@@ -835,19 +835,7 @@ function setMode(mode) {
   document.getElementById('modeTour').hidden = mode !== 'tour';
 }
 
-/* ---------- Bier-Radtour (Fahrrad-Routenplaner über OSRM) ---------- */
-async function osrmTrip(coords, attempt = 1) {
-  const coordStr = coords.map(c => `${c.lon},${c.lat}`).join(';');
-  const url = `${OSRM_BASE}/trip/v1/driving/${coordStr}?source=first&destination=last&roundtrip=false&geometries=geojson&overview=full`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    if (attempt < 3) { await sleep(1000 * attempt); return osrmTrip(coords, attempt + 1); }
-    throw new Error('Routing-Server antwortet nicht (' + res.status + ')');
-  }
-  const data = await res.json();
-  if (data.code !== 'Ok') throw new Error('Routing fehlgeschlagen: ' + data.code);
-  return { trip: data.trips[0], waypoints: data.waypoints };
-}
+/* ---------- Bier-Radtour (Fahrrad-Routenplaner) ---------- */
 
 // Reines Straßen-Routing OHNE Neusortierung — verbindet die Punkte exakt in der
 // gegebenen Reihenfolge. Dient als Fallback, falls der Fahrrad-Routingdienst
@@ -924,6 +912,13 @@ async function fetchBrouterRoute(waypoints, profile = BROUTER_PROFILE, attempt =
   return { geometryLatLngs: trackLatLngs, distance: cum[lastIdx], duration: times[lastIdx] || 0, legs };
 }
 
+// Erfahrungswert: eine gefahrene Radstrecke ist etwa 1.35x länger als die
+// Luftlinie (Straßennetz, Umwege um Hindernisse). Nur der Startwert der
+// Regelschleife unten hängt davon ab — der Rest korrigiert sich selbst.
+const ROAD_DETOUR_FACTOR = 1.35;
+const TOUR_TOLERANCE = 0.08;        // ±8% gelten als "trifft die Wunschlänge"
+const TOUR_MAX_ROUTE_CALLS = 9;     // Obergrenze für Routing-Anfragen pro Planung
+
 // Peilung (0-360°) von `start` zu `point` — Norden = 0°, Osten = 90° usw.
 function bearingFrom(start, point) {
   const toRad = d => d * Math.PI / 180;
@@ -934,65 +929,221 @@ function bearingFrom(start, point) {
   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
 }
 
-// Teilt den Kompass in `k` gleich große Sektoren um den Start und wählt aus JEDEM
-// Sektor den Kandidaten, dessen Entfernung am nächsten an `targetRadius` liegt.
-// Das verhindert, dass Stopps zwar unterschiedlich weit weg, aber alle in der
-// gleichen Himmelsrichtung liegen — was große Umwege erzwingen würde, weil die
-// Route dann kreuz und quer statt in einer Schleife verlaufen müsste.
-function pickDirectionallySpread(candidates, start, k, targetRadius) {
+// Welchen Radius braucht eine Schleife über `k` Stopps, damit die GEFAHRENE
+// Strecke etwa `targetM` lang wird? Ein regelmäßiges k-Eck auf einem Kreis mit
+// Radius r hat den Umfang 2*k*r*sin(pi/k) (k=3 -> 5.20*r, k=6 -> 6.00*r, erst für
+// große k nähert sich das dem Kreisumfang 2*pi*r an — deshalb war die alte
+// Annahme "targetM/(2*pi)" bei wenigen Stopps systematisch zu großzügig).
+function loopRadiusForTarget(targetM, k) {
+  const polygonPerimeterFactor = 2 * k * Math.sin(Math.PI / k);
+  return targetM / (polygonPerimeterFactor * ROAD_DETOUR_FACTOR);
+}
+
+// Rundtour: Kompass in `k` Sektoren teilen und pro Sektor den Ort wählen, der am
+// nächsten an `radius` liegt — aber NIEMALS weiter als `maxDist`. Diese Obergrenze
+// ist entscheidend: ein einzelner weit entfernter Ort in einer dünn besetzten
+// Himmelsrichtung hat vorher die ganze Tour aufgeblasen (Hin- und Rückweg zählen
+// doppelt). Die Rückgabe ist nach Peilung sortiert, wodurch die Schleife sich
+// nicht selbst kreuzt — ein eigener Routing-Aufruf zur Sortierung entfällt damit.
+// `radii` ist ein Array mit einem Wunsch-Radius pro Sektor. Unterschiedliche Radien
+// je Sektor sind der Feinsteller der Längensteuerung: die erreichbaren Routenlängen
+// bilden eine Treppenfunktion, und ein einheitlicher Radius springt oft über die
+// Wunschlänge hinweg. Einzelne Sektoren weiter außen zu wählen füllt diese Lücken.
+function pickRadialStops(candidates, start, k, radii, maxDist, sectorOffset = 0) {
   const sectorSize = 360 / k;
   const used = new Set();
   const picked = [];
   for (let i = 0; i < k; i++) {
-    const sectorStart = i * sectorSize, sectorEnd = sectorStart + sectorSize;
+    const from = (sectorOffset + i * sectorSize) % 360;
+    const to = from + sectorSize;
+    const wantRadius = Array.isArray(radii) ? radii[i] : radii;
     let best = null, bestDiff = Infinity;
     for (const c of candidates) {
-      if (used.has(c.id)) continue;
-      const brg = bearingFrom(start, c);
-      if (brg < sectorStart || brg >= sectorEnd) continue;
-      const diff = Math.abs(c.distance - targetRadius);
+      if (used.has(c.id) || c.distance > maxDist) continue;
+      let brg = bearingFrom(start, c);
+      if (brg < from) brg += 360;              // Sektor über die 360°-Grenze hinweg
+      if (brg < from || brg >= to) continue;
+      const diff = Math.abs(c.distance - wantRadius);
       if (diff < bestDiff) { bestDiff = diff; best = c; }
     }
     if (best) { picked.push(best); used.add(best.id); }
   }
+  picked.sort((a, b) => bearingFrom(start, a) - bearingFrom(start, b));
   return picked;
 }
 
-function reconstructOrder(result, subset, start, endPoint) {
-  const inputPoints = [start, ...subset, endPoint];
-  const order = result.waypoints
-    .map((wp, idx) => ({ idx, wpIndex: wp.waypoint_index }))
-    .sort((a, b) => a.wpIndex - b.wpIndex)
-    .map(o => o.idx);
-  return order.map(i => inputPoints[i]); // [start, ...stops in Reihenfolge, endPoint]
+// Punkt-zu-Punkt: Orte entlang des Korridors Start->Ziel auswählen. `t` ist der
+// Fortschritt auf der Achse (0 = Start, 1 = Ziel), `lateral` der seitliche Abstand
+// zur Achse. Das Streckenbudget (Wunschlänge minus Luftlinie) begrenzt, wie weit
+// ein Stopp seitlich abweichen darf — sonst reißt ein Ort quer draußen die Tour auf.
+function projectOnAxis(start, end, p) {
+  const mPerDegLat = 111320;
+  const mPerDegLon = 111320 * Math.cos(start.lat * Math.PI / 180);
+  const ax = (end.lon - start.lon) * mPerDegLon, ay = (end.lat - start.lat) * mPerDegLat;
+  const px = (p.lon - start.lon) * mPerDegLon, py = (p.lat - start.lat) * mPerDegLat;
+  const axisLen2 = ax * ax + ay * ay;
+  if (axisLen2 === 0) return { t: 0, lateral: Math.hypot(px, py) };
+  const t = (px * ax + py * ay) / axisLen2;
+  const lateral = Math.abs(px * ay - py * ax) / Math.sqrt(axisLen2);
+  return { t, lateral };
 }
 
-// Probiert ein paar plausible Sektor-Anzahlen durch (mehr Sektoren = mehr, aber
-// näher beieinanderliegende Stopps) und lässt OSRM für jede Auswahl eine ECHTE,
-// kurze Trip-Anfrage (wenige Punkte, schnell) die beste Besuchsreihenfolge finden.
-async function findBestTrip(pool, start, endPoint, desiredKm, minStops, randomize = false) {
-  const targetM = desiredKm * 1000;
-  const targetRadius = targetM / (2 * Math.PI); // Radius einer Schleife mit Umfang ≈ targetM
-  const maxK = Math.min(pool.length, minStops + 10);
+function pickCorridorStops(candidates, start, end, k, budgetM, tOffset = 0) {
+  const direct = haversine(start.lat, start.lon, end.lat, end.lon);
+  const slack = Math.max(0, budgetM - direct * ROAD_DETOUR_FACTOR);
+  // Ein seitlicher Abstecher kostet grob 2x den Abstand; das Restbudget wird auf die
+  // Stopps verteilt. Wichtig: das ist ein ANGESTREBTER Abstand, keine Obergrenze —
+  // würde man seitliche Abweichung nur bestrafen, klebte die Auswahl immer an der
+  // Direktlinie und die Wunschlänge wäre bei längeren Touren nie erreichbar.
+  const targetLateral = slack / (2 * k) / ROAD_DETOUR_FACTOR;
+  const maxLateral = Math.max(300, targetLateral * 2.2);
+  const enriched = candidates
+    .map(c => ({ c, ...projectOnAxis(start, end, c) }))
+    .filter(x => x.t > -0.15 && x.t < 1.15 && x.lateral <= maxLateral);
 
-  const attempts = [];
-  for (let k = minStops; k <= maxK; k++) {
-    const subset = pickDirectionallySpread(pool, start, k, targetRadius);
-    if (subset.length < minStops) continue;
-    let result;
-    try { result = await osrmTrip([start, ...subset, endPoint]); } catch (e) { continue; }
-    attempts.push({ subset, result, diff: Math.abs(result.trip.distance - targetM) });
-    if (result.trip.distance > targetM * 1.6 && k > minStops) break;
+  const used = new Set();
+  const picked = [];
+  for (let i = 1; i <= k; i++) {
+    const targetT = clamp(((i + tOffset) / (k + 1)), 0, 1);
+    let best = null, bestScore = Infinity;
+    for (const x of enriched) {
+      if (used.has(x.c.id)) continue;
+      // Fortschritt auf der Achse zählt stärker als die Abweichung vom Wunsch-Abstand.
+      const score = Math.abs(x.t - targetT) * direct * 1.5 + Math.abs(x.lateral - targetLateral);
+      if (score < bestScore) { bestScore = score; best = x; }
+    }
+    if (best) { picked.push(best); used.add(best.c.id); }
   }
-  if (!attempts.length) throw new Error('Keine Route mit genügend verteilten Stopps berechenbar');
+  picked.sort((a, b) => a.t - b.t);
+  return picked.map(x => x.c);
+}
 
-  attempts.sort((a, b) => a.diff - b.diff);
-  const chosen = randomize
-    ? attempts[Math.floor(Math.random() * Math.min(3, attempts.length))]
-    : attempts[0];
+// Holt die tatsächlich gefahrene Route: bevorzugt BRouter ("safety"-Profil,
+// Radwege/ruhige Straßen), sonst normales Straßen-Routing in fester Reihenfolge.
+async function fetchTourRoute(points) {
+  try {
+    return { ...await fetchBrouterRoute(points), bikeFriendly: true };
+  } catch (e) {
+    return { ...await osrmRouteFixedOrder(points), bikeFriendly: false };
+  }
+}
 
-  const orderedInputPoints = reconstructOrder(chosen.result, chosen.subset, start, endPoint);
-  return orderedInputPoints.slice(1, -1);
+// Sucht die Stopp-Auswahl, deren TATSÄCHLICH GEFAHRENE Strecke der Wunschlänge am
+// nächsten kommt. Gemessen wird immer mit demselben Router, der auch angezeigt wird —
+// vorher wurde mit OSRM ausgewählt, aber die bewusst umwegigere BRouter-Strecke
+// dargestellt, was systematisch zu lange Routen ergab.
+//
+// Die erreichbaren Längen bilden eine Treppenfunktion (es gibt nur endlich viele
+// Orte), deshalb wird nicht proportional nachgeregelt — das pendelte zwischen "zu
+// kurz" und "zu lang" hin und her, ohne je in der Mitte zu landen. Stattdessen:
+//   1. Intervall einschachteln,  2. halbieren,
+//   3. einzelne Stopps weiter nach außen ziehen, um Treppenlücken zu füllen,
+//   4. falls noch zu lang: Umweg-Verursacher gegen näheren Ort tauschen.
+async function planTour(pool, start, endPoint, desiredKm, minStops, opts = {}) {
+  const targetM = desiredKm * 1000;
+  const roundtrip = opts.roundtrip;
+  const jitter = opts.jitter || 0;
+  const onProgress = opts.onProgress || (() => {});
+  // Bei einer Rundtour kostet ein Stopp in der Entfernung d mindestens 2*d
+  // (hin und zurück) — weiter als knapp die halbe Wunschlänge darf keiner liegen.
+  const maxStopDist = targetM * 0.42;
+  const k = minStops;
+  const tolerance = targetM * TOUR_TOLERANCE;
+
+  let calls = 0;
+  let best = null;
+
+  const selectStops = (scale) => roundtrip
+    ? pickRadialStops(pool, start, k, loopRadiusForTarget(targetM * scale, k), maxStopDist * Math.max(1, scale), jitter * 360)
+    : pickCorridorStops(pool, start, endPoint, k, targetM * scale, jitter);
+
+  // Misst eine Auswahl und merkt sie, falls sie näher an der Wunschlänge liegt.
+  const evaluate = async (stops, label) => {
+    calls++;
+    onProgress(label || calls);
+    const route = await fetchTourRoute([start, ...stops, endPoint]);
+    const err = route.distance - targetM;
+    if (!best || Math.abs(err) < Math.abs(best.err)) best = { stops, route, err };
+    return err;
+  };
+
+  /* 1. Einschachteln: ein Intervall [lo = zu kurz, hi = zu lang] finden. */
+  let lo = null, hi = null, scale = 1;
+  for (let i = 0; i < 4 && calls < TOUR_MAX_ROUTE_CALLS; i++) {
+    const stops = selectStops(scale);
+    if (stops.length < minStops) {
+      scale *= 1.45;                    // Suchbereich zu eng -> aufweiten
+      if (scale > 6) break;
+      continue;
+    }
+    const err = await evaluate(stops);
+    if (Math.abs(err) <= tolerance) return best;
+    if (err < 0) { lo = scale; if (hi) break; scale *= 1.6; }
+    else         { hi = scale; if (lo) break; scale /= 1.6; }
+  }
+  if (!best) throw new Error('Keine passende Route mit genügend Stopps gefunden');
+
+  /* 2. Intervallhalbierung (geometrisches Mittel, da der Radius multiplikativ wirkt). */
+  for (let i = 0; i < 3 && lo && hi && calls < TOUR_MAX_ROUTE_CALLS; i++) {
+    const mid = Math.sqrt(lo * hi);
+    const stops = selectStops(mid);
+    if (stops.length < minStops) break;
+    const err = await evaluate(stops);
+    if (Math.abs(err) <= tolerance) return best;
+    if (err < 0) lo = mid; else hi = mid;
+  }
+
+  /* 3. Treppenlücke füllen: einzelne Sektoren auf den größeren Radius hochziehen.
+        Damit entstehen Zwischenlängen, die ein einheitlicher Radius überspringt. */
+  if (roundtrip && lo && hi && Math.abs(best.err) > tolerance) {
+    const rLo = loopRadiusForTarget(targetM * lo, k);
+    const rHi = loopRadiusForTarget(targetM * hi, k);
+    const maxMixes = Math.min(k - 1, 2);   // mehr bringt erfahrungsgemäß nichts mehr
+    for (let m = 1; m <= maxMixes && calls < TOUR_MAX_ROUTE_CALLS; m++) {
+      const radii = Array.from({ length: k }, (_, i) => (i < m ? rHi : rLo));
+      const stops = pickRadialStops(pool, start, k, radii, maxStopDist * Math.max(1, hi), jitter * 360);
+      if (stops.length < minStops) continue;
+      const err = await evaluate(stops, 'feinschliff');
+      if (Math.abs(err) <= tolerance) return best;
+    }
+  }
+
+  /* 4. Noch zu lang? Den Stopp mit dem größten Umweg-Anteil gegen einen näher
+        gelegenen TAUSCHEN (nicht löschen) — so bleibt die Mindestanzahl erhalten. */
+  while (calls < TOUR_MAX_ROUTE_CALLS && best.route.distance > targetM + tolerance) {
+    const stops = best.stops;
+    const legs = best.route.legs;
+    let worstIdx = -1, worstCost = -Infinity;
+    for (let i = 0; i < stops.length; i++) {
+      const prev = i === 0 ? start : stops[i - 1];
+      const next = i === stops.length - 1 ? endPoint : stops[i + 1];
+      const direct = haversine(prev.lat, prev.lon, next.lat, next.lon);
+      const cost = (legs[i] ? legs[i].distance : 0) + (legs[i + 1] ? legs[i + 1].distance : 0) - direct;
+      if (cost > worstCost) { worstCost = cost; worstIdx = i; }
+    }
+    if (worstIdx < 0) break;
+
+    const inUse = new Set(stops.map(s => s.id));
+    const prev = worstIdx === 0 ? start : stops[worstIdx - 1];
+    const next = worstIdx === stops.length - 1 ? endPoint : stops[worstIdx + 1];
+    let replacement = null, bestCost = worstCost;
+    for (const c of pool) {
+      if (inUse.has(c.id)) continue;
+      const cost = haversine(prev.lat, prev.lon, c.lat, c.lon)
+        + haversine(c.lat, c.lon, next.lat, next.lon)
+        - haversine(prev.lat, prev.lon, next.lat, next.lon);
+      if (cost < bestCost) { bestCost = cost; replacement = c; }
+    }
+    if (!replacement) break;
+
+    const candidateStops = stops.slice();
+    candidateStops[worstIdx] = replacement;
+    const prevErr = Math.abs(best.err);
+    await evaluate(candidateStops, 'feinschliff');
+    if (Math.abs(best.err) >= prevErr) break;   // keine Verbesserung -> aufhören
+  }
+
+  return best;
 }
 
 async function buildTour() {
@@ -1020,7 +1171,10 @@ async function buildTour() {
   status.textContent = 'Bierorte entlang der Route werden gesucht…';
   const centerLat = (start.lat + endPoint.lat) / 2;
   const centerLon = (start.lon + endPoint.lon) / 2;
-  let radius = clamp(desiredKm * 1000 * 0.55, 800, 15000);
+  // Suchradius: bei einer Rundtour reicht etwas über die halbe Wunschlänge; bei
+  // Punkt-zu-Punkt muss zusätzlich der ganze Korridor bis zum Ziel abgedeckt sein.
+  const directToEnd = haversine(start.lat, start.lon, endPoint.lat, endPoint.lon);
+  let radius = clamp(Math.max(desiredKm * 1000 * 0.55, directToEnd * 0.6 + 1000), 800, 20000);
   const activeTypes = new Set(getActiveTypeFilters());
 
   let candidates = [];
@@ -1048,13 +1202,18 @@ async function buildTour() {
   mergeIntoAllPlaces(candidates);
 
   const pool = candidates;
+  lastTourParams = { pool, start, endPoint, desiredKm, minStops, roundtrip };
 
-  status.textContent = `Route wird berechnet… (${pool.length} mögliche Stopps in der Auswahl)`;
   try {
-    const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops);
-    lastTourParams = { pool, start, endPoint, desiredKm, minStops };
-    status.textContent = 'Fahrradfreundliche Wege werden gesucht…';
-    await finalizeTour(subset, start, endPoint, desiredKm, minStops);
+    const best = await planTour(pool, start, endPoint, desiredKm, minStops, {
+      roundtrip,
+      onProgress: p => {
+        status.textContent = p === 'feinschliff'
+          ? 'Route wird auf die Wunschlänge feinjustiert…'
+          : `Fahrradroute wird berechnet… (Versuch ${p})`;
+      },
+    });
+    renderTour(best, start, endPoint, desiredKm);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler beim Berechnen der Route: ' + e.message;
@@ -1065,69 +1224,31 @@ async function rerollTour() {
   if (!lastTourParams) return;
   const status = document.getElementById('tourStatus');
   status.textContent = 'Neue Route wird gewürfelt…';
-  const { pool, start, endPoint, desiredKm, minStops } = lastTourParams;
+  const { pool, start, endPoint, desiredKm, minStops, roundtrip } = lastTourParams;
   try {
-    const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops, true);
-    await finalizeTour(subset, start, endPoint, desiredKm, minStops);
+    const best = await planTour(pool, start, endPoint, desiredKm, minStops, {
+      roundtrip,
+      jitter: Math.random(),   // Sektoren/Korridor versetzt -> andere Orte, gleiche Länge
+      onProgress: p => {
+        status.textContent = p === 'feinschliff'
+          ? 'Route wird auf die Wunschlänge feinjustiert…'
+          : `Neue Route wird berechnet… (Versuch ${p})`;
+      },
+    });
+    renderTour(best, start, endPoint, desiredKm);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler: ' + e.message;
   }
 }
 
-async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) {
-  // Reihenfolge steht zunächst fest (gleichmäßig nach Himmelsrichtung verteilt).
-  // Für die eigentliche Strecke fragen wir BRouter mit einem Sicherheits-Profil an
-  // (bevorzugt Radwege/ruhige Straßen) — das macht die Route aber oft länger als
-  // die für die Auswahl verwendete Schätzung. Deshalb wird hier iterativ der Stopp
-  // mit dem größten Umweg-Beitrag entfernt, bis die ECHTE Länge nah an der
-  // Wunschlänge liegt (oder die Mindestanzahl an Stopps erreicht ist).
+// Zeichnet eine fertig geplante Tour (Karte + Seitenleiste). Die Streckenlänge ist
+// zu diesem Zeitpunkt bereits final — hier wird nicht mehr gerechnet.
+function renderTour(best, start, endPoint, desiredKm) {
   const targetM = (desiredKm || 0) * 1000;
-  let orderedStops = initialStops.slice();
-  let geometryLatLngs, legs, totalDistance, totalDuration, bikeFriendly = true;
-
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const orderedInputPoints = [start, ...orderedStops, endPoint];
-    let route;
-    try {
-      route = await fetchBrouterRoute(orderedInputPoints);
-    } catch (e) {
-      bikeFriendly = false;
-      try {
-        route = await osrmRouteFixedOrder(orderedInputPoints);
-        showToast('Fahrradfreundliches Routing nicht erreichbar — zeige Standard-Route.');
-      } catch (e2) {
-        showToast('Route konnte nicht berechnet werden: ' + e2.message);
-        return;
-      }
-      geometryLatLngs = route.geometryLatLngs;
-      legs = route.legs;
-      totalDistance = route.distance;
-      totalDuration = route.duration;
-      break; // im Fallback-Fall nicht mehr weiter trimmen
-    }
-
-    geometryLatLngs = route.geometryLatLngs;
-    legs = route.legs;
-    totalDistance = route.distance;
-    totalDuration = route.duration;
-
-    if (!targetM || orderedStops.length <= minStops) break;
-    const overshoot = totalDistance - targetM;
-    if (overshoot <= targetM * 0.12) break; // nah genug am Ziel
-
-    // Den Stopp mit dem größten Umweg-Beitrag finden (Etappe hin + zurück minus
-    // direkter Weg zwischen den Nachbarpunkten) und entfernen, dann neu berechnen.
-    let worstIdx = 0, worstCost = -Infinity;
-    for (let i = 0; i < orderedStops.length; i++) {
-      const prevPt = i === 0 ? start : orderedStops[i - 1];
-      const nextPt = i === orderedStops.length - 1 ? endPoint : orderedStops[i + 1];
-      const direct = haversine(prevPt.lat, prevPt.lon, nextPt.lat, nextPt.lon);
-      const cost = legs[i].distance + legs[i + 1].distance - direct;
-      if (cost > worstCost) { worstCost = cost; worstIdx = i; }
-    }
-    orderedStops.splice(worstIdx, 1);
-  }
+  const orderedStops = best.stops;
+  const { geometryLatLngs, legs, distance: totalDistance, duration: totalDuration, bikeFriendly } = best.route;
+  if (!bikeFriendly) showToast('Fahrradfreundliches Routing nicht erreichbar — zeige Standard-Route.');
 
   currentTour = {
     orderedStops, legs, start, endPoint, geometryLatLngs,
@@ -1135,7 +1256,8 @@ async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) 
   };
 
   routeLayer.clearLayers();
-  L.polyline(geometryLatLngs, { color: '#af3b28', weight: 5, opacity: 0.85 }).addTo(routeLayer);
+  const routeColor = getComputedStyle(document.documentElement).getPropertyValue('--route-color').trim() || '#a53a2b';
+  L.polyline(geometryLatLngs, { color: routeColor, weight: 5, opacity: 0.85 }).addTo(routeLayer);
   L.marker([start.lat, start.lon], {
     icon: L.divIcon({ className: '', html: '<div class="tour-num-icon tour-num-icon-start">S</div>', iconSize: [26, 26], iconAnchor: [13, 13] })
   }).addTo(routeLayer).bindPopup('Start');
@@ -1152,14 +1274,27 @@ async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) 
   const bounds = L.latLngBounds(geometryLatLngs);
   map.fitBounds(bounds, { padding: [40, 40] });
 
+  const deviation = targetM ? (totalDistance - targetM) / targetM : 0;
+  const deviationLabel = !targetM ? ''
+    : Math.abs(deviation) <= TOUR_TOLERANCE ? `Ziel: ${desiredKm} km ✓`
+    : `${deviation > 0 ? '+' : '−'}${Math.abs(Math.round(deviation * 100))} % vs. ${desiredKm} km`;
+
   document.getElementById('tourStats').innerHTML = `
-    <div class="tour-stat"><b>${(totalDistance / 1000).toFixed(1)} km</b><span>Gesamtlänge</span></div>
+    <div class="tour-stat"><b>${(totalDistance / 1000).toFixed(1)} km</b><span>${deviationLabel || 'Gesamtlänge'}</span></div>
     <div class="tour-stat"><b>${fmtDuration(totalDuration)}</b><span>Fahrzeit ca.</span></div>
     <div class="tour-stat"><b>${orderedStops.length}</b><span>Bierorte</span></div>
   `;
-  document.getElementById('tourRoutingHint').innerHTML = bikeFriendly
-    ? `${icon('bike', { size: 13 })} Routing bevorzugt Radwege &amp; ruhige Straßen`
-    : `${icon('alertTriangle', { size: 13 })} Standard-Routing (Fahrrad-Routingdienst nicht erreichbar)`;
+  const hints = [
+    bikeFriendly
+      ? `${icon('bike', { size: 13 })} Routing bevorzugt Radwege &amp; ruhige Straßen`
+      : `${icon('alertTriangle', { size: 13 })} Standard-Routing (Fahrrad-Routingdienst nicht erreichbar)`,
+  ];
+  if (targetM && deviation > TOUR_TOLERANCE) {
+    hints.push(`${icon('alertTriangle', { size: 13 })} Länger als gewünscht: näher gelegene Orte hätten sich hier nicht zu einer sinnvollen Schleife verbinden lassen. Mehr Ortstypen im Filter erlauben oder die Mindestanzahl senken schafft mehr Auswahl.`);
+  } else if (targetM && deviation < -TOUR_TOLERANCE) {
+    hints.push(`${icon('alertTriangle', { size: 13 })} Kürzer als gewünscht: das ist die längste Runde, die sich hier ohne unnötigen Umweg ergibt (weiter entfernte Orte hätten die Tour deutlich über ${desiredKm} km gebracht). Mehr Stopps oder eine größere Wunschlänge geben mehr Spielraum.`);
+  }
+  document.getElementById('tourRoutingHint').innerHTML = hints.map(h => `<div class="icon-row">${h}</div>`).join('');
   document.getElementById('tourStops').innerHTML = orderedStops.map((s, i) => {
     const meta = TYPE_META[s.type];
     return `<div class="tour-stop" data-id="${s.id}">
