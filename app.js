@@ -4,6 +4,8 @@
 const OVERPASS_URL = 'https://overpass-api.de/api/interpreter';
 const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
 const OSRM_BASE = 'https://routing.openstreetmap.de/routed-bike';
+const BROUTER_URL = 'https://brouter.de/brouter';
+const BROUTER_PROFILE = 'safety'; // bevorzugt Radwege/ruhige Straßen, meidet Hauptstraßen
 const OPEN_METEO_URL = 'https://api.open-meteo.com/v1/forecast';
 const STORAGE_KEY_DATA = 'bierlocator_data_v1';
 const STORAGE_KEY_PREFS = 'bierlocator_prefs_v1';
@@ -142,20 +144,13 @@ function fmtDist(m) {
 }
 function fmtDuration(seconds) {
   if (seconds < 60) return '< 1 Min';
-  const h = Math.floor(seconds / 3600);
-  const min = Math.round((seconds % 3600) / 60);
+  const totalMin = Math.round(seconds / 60);
+  const h = Math.floor(totalMin / 60);
+  const min = totalMin % 60;
   return h > 0 ? `${h} Std ${min} Min` : `${min} Min`;
 }
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function shuffleArray(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 function timeAgo(ts) {
   const diff = Date.now() - ts;
   const days = Math.floor(diff / 86400000);
@@ -738,22 +733,113 @@ async function osrmTrip(coords, attempt = 1) {
   return { trip: data.trips[0], waypoints: data.waypoints };
 }
 
-// Nimmt eine nach Entfernung sortierte Liste und verteilt die Auswahl über die
-// gesamte Spanne (nah bis weit weg), statt nur die allernächsten zu nehmen —
-// sonst liegen bei sehr dichten Innenstädten alle Kandidaten viel zu eng beieinander.
-function stratifiedSample(sortedByDistance, cap) {
-  if (sortedByDistance.length <= cap) return sortedByDistance;
-  const bins = 8;
-  const maxDist = sortedByDistance[sortedByDistance.length - 1].distance || 1;
-  const binned = Array.from({ length: bins }, () => []);
-  for (const c of sortedByDistance) {
-    const idx = Math.min(bins - 1, Math.floor((c.distance / maxDist) * bins));
-    binned[idx].push(c);
+// Reines Straßen-Routing OHNE Neusortierung — verbindet die Punkte exakt in der
+// gegebenen Reihenfolge. Dient als Fallback, falls der Fahrrad-Routingdienst
+// (BRouter) nicht erreichbar ist, ohne die gewählte Stopp-Reihenfolge zu verwerfen.
+async function osrmRouteFixedOrder(points, attempt = 1) {
+  const coordStr = points.map(p => `${p.lon},${p.lat}`).join(';');
+  const url = `${OSRM_BASE}/route/v1/driving/${coordStr}?overview=full&geometries=geojson&steps=false`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    if (attempt < 3) { await sleep(1000 * attempt); return osrmRouteFixedOrder(points, attempt + 1); }
+    throw new Error('Routing-Server antwortet nicht (' + res.status + ')');
   }
-  const perBin = Math.ceil(cap / bins);
-  const result = [];
-  for (const b of binned) result.push(...b.slice(0, perBin));
-  return result.slice(0, cap);
+  const data = await res.json();
+  if (data.code !== 'Ok') throw new Error('Routing fehlgeschlagen: ' + data.code);
+  const route = data.routes[0];
+  return {
+    geometryLatLngs: route.geometry.coordinates.map(c => [c[1], c[0]]),
+    distance: route.distance,
+    duration: route.duration,
+    legs: route.legs.map(l => ({ distance: l.distance, duration: l.duration })),
+  };
+}
+
+function cumulativeDistances(latLngs) {
+  const cum = [0];
+  for (let i = 1; i < latLngs.length; i++) {
+    cum.push(cum[i - 1] + haversine(latLngs[i - 1][0], latLngs[i - 1][1], latLngs[i][0], latLngs[i][1]));
+  }
+  return cum;
+}
+
+// Findet für jeden Wegpunkt den nächstgelegenen Punkt auf dem Track — die Suche
+// beginnt jeweils dort, wo der vorherige Wegpunkt gefunden wurde, damit die
+// Reihenfolge (und damit die Etappen-Aufteilung) garantiert stimmt.
+function matchTrackIndices(trackLatLngs, waypoints) {
+  let searchStart = 0;
+  return waypoints.map(wp => {
+    let bestIdx = searchStart, bestDist = Infinity;
+    for (let i = searchStart; i < trackLatLngs.length; i++) {
+      const d = haversine(wp.lat, wp.lon, trackLatLngs[i][0], trackLatLngs[i][1]);
+      if (d < bestDist) { bestDist = d; bestIdx = i; }
+    }
+    searchStart = bestIdx;
+    return bestIdx;
+  });
+}
+
+// Fahrrad-Routing über BRouter (öffentlicher Dienst) mit dem "safety"-Profil,
+// das Radwege/ruhige Straßen bevorzugt und Hauptstraßen meidet — im Gegensatz
+// zum schnelleren, aber straßenlastigeren OSRM-Bike-Profil.
+async function fetchBrouterRoute(waypoints, profile = BROUTER_PROFILE, attempt = 1) {
+  const lonlats = waypoints.map(w => `${w.lon},${w.lat}`).join('|');
+  const url = `${BROUTER_URL}?lonlats=${lonlats}&profile=${profile}&alternativeidx=0&format=geojson`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    if (attempt < 3) { await sleep(1000 * attempt); return fetchBrouterRoute(waypoints, profile, attempt + 1); }
+    throw new Error('BRouter-Antwort: ' + res.status);
+  }
+  const data = await res.json();
+  const feature = data.features && data.features[0];
+  if (!feature || !feature.geometry || !feature.geometry.coordinates.length) throw new Error('BRouter: keine Route gefunden');
+  const trackLatLngs = feature.geometry.coordinates.map(c => [c[1], c[0]]);
+  const times = (feature.properties.times || []).map(Number);
+  const cum = cumulativeDistances(trackLatLngs);
+  const indices = matchTrackIndices(trackLatLngs, waypoints);
+  const legs = [];
+  for (let i = 0; i < waypoints.length - 1; i++) {
+    legs.push({
+      distance: Math.max(0, cum[indices[i + 1]] - cum[indices[i]]),
+      duration: Math.max(0, (times[indices[i + 1]] || 0) - (times[indices[i]] || 0)),
+    });
+  }
+  const lastIdx = indices[indices.length - 1];
+  return { geometryLatLngs: trackLatLngs, distance: cum[lastIdx], duration: times[lastIdx] || 0, legs };
+}
+
+// Peilung (0-360°) von `start` zu `point` — Norden = 0°, Osten = 90° usw.
+function bearingFrom(start, point) {
+  const toRad = d => d * Math.PI / 180;
+  const lat1 = toRad(start.lat), lat2 = toRad(point.lat);
+  const dLon = toRad(point.lon - start.lon);
+  const y = Math.sin(dLon) * Math.cos(lat2);
+  const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+  return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+
+// Teilt den Kompass in `k` gleich große Sektoren um den Start und wählt aus JEDEM
+// Sektor den Kandidaten, dessen Entfernung am nächsten an `targetRadius` liegt.
+// Das verhindert, dass Stopps zwar unterschiedlich weit weg, aber alle in der
+// gleichen Himmelsrichtung liegen — was große Umwege erzwingen würde, weil die
+// Route dann kreuz und quer statt in einer Schleife verlaufen müsste.
+function pickDirectionallySpread(candidates, start, k, targetRadius) {
+  const sectorSize = 360 / k;
+  const used = new Set();
+  const picked = [];
+  for (let i = 0; i < k; i++) {
+    const sectorStart = i * sectorSize, sectorEnd = sectorStart + sectorSize;
+    let best = null, bestDiff = Infinity;
+    for (const c of candidates) {
+      if (used.has(c.id)) continue;
+      const brg = bearingFrom(start, c);
+      if (brg < sectorStart || brg >= sectorEnd) continue;
+      const diff = Math.abs(c.distance - targetRadius);
+      if (diff < bestDiff) { bestDiff = diff; best = c; }
+    }
+    if (best) { picked.push(best); used.add(best.id); }
+  }
+  return picked;
 }
 
 function reconstructOrder(result, subset, start, endPoint) {
@@ -765,39 +851,32 @@ function reconstructOrder(result, subset, start, endPoint) {
   return order.map(i => inputPoints[i]); // [start, ...stops in Reihenfolge, endPoint]
 }
 
-// Ermittelt die passende Anzahl/Auswahl an Stopps mit nur 1-2 Routing-Anfragen:
-// zuerst EINE Anfrage mit dem ganzen Kandidaten-Pool (liefert die optimierte Besuchsreihenfolge),
-// dann wird anhand der Zwischenetappen rein rechnerisch die beste Abschneide-Länge gesucht,
-// und nur dafür ggf. noch einmal die exakte Route nachgefragt.
+// Probiert ein paar plausible Sektor-Anzahlen durch (mehr Sektoren = mehr, aber
+// näher beieinanderliegende Stopps) und lässt OSRM für jede Auswahl eine ECHTE,
+// kurze Trip-Anfrage (wenige Punkte, schnell) die beste Besuchsreihenfolge finden.
 async function findBestTrip(pool, start, endPoint, desiredKm, minStops, randomize = false) {
   const targetM = desiredKm * 1000;
-  const fullResult = await osrmTrip([start, ...pool, endPoint]);
-  const orderedFull = reconstructOrder(fullResult, pool, start, endPoint);
-  const orderedStopsFull = orderedFull.slice(1, -1);
-  const legsFull = fullResult.trip.legs;
+  const targetRadius = targetM / (2 * Math.PI); // Radius einer Schleife mit Umfang ≈ targetM
+  const maxK = Math.min(pool.length, minStops + 10);
 
-  const prefix = [0];
-  for (let i = 0; i < orderedStopsFull.length; i++) prefix.push(prefix[i] + legsFull[i].distance);
-
-  const candidates = [];
-  for (let k = minStops; k <= orderedStopsFull.length; k++) {
-    const lastStop = orderedStopsFull[k - 1];
-    const estTotal = prefix[k] + haversine(lastStop.lat, lastStop.lon, endPoint.lat, endPoint.lon);
-    candidates.push({ k, diff: Math.abs(estTotal - targetM) });
+  const attempts = [];
+  for (let k = minStops; k <= maxK; k++) {
+    const subset = pickDirectionallySpread(pool, start, k, targetRadius);
+    if (subset.length < minStops) continue;
+    let result;
+    try { result = await osrmTrip([start, ...subset, endPoint]); } catch (e) { continue; }
+    attempts.push({ subset, result, diff: Math.abs(result.trip.distance - targetM) });
+    if (result.trip.distance > targetM * 1.6 && k > minStops) break;
   }
-  candidates.sort((a, b) => a.diff - b.diff);
+  if (!attempts.length) throw new Error('Keine Route mit genügend verteilten Stopps berechenbar');
+
+  attempts.sort((a, b) => a.diff - b.diff);
   const chosen = randomize
-    ? candidates[Math.floor(Math.random() * Math.min(3, candidates.length))]
-    : candidates[0];
-  const bestK = chosen.k;
+    ? attempts[Math.floor(Math.random() * Math.min(3, attempts.length))]
+    : attempts[0];
 
-  if (bestK === orderedStopsFull.length && !randomize) {
-    return { trip: fullResult.trip, waypoints: fullResult.waypoints, subset: pool };
-  }
-
-  const subset = orderedStopsFull.slice(0, bestK);
-  const finalResult = await osrmTrip([start, ...subset, endPoint]);
-  return { trip: finalResult.trip, waypoints: finalResult.waypoints, subset };
+  const orderedInputPoints = reconstructOrder(chosen.result, chosen.subset, start, endPoint);
+  return orderedInputPoints.slice(1, -1);
 }
 
 async function buildTour() {
@@ -829,10 +908,15 @@ async function buildTour() {
   const activeTypes = new Set(getActiveTypeFilters());
 
   let candidates = [];
+  let closedCount = 0;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const found = await fetchPlacesNear(centerLat, centerLon, radius, start.lat, start.lon);
-      candidates = found.filter(p => activeTypes.has(p.type));
+      const typed = found.filter(p => activeTypes.has(p.type));
+      closedCount = typed.filter(p => isOpenNow(p.tags.opening_hours) === false).length;
+      // Orte ohne Öffnungszeiten-Angabe bleiben drin (unbekannt ≠ geschlossen) —
+      // nur nachweislich geschlossene werden ausgeschlossen.
+      candidates = typed.filter(p => isOpenNow(p.tags.opening_hours) !== false);
     } catch (e) {
       status.textContent = 'Fehler bei der Ortssuche: ' + e.message;
       return;
@@ -841,20 +925,20 @@ async function buildTour() {
     radius = Math.min(radius * 1.7, 20000);
   }
   if (candidates.length < minStops) {
-    status.textContent = `Nur ${candidates.length} passende Bierort(e) in der Umgebung gefunden — weniger als die gewünschte Mindestanzahl (${minStops}). Vergrößere die Wunschlänge, wähle mehr Ortstypen im Filter, oder reduziere die Mindestanzahl.`;
+    status.textContent = `Nur ${candidates.length} passende, aktuell geöffnete Bierort(e) in der Umgebung gefunden — weniger als die gewünschte Mindestanzahl (${minStops}). Vergrößere die Wunschlänge, wähle mehr Ortstypen im Filter, oder reduziere die Mindestanzahl.`;
     return;
   }
+  if (closedCount > 0) showToast(`ℹ️ ${closedCount} aktuell geschlossene Orte ausgeblendet.`);
   mergeIntoAllPlaces(candidates);
 
-  candidates.sort((a, b) => a.distance - b.distance);
-  const pool = stratifiedSample(candidates, Math.max(minStops + 15, 30));
+  const pool = candidates;
 
   status.textContent = `Route wird berechnet… (${pool.length} mögliche Stopps in der Auswahl)`;
   try {
-    const best = await findBestTrip(pool, start, endPoint, desiredKm, minStops);
-    if (!best) { status.textContent = 'Der Routing-Server war nicht erreichbar. Bitte später erneut versuchen.'; return; }
+    const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops);
     lastTourParams = { pool, start, endPoint, desiredKm, minStops };
-    finalizeTour(best, start, endPoint);
+    status.textContent = 'Fahrradfreundliche Wege werden gesucht…';
+    await finalizeTour(subset, start, endPoint);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler beim Berechnen der Route: ' + e.message;
@@ -866,26 +950,47 @@ async function rerollTour() {
   const status = document.getElementById('tourStatus');
   status.textContent = 'Neue Route wird gewürfelt…';
   const { pool, start, endPoint, desiredKm, minStops } = lastTourParams;
-  const shuffled = shuffleArray(pool);
   try {
-    const best = await findBestTrip(shuffled, start, endPoint, desiredKm, minStops, true);
-    if (!best) { status.textContent = 'Konnte keine neue Route berechnen.'; return; }
-    finalizeTour(best, start, endPoint);
+    const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops, true);
+    await finalizeTour(subset, start, endPoint);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler: ' + e.message;
   }
 }
 
-function finalizeTour(best, start, endPoint) {
-  const orderedInputPoints = reconstructOrder(best, best.subset, start, endPoint);
-  const orderedStops = orderedInputPoints.slice(1, -1);
-  const legs = best.trip.legs;
-  const geometryLatLngs = best.trip.geometry.coordinates.map(c => [c[1], c[0]]);
+async function finalizeTour(orderedStops, start, endPoint) {
+  // Reihenfolge steht fest (gleichmäßig verteilt, s. pickEvenlySpaced) und wird ab
+  // hier NICHT mehr von einem Routing-Dienst umsortiert. Für die eigentliche Strecke
+  // fragen wir BRouter mit einem Sicherheits-Profil an (bevorzugt Radwege/ruhige
+  // Straßen); nur falls das fehlschlägt, springt ein normales OSRM-Routing (feste
+  // Reihenfolge) als Fallback ein.
+  const orderedInputPoints = [start, ...orderedStops, endPoint];
+  let geometryLatLngs, legs, totalDistance, totalDuration, bikeFriendly = true;
+  try {
+    const bike = await fetchBrouterRoute(orderedInputPoints);
+    geometryLatLngs = bike.geometryLatLngs;
+    legs = bike.legs;
+    totalDistance = bike.distance;
+    totalDuration = bike.duration;
+  } catch (e) {
+    bikeFriendly = false;
+    try {
+      const fallback = await osrmRouteFixedOrder(orderedInputPoints);
+      geometryLatLngs = fallback.geometryLatLngs;
+      legs = fallback.legs;
+      totalDistance = fallback.distance;
+      totalDuration = fallback.duration;
+      showToast('Fahrradfreundliches Routing nicht erreichbar — zeige Standard-Route.');
+    } catch (e2) {
+      showToast('Route konnte nicht berechnet werden: ' + e2.message);
+      return;
+    }
+  }
 
   currentTour = {
     orderedStops, legs, start, endPoint, geometryLatLngs,
-    distance: best.trip.distance, duration: best.trip.duration,
+    distance: totalDistance, duration: totalDuration,
   };
 
   routeLayer.clearLayers();
@@ -907,10 +1012,13 @@ function finalizeTour(best, start, endPoint) {
   map.fitBounds(bounds, { padding: [40, 40] });
 
   document.getElementById('tourStats').innerHTML = `
-    <div class="tour-stat"><b>${(best.trip.distance / 1000).toFixed(1)} km</b><span>Gesamtlänge</span></div>
-    <div class="tour-stat"><b>${fmtDuration(best.trip.duration)}</b><span>Fahrzeit ca.</span></div>
+    <div class="tour-stat"><b>${(totalDistance / 1000).toFixed(1)} km</b><span>Gesamtlänge</span></div>
+    <div class="tour-stat"><b>${fmtDuration(totalDuration)}</b><span>Fahrzeit ca.</span></div>
     <div class="tour-stat"><b>${orderedStops.length}</b><span>Bierorte</span></div>
   `;
+  document.getElementById('tourRoutingHint').textContent = bikeFriendly
+    ? '🚲 Routing bevorzugt Radwege & ruhige Straßen'
+    : '⚠️ Standard-Routing (Fahrrad-Routingdienst nicht erreichbar)';
   document.getElementById('tourStops').innerHTML = orderedStops.map((s, i) => {
     const meta = TYPE_META[s.type];
     return `<div class="tour-stop" data-id="${s.id}">
