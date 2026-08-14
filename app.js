@@ -950,6 +950,19 @@ ${trkpts}
   URL.revokeObjectURL(url);
 }
 
+function openTourInGoogleMaps() {
+  if (!currentTour) return;
+  const { start, endPoint, orderedStops } = currentTour;
+  const origin = `${start.lat},${start.lon}`;
+  const destination = `${endPoint.lat},${endPoint.lon}`;
+  const params = new URLSearchParams({ api: '1', origin, destination, travelmode: 'bicycling' });
+  if (orderedStops.length) {
+    // Google Maps' Web-Directions-URL honoriert zuverlässig nur die ersten ~9 Wegpunkte.
+    params.set('waypoints', orderedStops.slice(0, 9).map(s => `${s.lat},${s.lon}`).join('|'));
+  }
+  window.open(`https://www.google.com/maps/dir/?${params.toString()}`, '_blank', 'noopener');
+}
+
 /* ---------- Promille-Rechner ---------- */
 const BETA_PER_HOUR = 0.15; // Abbaurate ‰/h (typischer Mittelwert 0,10-0,20)
 
@@ -1194,6 +1207,8 @@ function init() {
   document.getElementById('btnBuildTour').addEventListener('click', buildTour);
   document.getElementById('btnRerollTour').addEventListener('click', rerollTour);
   document.getElementById('btnExportGpx').addEventListener('click', exportTourGpx);
+  document.getElementById('btnTourGmaps').addEventListener('click', openTourInGoogleMaps);
+  window.addEventListener('resize', () => map.invalidateSize());
 
   renderAll();
 }
