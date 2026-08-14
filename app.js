@@ -40,16 +40,83 @@ const BAC_STAGES = [
 ];
 function bacStageFor(bac) { return BAC_STAGES.find(s => bac <= s.max); }
 
+/* ---------- Icon-System ---------------------------------------------------
+ * Ein einziges Set schlichter, strichbasierter SVG-Icons (24x24, currentColor)
+ * ersetzt Emoji als Bildsprache — konsistente Strichstärke statt Symbol-Wildwuchs
+ * aus unterschiedlichen Schriftarten/Plattform-Renderern.
+ * -------------------------------------------------------------------------- */
+const ICONS = {
+  pin: '<path d="M12 21s-6.5-6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.25"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M19.5 19.5l-4.3-4.3"/>',
+  bike: '<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L10 8h5l3.5 9.5"/><path d="M9 8h4"/><path d="M12 8l2.5 5.5H8"/>',
+  sliders: '<path d="M4 6h9M17 6h3M4 12h3M9 12h11M4 18h13M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+  filter: '<path d="M4 5h16l-6 7.5V19l-4 2v-8.5z"/>',
+  coin: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.5 9.5c0-1.1 1-2 2.5-2s2.5.8 2.5 2-1 1.7-2.5 2-2.5.9-2.5 2 1 2 2.5 2 2.5-.9 2.5-2"/>',
+  list: '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.1"/><circle cx="4.5" cy="12" r="1.1"/><circle cx="4.5" cy="18" r="1.1"/>',
+  map: '<path d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"/><path d="M9 4v14M15 6v14"/>',
+  shuffle: '<path d="M3 6h3.5L15 17.5H21M15 6.5h6M17.5 4l3 2.5-3 2.5M3 17.5h3.5L11 11"/><path d="M17.5 20l3-2.5-3-2.5"/>',
+  refresh: '<path d="M20 11a8 8 0 1 0-2.6 6"/><path d="M20 5v6h-6"/>',
+  compass: '<circle cx="12" cy="12" r="8.5"/><path d="M15 9l-2 6-4 2 2-6z"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  tag: '<path d="M11.5 3.5H5a1.5 1.5 0 0 0-1.5 1.5v6.5a1.5 1.5 0 0 0 .44 1.06l8.5 8.5a1.5 1.5 0 0 0 2.12 0l6.44-6.44a1.5 1.5 0 0 0 0-2.12l-8.5-8.5a1.5 1.5 0 0 0-1.06-.44z"/><circle cx="8.2" cy="8.2" r="1.3"/>',
+  star: '<path d="M12 4l2.47 5.34 5.53.62-4.2 3.9 1.15 5.64L12 16.7l-4.95 2.8 1.15-5.64-4.2-3.9 5.53-.62z"/>',
+  alertTriangle: '<path d="M12 4L2.5 20h19z"/><path d="M12 10.5v4"/><circle cx="12" cy="17.2" r="0.15"/>',
+  edit: '<path d="M4 20h4l10.5-10.5a2 2 0 0 0 0-2.8l-1.2-1.2a2 2 0 0 0-2.8 0L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
+  undo: '<path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v6h6"/>',
+  flag: '<path d="M6 21V4"/><path d="M6 5h10.5l-2.3 4 2.3 4H6"/>',
+  sun: '<circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  moon: '<path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a7 7 0 0 0 10.2 10.2z"/>',
+  download: '<path d="M12 4v11.5"/><path d="M7.5 11l4.5 4.5L16.5 11"/><path d="M4.5 19.5h15"/>',
+  upload: '<path d="M12 19.5V8"/><path d="M7.5 12.5L12 8l4.5 4.5"/><path d="M4.5 19.5h15"/>',
+  trash: '<path d="M5 7h14"/><path d="M9.5 7V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v2"/><path d="M7 7l1 12.5A1.5 1.5 0 0 0 9.5 21h5a1.5 1.5 0 0 0 1.5-1.5L17 7"/><path d="M10.3 11v6M13.7 11v6"/>',
+  calculator: '<rect x="5" y="3" width="14" height="18" rx="2.2"/><path d="M7.5 6.5h9v3.5h-9z"/><circle cx="8" cy="14" r="0.9"/><circle cx="12" cy="14" r="0.9"/><circle cx="16" cy="14" r="0.9"/><circle cx="8" cy="17.5" r="0.9"/><circle cx="12" cy="17.5" r="0.9"/><circle cx="16" cy="17.5" r="0.9"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  chevronDown: '<path d="M6 9l6 6 6-6"/>',
+  cloud: '<path d="M7.5 17.5a4 4 0 1 1 .8-7.9 5.2 5.2 0 0 1 10 1.9 3.4 3.4 0 0 1-1 6z"/>',
+  cloudRain: '<path d="M7.5 15.5a4 4 0 1 1 .8-7.9 5.2 5.2 0 0 1 10 1.9 3.4 3.4 0 0 1-1 6z"/><path d="M9 19l-1 2.5M13 19l-1 2.5M17 19l-1 2.5"/>',
+  cloudSnow: '<path d="M7.5 14.5a4 4 0 1 1 .8-7.9 5.2 5.2 0 0 1 10 1.9 3.4 3.4 0 0 1-1 6z"/><circle cx="9" cy="19.5" r="0.4"/><circle cx="13" cy="19.5" r="0.4"/><circle cx="17" cy="19.5" r="0.4"/>',
+  cloudStorm: '<path d="M7.5 14.5a4 4 0 1 1 .8-7.9 5.2 5.2 0 0 1 10 1.9 3.4 3.4 0 0 1-1 6z"/><path d="M13 16.5l-2.5 4h3l-2 3.5"/>',
+  fog: '<path d="M4 9h13M4 13h16M6 17h12M4 21h16" opacity="0" /><path d="M6.5 9.5h11M4 13.5h16M7 17.5h10"/>',
+  thermometer: '<path d="M12 4a2 2 0 0 1 2 2v8.3a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"/><path d="M12 9v5.5"/>',
+  flame: '<path d="M12 3s5 4.5 5 9.5a5 5 0 1 1-10 0c0-1 .3-2 1-3 0 1.3 1 2 1 2-.3-3 1-4.5 3-6.5-.5 2-.3 3.3.5 4.5.7-1 .5-2.2-.5-6.5z"/>',
+  activity: '<path d="M3 12h4l2.2-7L13 19l2.5-7H21"/>',
+  droplet: '<path d="M12 3.5s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11z"/>',
+  checkCircle: '<circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.6 2.6L16 9.5"/>',
+  beerMug: '<path d="M6.5 8h9v11a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/><path d="M15.5 10.5h1.8A1.7 1.7 0 0 1 19 12.2v2.6a1.7 1.7 0 0 1-1.7 1.7h-1.8"/><path d="M8.5 5v3M11.2 4v4M13.8 5v3"/>',
+  tree: '<path d="M12 3l4.5 7h-2.6L17.5 16H6.5l3.6-6H7.5z"/><path d="M12 16v5"/>',
+  utensils: '<path d="M8 3v6a2 2 0 0 0 4 0V3M10 9v12M6 3v5M6 3v0M14.5 3c-1.4 0-2.5 1.8-2.5 4.5S13.1 12 14.5 12M14.5 3v18"/>',
+  sandwich: '<path d="M4 11.5h16L18 17H6z"/><path d="M4 11.5c0-4 3.6-7 8-7s8 3 8 7"/><path d="M5 14.2h14"/>',
+  disc: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.2"/>',
+  fuel: '<path d="M5 21V6.5A2 2 0 0 1 7 4.5h4a2 2 0 0 1 2 2V21"/><path d="M3.5 21h11"/><path d="M13 10.5h1.8l2.7 2.7v4.3a1.5 1.5 0 0 1-3 0v-1.8h-1.5"/>',
+  cart: '<circle cx="9.5" cy="20" r="1.1"/><circle cx="17" cy="20" r="1.1"/><path d="M3 4h2.2l2 11h10.9L20 8.5H7"/>',
+  box: '<path d="M3.5 8L12 3.5 20.5 8 12 12.5z"/><path d="M3.5 8v8.5L12 21l8.5-4.5V8"/><path d="M12 12.5V21"/>',
+  store: '<path d="M4 9.5V20h16V9.5"/><path d="M3 9.5l1.3-5h15.4l1.3 5z"/><path d="M9.5 20v-5.5h5V20"/>',
+};
+function icon(name, opts) {
+  opts = opts || {};
+  const size = opts.size || 18;
+  const cls = 'icon' + (opts.className ? ' ' + opts.className : '');
+  const body = ICONS[name] || '';
+  const fill = opts.filled ? 'currentColor' : 'none';
+  return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="${fill}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+}
+function hydrateIcons(root) {
+  (root || document).querySelectorAll('[data-icon]').forEach(el => {
+    const size = el.dataset.iconSize ? parseInt(el.dataset.iconSize, 10) : 18;
+    el.innerHTML = icon(el.dataset.icon, { size, filled: el.dataset.iconFilled === 'true' });
+  });
+}
+
 const TYPE_META = {
-  pub:         { label: 'Kneipe/Bar',    icon: '🍺' },
-  biergarten:  { label: 'Biergarten',    icon: '🌳' },
-  restaurant:  { label: 'Restaurant',    icon: '🍽️' },
-  fastfood:    { label: 'Imbiss',        icon: '🍔' },
-  nightclub:   { label: 'Club/Disco',    icon: '🪩' },
-  fuel:        { label: 'Tankstelle',    icon: '⛽' },
-  supermarket: { label: 'Supermarkt',    icon: '🛒' },
-  beverages:   { label: 'Getränkemarkt', icon: '🧃' },
-  convenience: { label: 'Kiosk',         icon: '🏪' },
+  pub:         { label: 'Kneipe/Bar',    icon: 'beerMug' },
+  biergarten:  { label: 'Biergarten',    icon: 'tree' },
+  restaurant:  { label: 'Restaurant',    icon: 'utensils' },
+  fastfood:    { label: 'Imbiss',        icon: 'sandwich' },
+  nightclub:   { label: 'Club/Disco',    icon: 'disc' },
+  fuel:        { label: 'Tankstelle',    icon: 'fuel' },
+  supermarket: { label: 'Supermarkt',    icon: 'cart' },
+  beverages:   { label: 'Getränkemarkt', icon: 'box' },
+  convenience: { label: 'Kiosk',         icon: 'store' },
 };
 // Mapping von OSM-Tags auf unsere internen Typen
 const OSM_TAG_TO_TYPE = {
@@ -244,14 +311,14 @@ function isOpenNow(openingHours) {
 }
 
 /* ---------- Wetter (open-meteo, kein API-Key nötig) ---------- */
-function weatherIcon(code) {
-  if (code === 0) return '☀️';
-  if ([1, 2, 3].includes(code)) return '⛅';
-  if ([45, 48].includes(code)) return '🌫️';
-  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return '🌧️';
-  if ([71, 73, 75, 77, 85, 86].includes(code)) return '❄️';
-  if ([95, 96, 99].includes(code)) return '⛈️';
-  return '🌡️';
+function weatherIconName(code) {
+  if (code === 0) return 'sun';
+  if ([1, 2, 3].includes(code)) return 'cloud';
+  if ([45, 48].includes(code)) return 'fog';
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'cloudRain';
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return 'cloudSnow';
+  if ([95, 96, 99].includes(code)) return 'cloudStorm';
+  return 'thermometer';
 }
 function isGoodBiergartenWeather(cw) {
   return cw && cw.temperature >= 18 && [0, 1, 2, 3].includes(cw.weathercode);
@@ -268,12 +335,11 @@ async function fetchWeather(lat, lon) {
     if (!data.current_weather) return;
     lastWeather = data.current_weather;
     const el = document.getElementById('weatherBadge');
-    const icon = weatherIcon(lastWeather.weathercode);
     let extra = '';
-    if (isGoodBiergartenWeather(lastWeather)) extra = ' — perfektes Biergartenwetter! 🌳';
-    else if (isRainy(lastWeather)) extra = ' — eher drinnen bleiben ☔';
+    if (isGoodBiergartenWeather(lastWeather)) extra = ' — gutes Biergartenwetter';
+    else if (isRainy(lastWeather)) extra = ' — eher drinnen bleiben';
     el.hidden = false;
-    el.textContent = `${icon} ${Math.round(lastWeather.temperature)}°C${extra}`;
+    el.innerHTML = `${icon(weatherIconName(lastWeather.weathercode), { size: 16 })} ${Math.round(lastWeather.temperature)}°C${extra}`;
     renderAll();
   } catch (e) { /* Wetter ist nur ein Bonus, Fehler hier sind unkritisch */ }
 }
@@ -311,7 +377,7 @@ function geolocate() {
       status.textContent = `Standort gefunden (±${Math.round(pos.coords.accuracy)} m).`;
       map.setView([userLocation.lat, userLocation.lon], 15);
       L.marker([userLocation.lat, userLocation.lon], { title: 'Du bist hier' })
-        .addTo(map).bindPopup('📍 Dein Standort');
+        .addTo(map).bindPopup('Dein Standort');
       searchNearby();
       fetchWeather(userLocation.lat, userLocation.lon);
     },
@@ -533,8 +599,8 @@ function renderMarkers(list) {
 
 function popupHtml(place, cheapest) {
   const meta = TYPE_META[place.type];
-  let html = `<b>${meta.icon} ${escapeHtml(place.name)}</b><br>${meta.label} · ${fmtDist(place.distance)}`;
-  if (cheapest) html += `<br><b style="color:#3a8a52">${cheapest.per05.toFixed(2)} € / 0,5l</b> (${escapeHtml(cheapest.beerType)})`;
+  let html = `<div style="display:flex;align-items:center;gap:6px"><span style="color:var(--accent-dark)">${icon(meta.icon, { size: 15 })}</span><b>${escapeHtml(place.name)}</b></div>${meta.label} · ${fmtDist(place.distance)}`;
+  if (cheapest) html += `<br><b style="color:var(--good)">${cheapest.per05.toFixed(2)} € / 0,5l</b> (${escapeHtml(cheapest.beerType)})`;
   return html;
 }
 
@@ -555,12 +621,16 @@ function renderList(list) {
     card.className = 'place-card';
     card.innerHTML = `
       <div class="pc-top">
-        <span class="pc-name">${meta.icon} ${escapeHtml(place.name)} ${rec.favorite ? '<span class="pc-star">★</span>' : ''}</span>
+        <span class="pc-name">
+          <span class="pc-type-icon">${icon(meta.icon, { size: 16 })}</span>
+          ${escapeHtml(place.name)}
+          ${rec.favorite ? `<span class="pc-star">${icon('star', { size: 13, filled: true })}</span>` : ''}
+        </span>
         <span class="pc-dist">${fmtDist(place.distance)}</span>
       </div>
       <div class="pc-meta">
         <span class="badge">${meta.label}</span>
-        ${rating ? `<span class="badge">⭐ ${rating.toFixed(1)}</span>` : ''}
+        ${rating ? `<span class="badge badge-rating">${icon('star', { size: 11, filled: true })} ${rating.toFixed(1)}</span>` : ''}
         ${cheapest ? `<span class="pc-price">${cheapest.per05.toFixed(2)} €/0,5l</span> · ${escapeHtml(cheapest.beerType)}` : '<span class="hint" style="display:inline">Kein Preis gemeldet</span>'}
       </div>
     `;
@@ -601,8 +671,8 @@ function openDetail(placeId) {
 
   const openState = isOpenNow(place.tags.opening_hours);
   let openBadge = '';
-  if (openState === true) openBadge = '<span class="badge badge-open">🟢 Jetzt geöffnet (geschätzt)</span>';
-  else if (openState === false) openBadge = '<span class="badge badge-closed">🔴 Jetzt geschlossen (geschätzt)</span>';
+  if (openState === true) openBadge = `<span class="badge badge-open"><span class="status-dot"></span> Jetzt geöffnet (geschätzt)</span>`;
+  else if (openState === false) openBadge = `<span class="badge badge-closed"><span class="status-dot"></span> Jetzt geschlossen (geschätzt)</span>`;
 
   const pricesHtml = rec.prices.length
     ? rec.prices.slice().sort((a, b) => b.reportedAt - a.reportedAt).map((p) => `
@@ -616,19 +686,23 @@ function openDetail(placeId) {
   const unitOptions = Object.entries(UNIT_LABELS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
 
   document.getElementById('detailContent').innerHTML = `
-    <h3>${meta.icon} ${escapeHtml(place.name)} <span class="fav-toggle" id="favToggle">${rec.favorite ? '★' : '☆'}</span></h3>
+    <h3>
+      <span class="detail-type-icon">${icon(meta.icon, { size: 22 })}</span>
+      ${escapeHtml(place.name)}
+      <button class="fav-toggle" id="favToggle" aria-label="Favorit" title="Als Favorit markieren">${icon('star', { size: 20, filled: rec.favorite })}</button>
+    </h3>
     <div class="hint">${meta.label}${addr ? ' · ' + escapeHtml(addr) : ''} · ${fmtDist(place.distance)} entfernt</div>
     ${openBadge ? `<div style="margin-top:6px">${openBadge}</div>` : ''}
-    ${place.tags.opening_hours ? `<div class="hint">🕒 ${escapeHtml(place.tags.opening_hours)}</div>` : ''}
-    <div style="margin-top:10px"><a href="${gmapsUrl}" target="_blank" rel="noopener">🧭 Route in Google Maps öffnen</a></div>
+    ${place.tags.opening_hours ? `<div class="hint icon-row">${icon('clock', { size: 13 })} ${escapeHtml(place.tags.opening_hours)}</div>` : ''}
+    <a class="detail-link" href="${gmapsUrl}" target="_blank" rel="noopener">${icon('compass', { size: 15 })} Route in Google Maps öffnen</a>
 
     <div class="detail-section">
-      <h4>⭐ Bewertung ${rating ? `(Ø ${rating.toFixed(1)} aus ${rec.ratings.length})` : ''}</h4>
-      <div class="stars" id="starInput">${[1, 2, 3, 4, 5].map(n => `<span data-n="${n}">★</span>`).join('')}</div>
+      <h4>${icon('star', { size: 14 })} Bewertung ${rating ? `<span class="detail-section-meta">Ø ${rating.toFixed(1)} aus ${rec.ratings.length}</span>` : ''}</h4>
+      <div class="stars" id="starInput">${[1, 2, 3, 4, 5].map(n => `<span data-n="${n}">${icon('star', { size: 22, className: 'star-input-icon' })}</span>`).join('')}</div>
     </div>
 
     <div class="detail-section">
-      <h4>💶 Gemeldete Preise (crowdsourced)</h4>
+      <h4>${icon('tag', { size: 14 })} Gemeldete Preise <span class="detail-section-meta">crowdsourced</span></h4>
       ${pricesHtml}
       <form class="add-price-form" id="addPriceForm">
         <input type="text" name="beerType" placeholder="Biersorte (z.B. Pils)" required>
@@ -639,12 +713,12 @@ function openDetail(placeId) {
     </div>
 
     <div class="detail-section">
-      <h4>⚠️ Daten stimmen nicht?</h4>
+      <h4>${icon('alertTriangle', { size: 14 })} Daten stimmen nicht?</h4>
       <div class="hint">Diese Karte basiert auf OpenStreetMap — falsche, veraltete oder fehlende Einträge lassen sich dort direkt für alle korrigieren.</div>
       <div class="row" style="margin-top:8px">
-        <a href="${osmEditUrl(place.id)}" target="_blank" rel="noopener" class="btn-secondary" style="flex:1;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">✏️ Bei OpenStreetMap korrigieren</a>
+        <a href="${osmEditUrl(place.id)}" target="_blank" rel="noopener" class="btn-secondary btn-icon-label" style="flex:1">${icon('edit', { size: 15 })} Bei OpenStreetMap korrigieren</a>
       </div>
-      <button id="btnHidePlace" class="btn-secondary full" style="margin-top:6px">${rec.hidden ? '↩️ Wieder einblenden' : '🚩 Als falsch/geschlossen melden (ausblenden)'}</button>
+      <button id="btnHidePlace" class="btn-secondary full btn-icon-label" style="margin-top:6px">${icon(rec.hidden ? 'undo' : 'flag', { size: 15 })} ${rec.hidden ? 'Wieder einblenden' : 'Als falsch/geschlossen melden'}</button>
     </div>
   `;
 
@@ -727,6 +801,11 @@ function importData(file) {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem(STORAGE_KEY_THEME, theme);
+  const themeIcon = document.getElementById('themeIcon');
+  if (themeIcon) {
+    themeIcon.dataset.icon = theme === 'dark' ? 'sun' : 'moon';
+    hydrateIcons(themeIcon.parentElement);
+  }
 }
 function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
@@ -920,7 +999,7 @@ async function buildTour() {
   const status = document.getElementById('tourStatus');
   document.getElementById('tourResultPanel').hidden = true;
   if (!userLocation) {
-    status.textContent = 'Bitte zuerst oben (📍 Standort) einen Startpunkt festlegen.';
+    status.textContent = 'Bitte zuerst oben unter „Standort" einen Startpunkt festlegen.';
     return;
   }
   const roundtrip = document.getElementById('tourRoundtrip').checked;
@@ -1058,8 +1137,8 @@ async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) 
   routeLayer.clearLayers();
   L.polyline(geometryLatLngs, { color: '#af3b28', weight: 5, opacity: 0.85 }).addTo(routeLayer);
   L.marker([start.lat, start.lon], {
-    icon: L.divIcon({ className: '', html: '<div class="tour-num-icon" style="background:#3a8a52">S</div>', iconSize: [26, 26], iconAnchor: [13, 13] })
-  }).addTo(routeLayer).bindPopup('🏁 Start');
+    icon: L.divIcon({ className: '', html: '<div class="tour-num-icon tour-num-icon-start">S</div>', iconSize: [26, 26], iconAnchor: [13, 13] })
+  }).addTo(routeLayer).bindPopup('Start');
   orderedStops.forEach((s, i) => {
     L.marker([s.lat, s.lon], {
       icon: L.divIcon({ className: '', html: `<div class="tour-num-icon">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] })
@@ -1067,8 +1146,8 @@ async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) 
   });
   if (endPoint !== start) {
     L.marker([endPoint.lat, endPoint.lon], {
-      icon: L.divIcon({ className: '', html: '<div class="tour-num-icon" style="background:#3a8a52">Z</div>', iconSize: [26, 26], iconAnchor: [13, 13] })
-    }).addTo(routeLayer).bindPopup('🏁 Ziel');
+      icon: L.divIcon({ className: '', html: '<div class="tour-num-icon tour-num-icon-start">Z</div>', iconSize: [26, 26], iconAnchor: [13, 13] })
+    }).addTo(routeLayer).bindPopup('Ziel');
   }
   const bounds = L.latLngBounds(geometryLatLngs);
   map.fitBounds(bounds, { padding: [40, 40] });
@@ -1078,18 +1157,19 @@ async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) 
     <div class="tour-stat"><b>${fmtDuration(totalDuration)}</b><span>Fahrzeit ca.</span></div>
     <div class="tour-stat"><b>${orderedStops.length}</b><span>Bierorte</span></div>
   `;
-  document.getElementById('tourRoutingHint').textContent = bikeFriendly
-    ? '🚲 Routing bevorzugt Radwege & ruhige Straßen'
-    : '⚠️ Standard-Routing (Fahrrad-Routingdienst nicht erreichbar)';
+  document.getElementById('tourRoutingHint').innerHTML = bikeFriendly
+    ? `${icon('bike', { size: 13 })} Routing bevorzugt Radwege &amp; ruhige Straßen`
+    : `${icon('alertTriangle', { size: 13 })} Standard-Routing (Fahrrad-Routingdienst nicht erreichbar)`;
   document.getElementById('tourStops').innerHTML = orderedStops.map((s, i) => {
     const meta = TYPE_META[s.type];
     return `<div class="tour-stop" data-id="${s.id}">
       <span class="ts-num">${i + 1}</span>
-      <span>${meta.icon} ${escapeHtml(s.name)}</span>
+      <span class="ts-icon">${icon(meta.icon, { size: 15 })}</span>
+      <span>${escapeHtml(s.name)}</span>
       <span class="ts-leg">${fmtDist(legs[i].distance)}</span>
     </div>`;
   }).join('') + `<div class="tour-stop">
-      <span class="ts-num">🏁</span>
+      <span class="ts-num ts-num-flag">${icon('flag', { size: 12 })}</span>
       <span>${endPoint === start ? 'Zurück zum Start' : 'Ziel'}</span>
       <span class="ts-leg">${fmtDist(legs[legs.length - 1].distance)}</span>
     </div>`;
@@ -1169,7 +1249,7 @@ function renderBacLog() {
     <div class="bac-log-item">
       <span>${e.qty}× ${escapeHtml(e.label)} (${e.abv}%)</span>
       <span>${timeAgo(e.timestamp) === 'heute' ? fmtMinutesAgo(e.timestamp) : timeAgo(e.timestamp)}</span>
-      <button class="bli-remove" data-ts="${e.timestamp}" title="Entfernen">✕</button>
+      <button class="bli-remove" data-ts="${e.timestamp}" title="Entfernen">${icon('x', { size: 13 })}</button>
     </div>
   `).join('');
   el.querySelectorAll('.bli-remove').forEach(btn => {
@@ -1219,19 +1299,19 @@ function renderBacResult() {
     </div>
 
     <div class="bac-timeline">
-      ${bac > 0.1 ? `<div class="bt-row"><span>🚦 Unter 0,1‰ (Neulinge/Berufsfahrer)</span><span>ca. ${fmtDuration(hoursTo01 * 3600)} · ${fmtClockIn(hoursTo01)} Uhr</span></div>` : ''}
-      ${bac > 0.5 ? `<div class="bt-row"><span>🚗 Unter 0,5‰ (allg. Grenze AT/DE)</span><span>ca. ${fmtDuration(hoursTo05 * 3600)} · ${fmtClockIn(hoursTo05)} Uhr</span></div>` : ''}
-      ${bac > 0 ? `<div class="bt-row"><span>✅ Rechnerisch nüchtern (0‰)</span><span>ca. ${fmtDuration(hoursToZero * 3600)} · ${fmtClockIn(hoursToZero)} Uhr</span></div>` : '<div class="bt-row"><span>✅ Rechnerisch nüchtern</span><span>jetzt</span></div>'}
+      ${bac > 0.1 ? `<div class="bt-row"><span class="icon-row">${icon('alertTriangle', { size: 13 })} Unter 0,1‰ (Neulinge/Berufsfahrer)</span><span>ca. ${fmtDuration(hoursTo01 * 3600)} · ${fmtClockIn(hoursTo01)} Uhr</span></div>` : ''}
+      ${bac > 0.5 ? `<div class="bt-row"><span class="icon-row">${icon('alertTriangle', { size: 13 })} Unter 0,5‰ (allg. Grenze AT/DE)</span><span>ca. ${fmtDuration(hoursTo05 * 3600)} · ${fmtClockIn(hoursTo05)} Uhr</span></div>` : ''}
+      ${bac > 0 ? `<div class="bt-row"><span class="icon-row">${icon('checkCircle', { size: 13 })} Rechnerisch nüchtern (0‰)</span><span>ca. ${fmtDuration(hoursToZero * 3600)} · ${fmtClockIn(hoursToZero)} Uhr</span></div>` : `<div class="bt-row"><span class="icon-row">${icon('checkCircle', { size: 13 })} Rechnerisch nüchtern</span><span>jetzt</span></div>`}
     </div>
 
     <div class="bac-facts">
-      <div class="tour-stat"><b>${Math.round(totalKcal)}</b><span>kcal getrunken</span></div>
-      <div class="tour-stat"><b>🍕 ${pizzaSlices.toFixed(1)}</b><span>Pizzastücke</span></div>
-      <div class="tour-stat"><b>🏃 ${jogKm.toFixed(1)} km</b><span>Joggen zum Verbrennen</span></div>
+      <div class="tour-stat"><b>${icon('flame', { size: 15, className: 'stat-icon' })} ${Math.round(totalKcal)}</b><span>kcal getrunken</span></div>
+      <div class="tour-stat"><b>${icon('activity', { size: 15, className: 'stat-icon' })} ${jogKm.toFixed(1)} km</b><span>Joggen zum Verbrennen</span></div>
+      <div class="tour-stat"><b>${icon('droplet', { size: 15, className: 'stat-icon' })} ${waterGlasses}</b><span>Gläser Wasser</span></div>
     </div>
     <div class="bac-facts">
-      <div class="tour-stat"><b>💧 ${waterGlasses}</b><span>Gläser Wasser empfohlen</span></div>
       <div class="tour-stat"><b style="color:var(--${hangoverColor})">${hangoverRisk}</b><span>Kater-Risiko morgen</span></div>
+      <div class="tour-stat"><b>${pizzaSlices.toFixed(1)}</b><span>Pizzastücke entspr.</span></div>
     </div>
 
     <div class="bac-legal">
@@ -1247,7 +1327,7 @@ function renderBacResult() {
 function openBacTool() {
   const presetOptions = Object.entries(DRINK_PRESETS).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
   document.getElementById('toolContent').innerHTML = `
-    <h3>🧮 Promille-Rechner</h3>
+    <h3><span class="detail-type-icon">${icon('calculator', { size: 20 })}</span> Promille-Rechner</h3>
     <div class="hint">Trage getrunkene Getränke ein — der Rechner läuft live weiter, während das Fenster offen ist.</div>
 
     <form class="bac-form" id="bacProfileForm">
@@ -1277,7 +1357,7 @@ function openBacTool() {
     </div>
 
     <div id="bacLogList" class="bac-log-list"></div>
-    <button id="btnClearBacLog" class="btn-ghost" style="margin-top:8px;border-color:var(--border);color:var(--text)">🗑 Log leeren</button>
+    <button id="btnClearBacLog" class="btn-secondary btn-icon-label" style="margin-top:8px">${icon('trash', { size: 14 })} Log leeren</button>
 
     <div id="bacResult"></div>
   `;
@@ -1310,7 +1390,7 @@ function openBacTool() {
     saveBac();
     renderBacLog();
     renderBacResult();
-    showToast(`${preset.label} hinzugefügt 🍻`);
+    showToast(`${preset.label} hinzugefügt`);
   });
 
   document.getElementById('btnClearBacLog').addEventListener('click', () => {
@@ -1329,6 +1409,7 @@ function openBacTool() {
 
 /* ---------- Init ---------- */
 function init() {
+  hydrateIcons();
   initMap();
   applyPrefsToForm();
   const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';

@@ -1,5 +1,5 @@
 """Erzeugt die App-Icons für Bier-Locator (PWA/manifest) mit Pillow.
-Zeichnet einen stilisierten Bierkrug im Farbschema der App ('Zapf & Karte').
+Zeichnet einen stilisierten Bierkrug im Farbschema der App.
 """
 from PIL import Image, ImageDraw
 import os
@@ -7,12 +7,12 @@ import os
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "icons")
 os.makedirs(OUT_DIR, exist_ok=True)
 
-BG_DARK = (30, 42, 31, 255)      # --header-bg
-AMBER = (200, 121, 26, 255)      # --accent
-AMBER_DARK = (161, 95, 16, 255)  # --accent-dark
+BG_DARK = (32, 28, 23, 255)      # --header-bg
+AMBER = (184, 114, 42, 255)      # --accent
+AMBER_DARK = (156, 95, 32, 255)  # --accent-hover
 FOAM = (250, 244, 230, 255)
 GLASS = (255, 250, 240, 60)      # leicht transparentes Glas-Highlight
-OUTLINE = (20, 32, 15, 255)
+OUTLINE = (20, 17, 13, 255)
 
 
 def draw_mug(size, padding_ratio=0.0):

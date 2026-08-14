@@ -4,7 +4,7 @@
 // Nominatim, OSRM, Wetter) werden bewusst NICHT aggressiv gecacht — die App
 // braucht für Suche/Routing ohnehin eine Internetverbindung, hier geht es nur
 // darum, dass die App selbst schnell und auch mal offline startet.
-const SHELL_CACHE = 'bierlocator-shell-v1';
+const SHELL_CACHE = 'bierlocator-shell-v2';
 const RUNTIME_CACHE = 'bierlocator-runtime-v1';
 
 const SHELL_FILES = [
