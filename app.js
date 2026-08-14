@@ -115,8 +115,11 @@ function savePrefs() {
   localStorage.setItem(STORAGE_KEY_PREFS, JSON.stringify(prefs));
 }
 function getPlaceRecord(id) {
-  if (!localData[id]) localData[id] = { prices: [], ratings: [], favorite: false };
+  if (!localData[id]) localData[id] = { prices: [], ratings: [], favorite: false, hidden: false };
   return localData[id];
+}
+function countHiddenPlaces() {
+  return Object.values(localData).filter(r => r.hidden).length;
 }
 function loadBac() {
   try {
@@ -469,7 +472,7 @@ function filterAndSortPlaces() {
   const onlyFavorites = document.getElementById('onlyFavorites').checked;
   const sortBy = document.getElementById('sortSelect').value;
 
-  let list = allPlaces.filter(p => activeTypes.has(p.type));
+  let list = allPlaces.filter(p => activeTypes.has(p.type) && !getPlaceRecord(p.id).hidden);
 
   if (beerFilter) {
     list = list.filter(p => getPlaceRecord(p.id).prices.some(pr => pr.beerType.toLowerCase().includes(beerFilter)));
@@ -506,6 +509,14 @@ function renderAll() {
   renderMarkers(list);
   renderList(list);
   renderCheapest(list);
+  renderHiddenPlacesRow();
+}
+
+function renderHiddenPlacesRow() {
+  const count = countHiddenPlaces();
+  const row = document.getElementById('hiddenPlacesRow');
+  row.hidden = count === 0;
+  document.getElementById('hiddenPlacesCount').textContent = count;
 }
 
 function renderMarkers(list) {
@@ -573,6 +584,11 @@ function renderCheapest(list) {
 }
 
 /* ---------- Detailansicht ---------- */
+function osmEditUrl(placeId) {
+  const [type, id] = placeId.split('/');
+  return `https://www.openstreetmap.org/edit?${type}=${id}`;
+}
+
 function openDetail(placeId) {
   const place = allPlaces.find(p => p.id === placeId);
   if (!place) return;
@@ -621,6 +637,15 @@ function openDetail(placeId) {
         <button type="submit" class="btn-secondary">Preis melden</button>
       </form>
     </div>
+
+    <div class="detail-section">
+      <h4>⚠️ Daten stimmen nicht?</h4>
+      <div class="hint">Diese Karte basiert auf OpenStreetMap — falsche, veraltete oder fehlende Einträge lassen sich dort direkt für alle korrigieren.</div>
+      <div class="row" style="margin-top:8px">
+        <a href="${osmEditUrl(place.id)}" target="_blank" rel="noopener" class="btn-secondary" style="flex:1;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">✏️ Bei OpenStreetMap korrigieren</a>
+      </div>
+      <button id="btnHidePlace" class="btn-secondary full" style="margin-top:6px">${rec.hidden ? '↩️ Wieder einblenden' : '🚩 Als falsch/geschlossen melden (ausblenden)'}</button>
+    </div>
   `;
 
   document.getElementById('favToggle').onclick = () => {
@@ -628,6 +653,18 @@ function openDetail(placeId) {
     saveLocalData();
     openDetail(placeId);
     renderAll();
+  };
+  document.getElementById('btnHidePlace').onclick = () => {
+    rec.hidden = !rec.hidden;
+    saveLocalData();
+    renderAll();
+    if (rec.hidden) {
+      showToast('Danke für den Hinweis — Ort ausgeblendet.');
+      document.getElementById('detailOverlay').hidden = true;
+    } else {
+      showToast('Wieder eingeblendet.');
+      openDetail(placeId);
+    }
   };
   document.querySelectorAll('#starInput span').forEach(el => {
     el.onclick = () => {
@@ -912,7 +949,7 @@ async function buildTour() {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const found = await fetchPlacesNear(centerLat, centerLon, radius, start.lat, start.lon);
-      const typed = found.filter(p => activeTypes.has(p.type));
+      const typed = found.filter(p => activeTypes.has(p.type) && !getPlaceRecord(p.id).hidden);
       closedCount = typed.filter(p => isOpenNow(p.tags.opening_hours) === false).length;
       // Orte ohne Öffnungszeiten-Angabe bleiben drin (unbekannt ≠ geschlossen) —
       // nur nachweislich geschlossene werden ausgeschlossen.
@@ -938,7 +975,7 @@ async function buildTour() {
     const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops);
     lastTourParams = { pool, start, endPoint, desiredKm, minStops };
     status.textContent = 'Fahrradfreundliche Wege werden gesucht…';
-    await finalizeTour(subset, start, endPoint);
+    await finalizeTour(subset, start, endPoint, desiredKm, minStops);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler beim Berechnen der Route: ' + e.message;
@@ -952,40 +989,65 @@ async function rerollTour() {
   const { pool, start, endPoint, desiredKm, minStops } = lastTourParams;
   try {
     const subset = await findBestTrip(pool, start, endPoint, desiredKm, minStops, true);
-    await finalizeTour(subset, start, endPoint);
+    await finalizeTour(subset, start, endPoint, desiredKm, minStops);
     status.textContent = '';
   } catch (e) {
     status.textContent = 'Fehler: ' + e.message;
   }
 }
 
-async function finalizeTour(orderedStops, start, endPoint) {
-  // Reihenfolge steht fest (gleichmäßig verteilt, s. pickEvenlySpaced) und wird ab
-  // hier NICHT mehr von einem Routing-Dienst umsortiert. Für die eigentliche Strecke
-  // fragen wir BRouter mit einem Sicherheits-Profil an (bevorzugt Radwege/ruhige
-  // Straßen); nur falls das fehlschlägt, springt ein normales OSRM-Routing (feste
-  // Reihenfolge) als Fallback ein.
-  const orderedInputPoints = [start, ...orderedStops, endPoint];
+async function finalizeTour(initialStops, start, endPoint, desiredKm, minStops) {
+  // Reihenfolge steht zunächst fest (gleichmäßig nach Himmelsrichtung verteilt).
+  // Für die eigentliche Strecke fragen wir BRouter mit einem Sicherheits-Profil an
+  // (bevorzugt Radwege/ruhige Straßen) — das macht die Route aber oft länger als
+  // die für die Auswahl verwendete Schätzung. Deshalb wird hier iterativ der Stopp
+  // mit dem größten Umweg-Beitrag entfernt, bis die ECHTE Länge nah an der
+  // Wunschlänge liegt (oder die Mindestanzahl an Stopps erreicht ist).
+  const targetM = (desiredKm || 0) * 1000;
+  let orderedStops = initialStops.slice();
   let geometryLatLngs, legs, totalDistance, totalDuration, bikeFriendly = true;
-  try {
-    const bike = await fetchBrouterRoute(orderedInputPoints);
-    geometryLatLngs = bike.geometryLatLngs;
-    legs = bike.legs;
-    totalDistance = bike.distance;
-    totalDuration = bike.duration;
-  } catch (e) {
-    bikeFriendly = false;
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const orderedInputPoints = [start, ...orderedStops, endPoint];
+    let route;
     try {
-      const fallback = await osrmRouteFixedOrder(orderedInputPoints);
-      geometryLatLngs = fallback.geometryLatLngs;
-      legs = fallback.legs;
-      totalDistance = fallback.distance;
-      totalDuration = fallback.duration;
-      showToast('Fahrradfreundliches Routing nicht erreichbar — zeige Standard-Route.');
-    } catch (e2) {
-      showToast('Route konnte nicht berechnet werden: ' + e2.message);
-      return;
+      route = await fetchBrouterRoute(orderedInputPoints);
+    } catch (e) {
+      bikeFriendly = false;
+      try {
+        route = await osrmRouteFixedOrder(orderedInputPoints);
+        showToast('Fahrradfreundliches Routing nicht erreichbar — zeige Standard-Route.');
+      } catch (e2) {
+        showToast('Route konnte nicht berechnet werden: ' + e2.message);
+        return;
+      }
+      geometryLatLngs = route.geometryLatLngs;
+      legs = route.legs;
+      totalDistance = route.distance;
+      totalDuration = route.duration;
+      break; // im Fallback-Fall nicht mehr weiter trimmen
     }
+
+    geometryLatLngs = route.geometryLatLngs;
+    legs = route.legs;
+    totalDistance = route.distance;
+    totalDuration = route.duration;
+
+    if (!targetM || orderedStops.length <= minStops) break;
+    const overshoot = totalDistance - targetM;
+    if (overshoot <= targetM * 0.12) break; // nah genug am Ziel
+
+    // Den Stopp mit dem größten Umweg-Beitrag finden (Etappe hin + zurück minus
+    // direkter Weg zwischen den Nachbarpunkten) und entfernen, dann neu berechnen.
+    let worstIdx = 0, worstCost = -Infinity;
+    for (let i = 0; i < orderedStops.length; i++) {
+      const prevPt = i === 0 ? start : orderedStops[i - 1];
+      const nextPt = i === orderedStops.length - 1 ? endPoint : orderedStops[i + 1];
+      const direct = haversine(prevPt.lat, prevPt.lon, nextPt.lat, nextPt.lon);
+      const cost = legs[i].distance + legs[i + 1].distance - direct;
+      if (cost > worstCost) { worstCost = cost; worstIdx = i; }
+    }
+    orderedStops.splice(worstIdx, 1);
   }
 
   currentTour = {
@@ -1290,6 +1352,13 @@ function init() {
   document.querySelectorAll('#typeFilters input, #onlyWithPrice, #onlyFavorites, #sortSelect').forEach(el =>
     el.addEventListener('change', renderAll)
   );
+  document.getElementById('btnResetHidden').addEventListener('click', (e) => {
+    e.preventDefault();
+    Object.values(localData).forEach(rec => { rec.hidden = false; });
+    saveLocalData();
+    renderAll();
+    showToast('Alle ausgeblendeten Orte sind wieder sichtbar.');
+  });
   document.getElementById('filterBeerType').addEventListener('input', renderAll);
 
   document.getElementById('btnCloseDetail').addEventListener('click', () => { document.getElementById('detailOverlay').hidden = true; });
