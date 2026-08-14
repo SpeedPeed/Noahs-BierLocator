@@ -1,0 +1,20 @@
+{
+  "name": "Bier-Locator — Zapf & Karte",
+  "short_name": "Bier-Locator",
+  "description": "Findet Kneipen, Biergärten, Supermärkte & mehr in der Nähe, vergleicht Bierpreise und plant Fahrrad-Bier-Touren.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f1e4c3",
+  "theme_color": "#1e2a1f",
+  "lang": "de",
+  "dir": "ltr",
+  "categories": ["food", "travel", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
