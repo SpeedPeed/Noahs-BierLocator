@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bier-Locator — Zapf & Karte</title>
+<meta name="description" content="Findet Kneipen, Biergärten, Supermärkte & mehr in der Nähe, vergleicht Bierpreise und plant Fahrrad-Bier-Touren.">
+<meta name="theme-color" content="#1e2a1f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bier-Locator">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mug" aria-hidden="true">🍺</span>
+    <span class="brand-text">Bier-Locator<small>Zapf&nbsp;&amp;&nbsp;Karte</small></span>
+  </div>
+  <div class="topbar-actions">
+    <button id="btnBac" class="btn-tool" title="Promille-Rechner">🧮<span>Rechner</span></button>
+    <button id="btnExport" class="btn-tool" title="Meine Daten exportieren">⭳<span>Export</span></button>
+    <button id="btnImport" class="btn-tool" title="Daten importieren">⭱<span>Import</span></button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+    <button id="btnTheme" class="btn-tool btn-tool-round" title="Hell/Dunkel umschalten">🌓</button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+
+    <section class="panel">
+      <h2>📍 Standort</h2>
+      <button id="btnGeolocate" class="btn-cap full">Meinen Standort verwenden</button>
+      <div class="or-divider"><span>oder</span></div>
+      <div class="row">
+        <input id="addressInput" type="text" placeholder="Adresse oder Ort eingeben…">
+        <button id="btnSearchAddress" class="btn-secondary">Suchen</button>
+      </div>
+      <div id="locationStatus" class="hint"></div>
+      <div id="weatherBadge" class="weather-badge" hidden></div>
+    </section>
+
+    <nav class="tap-tabs" id="modeTabs">
+      <button class="tap-tab active" data-mode="finden">🔍 Orte finden</button>
+      <button class="tap-tab" data-mode="tour">🚲 Bier-Radtour</button>
+    </nav>
+
+    <div id="modeFinden" class="mode-content">
+      <section class="panel">
+        <h2>⚙️ Meine Ansprüche</h2>
+        <label class="field">
+          Lieblingssorte
+          <input id="prefBeerType" type="text" placeholder="z.B. Pils, Weizen, IPA, alkoholfrei…">
+        </label>
+        <label class="field">
+          Maximalpreis pro 0,5 l (€)
+          <input id="prefMaxPrice" type="number" min="0" step="0.1" placeholder="z.B. 3.50">
+        </label>
+        <label class="field">
+          Bevorzugter Umkreis: <span id="radiusValue">1000 m</span>
+          <input id="radiusSlider" type="range" min="200" max="5000" step="100" value="1000">
+        </label>
+        <label class="field checkbox">
+          <input id="prefBiergarten" type="checkbox"> Biergarten bevorzugt (wenn Wetter/Sitzplatz wichtig ist)
+        </label>
+        <button id="btnSavePrefs" class="btn-secondary full">Profil speichern</button>
+      </section>
+
+      <section class="panel">
+        <h2>🔎 Filter &amp; Suche</h2>
+        <div class="field">
+          <span>Art des Ortes</span>
+          <div class="chip-group" id="typeFilters">
+            <label class="chip"><input type="checkbox" value="pub" checked>Kneipe/Bar</label>
+            <label class="chip"><input type="checkbox" value="biergarten" checked>Biergarten</label>
+            <label class="chip"><input type="checkbox" value="restaurant" checked>Restaurant</label>
+            <label class="chip"><input type="checkbox" value="fastfood" checked>Imbiss</label>
+            <label class="chip"><input type="checkbox" value="nightclub" checked>Club/Disco</label>
+            <label class="chip"><input type="checkbox" value="fuel" checked>Tankstelle</label>
+            <label class="chip"><input type="checkbox" value="supermarket" checked>Supermarkt</label>
+            <label class="chip"><input type="checkbox" value="beverages" checked>Getränkemarkt</label>
+            <label class="chip"><input type="checkbox" value="convenience" checked>Kiosk</label>
+          </div>
+        </div>
+        <label class="field">
+          Biersorte enthält
+          <input id="filterBeerType" type="text" placeholder="Filtert nach gemeldeten Sorten…">
+        </label>
+        <label class="field">
+          Sortierung
+          <select id="sortSelect">
+            <option value="recommended">Für dich empfohlen</option>
+            <option value="distance">Entfernung</option>
+            <option value="price">Preis (günstigstes zuerst)</option>
+            <option value="rating">Bewertung</option>
+          </select>
+        </label>
+        <label class="field checkbox">
+          <input id="onlyWithPrice" type="checkbox"> Nur Orte mit gemeldetem Preis
+        </label>
+        <label class="field checkbox">
+          <input id="onlyFavorites" type="checkbox"> Nur Favoriten
+        </label>
+        <button id="btnRefresh" class="btn-cap full">🔄 Orte in der Nähe suchen</button>
+      </section>
+
+      <section class="panel" id="cheapestPanel" hidden>
+        <h2>💸 Günstigstes Bier in der Nähe</h2>
+        <div id="cheapestBox"></div>
+      </section>
+
+      <section class="panel results-panel">
+        <h2>📋 Ergebnisse (<span id="resultCount">0</span>)</h2>
+        <div id="resultsList" class="results-list"></div>
+      </section>
+    </div>
+
+    <div id="modeTour" class="mode-content" hidden>
+      <section class="panel">
+        <h2>🚲 Radtour planen</h2>
+        <label class="field checkbox">
+          <input id="tourRoundtrip" type="checkbox" checked> Rundtour (zurück zum Start)
+        </label>
+        <div id="tourDestRow" class="row" hidden>
+          <input id="tourDestInput" type="text" placeholder="Zielort eingeben…">
+        </div>
+        <label class="field">
+          Wunschlänge: <span id="tourKmValue">15 km</span>
+          <input id="tourKm" type="range" min="3" max="60" step="1" value="15">
+        </label>
+        <label class="field">
+          Mindestanzahl Bierorte
+          <input id="tourMinStops" type="number" min="1" max="15" value="3">
+        </label>
+        <button id="btnBuildTour" class="btn-cap full">🚲 Route erstellen</button>
+        <div id="tourStatus" class="hint"></div>
+      </section>
+
+      <section class="panel" id="tourResultPanel" hidden>
+        <h2>🗺️ Deine Bier-Radtour</h2>
+        <div id="tourStats" class="tour-stats"></div>
+        <div id="tourStops" class="tour-stops"></div>
+        <div class="row" style="margin-top:10px">
+          <button id="btnRerollTour" class="btn-secondary full">🎲 Andere Route</button>
+          <button id="btnExportGpx" class="btn-secondary full">⭳ GPX</button>
+        </div>
+      </section>
+    </div>
+  </aside>
+
+  <main class="mapwrap">
+    <div id="map"></div>
+  </main>
+</div>
+
+<div id="detailOverlay" class="overlay" hidden>
+  <div class="detail-card">
+    <button id="btnCloseDetail" class="btn-close">✕</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<div id="toolOverlay" class="overlay" hidden>
+  <div class="detail-card">
+    <button id="btnCloseTool" class="btn-close">✕</button>
+    <div id="toolContent"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

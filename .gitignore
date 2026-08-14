@@ -1,0 +1,6 @@
+Git-2.55.0.4-64-bit.exe
+.claude/
+__pycache__/
+*.pyc
+Thumbs.db
+.DS_Store
