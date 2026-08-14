@@ -275,7 +275,9 @@ html, body {
 @media (max-width: 860px) {
   .app { flex-direction: column; height: auto; }
   .sidebar { width: 100%; max-width: none; min-width: 0; max-height: 60vh; }
-  .mapwrap { height: 50vh; }
+  /* flex:1 (flex-basis:0%) von .mapwrap würde hier mit height:auto auf .app kollidieren
+     und die Karte auf 0px Höhe kollabieren lassen — deshalb flex explizit aufheben. */
+  .mapwrap { flex: none; height: 60vh; min-height: 320px; }
 }
 @media (max-width: 560px) {
   .topbar { flex-wrap: wrap; gap: 8px; }
