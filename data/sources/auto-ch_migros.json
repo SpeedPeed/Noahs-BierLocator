@@ -2,19 +2,6 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Birra Moretti Zero alkoholfrei",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 13.2,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121333800000",
-"seen": "2026-10-06",
-"volume_l": 3.0,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
 "beer": "Guinness Draught 0.0% alkoholfrei",
 "unit": "other",
 "package": "0,44 l",
@@ -23,6 +10,19 @@
 "source": "https://www.migros.ch/de/product/121331000000",
 "seen": "2026-10-06",
 "volume_l": 0.44,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Birra Moretti Zero alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 13.2,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121333800000",
+"seen": "2026-10-06",
+"volume_l": 3.0,
 "currency": "CHF"
 },
 {
@@ -118,19 +118,6 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Calanda Radler Zitrone alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 8.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121335000000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
 "beer": "Feldschlösschen Panache Zitrone 0.0% alkoholfrei",
 "unit": "other",
 "package": "6×0,5 l",
@@ -152,6 +139,19 @@
 "source": "https://www.migros.ch/de/product/121329500000",
 "seen": "2026-10-06",
 "volume_l": 1.32,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Calanda Radler Zitrone alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121335000000",
+"seen": "2026-10-06",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -204,6 +204,18 @@
 "source": "https://www.migros.ch/de/product/121336400000",
 "seen": "2026-10-06",
 "volume_l": 3.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Lowlander IPA 0.3% Brewed with Mango, Cardamom & Orange Peel, alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.8,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121301500000",
+"seen": "2026-10-06",
 "currency": "CHF"
 },
 {
@@ -1032,13 +1044,14 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Lowlander IPA 0.3% Brewed with Mango, Cardamom & Orange Peel, alkoholfrei",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 2.8,
+"beer": "Non IPA alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 10.95,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121301500000",
+"source": "https://www.migros.ch/de/product/121334400000",
 "seen": "2026-10-06",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -1057,44 +1070,6 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "1664 Blanc 0.0% alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 9.95,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121313400000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Non IPA alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 10.95,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121334400000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Brooklyn Special Effects Hoppy Lager, alkoholfrei",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 2.7,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121301300000",
-"seen": "2026-10-06",
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
 "beer": "Non Lager alkoholfrei",
 "unit": "other",
 "package": "4×0,5 l",
@@ -1103,6 +1078,19 @@
 "source": "https://www.migros.ch/de/product/121307600000",
 "seen": "2026-10-06",
 "volume_l": 2.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "1664 Blanc 0.0% alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 9.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121313400000",
+"seen": "2026-10-06",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -1121,14 +1109,13 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Bilz Panache alkoholfrei",
-"unit": "other",
-"package": "10×0,33 l",
-"price": 14.5,
+"beer": "Brooklyn Special Effects Hoppy Lager, alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.7,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121329300000",
+"source": "https://www.migros.ch/de/product/121301300000",
 "seen": "2026-10-06",
-"volume_l": 3.3,
 "currency": "CHF"
 },
 {
@@ -1142,6 +1129,19 @@
 "source": "https://www.migros.ch/de/product/121311100000",
 "seen": "2026-10-06",
 "volume_l": 1.65,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Bilz Panache alkoholfrei",
+"unit": "other",
+"package": "10×0,33 l",
+"price": 14.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121329300000",
+"seen": "2026-10-06",
+"volume_l": 3.3,
 "currency": "CHF"
 },
 {
@@ -1225,6 +1225,19 @@
 {
 "country": "CH",
 "chain": "migros",
+"beer": "Non Elderflower alkoholfrei",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 5.4,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121307300000",
+"seen": "2026-10-06",
+"volume_l": 1.32,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
 "beer": "Non Grapefruit alkoholfrei",
 "unit": "other",
 "package": "4×0,33 l",
@@ -1244,19 +1257,6 @@
 "price": 5.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307800000",
-"seen": "2026-10-06",
-"volume_l": 1.32,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Non Elderflower alkoholfrei",
-"unit": "other",
-"package": "4×0,33 l",
-"price": 5.4,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121307300000",
 "seen": "2026-10-06",
 "volume_l": 1.32,
 "currency": "CHF"
