@@ -1,0 +1,46 @@
+name: Bierpreise aktualisieren
+
+# Holt jeden Montag früh die aktuellen Online-Preise der Supermarktketten
+# (scripts/scrape_prices.py) und committet sie, wenn sich etwas geändert hat.
+# Manuell starten: GitHub → Actions → "Bierpreise aktualisieren" → "Run workflow".
+on:
+  schedule:
+    - cron: '0 4 * * 1'   # Montag 04:00 UTC (06:00 Sommerzeit Wien)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-prices
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Preise holen
+        # Einzelne Ketten dürfen scheitern (z.B. wenn ein Shop GitHub-Server blockiert) —
+        # deren letzte Daten bleiben dann erhalten.
+        run: python scripts/scrape_prices.py || echo "::warning::Einige Ketten konnten nicht aktualisiert werden (siehe Log oben)"
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Änderungen committen
+        run: |
+          if git diff --quiet -- data/; then
+            echo "Keine Preisänderungen."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "Bierpreise aktualisiert ($(date -u +%Y-%m-%d))"
+          git push
