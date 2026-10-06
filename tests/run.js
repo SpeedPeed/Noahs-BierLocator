@@ -5,6 +5,7 @@ import { validatePrice, per05 } from '../js/prices.js';
 import { generateVariants, overlapRatio, legStats, makeProjection } from '../js/tour/planner.js';
 import { encodeTour, decodeTour } from '../js/share.js';
 import { classify } from '../js/places.js';
+import { chainOf } from '../js/chainPrices.js';
 import { seededRandom, haversine } from '../js/util.js';
 
 const results = [];
@@ -215,6 +216,18 @@ test('Gasthäuser werden erkannt, normale Restaurants nicht', () => {
   eq(classify({ amenity: 'restaurant', name: 'Pizzeria Roma', cuisine: 'pizza' }), 'restaurant');
   eq(classify({ amenity: 'pub', microbrewery: 'yes' }), 'brewery');
   eq(classify({ amenity: 'restaurant', 'drink:beer': 'no' }), null);
+});
+
+test('Filialen werden ihrer Kette zugeordnet', () => {
+  const sm = (tags, type = 'supermarket') => chainOf({ type, tags });
+  eq(sm({ brand: 'Billa', 'addr:country': 'AT' }).key, 'billa');
+  eq(sm({ name: 'BILLA PLUS', 'addr:country': 'AT' }).key, 'billa_plus');
+  eq(sm({ brand: 'Interspar', 'addr:country': 'AT' }).key, 'interspar');
+  eq(sm({ name: 'SPAR Kaiserfeldgasse', 'addr:country': 'AT' }).key, 'spar');
+  eq(sm({ brand: 'Aldi Süd', 'addr:country': 'DE' }).key, 'aldi_sued');
+  eq(sm({ brand: 'Netto Marken-Discount', 'addr:country': 'DE' }).key, 'netto');
+  eq(sm({ name: 'Billa' , 'addr:country': 'AT' }, 'pub'), null, 'Kneipen sind keine Kettenfilialen');
+  eq(sm({ name: 'Greißlerei Huber', 'addr:country': 'AT' }), null);
 });
 
 /* ---------- Teilen ---------- */

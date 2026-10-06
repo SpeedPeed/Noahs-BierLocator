@@ -3,7 +3,7 @@
 // App-Dateien: zuerst Netzwerk (Updates kommen sofort an), offline aus dem Cache.
 // Kartenkacheln, Schriften & Bibliotheken: Cache zuerst, im Hintergrund aktualisieren.
 // Live-Daten (Overpass, Routing, Wetter, Supabase) werden nicht gecacht.
-const VERSION = 'v3.0.1';
+const VERSION = 'v3.1.0';
 const SHELL_CACHE = `bierlocator-shell-${VERSION}`;
 const RUNTIME_CACHE = 'bierlocator-runtime-v2';
 
@@ -14,7 +14,7 @@ const SHELL_FILES = [
   './js/openingHours.js', './js/prices.js', './js/bac.js', './js/legal.js', './js/share.js', './js/map.js',
   './js/tour/planner.js', './js/tour/routing.js', './js/tour/tourPlan.js',
   './js/ui/dom.js', './js/ui/sheet.js', './js/ui/finder.js', './js/ui/detail.js', './js/ui/tourUi.js',
-  './js/ui/bacUi.js', './js/ui/autocomplete.js',
+  './js/ui/bacUi.js', './js/ui/autocomplete.js', './js/chainPrices.js', './data/chain-prices.json',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-192-maskable.png', './icons/icon-512-maskable.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',
 ];

@@ -728,3 +728,10 @@ kbd { font-family: inherit; font-size: 12px; padding: 1px 6px; border: 1px solid
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+/* Online-Preise von Ketten */
+.card-price.online { background: color-mix(in srgb, #2f7fc1 14%, var(--panel)); color: #2f7fc1; }
+[data-theme="dark"] .card-price.online { color: #7db8ec; }
+.price-row.online { background: color-mix(in srgb, #2f7fc1 6%, var(--panel-2)); }
+.price-row.online .pr-age { color: var(--accent-strong); font-weight: 700; text-decoration: none; }
+.promo { font-size: 10.5px; font-weight: 800; text-transform: uppercase; padding: 1px 6px; border-radius: 99px; background: var(--bad-tint); color: var(--bad); vertical-align: middle; }

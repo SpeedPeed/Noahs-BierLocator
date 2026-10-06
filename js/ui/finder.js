@@ -10,6 +10,7 @@ import { fmtDist, fmtEuro, escapeHtml, timeAgo, debounce } from '../util.js';
 import { $, toast, skeletonCards, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
 import { BEER_SUGGESTIONS } from '../prices.js';
+import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf } from '../chainPrices.js';
 
 let openPlace = () => {};
 let loading = false;
@@ -99,6 +100,7 @@ export function initFinder(opts) {
   });
 
   renderEmpty();
+  loadChainPrices().then(() => render());
 }
 
 function renderEmpty() {
@@ -145,11 +147,20 @@ export async function searchAt(center, radius = prefs.radius, { fit = true, quie
 }
 
 /* ---------- Filtern & Sortieren ---------- */
-function recommendationScore(p, s, st) {
+// Preis für Liste/Karte: Community-Meldung (aktuell) vor Online-Preis der Kette
+// vor veralteter Meldung.
+function effectivePrice(p, s) {
+  if (s.cheapest && !s.cheapest.stale) return s.cheapest;
+  const c = cheapestChainPrice(p);
+  if (c) return { per05: c.per05, beer: c.beer, created_at: Date.parse(c.seen), online: true, promo: c.promo, currency: c.currency, chain: CHAIN_LABELS[chainOf(p).key] };
+  return s.cheapest;
+}
+const money = pr => (pr.currency === 'CHF' ? `CHF ${pr.per05.toFixed(2)}` : fmtEuro(pr.per05));
+function recommendationScore(p, s, st, price) {
   let score = (1 - Math.min(p.distance / (prefs.radius || 1000), 1)) * 40;
-  if (s.cheapest) {
-    score += prefs.maxPrice ? (s.cheapest.per05 <= prefs.maxPrice ? 22 : -18) : 8;
-    if (prefs.beerType && s.cheapest.beer.toLowerCase().includes(prefs.beerType.toLowerCase())) score += 12;
+  if (price) {
+    score += prefs.maxPrice ? (price.per05 <= prefs.maxPrice ? 22 : -18) : 8;
+    if (prefs.beerType && price.beer.toLowerCase().includes(prefs.beerType.toLowerCase())) score += 12;
   }
   if (prefs.beerType && s.prices.some(x => x.beer.toLowerCase().includes(prefs.beerType.toLowerCase()))) score += 14;
   if (s.rating.avg) score += (s.rating.avg - 2.5) * 6;
@@ -172,16 +183,16 @@ function visibleList() {
   const beer = $('#filterBeer').value.trim().toLowerCase();
   const now = new Date();
   let list = state.places.filter(p => types.has(p.type) && !isHidden(p.id));
-  list = list.map(p => ({ p, s: getSummary(p.id), st: placeStatus(p, now) }));
+  list = list.map(p => { const s = getSummary(p.id); return { p, s, st: placeStatus(p, now), price: effectivePrice(p, s) }; });
   if (prefs.onlyOpen) list = list.filter(x => x.st && x.st.open);
-  if (prefs.onlyPrice) list = list.filter(x => x.s.prices.length);
+  if (prefs.onlyPrice) list = list.filter(x => x.price);
   if (prefs.onlyFav) list = list.filter(x => isFavorite(x.p.id));
-  if (beer) list = list.filter(x => x.s.prices.some(pr => pr.beer.toLowerCase().includes(beer)));
+  if (beer) list = list.filter(x => x.s.prices.some(pr => pr.beer.toLowerCase().includes(beer)) || chainPricesFor(x.p).some(pr => pr.beer.toLowerCase().includes(beer)));
 
   if (prefs.sort === 'distance') list.sort((a, b) => a.p.distance - b.p.distance);
   else if (prefs.sort === 'price') {
     list.sort((a, b) => {
-      const pa = a.s.cheapest, pb = b.s.cheapest;
+      const pa = a.price, pb = b.price;
       if (!pa && !pb) return a.p.distance - b.p.distance;
       if (!pa) return 1;
       if (!pb) return -1;
@@ -190,7 +201,7 @@ function visibleList() {
   } else if (prefs.sort === 'rating') {
     list.sort((a, b) => (b.s.rating.avg || 0) - (a.s.rating.avg || 0) || a.p.distance - b.p.distance);
   } else {
-    list.forEach(x => { x.score = recommendationScore(x.p, x.s, x.st); });
+    list.forEach(x => { x.score = recommendationScore(x.p, x.s, x.st, x.price); });
     list.sort((a, b) => b.score - a.score);
   }
   return list;
@@ -200,12 +211,13 @@ function visibleList() {
 export function render() {
   if (!state.searchCenter) return;
   const list = visibleList();
-  const cheapest = list.filter(x => x.s.cheapest && !x.s.cheapest.stale).sort((a, b) => a.s.cheapest.per05 - b.s.cheapest.per05)[0];
+  const cheapest = list.filter(x => x.price && !x.price.stale && x.price.currency !== 'CHF').sort((a, b) => a.price.per05 - b.price.per05)[0]
+    || list.filter(x => x.price && !x.price.stale).sort((a, b) => a.price.per05 - b.price.per05)[0];
 
   if (state.mode === 'find') {
     mapview.renderPlaceMarkers(list.map(x => ({
       place: x.p,
-      info: { price: x.s.cheapest ? x.s.cheapest.per05 : null, closed: x.st && !x.st.open, favorite: isFavorite(x.p.id), best: cheapest && cheapest.p.id === x.p.id },
+      info: { price: x.price ? x.price.per05 : null, closed: x.st && !x.st.open, favorite: isFavorite(x.p.id), best: cheapest && cheapest.p.id === x.p.id },
     })), id => openPlace(id));
   }
 
@@ -224,16 +236,16 @@ export function render() {
   // Günstigstes Bier
   const cc = $('#cheapestCard');
   if (cheapest) {
-    const c = cheapest.s.cheapest;
+    const c = cheapest.price;
     cc.hidden = false;
     cc.innerHTML = `<button class="cheapest-inner" data-place="${cheapest.p.id}">
       <div class="cheapest-glass" aria-hidden="true">${icon('coin', { size: 26 })}</div>
       <div class="cheapest-text">
-        <span class="cheapest-kicker">Günstigstes Bier hier</span>
-        <span class="cheapest-price">${fmtEuro(c.per05)}<small> / 0,5 l</small></span>
+        <span class="cheapest-kicker">Günstigstes Bier hier${c.online ? ' · Online-Preis' : ''}</span>
+        <span class="cheapest-price">${money(c)}<small> / 0,5 l</small></span>
         <span class="cheapest-where">${escapeHtml(c.beer)} · ${escapeHtml(cheapest.p.name)} · ${fmtDist(cheapest.p.distance)}</span>
       </div>
-      <span class="cheapest-age">${timeAgo(c.created_at)}</span>
+      <span class="cheapest-age">${c.online ? 'Stand ' + new Date(c.created_at).toLocaleDateString('de-DE') : timeAgo(c.created_at)}</span>
     </button>`;
   } else {
     cc.hidden = true;
@@ -254,11 +266,11 @@ function stars(avg) {
   return `<span class="mini-stars" style="--v:${(avg / 5) * 100}%" aria-label="${avg.toFixed(1)} von 5 Sternen">★★★★★</span>`;
 }
 
-function cardHtml({ p, s, st }, i) {
+function cardHtml({ p, s, st, price: pr }, i) {
   const m = TYPE_META[p.type];
   const b = statusBadge(st);
-  const price = s.cheapest
-    ? `<span class="card-price${s.cheapest.stale ? ' stale' : ''}" title="${escapeHtml(s.cheapest.beer)} · ${timeAgo(s.cheapest.created_at)}">${fmtEuro(s.cheapest.per05)}</span>`
+  const price = pr
+    ? `<span class="card-price${pr.stale ? ' stale' : ''}${pr.online ? ' online' : ''}" title="${escapeHtml(pr.beer)} · ${pr.online ? 'Online-Preis ' + escapeHtml(pr.chain) : timeAgo(pr.created_at)}">${money(pr)}</span>`
     : '';
   const extras = [];
   if (p.tags.outdoor_seating === 'yes' && p.type !== 'biergarten') extras.push(`<span class="tag">${icon('sun', { size: 12 })}Draußen</span>`);
