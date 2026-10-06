@@ -1,8 +1,9 @@
 // Zentrale Konfiguration. Für geteilte Preise/Bewertungen (alle Nutzer sehen
 // dieselben Daten) hier die Daten eines kostenlosen Supabase-Projekts eintragen —
 // Anleitung siehe README.md. Leer = alles bleibt lokal im Browser.
-export const SUPABASE_URL = '';       // z.B. 'https://abcdefgh.supabase.co'
-export const SUPABASE_ANON_KEY = '';  // "anon"/"publishable" Key (darf öffentlich sein)
+export const SUPABASE_URL = 'https://uiqxntuthokelgwoxocw.supabase.co';
+// "anon"-Key: darf öffentlich sein (NIEMALS den service_role-Key hier eintragen!)
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcXhudHV0aG9rZWxnd294b2N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNjIzMTcsImV4cCI6MjEwNjgzODMxN30.VZ7qoU0-xukEV0NmimZOlD-wjy13xU78GjUNOvwbDn8';
 
 // Mehrere Overpass-Server: einzelne sind oft überlastet (504) — die App fragt die
 // ersten beiden parallel, dann gestaffelt weitere an und nimmt die erste Antwort.
