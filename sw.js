@@ -3,7 +3,7 @@
 // App-Dateien: zuerst Netzwerk (Updates kommen sofort an), offline aus dem Cache.
 // Kartenkacheln, Schriften & Bibliotheken: Cache zuerst, im Hintergrund aktualisieren.
 // Live-Daten (Overpass, Routing, Wetter, Supabase) werden nicht gecacht.
-const VERSION = 'v3.1.0';
+const VERSION = 'v3.2.0';
 const SHELL_CACHE = `bierlocator-shell-${VERSION}`;
 const RUNTIME_CACHE = 'bierlocator-runtime-v2';
 

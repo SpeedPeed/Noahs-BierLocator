@@ -1,0 +1,30 @@
+[
+{
+"country": "CH",
+"chain": "lidl",
+"beer": "Feldschlösschen Bier Original",
+"unit": "other",
+"package": "15×0,33 l",
+"price": 12.49,
+"promo": true,
+"source": "https://www.lidl.ch/p/de-CH/feldschloesschen-bier-original/p10059635",
+"seen": "2026-10-06",
+"volume_l": 4.95,
+"currency": "CHF",
+"note": "Aktion"
+},
+{
+"country": "CH",
+"chain": "lidl",
+"beer": "Calanda Radler Mango Spritz 0,0%",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 5.95,
+"promo": true,
+"source": "https://www.lidl.ch/p/de-CH/calanda-radler-mango-spritz-0-0/p10059630",
+"seen": "2026-10-06",
+"volume_l": 1.98,
+"currency": "CHF",
+"note": "Aktion"
+}
+]

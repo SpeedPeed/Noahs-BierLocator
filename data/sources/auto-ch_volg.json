@@ -1,0 +1,102 @@
+[
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Volg Lager Bier Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.3,
+"promo": false,
+"source": "https://www.volgshop.ch/product/volg-lager-bier-alkoholfrei-dose-6x50cl/",
+"seen": "2026-10-06",
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Birra Moretti",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 2.6,
+"promo": false,
+"source": "https://www.volgshop.ch/product/birra-moretti-50cl/",
+"seen": "2026-10-06",
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Volg Lager-Bier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.0,
+"promo": false,
+"source": "https://www.volgshop.ch/product/volg-lager-bier-dose-50cl/",
+"seen": "2026-10-06",
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Volg Lager-Bier IP-Suisse",
+"unit": "other",
+"package": "10×0,33 l",
+"price": 8.95,
+"promo": false,
+"source": "https://www.volgshop.ch/product/volg-lager-bier-ip-suisse-10x33cl/",
+"seen": "2026-10-06",
+"volume_l": 3.3,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Feldschlösschen Original",
+"unit": "other",
+"package": "10×0,33 l",
+"price": 14.95,
+"promo": false,
+"source": "https://www.volgshop.ch/product/feldschloesschen-original-10x33cl/",
+"seen": "2026-10-06",
+"volume_l": 3.3,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Feldschlösschen alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 13.8,
+"promo": false,
+"source": "https://www.volgshop.ch/product/feldschloesschen-alk-frei-dose-6x50cl/",
+"seen": "2026-10-06",
+"volume_l": 3.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Feldschlösschen Original",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 2.3,
+"promo": false,
+"source": "https://www.volgshop.ch/product/feldschloesschen-orignal-dose-50cl/",
+"seen": "2026-10-06",
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "volg",
+"beer": "Eve Litchi",
+"unit": "other",
+"package": "4×0,275 l",
+"price": 11.95,
+"promo": false,
+"source": "https://www.volgshop.ch/product/eve-litchi-4x27-5cl/",
+"seen": "2026-10-06",
+"volume_l": 1.1,
+"currency": "CHF"
+}
+]

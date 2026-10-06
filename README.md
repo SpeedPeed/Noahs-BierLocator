@@ -99,19 +99,29 @@ beim ersten Start im Community-Modus automatisch hochgeladen.
 
 ## Online-Preise der Supermarktketten
 
-Für BILLA, SPAR, HOFER, Lidl, PENNY, MPREIS (AT), ALDI, EDEKA, Kaufland, Netto, Lidl (DE)
-sowie Coop, Migros, Denner, ALDI, Lidl, Volg, Spar (CH) sind recherchierte Online-Preise
-hinterlegt. Jede Filiale der Kette zeigt sie automatisch als „Online-Preis · Stand …“ an
-(mit Link zur Quelle), Community-Meldungen haben Vorrang. Aktionen verschwinden nach ihrem
-Enddatum von selbst.
+Rund **1.650 Bierpreise** aus den Online-Sortimenten der Ketten. Jede Filiale zeigt die
+Preise ihrer Kette als „Online-Preis · Stand …“ (durchsuchbar, mit Link zum Produkt);
+Community-Meldungen haben Vorrang. Aktionen erscheinen erst ab ihrem Start und
+verschwinden nach ihrem Ende von selbst.
 
-Aktualisieren: neue Recherche als JSON in `data/sources/` ablegen, dann
+| Land | Komplettes Sortiment | Nur Aktionen / Teilsortiment | Händisch (Shop gesperrt) |
+|---|---|---|---|
+| AT | SPAR/EUROSPAR/INTERSPAR, BILLA/BILLA PLUS, MPREIS | PENNY, Lidl | HOFER |
+| DE | EDEKA (edeka24), ALDI NORD | Kaufland, Lidl (Partyfässer), PENNY, trinkgut, Getränke Hoffmann | ALDI SÜD, Netto |
+| CH | Migros (nur alkoholfrei), ALDI SUISSE, Volg | Denner, Lidl | Coop |
+
+Ohne Online-Preise: Sutterlüty, ADEG, Nah&Frisch (nur PDF-/Bild-Flugblätter), REWE und
+SPAR Schweiz. Bot-Schutz (Captchas o. ä.) wird bewusst nicht umgangen.
+
+**Aktualisieren** (dauert ein paar Minuten, braucht `curl`):
 
 ```bash
-python scripts/build_chain_prices.py
+python scripts/scrape_prices.py
 ```
 
-Das Skript prüft jeden Eintrag (Gebinde, Plausibilität) und schreibt `data/chain-prices.json`.
+Holt alle Ketten neu (`scripts/scrapers/<land>_<kette>.py`), schreibt `data/sources/auto-*.json`
+und baut `data/chain-prices.json`. Einzelne Ketten: `python scripts/scrape_prices.py at_spar at_billa`.
+Jeder Eintrag wird auf Plausibilität geprüft (z.B. keine Einzeldose über 5 €).
 
 ## Technik
 

@@ -1,0 +1,29 @@
+[
+{
+"country": "DE",
+"chain": "penny",
+"beer": "Warsteiner Pils Premium Verum",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 3.33,
+"promo": true,
+"source": "https://www.penny.de/angebote/getraenke/warsteiner-pils-premium-verum",
+"seen": "2026-10-06",
+"volume_l": 3.0,
+"note": "Aktion, statt UVP 4,95 €",
+"valid_until": "2026-10-10"
+},
+{
+"country": "DE",
+"chain": "penny",
+"beer": "Beck’s Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": true,
+"source": "https://www.penny.de/angebote/getraenke1/becks-pils",
+"seen": "2026-10-06",
+"note": "Aktion, statt UVP 1,04 €",
+"valid_until": "2026-10-10"
+}
+]
