@@ -5,3 +5,4 @@ Thumbs.db
 .DS_Store
 *.exe
 *.msi
+scripts/local_update.log
