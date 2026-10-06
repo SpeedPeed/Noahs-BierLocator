@@ -19,6 +19,9 @@ const CHAIN_PATTERNS = {
     ['lidl', /\blidl\b/i],
     ['penny', /\bpenny\b/i],
     ['mpreis', /m-?preis/i],
+    ['sutterluety', /sutterl(ü|ue)ty/i],
+    ['adeg', /\badeg\b/i],
+    ['nahundfrisch', /nah\s*(&|und)\s*frisch/i],
     ['unimarkt', /unimarkt/i],
   ],
   DE: [
@@ -50,6 +53,7 @@ const FALLBACK = { eurospar: 'spar', interspar: 'spar', billa_plus: 'billa' };
 export const CHAIN_LABELS = {
   billa: 'BILLA', billa_plus: 'BILLA PLUS', spar: 'SPAR', eurospar: 'EUROSPAR', interspar: 'INTERSPAR',
   hofer: 'HOFER', lidl: 'Lidl', penny: 'PENNY', mpreis: 'MPREIS', unimarkt: 'Unimarkt',
+  sutterluety: 'Sutterlüty', adeg: 'ADEG', nahundfrisch: 'Nah&Frisch',
   rewe: 'REWE', edeka: 'EDEKA', aldi_sued: 'ALDI SÜD', aldi_nord: 'ALDI NORD', kaufland: 'Kaufland',
   netto: 'Netto', trinkgut: 'trinkgut', getraenke_hoffmann: 'Getränke Hoffmann',
   coop: 'Coop', migros: 'Migros', denner: 'Denner', aldi: 'ALDI SUISSE', volg: 'Volg',
@@ -81,7 +85,8 @@ export function loadChainPrices() {
   return loading;
 }
 
-const ELIGIBLE_TYPES = new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
+const ALCOHOL_FREE = /alkoholfrei|alkoholarm|\b0[.,]0\b|0[.,]0\s*%|\bnon\b|ohne alkohol/i;
+const ELIGIBLE_TYPES =new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
 
 function placeCountry(place) {
   const c = (place.tags['addr:country'] || '').toUpperCase();
@@ -114,8 +119,11 @@ export function chainPricesFor(place) {
 export function cheapestChainPrice(place) {
   const list = chainPricesFor(place).filter(p => p.per05 != null);
   if (!list.length) return null;
-  const regular = list.filter(p => !p.promo);
-  const pool = regular.length ? regular : list;
+  // "Günstigstes Bier" soll ein richtiges Bier sein: Alkoholfreies nur, wenn es sonst nichts gibt.
+  const alcoholic = list.filter(p => !ALCOHOL_FREE.test(p.beer));
+  const base = alcoholic.length ? alcoholic : list;
+  const regular = base.filter(p => !p.promo);
+  const pool = regular.length ? regular : base;
   return pool.reduce((a, b) => (b.per05 < a.per05 ? b : a));
 }
 

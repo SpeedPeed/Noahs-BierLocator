@@ -1,0 +1,30 @@
+[
+{
+"country": "DE",
+"chain": "getraenke_hoffmann",
+"beer": "Ankertau Pilsener & Dunkel",
+"unit": "other",
+"package": "12×0,5 l",
+"price": 16.99,
+"promo": true,
+"source": "https://www.getraenke-hoffmann.de/angebote",
+"seen": "2026-10-06",
+"volume_l": 6.0,
+"note": "Aktion (Pilsener oder Dunkel); nicht in allen Filialen",
+"valid_until": "2026-10-10"
+},
+{
+"country": "DE",
+"chain": "getraenke_hoffmann",
+"beer": "Bitburger Premium Pils",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 14.99,
+"promo": true,
+"source": "https://www.getraenke-hoffmann.de/angebote",
+"seen": "2026-10-06",
+"note": "Aktion ab 12.10. (Premium Pils oder Alkoholfrei 0,0 % Herb)",
+"valid_until": "2026-10-17",
+"valid_from": "2026-10-12"
+}
+]

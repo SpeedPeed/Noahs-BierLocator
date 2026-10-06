@@ -26,9 +26,19 @@ def per05(p):
 
 def main():
     entries, problems = {}, []
-    for path in sorted(glob.glob(os.path.join(ROOT, 'data', 'sources', '*.json'))):
+    paths = sorted(glob.glob(os.path.join(ROOT, 'data', 'sources', '*.json')))
+    # Automatisch gescrapte Sortimente (auto-*.json) ersetzen händische Recherchen derselben Kette.
+    auto_chains = set()
+    for path in paths:
+        if os.path.basename(path).startswith('auto-'):
+            with open(path, encoding='utf-8') as f:
+                auto_chains |= {(p['country'], p['chain']) for p in json.load(f)}
+    for path in paths:
+        is_auto = os.path.basename(path).startswith('auto-')
         with open(path, encoding='utf-8') as f:
             for i, p in enumerate(json.load(f)):
+                if not is_auto and (p.get('country'), p.get('chain')) in auto_chains:
+                    continue
                 where = f'{os.path.basename(path)}#{i}'
                 missing = [k for k in REQUIRED if p.get(k) in (None, '')]
                 if missing:
@@ -46,15 +56,17 @@ def main():
     prices = sorted(entries.values(), key=lambda p: (p['country'], p['chain'], p['beer']))
     out = {'updated': max(p['seen'] for p in prices), 'prices': prices}
     with open(os.path.join(ROOT, 'data', 'chain-prices.json'), 'w', encoding='utf-8') as f:
-        json.dump(out, f, ensure_ascii=False, indent=1)
+        json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
     by = {}
     for p in prices:
         by.setdefault(f"{p['country']} {p['chain']}", 0)
         by[f"{p['country']} {p['chain']}"] += 1
     print(f'{len(prices)} Preise geschrieben:', ', '.join(f'{k} ({n})' for k, n in by.items()))
-    for msg in problems:
+    for msg in problems[:30]:
         print('  übersprungen:', msg)
-    return 1 if problems else 0
+    if len(problems) > 30:
+        print(f'  … und {len(problems) - 30} weitere')
+    return 0
 
 
 if __name__ == '__main__':

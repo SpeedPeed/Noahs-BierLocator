@@ -149,31 +149,61 @@ function render() {
   wire(p);
 }
 
+const CHAIN_PREVIEW = 8;
+const money = (v, cur) => (cur === 'CHF' ? `CHF ${v.toFixed(2)}` : fmtEuro(v));
+
 function chainSection(p) {
   const list = chainPricesFor(p);
   if (!list.length) return '';
   const label = CHAIN_LABELS[chainOf(p).key] || 'Kette';
-  const money = (v, cur) => (cur === 'CHF' ? `CHF ${v.toFixed(2)}` : fmtEuro(v));
-  const sorted = list.slice().sort((a, b) => (a.per05 ?? 99) - (b.per05 ?? 99));
-  const seen = sorted.map(x => x.seen).sort().pop();
+  const seen = list.map(x => x.seen).sort().pop();
   return `<section class="pd-section">
-    <h3 class="pd-h">${icon('globe', { size: 16 })}Online-Preise ${escapeHtml(label)} <span class="pd-h-meta">Stand ${new Date(seen).toLocaleDateString('de-DE')}</span></h3>
-    <ul class="price-list">${sorted.map(x => `
-      <li class="price-row online">
-        <div class="pr-main">
-          <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">Aktion${x.valid_until ? ' bis ' + new Date(x.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : ''}</span>` : ''}</span>
-          <span class="pr-unit">${escapeHtml(x.package || (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/0,5 l` : ''}</span>
-        </div>
-        <span class="pr-price">${money(x.price, x.currency)}</span>
-        <a class="pr-age" href="${escapeHtml(x.source)}" target="_blank" rel="noopener">Quelle</a>
-        <span></span>
-      </li>`).join('')}
-    </ul>
-    <p class="fine">Laut Online-Shop der Kette, ohne Pfand. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.</p>
+    <h3 class="pd-h">${icon('globe', { size: 16 })}Online-Preise ${escapeHtml(label)} <span class="pd-h-meta">${list.length} Biere · Stand ${new Date(seen).toLocaleDateString('de-DE')}</span></h3>
+    ${list.length > CHAIN_PREVIEW ? `<div class="chain-search">${icon('search', { size: 16 })}<input id="pdChainSearch" type="search" placeholder="Sorte oder Marke suchen…" autocomplete="off" aria-label="Online-Preise durchsuchen"></div>` : ''}
+    <ul class="price-list" id="pdChainList"></ul>
+    <button class="link-btn" id="pdChainMore" hidden></button>
+    <p class="fine">Laut Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro 0,5 l. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.</p>
   </section>`;
 }
 
+function chainRow(x) {
+  const until = x.valid_until ? ' bis ' + new Date(x.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : '';
+  return `<li class="price-row online">
+    <div class="pr-main">
+      <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">Aktion${until}</span>` : ''}</span>
+      <span class="pr-unit">${escapeHtml(x.package || (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/0,5 l` : ''}</span>
+    </div>
+    <span class="pr-price">${money(x.price, x.currency)}</span>
+    <a class="pr-age" href="${escapeHtml(x.source)}" target="_blank" rel="noopener">Quelle</a>
+    <span></span>
+  </li>`;
+}
+
+// Liste mit Suche: zuerst die günstigsten, "alle anzeigen" klappt auf.
+function wireChainList(p) {
+  const ul = $('#pdChainList');
+  if (!ul) return;
+  const all = chainPricesFor(p).slice().sort((a, b) => (a.per05 ?? 99) - (b.per05 ?? 99));
+  const input = $('#pdChainSearch');
+  const more = $('#pdChainMore');
+  let showAll = false;
+  const draw = () => {
+    const q = input ? input.value.trim().toLowerCase() : '';
+    const words = q.split(/\s+/).filter(Boolean);
+    const hits = words.length ? all.filter(x => words.every(w => `${x.beer} ${x.package}`.toLowerCase().includes(w))) : all;
+    const shown = showAll || words.length ? hits.slice(0, 300) : hits.slice(0, CHAIN_PREVIEW);
+    ul.innerHTML = shown.map(chainRow).join('') || '<li class="fine">Nichts gefunden.</li>';
+    const rest = hits.length - shown.length;
+    more.hidden = rest <= 0;
+    more.textContent = `Alle ${hits.length} anzeigen`;
+  };
+  if (input) input.addEventListener('input', draw);
+  more.onclick = () => { showAll = true; draw(); };
+  draw();
+}
+
 function wire(p) {
+  wireChainList(p);
   $('#pdFav').onclick = () => {
     const on = toggleFavorite(p.id);
     toast(on ? 'Als Favorit gemerkt' : 'Aus Favoriten entfernt', { tone: on ? 'good' : 'info', ms: 1600 });
