@@ -1,66 +1,124 @@
 # 🍺 Bier-Locator
 
-Eine Web-App, die reale Orte in der Nähe anzeigt, an denen man Bier kaufen kann
-(Kneipen, Bars, Biergärten, Supermärkte, Getränkemärkte, Kioske) – inklusive
-Preisvergleich, Bewertungen, Favoriten und einem Profil für persönliche
-Ansprüche.
-
-## Wichtiger Hinweis zu den Preisen
-
-Es gibt keine offizielle, öffentliche Datenquelle für Bierpreise pro Laden/Kneipe
-(anders als z.B. bei Tankstellen). Die **Standorte** kommen live und aktuell von
-OpenStreetMap. Die **Preise** werden crowdsourced gepflegt: du (und ggf. andere
-Nutzer im selben Browser) tragt Preise ein, jeweils mit Zeitstempel ("gemeldet
-vor X Tagen"), damit klar ist, wie aktuell eine Angabe ist.
-
-## Starten
-
-Browser-Geolocation funktioniert aus Sicherheitsgründen nicht bei `file://`.
-Daher die App über einen lokalen Server öffnen:
-
-```bash
-python -m http.server 8000
-```
-
-Danach im Browser öffnen: http://localhost:8000
-
-(Alternative, falls Node installiert ist: `npx serve .`)
+Findet Kneipen, Gasthäuser, Biergärten, Brauereien und Läden in der Nähe,
+vergleicht Bierpreise und plant **gleichmäßige Fahrrad-Biertouren**. Gemacht fürs
+Handy (installierbar als App), funktioniert aber auch am PC.
 
 ## Funktionen
 
-- **Standort**: eigener Standort per Geolocation oder Adresssuche
-- **Live-Kartendaten** von OpenStreetMap (Overpass API) – Kneipen, Bars,
-  Biergärten, Restaurants, Imbisse, Clubs, Tankstellen, Supermärkte,
-  Getränkemärkte, Kioske
-- **Preisvergleich**: Preise pro Biersorte melden, automatische Umrechnung auf
-  Preis pro 0,5 l zum fairen Vergleich (auch bei Kästen)
-- **"Günstigstes Bier in der Nähe"**-Anzeige
-- **Profil ("Meine Ansprüche")**: Lieblingssorte, Maximalpreis, bevorzugter
-  Umkreis, Biergarten-Präferenz – fließt in den Sortiermodus "Für dich
-  empfohlen" ein (inkl. Wetter-Bonus für Biergärten)
-- **Filter**: nach Ortstyp, Biersorte, nur mit Preisangabe, nur Favoriten
-- **Sortierung**: empfohlen / Entfernung / Preis / Bewertung
-- **Bewertungen** (Sterne) und **Favoriten** pro Ort
-- **"Jetzt geöffnet"-Schätzung** aus den OSM-Öffnungszeiten (Best-Effort)
-- **Live-Wetter** am Standort inkl. Biergarten-Tauglichkeits-Hinweis
-- **🚲 Bier-Radtour-Planer**: Start festlegen, optional ein Zielort (sonst
-  Rundtour), Wunschlänge in km und Mindestanzahl an Bierorten einstellen –
-  die App berechnet eine echte Fahrradroute (OSRM-Routing über reale
-  Radwege/Straßen) entlang möglichst passender Bierorte, zeigt sie auf der
-  Karte, lässt sich neu würfeln und als GPX für Fahrradcomputer/Komoot/Garmin
-  exportieren
-- **🧮 Promille-Rechner** (Widmark-Formel, grobe Schätzung, keine Rechtsgrundlage)
-- **Routenlink** zu Google Maps
-- **Dark/Light Mode**
-- **Export/Import** der eigenen Daten (Preise, Bewertungen, Profil) als JSON –
-  praktisch für Backup oder Umzug auf ein anderes Gerät, da alles nur lokal im
-  Browser (localStorage) gespeichert wird
+**Bier finden**
+- Vollbild-Karte mit farbigen Markern je Ortstyp, Preis-Etikett und Gruppierung bei vielen Orten
+- Suche mit Vorschlägen (Orte, Adressen, Lokale) oder GPS-Standort
+- „In diesem Bereich suchen“, nachdem man die Karte verschoben hat
+- Filter: Ortstypen (Doppeltipp = nur dieser Typ), *Jetzt offen*, *Mit Preis*, *Favoriten*, Sorte
+- Sortierung „Für dich“ (Entfernung, Preis, Bewertung, Öffnung, Wetter, Vorlieben)
+- **Gasthäuser & Wirtshäuser** werden erkannt, obwohl sie in OSM als „Restaurant“ eingetragen sind
+- Detailansicht: Wochenplan der Öffnungszeiten (inkl. Feiertage AT/DE/CH), Route, Anrufen, Website, Teilen
+
+**Preise & Bewertungen**
+- Preise melden mit Live-Prüfung: unrealistische Preise (z.B. 0,05 € oder 50 € für 0,5 l) lassen sich gar nicht abschicken
+- Umrechnung auf €/0,5 l (auch Maß und Kästen), Preise älter als 180 Tage werden ausgegraut
+- Eine Bewertung pro Gerät, jederzeit änderbar; eigene Preise löschbar
+- Optional **für alle geteilt** über Supabase (siehe unten), sonst lokal im Browser
+
+**Bier-Radtour**
+- Rundtour oder von A nach B, Wunschlänge, Anzahl Stopps, Startzeit, Pause pro Stopp
+- Fahrstil: *Ausgewogen*, *Ruhig & sicher*, *Zügig* (BRouter-Profile)
+- **Gleichmäßig verteilte Stopps** — keine Klumpen mehr (siehe „Wie die Tourplanung funktioniert“)
+- Nur Orte, die zur **geschätzten Ankunftszeit geöffnet** haben
+- Zeitplan mit Ankunft/Abfahrt, Höhenprofil (Hover zeigt die Stelle auf der Karte), Wetter während der Tour
+- Einzelne Stopps tauschen oder entfernen, „Andere Route“, GPX-Export, Google Maps, Teilen per Link
+- Promille-Hochrechnung „1 Bier pro Stopp“ im Vergleich zur Fahrrad-Grenze des Landes
+
+**Promille-Rechner**
+- Körperwasser nach Watson (Geschlecht, Gewicht, Größe, Alter), Resorption je Getränk, Michaelis-Menten-Abbau
+- Verlaufsdiagramm, Zeitpunkte „unter 0,5 ‰“ / „wieder nüchtern“, Grenzwerte für AT, DE und CH
+
+## Wie die Tourplanung funktioniert
+
+Früher wurden Stopps „irgendwo in jeder Himmelsrichtung“ gesucht und danach gegen
+nähere getauscht — dadurch lagen oft drei Orte auf einem Fleck und dann kam eine
+lange Leerfahrt. Jetzt gilt **Form zuerst, Orte danach** (`js/tour/planner.js`):
+
+1. Es wird eine ideale Tourform erzeugt (Kreis/Oval durch den Start oder ein Bogen
+   von A nach B) und darauf werden die Stopps als **exakt gleich weit auseinander
+   liegende Ankerpunkte** verteilt.
+2. Jeder Anker bekommt den passendsten Bierort in seiner Nähe (mit Mindestabstand
+   zwischen den Stopps, Bevorzugung guter Lokale, Öffnung zur Ankunftszeit).
+3. Hunderte Varianten (Drehung, Form, Größe) werden ohne Netzwerkanfragen bewertet:
+   Gleichmäßigkeit der Etappen, Länge, Kreuzungen, Spitzkehren.
+4. Nur die besten Kandidaten werden mit BRouter geroutet; der gemessene Umwegfaktor
+   der echten Straßen kalibriert die nächste Runde, bis die Wunschlänge (±8 %) passt.
+   Doppelt gefahrene Strecke (Stichstraßen) wird bestraft.
+
+Gibt die Gegend die gewünschte Anzahl gleichmäßig verteilter Stopps nicht her,
+sagt die App das ehrlich und schlägt eine passende Anzahl vor.
+
+## Starten (lokal)
+
+Standortbestimmung funktioniert nur über `https://` oder `localhost`:
+
+```bash
+python scripts/serve.py
+```
+
+Dann <http://localhost:8000> öffnen. (`python -m http.server` geht auch, cached aber
+Dateien hartnäckig im Browser.)
+
+**Tests:** <http://localhost:8000/tests/> öffnen — testet Öffnungszeiten-Parser,
+Promille-Modell, Preisprüfung, Tourplaner und Tour-Links direkt im Browser.
+
+## Veröffentlichen mit GitHub Pages
+
+1. Auf GitHub im Repo: **Settings → Pages → Build and deployment → Source: „Deploy from a branch“**,
+   Branch `main`, Ordner `/ (root)` → Save.
+2. Nach ~1 Minute läuft die App unter `https://<benutzername>.github.io/<repo>/`.
+3. Am Handy öffnen → „Zum Startbildschirm hinzufügen“ → läuft wie eine App.
+
+## Geteilte Preise & Bewertungen (Supabase, kostenlos)
+
+Ohne Einrichtung bleiben Preise/Bewertungen nur auf dem jeweiligen Gerät. Damit
+alle dieselben Daten sehen:
+
+1. Kostenloses Konto auf <https://supabase.com> anlegen → **New project**.
+2. Im Projekt: **SQL Editor → New query**, den kompletten Inhalt von
+   [`supabase/schema.sql`](supabase/schema.sql) einfügen → **Run**.
+3. **Project Settings → API**: *Project URL* und den *anon / publishable key* kopieren.
+4. In [`js/config.js`](js/config.js) eintragen:
+   ```js
+   export const SUPABASE_URL = 'https://xxxx.supabase.co';
+   export const SUPABASE_ANON_KEY = 'eyJ…'; // oder sb_publishable_…
+   ```
+5. Committen & pushen — fertig. Der Key ist öffentlich gedacht; die Datenbank
+   lässt nur geprüfte Schreibzugriffe über ihre Funktionen zu.
+
+Sicherheit ohne Login: Jedes Gerät hat eine zufällige geheime ID, gespeichert wird
+nur ihr Hash. Damit zählt pro Gerät und Ort eine Bewertung, eigene Preise lassen
+sich löschen, und es gibt ein Tageslimit gegen Spam. Lokal gemeldete Preise werden
+beim ersten Start im Community-Modus automatisch hochgeladen.
 
 ## Technik
 
-Reines HTML/CSS/JavaScript (kein Build-Schritt), Leaflet.js für die Karte,
-OpenStreetMap/Overpass für Orte, Nominatim für Adresssuche, der öffentliche
-FOSSGIS-OSRM-Dienst (routing.openstreetmap.de) für die Fahrrad-Routenplanung
-und open-meteo.com für das Wetter — alles kostenlos, ohne API-Key. Alle
-nutzergenerierten Daten (Preise, Bewertungen, Favoriten, Profil) liegen im
-`localStorage` des Browsers – es gibt keinen Server/Backend.
+Reines HTML/CSS/JavaScript mit ES-Modulen — **kein Build-Schritt**.
+
+```
+index.html, styles.css, sw.js, manifest.json
+js/
+  main.js          Einstieg, Verdrahtung
+  config.js        Server-Adressen, Supabase-Zugang
+  places.js        Overpass-Abfrage (mehrere Server, Cache), Ortstypen
+  openingHours.js  opening_hours-Parser inkl. Feiertage AT/DE/CH
+  community.js     Preise & Bewertungen (Supabase oder lokal)
+  prices.js        Gebinde, Umrechnung, Plausibilitätsprüfung
+  bac.js, legal.js Promille-Modell, Grenzwerte je Land
+  tour/            planner.js (Geometrie), tourPlan.js (Steuerung), routing.js (BRouter/OSRM)
+  ui/              Sheet, Liste, Detail, Tour, Promille, Suche
+supabase/schema.sql   Datenbank für geteilte Preise
+tests/                Browser-Tests
+```
+
+Datenquellen (alle ohne API-Key): OpenStreetMap/Overpass (Orte), OSM-Kacheln
+(Karte), Photon/Komoot (Suche), BRouter (Radrouten, Fallback OSRM/FOSSGIS),
+Open-Meteo (Wetter).
+
+*Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht. Auch nicht mit dem Rad.*
