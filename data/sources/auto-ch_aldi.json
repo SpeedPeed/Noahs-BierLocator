@@ -184,20 +184,6 @@
 {
 "country": "CH",
 "chain": "aldi",
-"beer": "Feldschlösschen Original",
-"unit": "other",
-"package": "12 l",
-"price": 27.59,
-"promo": true,
-"source": "https://www.aldi-suisse.ch/de/produkt/feldschloesschen-bier-original-000000000000661318",
-"seen": "2026-10-06",
-"volume_l": 12.0,
-"currency": "CHF",
-"note": "Aktionsartikel, solange Vorrat"
-},
-{
-"country": "CH",
-"chain": "aldi",
 "beer": "Karlskrone Pils",
 "unit": "0.5l",
 "package": "0,5 l",
