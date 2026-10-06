@@ -11,6 +11,7 @@ import { icon } from '../icons.js';
 import { escapeHtml, fmtDist, fmtEuro, timeAgo, haversine } from '../util.js';
 import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
+import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS } from '../chainPrices.js';
 
 let dlg, current = null, onChange = () => {};
 
@@ -39,6 +40,7 @@ export async function openPlace(id) {
     }
   }
   current = place;
+  await loadChainPrices();
   render();
   openDialog(dlg);
   loadSummaries([id]).then(() => { if (current && current.id === id) render(); }).catch(() => {});
@@ -120,6 +122,8 @@ function render() {
       <p class="fine">${my ? `Deine Bewertung: ${my} ★ · <button class="link-btn" id="pdUnrate">zurücknehmen</button>` : 'Tippe auf einen Stern. Pro Gerät zählt eine Bewertung — du kannst sie jederzeit ändern.'}</p>
     </section>
 
+    ${chainSection(p)}
+
     <section class="pd-section">
       <h3 class="pd-h">${icon('tag', { size: 16 })}Bierpreise <span class="pd-h-meta">${isShared() ? 'von der Community' : 'nur auf diesem Gerät'}</span></h3>
       ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">Noch kein Preis gemeldet — sei die erste Person!</p>`}
@@ -143,6 +147,30 @@ function render() {
     </section>`;
 
   wire(p);
+}
+
+function chainSection(p) {
+  const list = chainPricesFor(p);
+  if (!list.length) return '';
+  const label = CHAIN_LABELS[chainOf(p).key] || 'Kette';
+  const money = (v, cur) => (cur === 'CHF' ? `CHF ${v.toFixed(2)}` : fmtEuro(v));
+  const sorted = list.slice().sort((a, b) => (a.per05 ?? 99) - (b.per05 ?? 99));
+  const seen = sorted.map(x => x.seen).sort().pop();
+  return `<section class="pd-section">
+    <h3 class="pd-h">${icon('globe', { size: 16 })}Online-Preise ${escapeHtml(label)} <span class="pd-h-meta">Stand ${new Date(seen).toLocaleDateString('de-DE')}</span></h3>
+    <ul class="price-list">${sorted.map(x => `
+      <li class="price-row online">
+        <div class="pr-main">
+          <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">Aktion${x.valid_until ? ' bis ' + new Date(x.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : ''}</span>` : ''}</span>
+          <span class="pr-unit">${escapeHtml(x.package || (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/0,5 l` : ''}</span>
+        </div>
+        <span class="pr-price">${money(x.price, x.currency)}</span>
+        <a class="pr-age" href="${escapeHtml(x.source)}" target="_blank" rel="noopener">Quelle</a>
+        <span></span>
+      </li>`).join('')}
+    </ul>
+    <p class="fine">Laut Online-Shop der Kette, ohne Pfand. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.</p>
+  </section>`;
 }
 
 function wire(p) {

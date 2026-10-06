@@ -97,6 +97,22 @@ nur ihr Hash. Damit zählt pro Gerät und Ort eine Bewertung, eigene Preise lass
 sich löschen, und es gibt ein Tageslimit gegen Spam. Lokal gemeldete Preise werden
 beim ersten Start im Community-Modus automatisch hochgeladen.
 
+## Online-Preise der Supermarktketten
+
+Für BILLA, SPAR, HOFER, Lidl, PENNY, MPREIS (AT), ALDI, EDEKA, Kaufland, Netto, Lidl (DE)
+sowie Coop, Migros, Denner, ALDI, Lidl, Volg, Spar (CH) sind recherchierte Online-Preise
+hinterlegt. Jede Filiale der Kette zeigt sie automatisch als „Online-Preis · Stand …“ an
+(mit Link zur Quelle), Community-Meldungen haben Vorrang. Aktionen verschwinden nach ihrem
+Enddatum von selbst.
+
+Aktualisieren: neue Recherche als JSON in `data/sources/` ablegen, dann
+
+```bash
+python scripts/build_chain_prices.py
+```
+
+Das Skript prüft jeden Eintrag (Gebinde, Plausibilität) und schreibt `data/chain-prices.json`.
+
 ## Technik
 
 Reines HTML/CSS/JavaScript mit ES-Modulen — **kein Build-Schritt**.
