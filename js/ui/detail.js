@@ -12,6 +12,9 @@ import { escapeHtml, fmtDist, fmtEuro, timeAgo, haversine } from '../util.js';
 import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
 import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS } from '../chainPrices.js';
+import { loadHistory, describe } from '../priceHistory.js';
+import { openDiary } from './diaryUi.js';
+import { openScanner } from './scanUi.js';
 
 let dlg, current = null, onChange = () => {};
 
@@ -100,6 +103,7 @@ function render() {
     <div class="pd-actions">
       <a class="pd-action" href="${navUrl}" target="_blank" rel="noopener">${icon('compass', { size: 20 })}<span>Route</span></a>
       <button class="pd-action${fav ? ' on' : ''}" id="pdFav" aria-pressed="${fav}">${icon('heart', { size: 20, filled: fav })}<span>${fav ? 'Favorit' : 'Merken'}</span></button>
+      <button class="pd-action" id="pdCheckin">${icon('book', { size: 20 })}<span>Einchecken</span></button>
       <button class="pd-action" id="pdShare">${icon('share', { size: 20 })}<span>Teilen</span></button>
       ${phone ? `<a class="pd-action" href="tel:${escapeHtml(phone.split(';')[0].replace(/\s/g, ''))}">${icon('phone', { size: 20 })}<span>Anrufen</span></a>` : ''}
       ${web ? `<a class="pd-action" href="${escapeHtml(web)}" target="_blank" rel="noopener">${icon('globe', { size: 20 })}<span>Website</span></a>` : ''}
@@ -132,6 +136,7 @@ function render() {
         <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="0,00" required aria-label="Preis in Euro"><span>€</span></div>
         <select name="unit" aria-label="Gebinde">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
         <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}Melden</button>
+        <button type="button" class="btn btn-soft scan-btn" id="pdScan">${icon('scan', { size: 17 })}Barcode scannen</button>
         <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
       </form>
       <p class="fine">Preise älter als ${STALE_DAYS} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.</p>
@@ -166,9 +171,9 @@ function chainSection(p) {
   </section>`;
 }
 
-function chainRow(x) {
+function chainRow(x, i) {
   const until = x.valid_until ? ' bis ' + new Date(x.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : '';
-  return `<li class="price-row online">
+  return `<li class="price-row online" data-i="${i}" tabindex="0" role="button" aria-expanded="false" title="Preisverlauf anzeigen">
     <div class="pr-main">
       <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">Aktion${until}</span>` : ''}</span>
       <span class="pr-unit">${escapeHtml(x.package || (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/0,5 l` : ''}</span>
@@ -192,18 +197,49 @@ function wireChainList(p) {
     const words = q.split(/\s+/).filter(Boolean);
     const hits = words.length ? all.filter(x => words.every(w => `${x.beer} ${x.package}`.toLowerCase().includes(w))) : all;
     const shown = showAll || words.length ? hits.slice(0, 300) : hits.slice(0, CHAIN_PREVIEW);
-    ul.innerHTML = shown.map(chainRow).join('') || '<li class="fine">Nichts gefunden.</li>';
+    ul.innerHTML = shown.map((x, i) => chainRow(x, i)).join('') || '<li class="fine">Nichts gefunden.</li>';
+    ul._shown = shown;
     const rest = hits.length - shown.length;
     more.hidden = rest <= 0;
     more.textContent = `Alle ${hits.length} anzeigen`;
   };
   if (input) input.addEventListener('input', draw);
+  // Tipp auf eine Zeile: Preisverlauf aufklappen
+  const toggle = async li => {
+    const open = li.nextElementSibling && li.nextElementSibling.classList.contains('price-hist');
+    ul.querySelectorAll('.price-hist').forEach(n => n.remove());
+    ul.querySelectorAll('[aria-expanded="true"]').forEach(n => n.setAttribute('aria-expanded', 'false'));
+    if (open) return;
+    await loadHistory();
+    const d = describe(ul._shown[+li.dataset.i]);
+    if (!d) return;
+    li.setAttribute('aria-expanded', 'true');
+    li.insertAdjacentHTML('afterend', `<li class="price-hist">${d.svg}<ul>${d.text.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul></li>`);
+  };
+  ul.addEventListener('click', e => {
+    if (e.target.closest('a')) return;
+    const li = e.target.closest('.price-row[data-i]');
+    if (li) toggle(li);
+  });
+  ul.addEventListener('keydown', e => {
+    const li = e.target.closest && e.target.closest('.price-row[data-i]');
+    if (li && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(li); }
+  });
   more.onclick = () => { showAll = true; draw(); };
   draw();
 }
 
 function wire(p) {
   wireChainList(p);
+  $('#pdCheckin').onclick = () => { closeDialog(dlg); openDiary(p); };
+  $('#pdScan').onclick = () => openScanner(p, found => {
+    const form = $('#pdPriceForm');
+    if (!form) return;
+    form.beer.value = found.beer;
+    if (found.unit) form.unit.value = found.unit;
+    form.price.focus();
+    form.dispatchEvent(new Event('input'));
+  });
   $('#pdFav').onclick = () => {
     const on = toggleFavorite(p.id);
     toast(on ? 'Als Favorit gemerkt' : 'Aus Favoriten entfernt', { tone: on ? 'good' : 'info', ms: 1600 });

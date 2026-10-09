@@ -22,3 +22,7 @@ export const OPEN_METEO_URL = 'https://api.open-meteo.com/v1/forecast';
 
 export const MAX_PLACES = 600;
 export const DEFAULT_VIEW = { lat: 47.6, lon: 12.2, zoom: 6 }; // DACH
+
+// Öffentlicher Web-Push-Schlüssel (VAPID) für Preisalarme. Der private Schlüssel
+// liegt nur als GitHub-Secret VAPID_PRIVATE_KEY vor (nie ins Repo!).
+export const VAPID_PUBLIC_KEY = 'BDpbYgNYW-Piu-B8nzoXL9wXbsIGD6Be9fJW70ihViEh4QssxoMcSVCQk8Qg8dhFURx50BkRZD9DeznBbiyuOfI';

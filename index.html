@@ -53,7 +53,10 @@
   <div class="menu-wrap">
     <button id="btnMenu" class="fab" aria-label="Menü" aria-haspopup="true" aria-expanded="false"><span data-icon="menu" data-icon-size="20"></span></button>
     <div id="menu" class="menu" role="menu" hidden>
+      <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="17"></span>Bier-Tagebuch</button>
+      <button role="menuitem" data-action="alerts"><span data-icon="bell" data-icon-size="17"></span>Preisalarme<span class="menu-badge" id="alertBadge" hidden></span></button>
       <button role="menuitem" data-action="bac"><span data-icon="calculator" data-icon-size="17"></span>Promille-Rechner</button>
+      <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="17"></span>Geräte verbinden</button>
       <button role="menuitem" data-action="theme"><span id="themeIcon" data-icon="moon" data-icon-size="17"></span><span id="themeLabel">Dunkles Design</span></button>
       <button role="menuitem" data-action="export"><span data-icon="download" data-icon-size="17"></span>Daten exportieren</button>
       <button role="menuitem" data-action="import"><span data-icon="upload" data-icon-size="17"></span>Daten importieren</button>
@@ -215,6 +218,7 @@
           <button id="btnShareTour" class="btn btn-soft"><span data-icon="share" data-icon-size="17"></span>Teilen</button>
           <button id="btnGpx" class="btn btn-soft"><span data-icon="download" data-icon-size="17"></span>GPX</button>
           <button id="btnGmaps" class="btn btn-soft"><span data-icon="compass" data-icon-size="17"></span>Google Maps</button>
+          <button id="btnGroup" class="btn btn-primary action-wide"><span data-icon="users" data-icon-size="17"></span>Mit Freunden fahren</button>
         </div>
       </div>
     </section>
@@ -236,6 +240,31 @@
 <dialog id="aboutDialog" class="dlg" aria-labelledby="aboutTitle">
   <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
   <div id="aboutBody"></div>
+</dialog>
+
+<dialog id="syncDialog" class="dlg" aria-labelledby="syncTitle">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="syncBody" class="dlg-body"></div>
+</dialog>
+
+<dialog id="diaryDialog" class="dlg dlg-wide" aria-labelledby="diaryTitle">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="diaryBody" class="dlg-body"></div>
+</dialog>
+
+<dialog id="alertsDialog" class="dlg" aria-labelledby="alertsTitle">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="alertsBody" class="dlg-body"></div>
+</dialog>
+
+<dialog id="scanDialog" class="dlg" aria-labelledby="scanTitle">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="scanBody" class="dlg-body"></div>
+</dialog>
+
+<dialog id="groupDialog" class="dlg" aria-labelledby="groupTitle">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="groupBody" class="dlg-body"></div>
 </dialog>
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>

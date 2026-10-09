@@ -9,7 +9,18 @@ const KEYS = {
   bac: 'bl_bac_v2',
   location: 'bl_last_location_v1',
   device: 'bl_device_secret_v1',
+  meta: 'bl_sync_meta_v1',     // Zeitstempel für den Geräte-Sync
+  diary: 'bl_diary_v1',        // [{ id, t, deleted?, … }]
+  watches: 'bl_watches_v1',    // Preisalarme [{ id, q, max05, country }]
 };
+
+/* ---------- Änderungen melden (für den Geräte-Sync) ---------- */
+const changeListeners = [];
+export function onDataChange(fn) { changeListeners.push(fn); }
+let silent = false; // beim Einspielen von Sync-Daten keine Rück-Meldung
+function changed() { if (!silent) changeListeners.forEach(fn => { try { fn(); } catch (e) { /* egal */ } }); }
+const meta = (() => { try { return JSON.parse(localStorage.getItem('bl_sync_meta_v1')) || {}; } catch (e) { return {}; } })();
+function touch(section) { meta[section] = Date.now(); write(KEYS.meta, meta); }
 const LEGACY = { data: 'bierlocator_data_v1', prefs: 'bierlocator_prefs_v1', theme: 'bierlocator_theme_v1', bac: 'bierlocator_bac_v1' };
 
 function read(key, fallback) {
@@ -33,7 +44,7 @@ prefs.tour = Object.assign({}, DEFAULT_PREFS.tour, prefs.tour);
 // Neu hinzugekommene Ortstypen bei bestehenden Profilen einmalig aktivieren
 prefs.knownTypes = prefs.knownTypes || ['pub', 'biergarten', 'brewery', 'restaurant', 'fastfood', 'nightclub', 'fuel', 'supermarket', 'beverages', 'convenience'];
 for (const t of DEFAULT_TYPES) if (!prefs.knownTypes.includes(t)) { prefs.knownTypes.push(t); if (!prefs.types.includes(t)) prefs.types.push(t); }
-export function savePrefs() { write(KEYS.prefs, prefs); }
+export function savePrefs() { write(KEYS.prefs, prefs); touch('prefs'); changed(); }
 
 function migratePrefs() {
   const old = read(LEGACY.prefs, null);
@@ -52,12 +63,13 @@ function migratePersonal() {
   return out;
 }
 const rec = id => personal[id] || (personal[id] = { favorite: false, hidden: false });
+function savePersonal(id) { if (id) rec(id).t = Date.now(); write(KEYS.personal, personal); changed(); }
 export function isFavorite(id) { return !!(personal[id] && personal[id].favorite); }
 export function isHidden(id) { return !!(personal[id] && personal[id].hidden); }
-export function toggleFavorite(id) { rec(id).favorite = !rec(id).favorite; write(KEYS.personal, personal); return rec(id).favorite; }
-export function setHidden(id, v) { rec(id).hidden = v; write(KEYS.personal, personal); }
+export function toggleFavorite(id) { rec(id).favorite = !rec(id).favorite; savePersonal(id); return rec(id).favorite; }
+export function setHidden(id, v) { rec(id).hidden = v; savePersonal(id); }
 export function hiddenCount() { return Object.values(personal).filter(r => r.hidden).length; }
-export function unhideAll() { Object.values(personal).forEach(r => { r.hidden = false; }); write(KEYS.personal, personal); }
+export function unhideAll() { const t = Date.now(); Object.values(personal).forEach(r => { if (r.hidden) { r.hidden = false; r.t = t; } }); savePersonal(); }
 export function favoriteIds() { return Object.keys(personal).filter(id => personal[id].favorite); }
 
 /* ---------- Theme ---------- */
@@ -74,7 +86,62 @@ export function loadBac() {
     log: [],
   };
 }
-export function saveBac(state) { write(KEYS.bac, state); }
+export function saveBac(state) { write(KEYS.bac, state); touch('bac'); changed(); }
+
+/* ---------- Bier-Tagebuch ---------- */
+export function loadDiary() { return read(KEYS.diary, []); }
+export function saveDiary(list) { write(KEYS.diary, list); changed(); }
+
+/* ---------- Preisalarme ---------- */
+export function loadWatches() { return read(KEYS.watches, []); }
+export function saveWatches(list) { write(KEYS.watches, list); touch('watches'); changed(); }
+
+/* ---------- Geräte-Sync: Export & Zusammenführen ----------
+   Favoriten/Ausgeblendet: pro Ort gewinnt der neuere Eintrag. Tagebuch: Einträge
+   werden vereinigt (Löschungen als "deleted" mit Zeitstempel). Vorlieben,
+   Promille und Preisalarme: der neuere Stand gewinnt als Ganzes. */
+export function exportSync() {
+  return {
+    v: 1,
+    prefs: { t: meta.prefs || 0, data: prefs },
+    personal,
+    bac: { t: meta.bac || 0, data: loadBac() },
+    diary: loadDiary(),
+    watches: { t: meta.watches || 0, data: loadWatches() },
+  };
+}
+export function importSync(remote) {
+  if (!remote || remote.v !== 1) return false;
+  let localChanged = false;
+  silent = true;
+  try {
+    if (remote.prefs && remote.prefs.t > (meta.prefs || 0)) {
+      Object.assign(prefs, remote.prefs.data); write(KEYS.prefs, prefs); meta.prefs = remote.prefs.t; localChanged = true;
+    }
+    for (const [id, r] of Object.entries(remote.personal || {})) {
+      const mine = personal[id];
+      if (!mine || (r.t || 0) > (mine.t || 0)) { personal[id] = r; localChanged = true; }
+    }
+    write(KEYS.personal, personal);
+    if (remote.bac && remote.bac.t > (meta.bac || 0)) {
+      write(KEYS.bac, remote.bac.data); meta.bac = remote.bac.t; localChanged = true;
+    }
+    if (remote.watches && remote.watches.t > (meta.watches || 0)) {
+      write(KEYS.watches, remote.watches.data); meta.watches = remote.watches.t; localChanged = true;
+    }
+    const diary = loadDiary();
+    const byId = new Map(diary.map(e => [e.id, e]));
+    for (const e of remote.diary || []) {
+      const mine = byId.get(e.id);
+      if (!mine || (e.t || 0) > (mine.t || 0)) { byId.set(e.id, e); localChanged = true; }
+    }
+    write(KEYS.diary, [...byId.values()].sort((a, b) => b.at - a.at));
+    write(KEYS.meta, meta);
+  } finally {
+    silent = false;
+  }
+  return localChanged;
+}
 
 /* ---------- Letzter Standort ---------- */
 export function loadLastLocation() { return read(KEYS.location, null); }
