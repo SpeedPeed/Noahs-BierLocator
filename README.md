@@ -54,6 +54,25 @@ lange Leerfahrt. Jetzt gilt **Form zuerst, Orte danach** (`js/tour/planner.js`):
 Gibt die Gegend die gewünschte Anzahl gleichmäßig verteilter Stopps nicht her,
 sagt die App das ehrlich und schlägt eine passende Anzahl vor.
 
+## Android-App
+
+**[APK herunterladen](https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest)** — am Handy öffnen und
+installieren. Die App ist eine *Trusted Web Activity*: Sie zeigt die Live-Website im Vollbild
+(ohne Browserleiste) und ist daher immer automatisch aktuell. Die Verknüpfung App ↔ Website
+läuft über `https://speedpeed.github.io/.well-known/assetlinks.json` (Repo `speedpeed.github.io`).
+
+Neue APK nötig ist nur bei Änderungen an Name, Icon oder Paket. Dafür den Signaturschlüssel
+aus `Documents/BierLocator-Schluessel` verwenden (gleiches Paket `io.github.speedpeed.bierlocator`,
+höhere `appVersionCode`) — **dieser Schlüssel darf nie verloren gehen**, sonst lassen sich
+Updates nicht mehr über die bestehende App installieren.
+
+## Geräte-Sync, Tagebuch, Preisalarme, Gruppen-Touren
+
+Diese Funktionen brauchen zusätzlich [`supabase/002_features.sql`](supabase/002_features.sql)
+(einmal im Supabase SQL-Editor ausführen). Preisalarme per Push verschickt der GitHub-Job
+„Preisalarme verschicken“ nach jedem Preis-Update; er braucht die Secrets `ALERTS_TOKEN`
+und `VAPID_PRIVATE_KEY`.
+
 ## Starten (lokal)
 
 Standortbestimmung funktioniert nur über `https://` oder `localhost`:

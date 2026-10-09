@@ -180,6 +180,8 @@ function openAbout() {
     <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 18 })}<div>${isShared()
       ? '<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.'
       : '<b>Lokaler Modus:</b> Preise & Bewertungen bleiben auf diesem Gerät. Für geteilte Preise muss ein Supabase-Projekt eingetragen werden (siehe README).'}</div></div>
+    ${/android/i.test(navigator.userAgent) && !document.referrer.startsWith('android-app://') && !matchMedia('(display-mode: standalone)').matches
+      ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 18 })}Android-App herunterladen</a><p class="fine center">Läuft wie eine normale App, aktualisiert sich von selbst.</p>` : ''}
     <h3 class="pd-h">${icon('map', { size: 16 })}Datenquellen</h3>
     <ul class="about-list">
       <li><b>Orte:</b> OpenStreetMap via Overpass API</li>
