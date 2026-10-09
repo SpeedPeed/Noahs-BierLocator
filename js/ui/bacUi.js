@@ -13,6 +13,7 @@ const fmtP = v => v.toFixed(2).replace('.', ',');
 
 export function openBac() {
   const dlg = $('#bacDialog');
+  bac = loadBac(); // kann sich per Sync/Tagebuch geändert haben
   renderShell();
   renderAll(true);
   openDialog(dlg);

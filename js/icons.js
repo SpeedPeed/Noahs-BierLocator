@@ -59,6 +59,13 @@ const ICONS = {
   cart: '<circle cx="9.5" cy="20" r="1.1"/><circle cx="17" cy="20" r="1.1"/><path d="M3 4h2.2l2 11h10.9L20 8.5H7"/>',
   box: '<path d="M3.5 8L12 3.5 20.5 8 12 12.5z"/><path d="M3.5 8v8.5L12 21l8.5-4.5V8"/><path d="M12 12.5V21"/>',
   store: '<path d="M4 9.5V20h16V9.5"/><path d="M3 9.5l1.3-5h15.4l1.3 5z"/><path d="M9.5 20v-5.5h5V20"/>',
+  book: '<path d="M5 4.5h9.5a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9.5"/><path d="M9 8h5"/>',
+  bell: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+  users: '<circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M15.5 14.2a5 5 0 0 1 5.5 5.3"/>',
+  scan: '<path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M7.5 8.5v7M10 8.5v7M12.5 8.5v7M15 8.5v7M16.5 8.5v7"/>',
+  thumbUp: '<path d="M7 11v9H4.5V11zM7 11l4-7a2 2 0 0 1 2.5 2.4L12.8 10H18a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 20H7"/>',
+  thumbDown: '<path d="M17 13V4h2.5v9zM17 13l-4 7a2 2 0 0 1-2.5-2.4l.7-3.6H6a2 2 0 0 1-2-2.3l1.2-6A2 2 0 0 1 7.2 4H17"/>',
+  chart: '<path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/>',
   wheelchair: '<circle cx="11" cy="4.5" r="1.6"/><path d="M11 7.5v6h5l2 5"/><path d="M11 10.5h4"/><path d="M8 11.2a5 5 0 1 0 6.6 6.3"/>',
 };
 

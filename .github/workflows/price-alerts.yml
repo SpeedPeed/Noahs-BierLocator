@@ -1,0 +1,43 @@
+name: Preisalarme verschicken
+
+# Läuft nach jedem Preis-Update (GitHub-Job am Montagmorgen oder Push vom eigenen
+# PC) und schickt Web-Push-Benachrichtigungen für neue Treffer der Preisalarme.
+on:
+  workflow_run:
+    workflows: ['Bierpreise aktualisieren']
+    types: [completed]
+  push:
+    branches: [main]
+    paths: ['data/chain-prices.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: price-alerts
+  cancel-in-progress: false
+
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main   # nach workflow_run den frisch committeten Stand nehmen
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet pywebpush
+
+      - name: Benachrichtigungen senden
+        run: python scripts/send_alerts.py
+        env:
+          PYTHONIOENCODING: utf-8
+          SUPABASE_URL: https://uiqxntuthokelgwoxocw.supabase.co
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcXhudHV0aG9rZWxnd294b2N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNjIzMTcsImV4cCI6MjEwNjgzODMxN30.VZ7qoU0-xukEV0NmimZOlD-wjy13xU78GjUNOvwbDn8
+          ALERTS_TOKEN: ${{ secrets.ALERTS_TOKEN }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}

@@ -6,6 +6,7 @@ Jeder Eintrag wird geprüft (Pflichtfelder, Gebinde, Plausibilität pro 0,5 l). 
 Recherchen einfach als weitere Datei in data/sources/ ablegen; bei gleicher Kette +
 Bier + Gebinde + Aktion gewinnt der neueste Stand ("seen").
 """
+import datetime
 import glob
 import json
 import os
@@ -22,6 +23,40 @@ def per05(p):
     if p.get('volume_l'):
         return p['price'] / (p['volume_l'] * 2)
     return None
+
+
+def update_history(prices):
+    """Preisverlauf: pro Produkt (Kette+Bier+Gebinde) Punkte [Datum, Normalpreis, Aktionspreis].
+    Ein neuer Punkt entsteht nur, wenn sich etwas ändert — plus einer pro Woche als Lebenszeichen."""
+    path = os.path.join(ROOT, 'data', 'price-history.json')
+    try:
+        with open(path, encoding='utf-8') as f:
+            hist = json.load(f)
+    except (OSError, ValueError):
+        hist = {'since': None, 'items': {}}
+    today = max(p['seen'] for p in prices)
+    hist['since'] = hist.get('since') or today
+    cur = {}
+    for p in prices:
+        k = '|'.join([p['country'], p['chain'], p['beer'], p.get('package', '')])
+        reg, promo = cur.get(k, (None, None))
+        if p.get('promo'):
+            if not p.get('valid_from') or p['valid_from'] <= today:
+                promo = p['price'] if promo is None else min(promo, p['price'])
+        else:
+            reg = p['price']
+        cur[k] = (reg, promo)
+    items = hist['items']
+    for k, (reg, promo) in cur.items():
+        pts = items.setdefault(k, [])
+        last = pts[-1] if pts else None
+        if last and last[0] == today:
+            pts[-1] = [today, reg, promo]
+        elif not last or last[1] != reg or last[2] != promo or (datetime.date.fromisoformat(today) - datetime.date.fromisoformat(last[0])).days >= 7:
+            pts.append([today, reg, promo])
+    hist['updated'] = today
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(hist, f, ensure_ascii=False, separators=(',', ':'))
 
 
 def main():
@@ -57,6 +92,7 @@ def main():
     out = {'updated': max(p['seen'] for p in prices), 'prices': prices}
     with open(os.path.join(ROOT, 'data', 'chain-prices.json'), 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
+    update_history(prices)
     by = {}
     for p in prices:
         by.setdefault(f"{p['country']} {p['chain']}", 0)

@@ -44,3 +44,19 @@ export const BEER_SUGGESTIONS = [
   'Alkoholfrei', 'Kölsch', 'Altbier', 'Stiegl', 'Gösser', 'Ottakringer', 'Zipfer', 'Puntigamer', 'Augustiner',
   'Paulaner', 'Tegernseer', 'Feldschlösschen', 'Krombacher', 'Becks', 'Heineken',
 ];
+
+// "500 ml", "0,33 l", "20 x 0,5 l" (Open Food Facts) → Gebinde-Schlüssel oder null
+export function parsePackLabel(text) {
+  const t = String(text || '').toLowerCase().replace(',', '.').replace('×', 'x');
+  const m = t.match(/(?:(\d+)\s*x\s*)?(\d+(?:\.\d+)?)\s*(ml|cl|l)\b/);
+  if (!m) return null;
+  const n = m[1] ? Number(m[1]) : 1;
+  const l = Number(m[2]) / (m[3] === 'ml' ? 1000 : m[3] === 'cl' ? 100 : 1);
+  const near = (a, b) => Math.abs(a - b) < 0.01;
+  if (n === 1 && near(l, 0.5)) return '0.5l';
+  if (n === 1 && near(l, 0.33)) return '0.33l';
+  if (n === 1 && near(l, 1)) return '1l';
+  if (n === 20 && near(l, 0.5)) return 'kasten20x0.5l';
+  if (n === 24 && near(l, 0.33)) return 'kasten24x0.33l';
+  return null;
+}

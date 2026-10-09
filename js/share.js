@@ -41,6 +41,10 @@ export function readHash() {
   const h = location.hash.slice(1);
   if (h.startsWith('ort=')) return { kind: 'place', id: decodeURIComponent(h.slice(4)) };
   if (h.startsWith('tour=')) { const t = decodeTour(h.slice(5)); return t ? { kind: 'tour', tour: t } : null; }
+  if (h.startsWith('sync=')) return { kind: 'sync', code: decodeURIComponent(h.slice(5)) };
+  if (h.startsWith('gruppe=')) return { kind: 'group', code: decodeURIComponent(h.slice(7)).replace(/[^A-Za-z0-9]/g, '') };
+  if (h === 'alarme') return { kind: 'alerts' };
+  if (h === 'tagebuch') return { kind: 'diary' };
   return null;
 }
 export function clearHash() {

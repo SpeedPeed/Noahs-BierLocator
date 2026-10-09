@@ -6,6 +6,8 @@ import { generateVariants, overlapRatio, legStats, makeProjection } from '../js/
 import { encodeTour, decodeTour } from '../js/share.js';
 import { classify } from '../js/places.js';
 import { chainOf } from '../js/chainPrices.js';
+import { evaluate, matches } from '../js/alerts.js';
+import { parsePackLabel } from '../js/prices.js';
 import { seededRandom, haversine } from '../js/util.js';
 
 const results = [];
@@ -228,6 +230,25 @@ test('Filialen werden ihrer Kette zugeordnet', () => {
   eq(sm({ brand: 'Netto Marken-Discount', 'addr:country': 'DE' }).key, 'netto');
   eq(sm({ name: 'Billa' , 'addr:country': 'AT' }, 'pub'), null, 'Kneipen sind keine Kettenfilialen');
   eq(sm({ name: 'Greißlerei Huber', 'addr:country': 'AT' }), null);
+});
+
+test('Preisalarm: Wörter, Gebindeart, Höchstpreis, Gültigkeit', () => {
+  const p = (beer, unit, price, extra = {}) => ({ country: 'AT', chain: 'spar', beer, unit, price, package: '', ...extra });
+  const w = { q: 'zipfer märzen', kind: 'crate', max: 20, country: 'AT' };
+  ok(matches(w, p('Zipfer Märzen', 'kasten20x0.5l', 14.4)), 'Kiste unter 20 €');
+  ok(!matches(w, p('Zipfer Märzen', 'kasten20x0.5l', 25.8)), 'zu teuer');
+  ok(!matches(w, p('Zipfer Märzen', 'other', 8.4, { volume_l: 3 })), 'Sixpack ist keine Kiste');
+  ok(matches({ ...w, kind: 'pack' }, p('Zipfer Märzen', 'other', 8.4, { volume_l: 3 })), 'Sixpack');
+  ok(!matches(w, p('Gösser Märzen', 'kasten20x0.5l', 14)), 'andere Marke');
+  const res = evaluate([w], [p('Zipfer Märzen', 'kasten20x0.5l', 14.4, { valid_from: '2999-01-01' })]);
+  eq(res[0].hits.length, 0, 'künftige Aktion zählt noch nicht');
+});
+test('Scanner: Gebinde aus Open-Food-Facts-Menge', () => {
+  eq(parsePackLabel('500 ml'), '0.5l');
+  eq(parsePackLabel('0,33 l'), '0.33l');
+  eq(parsePackLabel('20 x 0,5 l'), 'kasten20x0.5l');
+  eq(parsePackLabel('6 x 0,33 l'), null);
+  eq(parsePackLabel(''), null);
 });
 
 /* ---------- Teilen ---------- */

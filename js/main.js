@@ -15,6 +15,11 @@ import { initDetail, openPlace } from './ui/detail.js';
 import { initTour, loadSharedTour, onTourModeShown, onTourModeHidden, paintRange } from './ui/tourUi.js';
 import { attachAutocomplete } from './ui/autocomplete.js';
 import { openBac } from './ui/bacUi.js';
+import { initSync } from './sync.js';
+import { openSync, joinFromLink } from './ui/syncUi.js';
+import { openDiary, diaryBeerSuggestions } from './ui/diaryUi.js';
+import { openAlerts, checkAlerts, initAlerts } from './ui/alertsUi.js';
+import { openGroupFromTour, joinGroupFromLink, activeGroup } from './ui/groupUi.js';
 
 /* ---------- Theme ---------- */
 function currentTheme() {
@@ -128,6 +133,9 @@ function initMenu() {
     close();
     const a = b.dataset.action;
     if (a === 'bac') openBac();
+    else if (a === 'diary') openDiary();
+    else if (a === 'alerts') openAlerts();
+    else if (a === 'sync') openSync();
     else if (a === 'theme') applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
     else if (a === 'export') {
       const data = exportBundle({ community: exportLocalCommunity() });
@@ -200,6 +208,10 @@ async function handleHash() {
     openPlace(h.id);
     return true;
   }
+  if (h.kind === 'sync') { joinFromLink(h.code); return false; }
+  if (h.kind === 'group') { joinGroupFromLink(h.code); return true; }
+  if (h.kind === 'alerts') { openAlerts(); return false; }
+  if (h.kind === 'diary') { openDiary(); return false; }
   if (h.kind === 'tour') {
     setMode('tour');
     await setLocation(h.tour.start, { search: false });
@@ -278,6 +290,14 @@ async function init() {
   window.addEventListener('hashchange', handleHash);
 
   registerSW();
+  initSync();
+  initAlerts();
+  on('sync-changed', () => { renderFinder(); toast('Daten von deinem anderen Gerät übernommen', { tone: 'good', ms: 2200 }); });
+  $('#btnGroup').addEventListener('click', openGroupFromTour);
+  const g = activeGroup();
+  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}Gruppe ${g.code}`;
+  $('#beerList').innerHTML = diaryBeerSuggestions().map(b => `<option value="${b.replace(/"/g, '&quot;')}">`).join('');
+  setTimeout(() => checkAlerts().catch(() => {}), 2500);
   if (isShared()) migrateLocalToShared().then(n => { if (n) toast(`${n} lokale Preise mit der Community geteilt`, { tone: 'good' }); }).catch(() => {});
 
   // Startpunkt: Link > letzter Standort > (falls erlaubt) GPS
