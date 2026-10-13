@@ -8,7 +8,7 @@
 "price": 2.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121331000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 0.44,
 "currency": "CHF"
 },
@@ -21,46 +21,8 @@
 "price": 13.2,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121333800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.0,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "M-Budget Lager alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.6,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121338700000",
-"seen": "2026-10-06",
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Calanda Radler Mango, alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 8.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121342700000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Calanda Radler Peach alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 8.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121310500000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -72,7 +34,45 @@
 "price": 9.6,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121328900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
+"volume_l": 1.98,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "M-Budget Lager alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.6,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121338700000",
+"seen": "2026-10-13",
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Calanda Radler Mango, alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121342700000",
+"seen": "2026-10-13",
+"volume_l": 1.98,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Calanda Radler Grapefruit alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121335200000",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -85,47 +85,21 @@
 "price": 10.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121300800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.1,
 "currency": "CHF"
 },
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Calanda Radler Grapefruit alkoholfrei",
+"beer": "Calanda Radler Peach alkoholfrei",
 "unit": "other",
 "package": "6×0,33 l",
 "price": 8.5,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121335200000",
-"seen": "2026-10-06",
+"source": "https://www.migros.ch/de/product/121310500000",
+"seen": "2026-10-13",
 "volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Calanda Lager Vita alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 8.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121310300000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Feldschlösschen Panache Zitrone 0.0% alkoholfrei",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 11.95,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121320300000",
-"seen": "2026-10-06",
-"volume_l": 3.0,
 "currency": "CHF"
 },
 {
@@ -137,7 +111,7 @@
 "price": 10.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121329500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -150,20 +124,20 @@
 "price": 8.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121335000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Feldschlösschen Bier Weizenfrisch ohne Alkohol",
+"beer": "Feldschlösschen Panache Zitrone 0.0% alkoholfrei",
 "unit": "other",
 "package": "6×0,5 l",
 "price": 11.95,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121337500000",
-"seen": "2026-10-06",
+"source": "https://www.migros.ch/de/product/121320300000",
+"seen": "2026-10-13",
 "volume_l": 3.0,
 "currency": "CHF"
 },
@@ -176,21 +150,21 @@
 "price": 11.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121304300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.0,
 "currency": "CHF"
 },
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Eichhof Radler alkoholfrei",
+"beer": "Feldschlösschen Bier Weizenfrisch ohne Alkohol",
 "unit": "other",
-"package": "10×0,33 l",
-"price": 12.95,
+"package": "6×0,5 l",
+"price": 11.95,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121326300000",
-"seen": "2026-10-06",
-"volume_l": 3.3,
+"source": "https://www.migros.ch/de/product/121337500000",
+"seen": "2026-10-13",
+"volume_l": 3.0,
 "currency": "CHF"
 },
 {
@@ -202,8 +176,21 @@
 "price": 11.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121336400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Calanda Lager Vita alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121310300000",
+"seen": "2026-10-13",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -215,7 +202,7 @@
 "price": 2.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121301500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -227,8 +214,34 @@
 "price": 11.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121320900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Grimbergen Blonde 0.0% alkoholfrei",
+"unit": "other",
+"package": "6×0,25 l",
+"price": 11.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121329700000",
+"seen": "2026-10-13",
+"volume_l": 1.5,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Non IPA alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 10.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121334400000",
+"seen": "2026-10-13",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -240,7 +253,7 @@
 "price": 2.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121342400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -252,7 +265,7 @@
 "price": 1.3,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121321400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -264,7 +277,7 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121324900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -276,7 +289,7 @@
 "price": 8.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121328800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -289,7 +302,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121326000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -301,7 +314,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121326200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -313,7 +326,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121327500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -325,7 +338,7 @@
 "price": 8.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121327600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -338,7 +351,7 @@
 "price": 2.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121300700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 0.275,
 "currency": "CHF"
 },
@@ -351,7 +364,7 @@
 "price": 10.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121320100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.0,
 "currency": "CHF"
 },
@@ -364,7 +377,7 @@
 "price": 1.85,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121320200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -376,7 +389,7 @@
 "price": 2,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121320800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -388,7 +401,7 @@
 "price": 2.1,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121328000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -400,7 +413,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121328700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -412,7 +425,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121329200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -424,7 +437,7 @@
 "price": 2.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121329400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -436,7 +449,7 @@
 "price": 2.1,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121329600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 0.25,
 "currency": "CHF"
 },
@@ -449,7 +462,7 @@
 "price": 1.65,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121329800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -461,7 +474,7 @@
 "price": 8.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121302800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -474,7 +487,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121302700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -486,7 +499,7 @@
 "price": 3.3,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121302500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -498,7 +511,7 @@
 "price": 1.2,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121332900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -510,7 +523,7 @@
 "price": 13.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121338500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 2.64,
 "currency": "CHF"
 },
@@ -523,7 +536,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121334900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -535,7 +548,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121335100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -547,7 +560,7 @@
 "price": 1.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121335500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -559,7 +572,7 @@
 "price": 1.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121336100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -571,7 +584,7 @@
 "price": 2.1,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121336300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -583,7 +596,7 @@
 "price": 1.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121338600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -595,7 +608,7 @@
 "price": 1.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121334300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -607,7 +620,7 @@
 "price": 1.35,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121334700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -619,7 +632,7 @@
 "price": 2.1,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121304200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -631,7 +644,7 @@
 "price": 1.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121304000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -643,7 +656,7 @@
 "price": 2.25,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121333700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -655,7 +668,7 @@
 "price": 2.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121303600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -667,7 +680,7 @@
 "price": 1.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121339000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -679,7 +692,7 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121304700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -692,7 +705,7 @@
 "price": 2.1,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121320500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -704,7 +717,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121342800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -716,7 +729,7 @@
 "price": 3.2,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121305200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -728,7 +741,7 @@
 "price": 1.6,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121342500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -740,7 +753,7 @@
 "price": 12.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121305300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -753,7 +766,7 @@
 "price": 14.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/120989700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -766,7 +779,7 @@
 "price": 2.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/120989500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -778,7 +791,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121310200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -790,7 +803,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121310400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -802,7 +815,7 @@
 "price": 1.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121313300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -814,7 +827,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -826,7 +839,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -838,7 +851,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -850,7 +863,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121311000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 0.275,
 "currency": "CHF"
 },
@@ -863,7 +876,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121310800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 0.275,
 "currency": "CHF"
 },
@@ -876,7 +889,7 @@
 "price": 1.85,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121310000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -888,7 +901,7 @@
 "price": 1.8,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121311700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -900,7 +913,7 @@
 "price": 13.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121311600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 2.64,
 "currency": "CHF"
 },
@@ -913,7 +926,7 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121322100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -925,7 +938,7 @@
 "price": 14.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121312500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -938,7 +951,7 @@
 "price": 2.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121312600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -950,7 +963,7 @@
 "price": 8.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121312800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -963,7 +976,7 @@
 "price": 7.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121312100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 2.0,
 "currency": "CHF"
 },
@@ -976,7 +989,7 @@
 "price": 2,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121311800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -988,7 +1001,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121312700000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -1000,7 +1013,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121309800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -1012,7 +1025,7 @@
 "price": 12.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121313600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -1025,7 +1038,7 @@
 "price": 1.6,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121314200000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "currency": "CHF"
 },
 {
@@ -1037,34 +1050,21 @@
 "price": 9.6,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121314100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Non IPA alkoholfrei",
+"beer": "Bilz Panache alkoholfrei",
 "unit": "other",
-"package": "6×0,33 l",
-"price": 10.95,
+"package": "10×0,33 l",
+"price": 14.5,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121334400000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Grimbergen Blonde 0.0% alkoholfrei",
-"unit": "other",
-"package": "6×0,25 l",
-"price": 11.95,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121329700000",
-"seen": "2026-10-06",
-"volume_l": 1.5,
+"source": "https://www.migros.ch/de/product/121329300000",
+"seen": "2026-10-13",
+"volume_l": 3.3,
 "currency": "CHF"
 },
 {
@@ -1076,7 +1076,7 @@
 "price": 7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 2.0,
 "currency": "CHF"
 },
@@ -1089,7 +1089,33 @@
 "price": 9.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121313400000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
+"volume_l": 1.98,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Eichhof Radler alkoholfrei",
+"unit": "other",
+"package": "10×0,33 l",
+"price": 12.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121326300000",
+"seen": "2026-10-13",
+"volume_l": 3.3,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Appenzeller Bier Bschorle alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121309900000",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -1102,20 +1128,21 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121310900000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.65,
 "currency": "CHF"
 },
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Brooklyn Special Effects Hoppy Lager, alkoholfrei",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 2.7,
+"beer": "Schützengarten Amber Bio, alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 11.5,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121301300000",
-"seen": "2026-10-06",
+"source": "https://www.migros.ch/de/product/121304100000",
+"seen": "2026-10-13",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -1127,21 +1154,8 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121311100000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.65,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Bilz Panache alkoholfrei",
-"unit": "other",
-"package": "10×0,33 l",
-"price": 14.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121329300000",
-"seen": "2026-10-06",
-"volume_l": 3.3,
 "currency": "CHF"
 },
 {
@@ -1153,33 +1167,7 @@
 "price": 8.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121326100000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Appenzeller Quöllfrisch alkoholfrei",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 10.95,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121310100000",
-"seen": "2026-10-06",
-"volume_l": 3.0,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Heineken 0.0 alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 9.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121342600000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -1192,8 +1180,34 @@
 "price": 12.5,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121321000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.3,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Appenzeller Quöllfrisch alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121310100000",
+"seen": "2026-10-13",
+"volume_l": 3.0,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Heineken 0.0 alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 9.5,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121342600000",
+"seen": "2026-10-13",
+"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -1205,21 +1219,8 @@
 "price": 11.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121325000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 3.3,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Schützengarten Amber Bio, alkoholfrei",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 11.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121304100000",
-"seen": "2026-10-06",
-"volume_l": 1.98,
 "currency": "CHF"
 },
 {
@@ -1231,7 +1232,7 @@
 "price": 5.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307300000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -1244,20 +1245,7 @@
 "price": 5.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121322200000",
-"seen": "2026-10-06",
-"volume_l": 1.32,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Non Panaché alkoholfrei",
-"unit": "other",
-"package": "4×0,33 l",
-"price": 5.4,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121307800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -1270,7 +1258,20 @@
 "price": 5.4,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121307500000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
+"volume_l": 1.32,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Non Panaché alkoholfrei",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 5.4,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121307800000",
+"seen": "2026-10-13",
 "volume_l": 1.32,
 "currency": "CHF"
 },
@@ -1283,7 +1284,7 @@
 "price": 6.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121333000000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 },
@@ -1296,7 +1297,7 @@
 "price": 7.95,
 "promo": false,
 "source": "https://www.migros.ch/de/product/121334800000",
-"seen": "2026-10-06",
+"seen": "2026-10-13",
 "volume_l": 1.98,
 "currency": "CHF"
 }
