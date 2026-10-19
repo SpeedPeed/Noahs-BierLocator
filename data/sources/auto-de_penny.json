@@ -2,28 +2,15 @@
 {
 "country": "DE",
 "chain": "penny",
-"beer": "Warsteiner Pils Premium Verum",
+"beer": "Penny Bier-Adventskalender",
 "unit": "other",
-"package": "6×0,5 l",
-"price": 3.33,
+"package": "24×0,5 l",
+"price": 33.33,
 "promo": true,
-"source": "https://www.penny.de/angebote/getraenke/warsteiner-pils-premium-verum",
-"seen": "2026-10-06",
-"volume_l": 3.0,
-"note": "Aktion, statt UVP 4,95 €",
-"valid_until": "2026-10-10"
-},
-{
-"country": "DE",
-"chain": "penny",
-"beer": "Beck’s Pils",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.79,
-"promo": true,
-"source": "https://www.penny.de/angebote/getraenke1/becks-pils",
-"seen": "2026-10-06",
-"note": "Aktion, statt UVP 1,04 €",
-"valid_until": "2026-10-10"
+"source": "https://www.penny.de/angebote/getraenke/penny-bier-adventskalender",
+"seen": "2026-10-19",
+"volume_l": 12.0,
+"note": "Aktion",
+"valid_until": "2026-10-24"
 }
 ]
