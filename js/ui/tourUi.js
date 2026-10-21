@@ -1,18 +1,21 @@
 // "Bier-Radtour": Formular, Planung mit Fortschritt, Ergebnis mit Zeitplan,
 // Höhenprofil, Wetter, Promille-Hochrechnung, Tauschen/Entfernen einzelner Stopps.
+// Während einer Live-Tour (liveUi.js) zeigt die Zeitleiste die tatsächliche Lage.
 import { prefs, savePrefs, isHidden, loadBac } from '../store.js';
-import { state, rememberPlaces } from '../state.js';
+import { state, rememberPlaces, emit } from '../state.js';
 import { TYPE_META, fetchPlacesAround, fetchPlacesByIds } from '../places.js';
-import { loadSummaries } from '../community.js';
+import { loadSummaries, getSummary } from '../community.js';
 import { placeStatus, statusBadge, tourQuality } from '../placeInfo.js';
 import { isOpenAt } from '../openingHours.js';
 import { planTour, rerouteTour, TOUR_TOLERANCE } from '../tour/tourPlan.js';
 import { alternativesForStop, legStats } from '../tour/planner.js';
 import { routeThrough, RIDE_STYLES } from '../tour/routing.js';
-import { weatherForWindow, weatherIcon, weatherText } from '../weather.js';
+import { liveSchedule } from '../tour/live.js';
+import { weatherForWindow, weatherIcon, weatherText, windDirName } from '../weather.js';
 import { simulateBac, DRINK_PRESETS } from '../bac.js';
 import { countryInfo } from '../legal.js';
 import { tourLink, shareLink } from '../share.js';
+import { cheapestChainPrice } from '../chainPrices.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fmtDist, fmtKm, fmtDuration, fmtClock, haversine, clamp } from '../util.js';
 import { $, toast, animateNumber, downloadFile } from './dom.js';
@@ -23,12 +26,26 @@ import * as mapview from '../map.js';
 
 const TOUR_CORE_TYPES = ['pub', 'biergarten', 'brewery', 'gasthaus'];
 const TOUR_EXTRA_TYPES = ['restaurant', 'beverages', 'convenience', 'supermarket', 'fuel'];
+
+export const TOUR_THEMES = {
+  all:        { label: 'Alles', icon: 'beerMug' },
+  brewery:    { label: 'Brauereien', icon: 'barrel' },
+  biergarten: { label: 'Biergärten', icon: 'tree' },
+  cheap:      { label: 'Günstig', icon: 'coin' },
+  mix:        { label: 'Bunt gemischt', icon: 'shuffle' },
+};
+const BREW_NAME = /bräu|brau(haus|erei|stube|keller|gasthof)|brewery|brewpub|brauwerk/i;
+const isBreweryLike = p => p.type === 'brewery' || p.tags.microbrewery === 'yes' || BREW_NAME.test(p.name);
+const isGardenLike = p => p.type === 'biergarten' || p.tags.outdoor_seating === 'yes' || p.tags.beer_garden === 'yes';
+
 let openPlace = () => {};
 let dest = null;         // { lat, lon, label }
 let tour = null;         // aktuelle Tour
 let pool = [];
+let poolTheme = null;
 let shownKeys = new Set();
 let busy = false;
+let lastWx = null;       // Wetter während der geplanten Tour
 
 export function initTour(opts) {
   openPlace = opts.openPlace;
@@ -40,10 +57,10 @@ export function initTour(opts) {
     t.roundtrip = round;
     seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String((b.dataset.value === 'round') === round)));
     $('#tourDestWrap').hidden = round;
+    $('#tourCalmRow').hidden = !round;
     savePrefs();
   };
   seg.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.value === 'round'); });
-  setMode(t.roundtrip);
   $('#tourDest').addEventListener('input', () => { dest = null; }); // Text geändert → altes Ziel verwerfen
   attachAutocomplete($('#tourDest'), $('#tourDestSuggest'), {
     onPick: it => { dest = it; },
@@ -92,18 +109,68 @@ export function initTour(opts) {
     savePrefs();
   });
 
-  const shops = $('#tourShops');
-  shops.checked = !!t.shops;
-  shops.addEventListener('change', () => { t.shops = shops.checked; pool = []; savePrefs(); });
+  // Thema & Extras (eingeklappt, damit das Formular schlank bleibt)
+  if (!TOUR_THEMES[t.theme]) t.theme = 'all';
+  $('#tourTheme').innerHTML = Object.entries(TOUR_THEMES).map(([k, th]) =>
+    `<button type="button" class="type-chip" role="radio" data-theme="${k}" aria-pressed="${t.theme === k}" style="--c:var(--accent-strong)">${icon(th.icon, { size: 15 })}<span>${th.label}</span></button>`).join('');
+  $('#tourTheme').addEventListener('click', e => {
+    const b = e.target.closest('[data-theme]');
+    if (!b) return;
+    t.theme = b.dataset.theme;
+    $('#tourTheme').querySelectorAll('[data-theme]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    pool = [];
+    savePrefs();
+    extrasSummary();
+  });
+  const sw = (id, key, def) => {
+    const el = $(id);
+    el.checked = t[key] == null ? def : !!t[key];
+    el.addEventListener('change', () => { t[key] = el.checked; if (key === 'shops') pool = []; savePrefs(); extrasSummary(); });
+  };
+  sw('#tourCalm', 'calmLate', true);
+  sw('#tourWind', 'wind', true);
+  sw('#tourShops', 'shops', false);
+  extrasSummary();
+  setMode(t.roundtrip);
 
   $('#btnPlan').addEventListener('click', () => plan());
   $('#btnReroll').addEventListener('click', () => plan({ reroll: true }));
   $('#btnTourEdit').addEventListener('click', () => { $('#tourForm').hidden = false; $('#tourForm').scrollIntoView({ behavior: 'smooth' }); });
-  $('#btnShareTour').addEventListener('click', shareTour);
-  $('#btnGpx').addEventListener('click', exportGpx);
-  $('#btnGmaps').addEventListener('click', openGmaps);
+  $('#btnLive').addEventListener('click', () => emit('live-start'));
+  initMoreMenu();
 
   $('#tourTimeline').addEventListener('click', onTimelineClick);
+}
+
+function extrasSummary() {
+  const t = prefs.tour;
+  const parts = [];
+  if (t.theme && t.theme !== 'all') parts.push(TOUR_THEMES[t.theme].label);
+  if (t.shops) parts.push('+ Läden');
+  $('#tourExtrasSummary').textContent = parts.join(' · ');
+}
+
+// "Mehr"-Menü der fertigen Tour: Teilen, GPX, Google Maps, Bingo, Speichern.
+function initMoreMenu() {
+  const btn = $('#btnTourMore'), menu = $('#tourMoreMenu');
+  const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    btn.setAttribute('aria-expanded', String(!menu.hidden));
+  });
+  document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('#tourMoreWrap')) close(); });
+  menu.addEventListener('click', e => {
+    const b = e.target.closest('[data-more]');
+    if (!b) return;
+    close();
+    const a = b.dataset.more;
+    if (a === 'share') shareTour();
+    else if (a === 'gpx') exportGpx();
+    else if (a === 'gmaps') openGmaps();
+    else if (a === 'bingo') emit('open-bingo');
+    else if (a === 'save') emit('tour-save');
+  });
 }
 
 export function paintRange(el) {
@@ -126,10 +193,51 @@ function setProgress(text) {
   $('#tourProgressText').textContent = text;
 }
 
+/* ---------- Thema ---------- */
+function effectivePer05(p) {
+  const s = getSummary(p.id);
+  if (s.cheapest && !s.cheapest.stale) return s.cheapest.per05;
+  const c = cheapestChainPrice(p);
+  return c ? c.per05 : null;
+}
+
+// Pool nach Thema eingrenzen. → { list, note }
+function themedPool(all, theme, k) {
+  if (theme === 'brewery') {
+    const list = all.filter(isBreweryLike);
+    if (list.length < k) throw new Error(`Nur ${list.length} Brauerei${list.length === 1 ? '' : 'en'} in der Gegend — weniger Stopps, eine längere Tour oder ein anderes Thema probieren.`);
+    return { list };
+  }
+  if (theme === 'biergarten') {
+    const list = all.filter(isGardenLike);
+    if (list.length < k) throw new Error(`Nur ${list.length} Biergärten bzw. Lokale mit Gastgarten in der Gegend — weniger Stopps oder ein anderes Thema probieren.`);
+    return { list };
+  }
+  if (theme === 'cheap') {
+    const priced = all.filter(p => effectivePer05(p) != null);
+    if (priced.length >= k * 2) return { list: priced };
+    return { list: all, note: `Nur ${priced.length} Lokale mit bekanntem Preis — die anderen Stopps sind nach Gefühl gewählt. Preise melden hilft!` };
+  }
+  return { list: all };
+}
+
+function themedQuality(theme, wx) {
+  if (theme === 'cheap') {
+    return p => {
+      const v = effectivePer05(p);
+      const bonus = v == null ? -0.12 : clamp((4.6 - v) / 3, -0.3, 0.45);
+      return clamp(tourQuality(p, wx) + bonus, 0, 1);
+    };
+  }
+  return p => tourQuality(p, wx);
+}
+const mixKey = p => (p.tags.brewery ? `bier:${p.tags.brewery.split(';')[0].trim().toLowerCase()}` : `typ:${p.type}`);
+
 /* ---------- Planung ---------- */
 async function plan({ reroll = false } = {}) {
   if (busy) return;
   const t = prefs.tour;
+  const theme = TOUR_THEMES[t.theme] ? t.theme : 'all';
   $('#tourError').hidden = true;
   if (!state.location) {
     showError('Bitte zuerst oben einen Startpunkt festlegen — Standort teilen oder einen Ort suchen.');
@@ -160,9 +268,11 @@ async function plan({ reroll = false } = {}) {
   if (mobile()) setSheet('half');
 
   try {
-    if (!reroll || !pool.length) {
+    let note = null;
+    if (!reroll || !pool.length || poolTheme !== theme) {
       setProgress('Bierorte in der Umgebung werden gesucht…');
-      const types = t.shops ? [...TOUR_CORE_TYPES, ...TOUR_EXTRA_TYPES] : TOUR_CORE_TYPES;
+      let types = t.shops ? [...TOUR_CORE_TYPES, ...TOUR_EXTRA_TYPES] : TOUR_CORE_TYPES;
+      if (theme === 'brewery' || theme === 'biergarten') types = [...new Set([...types, 'restaurant'])]; // Brauhäuser & Gastgärten sind oft "Restaurant"
       const center = end ? { lat: (start.lat + end.lat) / 2, lon: (start.lon + end.lon) / 2 } : start;
       const direct = end ? haversine(start.lat, start.lon, end.lat, end.lon) : 0;
       const radius = clamp(end ? Math.max(direct / 2 + 1500, targetM * 0.3) : targetM * 0.36 + 600, 1000, 22000);
@@ -170,29 +280,41 @@ async function plan({ reroll = false } = {}) {
       // Orte ohne Namen findet man vor Ort schlecht — nur nehmen, wenn sonst zu wenig da ist.
       const visible = places.filter(p => !isHidden(p.id));
       const named = visible.filter(p => !p.unnamed);
-      pool = named.length >= t.stops * 3 ? named : visible;
-      rememberPlaces(pool);
-      if (pool.length < t.stops) {
-        throw new Error(`Nur ${pool.length} passende Orte in der Gegend gefunden. Mehr Ortstypen unter „Bier finden“ erlauben, die Länge ändern oder weniger Stopps wählen.`);
-      }
+      const base = named.length >= t.stops * 3 ? named : visible;
+      rememberPlaces(base);
       // Bewertungen/Preise fließen in die Qualität ein — Fehler hier sind egal.
-      try { await loadSummaries(pool.slice(0, 600).map(p => p.id)); } catch (e) { /* weiter ohne */ }
+      try { await loadSummaries(base.slice(0, 600).map(p => p.id)); } catch (e) { /* weiter ohne */ }
+      const themed = themedPool(base, theme, t.stops);
+      pool = themed.list;
+      note = themed.note || null;
+      poolTheme = theme;
+      if (pool.length < t.stops) {
+        throw new Error(`Nur ${pool.length} passende Orte in der Gegend gefunden. Mehr Ortstypen erlauben („Thema & Extras“), die Länge ändern oder weniger Stopps wählen.`);
+      }
     }
+
+    // Wetter während der Tour (Vorhersage): Biergärten bei Sonne, drinnen bei Regen, Wind.
+    const estEnd = new Date(startTime.getTime() + (targetM / 4.2 + t.stops * t.dwell * 60) * 1000);
+    const wx = weatherForWindow(state.weather, startTime, estEnd);
+    lastWx = wx;
+    const wind = t.wind !== false && wx && wx.wind ? wx.wind : null;
 
     const country = state.country;
     const result = await planTour({
       pool, start, end, targetM, k: t.stops, style: t.style,
       startTime, dwellSec: t.dwell * 60,
-      quality: tourQuality,
+      quality: themedQuality(theme, wx),
       isOpenAt: (p, date) => isOpenAt(p.tags.opening_hours, date, country),
       reroll, avoidKeys: shownKeys,
+      wind, diversityKey: theme === 'mix' ? mixKey : null, calmLate: t.calmLate !== false,
       onProgress: ({ phase, step }) => setProgress(
         phase === 'shape' ? 'Schönste Tourform wird gesucht…'
           : phase === 'route' ? 'Fahrradroute wird berechnet…'
+          : phase === 'reverse' ? 'Prüfe, ob andersrum weniger Anstiege nach den Bieren kommen…'
           : `Feinschliff auf ${t.km} km (Runde ${step})…`),
     });
     shownKeys.add(result.variant.key);
-    tour = result;
+    tour = { ...result, theme, wind, wx, note };
     state.tour = tour;
     renderTour({ animate: true });
   } catch (e) {
@@ -227,18 +349,22 @@ function schedule(tr) {
 }
 
 /* ---------- Darstellung ---------- */
-export function renderTour({ animate = false } = {}) {
+export function renderTour({ animate = false, fit = true } = {}) {
   if (!tour) return;
   const tr = tour;
+  const live = state.live;
   const { rows, endTime, lastLeg } = schedule(tr);
+  const ls = live ? liveSchedule(tr, live) : null;
   const r = tr.route;
   const dev = (r.distance - tr.targetM) / tr.targetM;
   const legs = r.legs.map(l => l.distance);
-  const ls = legStats(legs);
+  const lst = legStats(legs);
 
   $('#tourForm').hidden = true;
   $('#tourResult').hidden = false;
-  $('#tourTitle').textContent = tr.roundtrip ? 'Deine Bier-Rundtour' : 'Deine Biertour';
+  $('#tourResult').classList.toggle('is-live', !!live);
+  $('#tourTitle').textContent = live ? 'Unterwegs' : tr.roundtrip ? 'Deine Bier-Rundtour' : 'Deine Biertour';
+  $('#btnTourEdit').hidden = !!live;
 
   const devText = Math.abs(dev) <= TOUR_TOLERANCE ? `≈ Wunsch ${tr.targetM / 1000} km` : `${dev > 0 ? '+' : '−'}${Math.round(Math.abs(dev) * 100)} % vs. ${tr.targetM / 1000} km`;
   const devTone = Math.abs(dev) <= TOUR_TOLERANCE ? 'good' : Math.abs(dev) <= 0.2 ? 'warn' : 'bad';
@@ -248,7 +374,7 @@ export function renderTour({ animate = false } = {}) {
     <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${fmtClock(endTime)}</b><small>zurück · ${fmtDuration((endTime - tr.startTime) / 1000)} gesamt</small></div>
     <div class="stat"><span class="stat-ico">${icon('mountain', { size: 18 })}</span><b>${r.ascent.up != null ? `<span data-num="${r.ascent.up}" data-dec="0">0</span> Hm` : '–'}</b><small>bergauf</small></div>
     <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b>${tr.stops.length}</b><small>Bierstopps</small></div>
-    <div class="stat"><span class="stat-ico">${icon('activity', { size: 18 })}</span><b>${fmtKm(Math.min(...legs))}–${fmtKm(Math.max(...legs))} km</b><small>pro Etappe${ls.cv < 0.3 ? ' · gleichmäßig' : ''}</small></div>`;
+    <div class="stat"><span class="stat-ico">${icon('activity', { size: 18 })}</span><b>${fmtKm(Math.min(...legs))}–${fmtKm(Math.max(...legs))} km</b><small>pro Etappe${lst.cv < 0.3 ? ' · gleichmäßig' : ''}</small></div>`;
   $('#tourStats').querySelectorAll('[data-num]').forEach(el => {
     if (animate) animateNumber(el, Number(el.dataset.num), { decimals: Number(el.dataset.dec), duration: 900 });
     else el.textContent = Number(el.dataset.num).toFixed(Number(el.dataset.dec)).replace('.', ',');
@@ -258,13 +384,14 @@ export function renderTour({ animate = false } = {}) {
   const w = weatherForWindow(state.weather, tr.startTime, endTime);
   $('#tourWeather').innerHTML = w ? `<div class="weather-strip">
       ${icon(weatherIcon(w.code), { size: 22 })}
-      <span><b>${Math.round(w.min)}–${Math.round(w.max)} °C</b>, ${weatherText(w.code)}</span>
+      <span><b>${Math.round(w.min)}–${Math.round(w.max)} °C</b>, ${weatherText(w.code)}${w.wind && w.wind.speed >= 10 ? ` · Wind ${w.wind.speed} km/h aus ${windDirName(w.wind.from)}` : ''}</span>
       <span class="rain ${w.rain >= 50 ? 'tone-bad' : w.rain >= 25 ? 'tone-warn' : ''}">${icon('umbrella', { size: 15 })}${w.rain} %</span>
     </div>` : '';
 
   // Hinweise
   const hints = [];
   if (!r.bikeFriendly) hints.push(['alertTriangle', 'Der Fahrrad-Router war nicht erreichbar — das ist eine Standard-Route ohne Radweg-Vorliebe.']);
+  if (tr.note) hints.push(['info', escapeHtml(tr.note)]);
   if (tr.evenerK && tr.evenerK < tr.stops.length) hints.push(['info', `Für ${tr.stops.length} Stopps liegen die Bierorte hier ungünstig verteilt. Mit ${tr.evenerK} Stopps wird die Tour gleichmäßiger. <button class="link-btn" data-even="${tr.evenerK}">Mit ${tr.evenerK} Stopps planen</button>`]);
   if (tr.k < tr.requestedK) hints.push(['info', `Nur ${tr.k} statt ${tr.requestedK} Stopps möglich — mehr Orte gibt die Gegend nicht her.`]);
   const sortedLegs = legs.slice().sort((a, b) => a - b);
@@ -278,6 +405,12 @@ export function renderTour({ animate = false } = {}) {
   if (r.overlap > 0.25) hints.push(['info', `Etwa ${Math.round(r.overlap * 100)} % der Strecke fährst du doppelt (Stichstraßen). „Andere Route“ probieren?`]);
   if (dev > 0.2) hints.push(['info', 'Deutlich länger als gewünscht — die passenden Orte liegen weiter auseinander.']);
   else if (dev < -0.2) hints.push(['info', 'Kürzer als gewünscht — weiter draußen gibt es keine passenden Orte.']);
+  if (tr.wx && tr.wx.rainy) hints.push(['cloudRain', tr.theme === 'biergarten' ? 'Regen angesagt — für eine Biergarten-Runde eher ungünstig.' : 'Regen angesagt — Lokale mit Innenraum wurden bevorzugt, Biergärten gemieden.']);
+  else if (tr.wx && tr.wx.sunny) hints.push(['sun', 'Biergartenwetter — Lokale mit Garten wurden bevorzugt.']);
+  if (tr.reversed) hints.push(['mountain', 'Andersrum gefahren: so liegen die Anstiege vor den Bieren statt danach.']);
+  if (tr.wind && tr.wind.speed >= 12 && tr.effort && tr.roundtrip) {
+    hints.push(['activity', tr.effort.headwind < -0.15 ? `Rückenwind auf dem Heimweg (Wind aus ${windDirName(tr.wind.from)}, ${tr.wind.speed} km/h).` : tr.effort.headwind > 0.15 ? `Gegen Ende Gegenwind (aus ${windDirName(tr.wind.from)}, ${tr.wind.speed} km/h) — anders ging's hier nicht.` : `Wind aus ${windDirName(tr.wind.from)} (${tr.wind.speed} km/h) kommt meist von der Seite.`]);
+  }
   const bac = projectBac(rows);
   if (bac) hints.push([bac.over ? 'alertTriangle' : 'beerMug', bac.text]);
   $('#tourHints').innerHTML = hints.map(([ic, h]) => `<div class="hint-row">${icon(ic, { size: 16 })}<span>${h}</span></div>`).join('');
@@ -289,42 +422,55 @@ export function renderTour({ animate = false } = {}) {
 
   renderElevation(r, rows);
 
-  // Zeitleiste
-  const country = state.country;
+  // Zeitleiste (live: tatsächliche Lage und neu berechnete Zeiten)
+  const lrow = i => ls && ls.rows[i];
+  const legHm = leg => (leg.up != null && leg.up >= 15 ? ` · ${icon('mountain', { size: 12 })}${leg.up} Hm` : '');
   $('#tourTimeline').innerHTML = `
-    <li class="tl-item tl-start" style="--i:0">
+    <li class="tl-item tl-start${live ? ' tl-done' : ''}" style="--i:0">
       <span class="tl-dot">${icon('flag', { size: 14, strokeWidth: 2.2 })}</span>
-      <div class="tl-body"><b>Start</b><small>${fmtClock(tr.startTime)} Uhr${state.locationLabel ? ' · ' + escapeHtml(state.locationLabel) : ''}</small></div>
+      <div class="tl-body"><b>Start</b><small>${fmtClock(live ? new Date(live.startedAt) : tr.startTime)} Uhr${state.locationLabel && !live ? ' · ' + escapeHtml(state.locationLabel) : ''}</small></div>
     </li>
     ${rows.map((row, i) => {
       const s = row.stop, m = TYPE_META[s.type];
-      const st = placeStatus(s, row.arrive);
+      const lr = lrow(i);
+      const arrive = lr && lr.arrive ? lr.arrive : row.arrive;
+      const leave = lr && lr.leave ? lr.leave : row.leave;
+      const st = placeStatus(s, arrive);
       const b = statusBadge(st);
-      const openAtArrival = st ? (st.open ? (st.until && st.until < row.leave ? `${icon('alertTriangle', { size: 13 })} schließt ${fmtClock(st.until)}` : `${icon('checkCircle', { size: 13 })} offen bei Ankunft`) : `${icon('alertTriangle', { size: 13 })} ${b.text}`) : `${icon('info', { size: 13 })} Zeiten unbekannt`;
-      const tone = st ? (st.open && !(st.until && st.until < row.leave) ? 'open' : 'closed') : 'unknown';
-      return `<li class="tl-leg" style="--i:${i * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(row.leg.distance)} · ${fmtDuration(row.leg.duration)}</span></li>
-      <li class="tl-item" data-stop="${i}" style="--c:${m.color};--i:${i * 2 + 2}">
-        <span class="tl-dot tl-num">${i + 1}</span>
+      const closesEarly = st && st.open && st.until && st.until < leave;
+      const openAtArrival = st ? (st.open ? (closesEarly ? `${icon('alertTriangle', { size: 13 })} schließt ${fmtClock(st.until)}` : `${icon('checkCircle', { size: 13 })} offen bei Ankunft`) : `${icon('alertTriangle', { size: 13 })} ${b.text}`) : `${icon('info', { size: 13 })} Zeiten unbekannt`;
+      const tone = st ? (st.open && !closesEarly ? 'open' : 'closed') : 'unknown';
+      const status = lr ? lr.status : '';
+      const done = status === 'done';
+      const times = done ? (lr.arrive ? `war da ${fmtClock(lr.arrive)}` : 'übersprungen')
+        : status === 'here' ? `seit ${fmtClock(lr.arrive)} · weiter ca. ${fmtClock(lr.leave)}`
+        : `an ${fmtClock(arrive)} – ab ${fmtClock(leave)}`;
+      const shift = lr && !done && status !== 'here' ? Math.round((lr.arrive - lr.plannedArrive) / 60000) : 0;
+      return `<li class="tl-leg${done || status === 'here' ? ' tl-done' : ''}" style="--i:${i * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(row.leg.distance)} · ${fmtDuration(row.leg.duration)}${legHm(row.leg)}</span></li>
+      <li class="tl-item${done ? ' tl-done' : ''}${status === 'here' ? ' tl-here' : ''}${status === 'next' ? ' tl-next' : ''}" data-stop="${i}" style="--c:${m.color};--i:${i * 2 + 2}">
+        <span class="tl-dot tl-num">${done ? icon('check', { size: 15, strokeWidth: 3 }) : i + 1}</span>
         <div class="tl-body">
           <button class="tl-name" data-open="${s.id}">${escapeHtml(s.name)}</button>
-          <small>${m.short} · an ${fmtClock(row.arrive)} – ab ${fmtClock(row.leave)}</small>
-          <span class="status status-${tone}">${openAtArrival}</span>
+          <small>${m.short} · ${times}${Math.abs(shift) >= 5 ? ` <span class="${shift > 0 ? 'tone-warn' : 'tone-good'}">(${shift > 0 ? '+' : '−'}${Math.abs(shift)} Min)</span>` : ''}</small>
+          ${done ? '' : `<span class="status status-${tone}">${openAtArrival}</span>`}
         </div>
-        <div class="tl-actions">
+        ${done ? '' : `<div class="tl-actions">
           <button class="icon-btn small" data-swap="${i}" aria-label="Anderen Ort an dieser Stelle" title="Tauschen">${icon('shuffle', { size: 16 })}</button>
-          ${tr.stops.length > 1 ? `<button class="icon-btn small" data-remove="${i}" aria-label="Stopp entfernen" title="Entfernen">${icon('x', { size: 16 })}</button>` : ''}
-        </div>
+          ${tr.stops.length > 1 && status !== 'here' ? `<button class="icon-btn small" data-remove="${i}" aria-label="Stopp entfernen" title="Entfernen">${icon('x', { size: 16 })}</button>` : ''}
+        </div>`}
       </li>`;
     }).join('')}
-    <li class="tl-leg" style="--i:${rows.length * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(lastLeg.distance)} · ${fmtDuration(lastLeg.duration)}</span></li>
+    <li class="tl-leg" style="--i:${rows.length * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(lastLeg.distance)} · ${fmtDuration(lastLeg.duration)}${legHm(lastLeg)}</span></li>
     <li class="tl-item tl-end" style="--i:${rows.length * 2 + 2}">
       <span class="tl-dot">${icon(tr.roundtrip ? 'flag' : 'checkCircle', { size: 14, strokeWidth: 2.2 })}</span>
-      <div class="tl-body"><b>${tr.roundtrip ? 'Zurück am Start' : 'Ziel'}</b><small>ca. ${fmtClock(endTime)} Uhr${!tr.roundtrip && dest ? ' · ' + escapeHtml(dest.label) : ''}</small></div>
+      <div class="tl-body"><b>${tr.roundtrip ? 'Zurück am Start' : 'Ziel'}</b><small>ca. ${fmtClock(ls ? ls.endTime : endTime)} Uhr${!tr.roundtrip && dest ? ' · ' + escapeHtml(dest.label) : ''}</small></div>
     </li>`;
   $('#tourTimeline').classList.toggle('animate', animate);
 
   mapview.showPlaceMarkers(false);
-  mapview.drawRoute(tr, id => openPlace(id));
+  const doneSet = live ? new Set(ls.rows.filter(x => x.status === 'done').map(x => x.i)) : null;
+  mapview.drawRoute(tr, id => openPlace(id), { fit, done: doneSet });
+  if (live) emit('live-redrawn');
 }
 
 // "1 Bier pro Stopp" hochrechnen und mit der Fahrrad-Grenze vergleichen.
@@ -372,12 +518,14 @@ function renderElevation(route, rows) {
     acc += route.legs[i].distance;
     return `<g class="elev-stop" transform="translate(${x(Math.min(acc, total)).toFixed(1)},0)"><line y1="${padT}" y2="${H - padB}"/><circle cy="${padT - 2}" r="8"/><text y="${padT + 1}" text-anchor="middle">${i + 1}</text></g>`;
   }).join('');
+  const prog = state.live ? clamp(state.live.progress / total, 0, 1) : 0;
   box.innerHTML = `
     <div class="elev-head"><span>${icon('mountain', { size: 14 })}Höhenprofil</span><small>${Math.round(min)}–${Math.round(max)} m</small></div>
     <svg viewBox="0 -8 ${W} ${H + 8}" preserveAspectRatio="none" role="img" aria-label="Höhenprofil der Tour">
       <defs><linearGradient id="elevGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".55"/><stop offset="1" stop-color="var(--accent)" stop-opacity=".04"/></linearGradient></defs>
       <path class="elev-area" d="${line}L${W},${H - padB}L0,${H - padB}Z" fill="url(#elevGrad)"/>
       <path class="elev-line" d="${line}" fill="none"/>
+      ${prog ? `<rect class="elev-done" x="0" y="0" width="${(prog * W).toFixed(1)}" height="${H - padB}"/><line class="elev-me" x1="${(prog * W).toFixed(1)}" x2="${(prog * W).toFixed(1)}" y1="${padT}" y2="${H - padB}"/>` : ''}
       ${stopMarks}
       <line class="elev-cursor" y1="${padT}" y2="${H - padB}" x1="-10" x2="-10"/>
     </svg>
@@ -405,32 +553,60 @@ async function onTimelineClick(e) {
   if (!swap && !rem) return;
   if (busy) return;
   const i = Number((swap || rem).dataset.swap ?? (swap || rem).dataset.remove);
+  if (swap) await swapStop(i);
+  else await removeStop(i);
+}
+
+// Alternativen für Stopp i; bei laufender Tour nur Orte, die zur neuen Ankunftszeit offen haben.
+export function alternativesFor(i, { arriveAt = null } = {}) {
+  if (!tour) return [];
+  const used = new Set(tour.stops.map(s => s.id));
+  let alts = alternativesForStop(pool.length ? pool : tour.stops, tour.variant, i, used, tourQuality);
+  if (arriveAt) alts = alts.filter(p => isOpenAt(p.tags.opening_hours, arriveAt, state.country) !== false);
+  return alts;
+}
+
+export async function swapStop(i, { replacement = null, arriveAt = null } = {}) {
   const stops = tour.stops.slice();
-  const variant = { ...tour.variant, anchors: tour.variant.anchors.slice() };
-  if (swap) {
-    const used = new Set(stops.map(s => s.id));
+  let pick = replacement;
+  if (!pick) {
     tour.swapHistory = tour.swapHistory || {};
     const tried = tour.swapHistory[i] || (tour.swapHistory[i] = new Set([stops[i].id]));
-    let alts = alternativesForStop(pool, variant, i, used, tourQuality).filter(p => !tried.has(p.id));
-    if (!alts.length) { tried.clear(); tried.add(stops[i].id); alts = alternativesForStop(pool, variant, i, used, tourQuality); }
-    if (!alts.length) { toast('Hier gibt es keine Alternative in der Nähe.'); return; }
-    stops[i] = alts[0];
-    tried.add(alts[0].id);
-  } else {
-    stops.splice(i, 1);
-    variant.anchors.splice(i, 1);
-    if (tour.swapHistory) tour.swapHistory = {};
+    let alts = alternativesFor(i, { arriveAt }).filter(p => !tried.has(p.id));
+    if (!alts.length) { tried.clear(); tried.add(stops[i].id); alts = alternativesFor(i, { arriveAt }); }
+    if (!alts.length) { toast(arriveAt ? 'In der Nähe hat zu der Zeit nichts anderes offen.' : 'Hier gibt es keine Alternative in der Nähe.'); return false; }
+    pick = alts[0];
+    tried.add(pick.id);
   }
+  stops[i] = pick;
+  return applyStops(stops, { i, label: `Neu: ${pick.name}` });
+}
+
+async function removeStop(i) {
+  const stops = tour.stops.slice();
+  stops.splice(i, 1);
+  const variant = { ...tour.variant, anchors: tour.variant.anchors.slice() };
+  variant.anchors.splice(i, 1);
+  tour = { ...tour, variant, swapHistory: {} };
+  if (state.live) emit('live-stop-removed', i);
+  return applyStops(stops, { i });
+}
+
+async function applyStops(stops, { i, label = null }) {
   busy = true;
-  const li = (swap || rem).closest('.tl-item');
+  const li = document.querySelector(`#tourTimeline [data-stop="${i}"]`);
   if (li) li.classList.add('working');
   try {
-    tour = await rerouteTour({ ...tour, variant }, stops);
+    tour = await rerouteTour(tour, stops);
     state.tour = tour;
-    renderTour();
-    if (swap) toast(`Neu: ${stops[i].name}`, { ms: 1800 });
+    emit('tour-changed', tour);
+    renderTour({ fit: !state.live });
+    if (label) toast(escapeHtml(label), { ms: 1800 });
+    return true;
   } catch (err) {
     toast('Neuberechnung fehlgeschlagen: ' + err.message, { tone: 'bad' });
+    renderTour({ fit: false });
+    return false;
   } finally {
     busy = false;
   }
@@ -466,13 +642,17 @@ function openGmaps() {
   if (tour.stops.length > 9) toast('Google Maps übernimmt nur die ersten 9 Stopps.');
 }
 
-async function shareTour() {
-  if (!tour) return;
-  const url = tourLink({
+export function currentTourLink() {
+  if (!tour) return null;
+  return tourLink({
     start: tour.start, end: tour.roundtrip ? null : tour.end, stopIds: tour.stops.map(s => s.id),
     style: tour.style, km: tour.targetM / 1000, dwell: tour.dwellSec / 60,
   });
-  const res = await shareLink({ title: 'Bier-Radtour', text: `${(tour.route.distance / 1000).toFixed(1)} km, ${tour.stops.length} Bierstopps — fährst du mit?`, url });
+}
+
+async function shareTour() {
+  if (!tour) return;
+  const res = await shareLink({ title: 'Bier-Radtour', text: `${(tour.route.distance / 1000).toFixed(1)} km, ${tour.stops.length} Bierstopps — fährst du mit?`, url: currentTourLink() });
   if (res === 'copied') toast('Tour-Link kopiert!', { tone: 'good' });
   else if (res === 'failed') toast('Teilen nicht möglich', { tone: 'bad' });
 }
@@ -481,6 +661,7 @@ async function shareTour() {
 export async function loadSharedTour(t) {
   setProgress('Geteilte Tour wird geladen…');
   $('#tourForm').hidden = true;
+  $('#tourResult').hidden = true;
   try {
     const stops = await fetchPlacesByIds(t.stopIds);
     if (!stops.length) throw new Error('Die Orte dieser Tour gibt es nicht mehr.');
@@ -496,7 +677,8 @@ export async function loadSharedTour(t) {
     };
     if (t.end) dest = { ...t.end, label: 'Ziel' };
     state.tour = tour;
-    renderTour({ animate: true });
+    if (state.live) emit('tour-changed', tour);
+    renderTour({ animate: !state.live, fit: !state.live });
   } catch (e) {
     $('#tourForm').hidden = false;
     showError(e.message);
@@ -505,8 +687,16 @@ export async function loadSharedTour(t) {
   }
 }
 
+// Gespeicherte Tour (z.B. eine laufende Live-Tour nach dem Neuladen) direkt übernehmen.
+export function setTour(t) {
+  tour = t;
+  state.tour = t;
+  if (!t.roundtrip) dest = { ...t.end, label: 'Ziel' };
+}
+export const getTour = () => tour;
+
 export function onTourModeShown() {
-  if (tour) { mapview.showPlaceMarkers(false); mapview.drawRoute(tour, id => openPlace(id)); }
+  if (tour) { mapview.showPlaceMarkers(false); renderTour({ fit: !state.live }); }
   else mapview.showPlaceMarkers(true);
 }
 export function onTourModeHidden() {
@@ -514,3 +704,4 @@ export function onTourModeHidden() {
   mapview.showPlaceMarkers(true);
 }
 export function hasTour() { return !!tour; }
+export function tourWeather() { return lastWx; }

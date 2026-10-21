@@ -1,7 +1,7 @@
 // Einstieg: verbindet Karte, Sheet, Suche, Modi und Dialoge.
 import { hydrateIcons, icon } from './icons.js';
 import { state, on } from './state.js';
-import { prefs, loadTheme, saveTheme, loadLastLocation, saveLastLocation, exportBundle, importBundle } from './store.js';
+import { prefs, savePrefs, loadTheme, saveTheme, loadLastLocation, saveLastLocation, exportBundle, importBundle } from './store.js';
 import { getPosition, reverseGeocode, geolocationGranted } from './geo.js';
 import { fetchWeather, weatherIcon, isBiergartenWeather, isRainy } from './weather.js';
 import { isShared, migrateLocalToShared, exportLocalCommunity, importLocalCommunity } from './community.js';
@@ -10,16 +10,22 @@ import { haversine } from './util.js';
 import * as mapview from './map.js';
 import { $, $$, toast, wireDialog, openDialog, downloadFile } from './ui/dom.js';
 import { initSheet, sheetOcclusion, setSheet, getSheet, mobile, onSheetChange } from './ui/sheet.js';
-import { initFinder, searchAt, render as renderFinder } from './ui/finder.js';
+import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints } from './ui/finder.js';
 import { initDetail, openPlace } from './ui/detail.js';
 import { initTour, loadSharedTour, onTourModeShown, onTourModeHidden, paintRange } from './ui/tourUi.js';
 import { attachAutocomplete } from './ui/autocomplete.js';
 import { openBac } from './ui/bacUi.js';
 import { initSync } from './sync.js';
 import { openSync, joinFromLink } from './ui/syncUi.js';
-import { openDiary, diaryBeerSuggestions } from './ui/diaryUi.js';
+import { openDiary, diaryBeerSuggestions, setTourLoader } from './ui/diaryUi.js';
 import { openAlerts, checkAlerts, initAlerts } from './ui/alertsUi.js';
-import { openGroupFromTour, joinGroupFromLink, activeGroup } from './ui/groupUi.js';
+import { openGroupMenu, joinGroupFromLink, activeGroup, initGroup, groupLiveTick, groupLiveStop, groupMates } from './ui/groupUi.js';
+import { initLive } from './ui/liveUi.js';
+import { openHome } from './ui/homeUi.js';
+import { openBingo, openSurprise } from './ui/funUi.js';
+import { initBadges } from './ui/badgesUi.js';
+import { showHeatmap, hideHeatmap } from './heatmap.js';
+import { yearStats } from './ui/wrappedUi.js';
 
 /* ---------- Theme ---------- */
 function currentTheme() {
@@ -102,8 +108,34 @@ function setMode(mode) {
   $('#paneTour').hidden = mode !== 'tour';
   $('#btnSearchArea').hidden = true;
   $('#sheetBody').scrollTop = 0;
-  if (mode === 'tour') onTourModeShown();
+  if (mode === 'tour') { onTourModeShown(); hideHeatmap(); $('#heatLegend').hidden = true; }
   else { onTourModeHidden(); renderFinder(); }
+}
+
+/* ---------- Preis-Heatmap ---------- */
+let lastList = null;
+function applyHeat(list) {
+  $('#menuHeat').setAttribute('aria-pressed', String(!!prefs.heatmap));
+  const legend = $('#heatLegend');
+  if (!prefs.heatmap || state.mode !== 'find' || !list) { hideHeatmap(); legend.hidden = true; return; }
+  const all = pricedPoints(list);
+  const gastro = all.filter(p => p.gastro);
+  const pts = gastro.length >= 3 ? gastro : all;
+  const r = showHeatmap(pts);
+  if (!r) { legend.hidden = true; return; }
+  const f = v => v.toFixed(2).replace('.', ',');
+  legend.hidden = false;
+  legend.innerHTML = `<b>Halbe</b><span>${f(r.hi)}</span><span class="hl-bar"></span><span>${f(r.lo)}</span><small>${r.n} Preise${pts === all && gastro.length < 3 ? ', inkl. Läden' : ''}</small>`;
+}
+function toggleHeat() {
+  prefs.heatmap = !prefs.heatmap;
+  savePrefs();
+  if (prefs.heatmap && state.mode !== 'find') setMode('find');
+  applyHeat(lastList);
+  if (prefs.heatmap) {
+    const n = lastList ? pricedPoints(lastList).length : 0;
+    toast(n >= 2 ? 'Preis-Heatmap an: grün = günstig, rot = teuer' : 'Preis-Heatmap an — hier gibt es aber noch kaum Preise. Melde welche!', { ms: 3500 });
+  }
 }
 
 /* ---------- "In diesem Bereich suchen" ---------- */
@@ -134,16 +166,20 @@ function initMenu() {
     const a = b.dataset.action;
     if (a === 'bac') openBac();
     else if (a === 'diary') openDiary();
+    else if (a === 'group') openGroupMenu();
+    else if (a === 'home') openHome();
+    else if (a === 'heatmap') toggleHeat();
     else if (a === 'alerts') openAlerts();
     else if (a === 'sync') openSync();
     else if (a === 'theme') applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
-    else if (a === 'export') {
-      const data = exportBundle({ community: exportLocalCommunity() });
-      downloadFile(`bierlocator-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(data, null, 2), 'application/json');
-      toast('Daten exportiert', { tone: 'good' });
-    } else if (a === 'import') $('#importFile').click();
     else if (a === 'about') openAbout();
   });
+  on('backup-export', () => {
+    const data = exportBundle({ community: exportLocalCommunity() });
+    downloadFile(`bierlocator-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(data, null, 2), 'application/json');
+    toast('Daten exportiert', { tone: 'good' });
+  });
+  on('backup-import', () => $('#importFile').click());
   $('#importFile').addEventListener('change', e => {
     const f = e.target.files[0];
     if (!f) return;
@@ -194,7 +230,10 @@ function openAbout() {
     <ul class="about-list">
       <li>Doppeltipp auf einen Ortstyp zeigt nur diesen Typ.</li>
       <li>Karte verschieben → „In diesem Bereich suchen“.</li>
-      <li>In der Tour lassen sich einzelne Stopps tauschen oder entfernen.</li>
+      <li>In der Tour lassen sich einzelne Stopps tauschen oder entfernen — „Los geht's“ startet die Live-Tour, deren Zeitplan sich mitbewegt.</li>
+      <li>Lieblingssorte unter „Umkreis &amp; Vorlieben“ eintragen → Aktionen in der Nähe erscheinen von selbst.</li>
+      <li>„Meine Runde“ im Menü: Biere zählen, Runden abrechnen, über Stopps abstimmen.</li>
+      <li>Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.</li>
       <li>Taste <kbd>/</kbd> springt in die Suche.</li>
     </ul>
     <p class="fine">Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.</p>`;
@@ -239,6 +278,17 @@ function registerSW() {
   }).catch(() => { /* egal */ });
 }
 
+/* ---------- Jahresrückblick-Hinweis (Dezember / Anfang Jänner) ---------- */
+function wrappedTeaser() {
+  const now = new Date();
+  const year = now.getMonth() === 11 ? now.getFullYear() : now.getMonth() === 0 && now.getDate() <= 15 ? now.getFullYear() - 1 : null;
+  if (!year) return;
+  const flag = `bl_wrapped_seen_${year}`;
+  if (localStorage.getItem(flag)) return;
+  if (yearStats(year).beers < 5) return;
+  setTimeout(() => toast(`Dein Bier-Jahr ${year} ist fertig 🍺`, { tone: 'good', ms: 9000, action: { label: 'Ansehen', run: () => { localStorage.setItem(flag, '1'); openDiary(null, 'year'); } } }), 4000);
+}
+
 /* ---------- Start ---------- */
 async function init() {
   hydrateIcons();
@@ -258,9 +308,18 @@ async function init() {
   });
 
   initFinder({ openPlace });
+  onRender(list => { lastList = list; applyHeat(list); });
   initDetail({ onChange: () => renderFinder() });
   initTour({ openPlace });
   initMenu();
+  initGroup();
+  initLive({ onGroupTick: groupLiveTick, onGroupStop: groupLiveStop, groupMembers: groupMates, setMode });
+  initBadges();
+  setTourLoader(async t => { setMode('tour'); if (mobile()) setSheet('half'); await setLocation(t.start, { search: false }); loadSharedTour(t); });
+  on('open-diary', tabName => openDiary(null, tabName));
+  on('open-home', () => openHome());
+  on('open-bingo', () => openBingo());
+  on('open-surprise', () => openSurprise(openPlace));
   $$('dialog').forEach(d => wireDialog(d));
   document.querySelectorAll('input[type=range]').forEach(r => { paintRange(r); r.addEventListener('input', () => paintRange(r)); });
 
@@ -281,7 +340,11 @@ async function init() {
     if (e.key === '/' && !e.target.closest('input, textarea, select') && !document.querySelector('dialog[open]')) { e.preventDefault(); si.focus(); }
   });
 
-  $('#btnLocate').addEventListener('click', locate);
+  $('#btnLocate').addEventListener('click', () => {
+    // Während der Live-Tour: Karte wieder dem Standort folgen lassen
+    if (state.live) { mapview.setFollow(true); if (state.location) mapview.followTo(state.location.lat, state.location.lon); return; }
+    locate();
+  });
   on('request-locate', locate);
   $('#btnBrand').addEventListener('click', openAbout);
   $$('.tab').forEach(t => t.addEventListener('click', () => { setMode(t.dataset.mode); if (mobile()) setSheet('half'); }));
@@ -295,9 +358,10 @@ async function init() {
   initSync();
   initAlerts();
   on('sync-changed', () => { renderFinder(); toast('Daten von deinem anderen Gerät übernommen', { tone: 'good', ms: 2200 }); });
-  $('#btnGroup').addEventListener('click', openGroupFromTour);
+  $('#btnGroup').addEventListener('click', openGroupMenu);
   const g = activeGroup();
-  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}Gruppe ${g.code}`;
+  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}Runde ${g.code}`;
+  wrappedTeaser();
   $('#beerList').innerHTML = diaryBeerSuggestions().map(b => `<option value="${b.replace(/"/g, '&quot;')}">`).join('');
   setTimeout(() => checkAlerts().catch(() => {}), 2500);
   if (isShared()) migrateLocalToShared().then(n => { if (n) toast(`${n} lokale Preise mit der Community geteilt`, { tone: 'good' }); }).catch(() => {});

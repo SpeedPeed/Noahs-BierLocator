@@ -216,6 +216,23 @@ export async function fetchPlacesByIds(ids) {
   return ids.map(id => found.get(id)).filter(Boolean);
 }
 
+// Bahnhöfe & Haltestellen der Bahn im Umkreis (für den Heimweg), nächste zuerst.
+export async function fetchStations(center, radius = 6000) {
+  const r = Math.round(radius), lat = center.lat.toFixed(4), lon = center.lon.toFixed(4);
+  const data = await overpass(`[out:json][timeout:20];\n(\n  nwr["railway"~"^(station|halt)$"](around:${r},${lat},${lon});\n);\nout center tags;`);
+  const out = [];
+  for (const el of data.elements || []) {
+    const la = el.lat ?? el.center?.lat, lo = el.lon ?? el.center?.lon;
+    const name = el.tags && el.tags.name;
+    if (la == null || !name) continue;
+    const d = haversine(center.lat, center.lon, la, lo);
+    const dup = out.find(o => o.name === name);
+    if (dup) { if (d < dup.distance) Object.assign(dup, { lat: la, lon: lo, distance: d }); continue; }
+    out.push({ id: `${el.type}/${el.id}`, name, lat: la, lon: lo, distance: d, kind: el.tags.station || el.tags.railway });
+  }
+  return out.sort((a, b) => a.distance - b.distance);
+}
+
 export function placeAddress(p) {
   const t = p.tags;
   const street = [t['addr:street'], t['addr:housenumber']].filter(Boolean).join(' ');

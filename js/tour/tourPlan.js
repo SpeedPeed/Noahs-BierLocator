@@ -4,7 +4,7 @@
 // gefahrener Strecke.
 
 import { generateVariants, routedScore } from './planner.js';
-import { routeThrough, RIDE_STYLES } from './routing.js';
+import { routeThrough, RIDE_STYLES, lateEffort } from './routing.js';
 import { mean, clamp, haversine } from '../util.js';
 
 export const TOUR_TOLERANCE = 0.08;
@@ -30,15 +30,17 @@ export async function planTour(opts) {
     pool, start, end = null, targetM, k, style = 'trekking',
     startTime = new Date(), dwellSec = 30 * 60, quality = () => 0.7, isOpenAt = null,
     onProgress = () => {}, avoidKeys = new Set(), reroll = false, rng = Math.random,
+    wind = null, diversityKey = null, calmLate = false,
   } = opts;
   const roundtrip = !end;
   const endPoint = end || start;
   let detour = (RIDE_STYLES[style] || RIDE_STYLES.trekking).detour;
+  const extra = { wind, diversityKey };
 
   onProgress({ phase: 'shape' });
   let effectiveK = k, variants = [];
   for (; effectiveK >= 1; effectiveK--) {
-    variants = generateVariants(pool, start, end, { targetM, k: effectiveK, detour, roundtrip, quality, isOpenAt, startTime, dwellSec });
+    variants = generateVariants(pool, start, end, { targetM, k: effectiveK, detour, roundtrip, quality, isOpenAt, startTime, dwellSec, ...extra });
     if (variants.length) break;
   }
   if (!variants.length) throw new Error('In dieser Gegend lassen sich keine passenden Bierorte zu einer Tour verbinden. Mehr Ortstypen erlauben oder eine andere Länge probieren.');
@@ -48,7 +50,7 @@ export async function planTour(opts) {
   let evenerK = null;
   if (variants[0].relaxed) {
     for (let kk = effectiveK - 1; kk >= 2; kk--) {
-      const v = generateVariants(pool, start, end, { targetM, k: kk, detour, roundtrip, quality, isOpenAt, startTime, dwellSec, maxVariants: 1 });
+      const v = generateVariants(pool, start, end, { targetM, k: kk, detour, roundtrip, quality, isOpenAt, startTime, dwellSec, maxVariants: 1, ...extra });
       if (v.length && !v[0].relaxed) { evenerK = kk; break; }
     }
   }
@@ -110,7 +112,7 @@ export async function planTour(opts) {
     const measured = [...tried.values()].map(r => r.detourMeasured);
     detour = clamp(Math.exp(mean(measured.map(Math.log))), 1.05, 2.4);
     onProgress({ phase: 'refine', step: round++ });
-    variants = generateVariants(pool, start, end, { targetM, k: effectiveK, detour, detourAt, roundtrip, quality, isOpenAt, startTime, dwellSec });
+    variants = generateVariants(pool, start, end, { targetM, k: effectiveK, detour, detourAt, roundtrip, quality, isOpenAt, startTime, dwellSec, ...extra });
     const candidates = fresh(variants);
     if (!candidates.length) break;
     // Im Feinschliff zählt die Länge: unter den guten Varianten die mit passender
@@ -124,7 +126,29 @@ export async function planTour(opts) {
     if (best === prevBest && Math.abs(res.route.distance - targetM) >= Math.abs(prevBest.route.distance - targetM) && round > 3) break;
   }
 
+  // Rundtour andersherum fahren, wenn dann die Anstiege (und der Gegenwind) vor
+  // statt nach den Bieren liegen — gleiche Stopps, gleiche Länge, nur eine Anfrage.
+  let reversed = false, effort = lateEffort(best.route, { wind });
+  if (roundtrip && calmLate && best.variant.stops.length >= 2 && (effort.climb > 25 || (wind && wind.speed >= 14))) {
+    const revStops = best.variant.stops.slice().reverse();
+    const openOk = !isOpenAt || etasFor(best.route, revStops.length, startTime, dwellSec, true)
+      .every((eta, i) => isOpenAt(revStops[i], eta) !== false);
+    if (openOk) {
+      onProgress({ phase: 'reverse' });
+      try {
+        const route = await routeThrough([start, ...revStops, endPoint], style);
+        const e2 = lateEffort(route, { wind });
+        if (e2.score < effort.score - 15 && Math.abs(route.distance - best.route.distance) / best.route.distance < 0.12) {
+          best = { ...best, route, variant: { ...best.variant, stops: revStops, anchors: best.variant.anchors.slice().reverse() } };
+          reversed = true;
+          effort = e2;
+        }
+      } catch (e) { /* dann eben die erste Richtung */ }
+    }
+  }
+
   return {
+    reversed, effort,
     stops: best.variant.stops,
     variant: best.variant,
     route: best.route,
@@ -140,6 +164,15 @@ export async function planTour(opts) {
     start, end: endPoint,
     targetM, style, startTime, dwellSec,
   };
+}
+
+// Geschätzte Ankunftszeiten an den Stopps; `reversed` = Etappen in umgekehrter Reihenfolge.
+function etasFor(route, k, startTime, dwellSec, reversed = false) {
+  const legs = reversed ? route.legs.slice().reverse() : route.legs;
+  const out = [];
+  let t = startTime.getTime();
+  for (let i = 0; i < k; i++) { t += legs[i].duration * 1000; out.push(new Date(t)); t += dwellSec * 1000; }
+  return out;
 }
 
 // Route für eine geänderte Stopp-Liste neu berechnen (Tauschen/Entfernen).

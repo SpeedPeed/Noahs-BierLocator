@@ -128,3 +128,15 @@ export function cheapestChainPrice(place) {
 }
 
 export function chainDataDate() { return data && data.updated; }
+
+// Nächste Filiale einer Kette unter den geladenen Orten (Preise von SPAR gelten
+// auch für EUROSPAR/INTERSPAR usw.).
+export function nearestStore(chainKey, country, places) {
+  let best = null;
+  for (const p of places) {
+    const c = chainOf(p);
+    if (!c || c.country !== country || (c.key !== chainKey && FALLBACK[c.key] !== chainKey)) continue;
+    if (!best || p.distance < best.distance) best = p;
+  }
+  return best;
+}

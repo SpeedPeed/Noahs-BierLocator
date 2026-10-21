@@ -53,13 +53,15 @@
   <div class="menu-wrap">
     <button id="btnMenu" class="fab" aria-label="Menü" aria-haspopup="true" aria-expanded="false"><span data-icon="menu" data-icon-size="20"></span></button>
     <div id="menu" class="menu" role="menu" hidden>
-      <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="17"></span>Bier-Tagebuch</button>
+      <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="17"></span>Tagebuch &amp; Erfolge</button>
+      <button role="menuitem" data-action="group"><span data-icon="users" data-icon-size="17"></span>Meine Runde</button>
+      <button role="menuitem" data-action="home"><span data-icon="home" data-icon-size="17"></span>Heimweg</button>
+      <button role="menuitem" data-action="heatmap" aria-pressed="false" id="menuHeat"><span data-icon="layers" data-icon-size="17"></span>Preis-Heatmap<span class="menu-check" data-icon="check" data-icon-size="16"></span></button>
       <button role="menuitem" data-action="alerts"><span data-icon="bell" data-icon-size="17"></span>Preisalarme<span class="menu-badge" id="alertBadge" hidden></span></button>
       <button role="menuitem" data-action="bac"><span data-icon="calculator" data-icon-size="17"></span>Promille-Rechner</button>
-      <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="17"></span>Geräte verbinden</button>
+      <div class="menu-sep"></div>
+      <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="17"></span>Geräte &amp; Backup</button>
       <button role="menuitem" data-action="theme"><span id="themeIcon" data-icon="moon" data-icon-size="17"></span><span id="themeLabel">Dunkles Design</span></button>
-      <button role="menuitem" data-action="export"><span data-icon="download" data-icon-size="17"></span>Daten exportieren</button>
-      <button role="menuitem" data-action="import"><span data-icon="upload" data-icon-size="17"></span>Daten importieren</button>
       <button role="menuitem" data-action="about"><span data-icon="info" data-icon-size="17"></span>Über die App</button>
     </div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -67,6 +69,7 @@
 </header>
 
 <button id="btnSearchArea" class="area-pill" hidden><span data-icon="refresh" data-icon-size="15"></span>In diesem Bereich suchen</button>
+<div id="heatLegend" class="heat-legend" hidden aria-label="Preis-Heatmap Legende"></div>
 
 <aside id="sheet" class="sheet" aria-label="Orte und Touren">
   <div class="sheet-grab" id="sheetGrab">
@@ -112,7 +115,7 @@
           </label>
           <div class="field-row">
             <label class="field">
-              <span class="field-label">Lieblingssorte</span>
+              <span class="field-label">Lieblingssorte <small>zeigt Aktionen</small></span>
               <input id="prefBeer" type="text" list="beerList" placeholder="z.B. Zwickl" maxlength="40">
             </label>
             <label class="field">
@@ -132,10 +135,14 @@
       </details>
 
       <div id="cheapestCard" class="cheapest" hidden></div>
+      <div id="dealCard" class="deal" hidden></div>
 
       <div class="results-head">
         <h2><span id="resultCount">0</span> <span id="resultNoun">Orte</span></h2>
-        <button id="btnUnhide" class="link-btn" hidden></button>
+        <div class="results-links">
+          <button id="btnUnhide" class="link-btn" hidden></button>
+          <button id="btnSurprise" class="link-btn" hidden><span data-icon="dice" data-icon-size="15"></span>Überrasch mich</button>
+        </div>
       </div>
       <div id="results" class="results" aria-live="polite"></div>
     </section>
@@ -188,10 +195,27 @@
           <div class="style-cards" id="tourStyle" role="radiogroup" aria-label="Fahrstil"></div>
         </div>
 
-        <label class="switch-row">
-          <input id="tourShops" type="checkbox" class="switch">
-          <span>Auch Restaurants, Läden &amp; Tankstellen <small>(sonst nur Kneipen, Gasthäuser, Biergärten, Brauereien)</small></span>
-        </label>
+        <details class="prefs" id="tourExtras">
+          <summary><span data-icon="sliders" data-icon-size="16"></span>Thema &amp; Extras <span class="prefs-summary" id="tourExtrasSummary"></span><span class="chev" data-icon="chevronDown" data-icon-size="16"></span></summary>
+          <div class="prefs-body">
+            <div class="field">
+              <span class="field-label">Thema</span>
+              <div class="theme-chips" id="tourTheme" role="radiogroup" aria-label="Thema der Tour"></div>
+            </div>
+            <label class="switch-row" id="tourCalmRow">
+              <input id="tourCalm" type="checkbox" class="switch">
+              <span>Anstiege nicht am Ende <small>(fährt die Runde andersrum, wenn's sonst nach den Bieren bergauf geht)</small></span>
+            </label>
+            <label class="switch-row">
+              <input id="tourWind" type="checkbox" class="switch">
+              <span>Wetter &amp; Wind beachten <small>(Rückenwind auf dem Heimweg, bei Regen drinnen sitzen)</small></span>
+            </label>
+            <label class="switch-row">
+              <input id="tourShops" type="checkbox" class="switch">
+              <span>Auch Restaurants, Läden &amp; Tankstellen <small>(sonst nur Kneipen, Gasthäuser, Biergärten, Brauereien)</small></span>
+            </label>
+          </div>
+        </details>
 
         <button id="btnPlan" class="btn btn-primary btn-big"><span data-icon="route" data-icon-size="19"></span>Tour planen</button>
         <p class="fine">Plant gleichmäßig verteilte Stopps, die zur geschätzten Ankunftszeit geöffnet haben.</p>
@@ -208,17 +232,26 @@
           <h2 id="tourTitle">Deine Biertour</h2>
           <button id="btnTourEdit" class="link-btn"><span data-icon="sliders" data-icon-size="14"></span>Anpassen</button>
         </div>
+        <div id="tourLive" class="live-card" hidden></div>
         <div id="tourStats" class="stat-grid"></div>
         <div id="tourWeather"></div>
         <div id="tourHints"></div>
         <div id="tourElev" class="elev"></div>
         <ol id="tourTimeline" class="timeline"></ol>
-        <div class="action-grid">
+        <div class="action-grid" id="tourActions">
+          <button id="btnLive" class="btn btn-primary btn-big action-wide"><span data-icon="play" data-icon-size="19"></span>Los geht's</button>
           <button id="btnReroll" class="btn btn-soft"><span data-icon="shuffle" data-icon-size="17"></span>Andere Route</button>
-          <button id="btnShareTour" class="btn btn-soft"><span data-icon="share" data-icon-size="17"></span>Teilen</button>
-          <button id="btnGpx" class="btn btn-soft"><span data-icon="download" data-icon-size="17"></span>GPX</button>
-          <button id="btnGmaps" class="btn btn-soft"><span data-icon="compass" data-icon-size="17"></span>Google Maps</button>
-          <button id="btnGroup" class="btn btn-primary action-wide"><span data-icon="users" data-icon-size="17"></span>Mit Freunden fahren</button>
+          <button id="btnGroup" class="btn btn-soft"><span data-icon="users" data-icon-size="17"></span>Mit Freunden</button>
+          <div class="menu-wrap" id="tourMoreWrap">
+            <button id="btnTourMore" class="btn btn-soft" aria-haspopup="true" aria-expanded="false" aria-label="Mehr"><span data-icon="more" data-icon-size="17"></span>Mehr</button>
+            <div id="tourMoreMenu" class="menu menu-up" role="menu" hidden>
+              <button role="menuitem" data-more="share"><span data-icon="share" data-icon-size="17"></span>Link teilen</button>
+              <button role="menuitem" data-more="gpx"><span data-icon="download" data-icon-size="17"></span>GPX-Datei</button>
+              <button role="menuitem" data-more="gmaps"><span data-icon="compass" data-icon-size="17"></span>In Google Maps</button>
+              <button role="menuitem" data-more="bingo"><span data-icon="grid" data-icon-size="17"></span>Bier-Bingo</button>
+              <button role="menuitem" data-more="save"><span data-icon="checkCircle" data-icon-size="17"></span>Als gefahren speichern</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -267,7 +300,12 @@
   <div id="groupBody" class="dlg-body"></div>
 </dialog>
 
-<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<dialog id="miscDialog" class="dlg" aria-label="Bier-Locator">
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <div id="miscBody" class="dlg-body"></div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" popover="manual" hidden></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>

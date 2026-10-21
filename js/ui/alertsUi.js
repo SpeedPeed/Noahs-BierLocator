@@ -1,11 +1,11 @@
 // Dialog "Preisalarme" + Prüfung beim Start + optionale Push-Benachrichtigungen.
 import { loadWatches, saveWatches, deviceSecret, onDataChange } from '../store.js';
-import { loadChainPrices, CHAIN_LABELS } from '../chainPrices.js';
+import { loadChainPrices, CHAIN_LABELS, nearestStore } from '../chainPrices.js';
 import { evaluate, hitKey, KINDS } from '../alerts.js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY, VAPID_PUBLIC_KEY } from '../config.js';
 import { state } from '../state.js';
 import { icon } from '../icons.js';
-import { escapeHtml, fetchWithTimeout, debounce } from '../util.js';
+import { escapeHtml, fetchWithTimeout, debounce, fmtDist } from '../util.js';
 import { $, openDialog, toast } from './dom.js';
 
 const SEEN = 'bl_alerts_seen_v1';
@@ -63,10 +63,10 @@ async function render() {
           <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · bis ${money(w.max, w.country === 'CH' ? 'CHF' : 'EUR')} · ${w.country || ''}</small>
           <button class="icon-btn small" data-del="${w.id}" aria-label="Alarm löschen">${icon('trash', { size: 14 })}</button>
         </div>
-        ${hits.length ? `<ul>${hits.slice(0, 6).map(h => `<li>
-          <span>${escapeHtml(CHAIN_LABELS[h.chain] || h.chain)}</span>
+        ${hits.length ? `<ul>${hits.slice(0, 6).map(h => { const near = nearestStore(h.chain, h.country, state.places); return `<li>
+          <span>${escapeHtml(CHAIN_LABELS[h.chain] || h.chain)}${near ? `<small class="ah-near">${fmtDist(near.distance)}</small>` : ''}</span>
           <span class="ah-beer">${escapeHtml(h.beer)} <small>${escapeHtml(h.package || '')}</small>${h.promo ? ' <span class="promo">Aktion</span>' : ''}</span>
-          <a href="${escapeHtml(h.source)}" target="_blank" rel="noopener"><b>${money(h.price, h.currency)}</b></a></li>`).join('')}</ul>
+          <a href="${escapeHtml(h.source)}" target="_blank" rel="noopener"><b>${money(h.price, h.currency)}</b></a></li>`; }).join('')}</ul>
           ${hits.length > 6 ? `<p class="fine">+ ${hits.length - 6} weitere</p>` : ''}`
         : '<p class="fine">Gerade kein Treffer — die App meldet sich, sobald es soweit ist.</p>'}
       </div>`).join('') : '<p class="fine center">Noch keine Alarme.</p>'}</div>

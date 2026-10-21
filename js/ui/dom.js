@@ -6,6 +6,14 @@ export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel
 export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let toastTimer;
+// Als "Popover" liegt der Toast auch über offenen Dialogen (Top Layer).
+function toastLayer(el, show) {
+  if (!el.showPopover) return;
+  try {
+    if (el.matches(':popover-open')) el.hidePopover();
+    if (show) el.showPopover();
+  } catch (e) { /* ältere Browser: normaler Toast */ }
+}
 export function toast(msg, { tone = 'info', ms = 2800, action = null } = {}) {
   const el = $('#toast');
   const ic = tone === 'good' ? 'checkCircle' : tone === 'bad' ? 'alertTriangle' : 'info';
@@ -15,15 +23,16 @@ export function toast(msg, { tone = 'info', ms = 2800, action = null } = {}) {
     const b = document.createElement('button');
     b.className = 'toast-action';
     b.textContent = action.label;
-    b.onclick = () => { action.run(); el.hidden = true; };
+    b.onclick = () => { action.run(); el.hidden = true; toastLayer(el, false); };
     el.appendChild(b);
   }
   el.hidden = false;
+  toastLayer(el, true);
   el.classList.remove('toast-in');
   void el.offsetWidth;
   el.classList.add('toast-in');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.hidden = true; }, action ? ms + 2500 : ms);
+  toastTimer = setTimeout(() => { el.hidden = true; toastLayer(el, false); }, action ? ms + 2500 : ms);
 }
 
 /* ---------- Dialoge (natives <dialog>, mit Ein-/Ausblend-Animation) ---------- */
@@ -45,6 +54,28 @@ export function wireDialog(dlg, onClose) {
   });
   dlg.addEventListener('cancel', e => { e.preventDefault(); closeDialog(dlg); });
   if (onClose) dlg.addEventListener('close', onClose);
+}
+
+// Allzweck-Dialog für kleinere Ansichten (Überraschung, Bingo, Heimweg, Tour-Ende …).
+export function openMisc(html, { wide = false } = {}) {
+  const dlg = $('#miscDialog');
+  dlg.classList.toggle('dlg-wide', wide);
+  $('#miscBody').innerHTML = html;
+  openDialog(dlg);
+  return $('#miscBody');
+}
+export const miscOpen = () => $('#miscDialog').open;
+export const closeMisc = () => closeDialog($('#miscDialog'));
+
+// Kleines Konfetti (für Bingo & Abzeichen) — respektiert "weniger Bewegung".
+export function confetti(n = 40) {
+  if (reducedMotion()) return;
+  const box = document.createElement('div');
+  box.className = 'confetti';
+  const colors = ['#f2a01c', '#3e9a52', '#c43d25', '#2f7fc1', '#fde9c2'];
+  box.innerHTML = Array.from({ length: n }, (_, i) => `<i style="--x:${Math.random() * 100}vw;--d:${(Math.random() * 0.6).toFixed(2)}s;--r:${Math.round(Math.random() * 720 - 360)}deg;--c:${colors[i % colors.length]}"></i>`).join('');
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 2600);
 }
 
 /* ---------- Animierte Zahl ---------- */

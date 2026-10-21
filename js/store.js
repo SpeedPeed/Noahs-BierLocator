@@ -12,6 +12,8 @@ const KEYS = {
   meta: 'bl_sync_meta_v1',     // Zeitstempel für den Geräte-Sync
   diary: 'bl_diary_v1',        // [{ id, t, deleted?, … }]
   watches: 'bl_watches_v1',    // Preisalarme [{ id, q, max05, country }]
+  tours: 'bl_tours_v1',        // gefahrene Touren [{ id, t, at, km, … , deleted? }]
+  stats: 'bl_stats_v1',        // Zähler für Abzeichen { prices, bingos }
 };
 
 /* ---------- Änderungen melden (für den Geräte-Sync) ---------- */
@@ -35,8 +37,10 @@ export const DEFAULT_TYPES = ['pub', 'biergarten', 'brewery', 'gasthaus', 'resta
 const DEFAULT_PREFS = {
   beerType: '', maxPrice: null, radius: 1000, biergartenPref: false,
   types: DEFAULT_TYPES, sort: 'recommended', onlyOpen: false, onlyPrice: false, onlyFav: false,
-  tour: { roundtrip: true, km: 15, stops: 4, style: 'trekking', dwell: 30, shops: false },
+  tour: { roundtrip: true, km: 15, stops: 4, style: 'trekking', dwell: 30, shops: false, theme: 'all', calmLate: true, wind: true },
   country: null,
+  home: null,                  // { lat, lon, label } für den Heimweg
+  heatmap: false,
 };
 
 export const prefs = Object.assign({}, DEFAULT_PREFS, read(KEYS.prefs, null) || migratePrefs());
@@ -96,6 +100,16 @@ export function saveDiary(list) { write(KEYS.diary, list); changed(); }
 export function loadWatches() { return read(KEYS.watches, []); }
 export function saveWatches(list) { write(KEYS.watches, list); touch('watches'); changed(); }
 
+/* ---------- Gefahrene Touren ---------- */
+export function loadTours() { return read(KEYS.tours, []); }
+export function saveTours(list) { write(KEYS.tours, list); changed(); }
+export function addTour(entry) { saveTours([entry, ...loadTours()]); }
+export function deleteTour(id) { saveTours(loadTours().map(t => (t.id === id ? { id, at: t.at, t: Date.now(), deleted: true } : t))); }
+
+/* ---------- Zähler (Abzeichen) ---------- */
+export function loadStats() { return read(KEYS.stats, { prices: 0, bingos: 0 }); }
+export function bumpStat(key, by = 1) { const s = loadStats(); s[key] = (s[key] || 0) + by; write(KEYS.stats, s); changed(); return s; }
+
 /* ---------- Geräte-Sync: Export & Zusammenführen ----------
    Favoriten/Ausgeblendet: pro Ort gewinnt der neuere Eintrag. Tagebuch: Einträge
    werden vereinigt (Löschungen als "deleted" mit Zeitstempel). Vorlieben,
@@ -108,6 +122,8 @@ export function exportSync() {
     bac: { t: meta.bac || 0, data: loadBac() },
     diary: loadDiary(),
     watches: { t: meta.watches || 0, data: loadWatches() },
+    tours: loadTours().map(({ track, ...rest }) => rest), // Spur bleibt lokal (zu groß)
+    stats: loadStats(),
   };
 }
 export function importSync(remote) {
@@ -136,6 +152,17 @@ export function importSync(remote) {
       if (!mine || (e.t || 0) > (mine.t || 0)) { byId.set(e.id, e); localChanged = true; }
     }
     write(KEYS.diary, [...byId.values()].sort((a, b) => b.at - a.at));
+    const tours = new Map(loadTours().map(e => [e.id, e]));
+    for (const e of remote.tours || []) {
+      const mine = tours.get(e.id);
+      if (!mine || (e.t || 0) > (mine.t || 0)) { tours.set(e.id, mine && mine.track && !e.deleted ? { ...e, track: mine.track } : e); localChanged = true; }
+    }
+    write(KEYS.tours, [...tours.values()].sort((a, b) => b.at - a.at));
+    if (remote.stats) {
+      const s = loadStats();
+      for (const [k, v] of Object.entries(remote.stats)) if ((v || 0) > (s[k] || 0)) { s[k] = v; localChanged = true; }
+      write(KEYS.stats, s);
+    }
     write(KEYS.meta, meta);
   } finally {
     silent = false;

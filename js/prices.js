@@ -45,6 +45,69 @@ export const BEER_SUGGESTIONS = [
   'Paulaner', 'Tegernseer', 'Feldschlösschen', 'Krombacher', 'Becks', 'Heineken',
 ];
 
+/* ---------- Getränkekarte per Foto (Texterkennung → Preisvorschläge) ---------- */
+const BEERISH = /bier|pils|helle|märzen|marzen|weizen|wei(ß|ss)|zwi?c?kl|radler|lager|\bipa\b|\bale\b|stout|porter|dunkel|bock|keller|export|kölsch|koelsch|\balt\b|zipfer|stiegl|gösser|goesser|ottakringer|puntigamer|augustiner|paulaner|tegernseer|krombacher|beck'?s|heineken|hofbr|schlossgold|edelwei|kaiser|murauer|hirter|trumer|feldschl|warsteiner|bitburger|erdinger|franziskaner|löwenbr|spaten|astra|jever|radeberger|budweiser|pilsner|urquell|krügerl|seidl|halbe|\bmaß\b|vom fass|zwickel|gösser|egger|schremser|freistädter|wieselburger|calanda|eichhof|quöllfrisch|appenzeller/i;
+const VOL_WORDS = { 'maß': 1, 'mass': 1, 'krügerl': 0.5, 'kruegerl': 0.5, 'halbe': 0.5, 'seidl': 0.3, 'pfiff': 0.2 };
+// Mengen ohne "l" (0,5 / 0,33) und typische Lesefehler der Texterkennung: "0,5 l" → "0,51", "0,5|", "0,5I".
+const TOKEN_RE = /(\d+(?:[.,]\d{1,2})?)\s*(?:l|ltr|lt|liter)\.?(?![a-zäöüß])|\b(maß|mass|krügerl|kruegerl|halbe|seidl|pfiff)\b|(?<![\d.,])(0[.,](?:25|33|2|3|4|5))(?:[1lI|](?![\d]))?(?![\d])|(?:€\s*)?(?<![\d.,])(\d{1,2})[.,](\d{2}|-{1,2})(?![\d])\s*(?:€|eur|chf|fr\.?)?/gi;
+
+const volUnit = l => (l == null ? null : Math.abs(l - 0.5) < 0.01 ? '0.5l' : Math.abs(l - 0.33) < 0.01 ? '0.33l' : Math.abs(l - 1) < 0.01 ? '1l' : null);
+const cleanName = s => s.replace(/[.…·_|*]{2,}/g, ' ').replace(/[^A-Za-zÄÖÜäöüß' &-]+/g, ' ').replace(/\s+/g, ' ').trim().replace(/^[-&' ]+|[-&' ]+$/g, '');
+
+// Text (z.B. aus der Texterkennung eines Fotos der Getränkekarte) → Kandidaten
+// [{ beer, price, unit, volL, beerish, ok, message }]. Nichts wird automatisch
+// gemeldet — die Liste ist nur ein Vorschlag zum Bestätigen.
+export function parseMenuText(text) {
+  const out = [];
+  let pendingName = '', headVols = [];
+  for (const rawLine of String(text || '').split(/\r?\n/)) {
+    const line = rawLine.replace(/\s+/g, ' ').trim();
+    if (!line) continue;
+    const tokens = [];
+    for (const m of line.matchAll(TOKEN_RE)) {
+      if (m[1] != null) tokens.push({ kind: 'vol', at: m.index, l: Number(m[1].replace(',', '.')) });
+      else if (m[2] != null) tokens.push({ kind: 'vol', at: m.index, l: VOL_WORDS[m[2].toLowerCase()] });
+      else if (m[3] != null) tokens.push({ kind: 'vol', at: m.index, l: Number(m[3].replace(',', '.')) });
+      else if (m[4] != null) {
+        const v = Number(m[4]) + (/^\d{2}$/.test(m[5]) ? Number(m[5]) / 100 : 0);
+        if (v >= 1) tokens.push({ kind: 'price', at: m.index, v });
+      }
+    }
+    const prices = tokens.filter(t => t.kind === 'price');
+    if (!prices.length) {
+      const name = cleanName(line);
+      // Zeile nur mit Menge (z.B. Spaltenkopf "0,5 l") gilt für die Zeilen darunter
+      const vols = tokens.filter(t => t.kind === 'vol');
+      if (vols.length) headVols = vols.map(v => v.l);
+      if (/[A-Za-zÄÖÜäöü]{2,}/.test(name) && name.length <= 40) pendingName = name;
+      continue;
+    }
+    let name = cleanName(line.slice(0, tokens[0].at));
+    if (name.length < 2) name = pendingName;
+    else pendingName = name;
+    if (!name) continue;
+    const vols = tokens.filter(t => t.kind === 'vol');
+    const used = new Set();
+    prices.forEach((p, k) => {
+      let vol = [...vols].reverse().find(v => v.at < p.at && !used.has(v));
+      if (!vol) vol = vols.find(v => v.at > p.at && !used.has(v));
+      if (vol) used.add(vol);
+      // ohne Menge in der Zeile: Spaltenköpfe ("0,3 l  0,5 l") der Reihe nach
+      const head = headVols.length === prices.length ? headVols[k] : headVols.length === 1 ? headVols[0] : null;
+      const volL = vol ? vol.l : !vols.length ? head : null;
+      // Ohne erkannte Menge: 0,5 l annehmen, aber nicht vorauswählen (bitte prüfen)
+      const guessed = volL == null;
+      const unit = guessed ? '0.5l' : volUnit(volL);
+      const beer = name.slice(0, 40);
+      const check = unit ? validatePrice(p.v, unit, beer) : { ok: false, message: `${String(volL).replace('.', ',')} l gibt es als Gebinde nicht — bitte anpassen.` };
+      const beerish = BEERISH.test(name);
+      if (out.some(o => o.beer === beer && o.unit === unit && o.price === p.v)) return;
+      out.push({ beer, price: p.v, unit, volL, guessed, beerish, ok: check.ok, message: check.ok ? (guessed ? 'Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.' : '') : check.message });
+    });
+  }
+  return out.slice(0, 40);
+}
+
 // "500 ml", "0,33 l", "20 x 0,5 l" (Open Food Facts) → Gebinde-Schlüssel oder null
 export function parsePackLabel(text) {
   const t = String(text || '').toLowerCase().replace(',', '.').replace('×', 'x');
