@@ -4,6 +4,19 @@ import { icon } from '../icons.js';
 import { escapeHtml, timeAgo } from '../util.js';
 import { $, openDialog, closeDialog, toast } from './dom.js';
 import { shareLink } from '../share.js';
+import { emit } from '../state.js';
+
+// Datei-Backup (früher eigene Menüpunkte) — gibt's in jedem Zustand des Dialogs.
+const BACKUP = `<div class="backup-box">
+    <h3 class="pd-h">${icon('download', { size: 16 })}Datei-Backup <span class="pd-h-meta">ohne Internet</span></h3>
+    <div class="row-btns">
+      <button class="btn btn-soft" data-backup="export">${icon('download', { size: 16 })}Exportieren</button>
+      <button class="btn btn-soft" data-backup="import">${icon('upload', { size: 16 })}Importieren</button>
+    </div>
+  </div>`;
+function wireBackup() {
+  document.querySelectorAll('#syncBody [data-backup]').forEach(b => b.onclick = () => emit(b.dataset.backup === 'export' ? 'backup-export' : 'backup-import'));
+}
 
 export async function openSync() {
   const dlg = $('#syncDialog');
@@ -12,16 +25,22 @@ export async function openSync() {
 }
 
 async function render() {
+  await renderInner();
+  $('#syncBody').insertAdjacentHTML('beforeend', BACKUP);
+  wireBackup();
+}
+
+async function renderInner() {
   const body = $('#syncBody');
   if (!syncAvailable()) {
-    body.innerHTML = `<h2 class="dlg-title">${icon('refresh', { size: 22 })}Geräte verbinden</h2>
+    body.innerHTML = `<h2 class="dlg-title">${icon('refresh', { size: 22 })}Geräte &amp; Backup</h2>
       <p class="fine">Für den Geräte-Sync muss Supabase eingerichtet sein (siehe README).</p>`;
     return;
   }
   const code = syncCode();
   if (!code) {
     body.innerHTML = `
-      <h2 class="dlg-title" id="syncTitle">${icon('refresh', { size: 22 })}Geräte verbinden</h2>
+      <h2 class="dlg-title" id="syncTitle">${icon('refresh', { size: 22 })}Geräte &amp; Backup</h2>
       <p>Favoriten, Vorlieben, Promille-Log, Tagebuch und Preisalarme auf allen deinen Geräten gleich — ohne Konto.</p>
       <div class="sync-choice">
         <button class="btn btn-primary btn-big" id="syncStart">${icon('plus', { size: 18 })}Sync starten</button>

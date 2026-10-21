@@ -30,6 +30,33 @@ Handy (installierbar als App), funktioniert aber auch am PC.
 - Einzelne Stopps tauschen oder entfernen, „Andere Route“, GPX-Export, Google Maps, Teilen per Link
 - Promille-Hochrechnung „1 Bier pro Stopp“ im Vergleich zur Fahrrad-Grenze des Landes
 
+- **Thema & Extras** (eingeklappt): *Brauereien*, *Biergärten*, *Günstig*, *Bunt gemischt*;
+  „Anstiege nicht am Ende“ fährt die Runde andersrum, wenn sonst nach den Bieren die Höhenmeter kommen;
+  „Wetter & Wind“ plant mit der Vorhersage (Biergärten bei Sonne, drinnen bei Regen, Rückenwind auf dem Heimweg)
+- **Live-Tour** („Los geht's“): GPS-Position auf der Route, nächster Stopp mit Entfernung & Ankunft,
+  Verspätung zum Plan, automatisches Erkennen von Ankunft/Abfahrt, Warnung + Ersatzvorschlag, wenn ein
+  späterer Stopp dann schon zu hat. Bildschirm bleibt an, läuft nach dem Neuladen weiter.
+- **Heimweg**: ruhigste Radroute nach Hause, zurück zum Start oder zum nächsten Bahnhof (mit Öffi-Link);
+  warnt, wenn man laut Promille-Rechner über der Fahrrad-Grenze liegt
+- **Meine Touren**: gefahrene Touren mit Spur, Stopps, Mitfahrenden — „Nochmal fahren“ mit einem Tipp
+
+**Mit Freunden („Meine Runde“)**
+- Bestenliste (Biere, Abzeichen, Preise, Tour-km), Biere zählen
+- Live-Standort der anderen auf der Karte — nur wer es selbst einschaltet, verfällt nach 15 Minuten
+- Runden eintragen und **Abrechnung** mit möglichst wenigen Überweisungen
+- **Abstimmung über den nächsten Stopp** (der Ersteller übernimmt den Gewinner für alle)
+
+**Spaß**
+- **Abzeichen** (23 Stück, aus Tagebuch, Touren, Preisen & Bingo)
+- **Bier-Bingo** für unterwegs (gleiche Karte für die ganze Runde)
+- **Überrasch mich**: Glücksrad wählt ein offenes Lokal in der Nähe
+- **Jahresrückblick** „Mein Bier-Jahr“ als teilbares Bild (im Dezember gibt's einen Hinweis)
+
+**Preise, mehr**
+- **Preis-Heatmap** (Menü): grün = günstig, rot = teuer
+- **Getränkekarte fotografieren**: Texterkennung schlägt Preise vor, gemeldet wird nur, was man abhakt
+- **Lieblingsbier im Angebot**: Lieblingssorte eintragen → Aktionen in Filialen in der Nähe erscheinen
+
 **Promille-Rechner**
 - Körperwasser nach Watson (Geschlecht, Gewicht, Größe, Alter), Resorption je Getränk, Michaelis-Menten-Abbau
 - Verlaufsdiagramm, Zeitpunkte „unter 0,5 ‰“ / „wieder nüchtern“, Grenzwerte für AT, DE und CH
@@ -69,7 +96,9 @@ Updates nicht mehr über die bestehende App installieren.
 ## Geräte-Sync, Tagebuch, Preisalarme, Gruppen-Touren
 
 Diese Funktionen brauchen zusätzlich [`supabase/002_features.sql`](supabase/002_features.sql)
-(einmal im Supabase SQL-Editor ausführen). Preisalarme per Push verschickt der GitHub-Job
+(einmal im Supabase SQL-Editor ausführen). „Meine Runde“ mit Live-Standort, Abrechnung und Abstimmung
+braucht zusätzlich [`supabase/003_runde.sql`](supabase/003_runde.sql) — ohne läuft die Gruppe wie bisher
+(Biere zählen, Stopps bewerten). Preisalarme per Push verschickt der GitHub-Job
 „Preisalarme verschicken“ nach jedem Preis-Update; er braucht die Secrets `ALERTS_TOKEN`
 und `VAPID_PRIVATE_KEY`.
 
@@ -156,9 +185,11 @@ js/
   community.js     Preise & Bewertungen (Supabase oder lokal)
   prices.js        Gebinde, Umrechnung, Plausibilitätsprüfung
   bac.js, legal.js Promille-Modell, Grenzwerte je Land
-  tour/            planner.js (Geometrie), tourPlan.js (Steuerung), routing.js (BRouter/OSRM)
-  ui/              Sheet, Liste, Detail, Tour, Promille, Suche
-supabase/schema.sql   Datenbank für geteilte Preise
+  tour/            planner.js (Geometrie, Wind), tourPlan.js (Steuerung), routing.js (BRouter/OSRM),
+                   live.js (GPS auf der Route, Zeitplan unterwegs)
+  settle.js, bingo.js, badges.js, heatmap.js   Abrechnung, Bingo, Abzeichen, Preis-Heatmap
+  ui/              Sheet, Liste, Detail, Tour, Live, Heimweg, Runde, Tagebuch, Spiele, Promille, Suche
+supabase/schema.sql   Datenbank für geteilte Preise (+ 002_features.sql, 003_runde.sql)
 tests/                Browser-Tests
 ```
 

@@ -155,11 +155,12 @@ export function showPlaceMarkers(show) {
   if (!show && map.hasLayer(cluster)) map.removeLayer(cluster);
 }
 
-export function clearRoute() { routeLayer.clearLayers(); elevMarker = null; }
+export function clearRoute() { routeLayer.clearLayers(); elevMarker = null; doneLine = null; }
 
-export function drawRoute(tour, onStopClick) {
+export function drawRoute(tour, onStopClick, { fit = true, done = null } = {}) {
   routeLayer.clearLayers();
   elevMarker = null;
+  doneLine = null;
   const latlngs = tour.route.latlngs;
   L.polyline(latlngs, { className: 'route-casing', weight: 9, interactive: false }).addTo(routeLayer);
   const line = L.polyline(latlngs, { className: 'route-line', weight: 5, interactive: false }).addTo(routeLayer);
@@ -169,7 +170,7 @@ export function drawRoute(tour, onStopClick) {
     .addTo(routeLayer).bindTooltip(tour.roundtrip ? 'Start & Ziel' : 'Start', { direction: 'top', offset: [0, -14] });
   tour.stops.forEach((s, i) => {
     const meta = TYPE_META[s.type];
-    const html = `<div class="tm" style="--c:${meta.color};--d:${300 + i * 140}ms">${i + 1}</div>`;
+    const html = `<div class="tm${done && done.has(i) ? ' tm-done' : ''}" style="--c:${meta.color};--d:${fit ? 300 + i * 140 : 0}ms">${done && done.has(i) ? icon('check', { size: 15, strokeWidth: 3 }) : i + 1}</div>`;
     L.marker([s.lat, s.lon], { icon: L.divIcon({ className: '', html, iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 1000, title: s.name })
       .addTo(routeLayer)
       .bindTooltip(escapeHtml(s.name), { direction: 'top', offset: [0, -14] })
@@ -181,6 +182,7 @@ export function drawRoute(tour, onStopClick) {
       .addTo(routeLayer).bindTooltip('Ziel', { direction: 'top', offset: [0, -14] });
   }
 
+  if (!fit) return;
   auto();
   map.fitBounds(L.latLngBounds(latlngs), { ...fitOptions(16), animate: !reducedMotion() });
 
@@ -215,3 +217,57 @@ export function showTrackPoint(latlng) {
 }
 
 export function invalidate() { map && map.invalidateSize(); }
+export function getMap() { return map; }
+
+/* ---------- Live-Tour ---------- */
+let doneLine = null, follow = false, dragHooked = false;
+const dragListeners = [];
+export function onUserDrag(fn) {
+  dragListeners.push(fn);
+  if (!dragHooked) { map.on('dragstart', () => dragListeners.forEach(f => f())); dragHooked = true; }
+}
+// Bereits gefahrener Teil der Route (grau über der roten Linie).
+export function setRouteProgress(latlngs) {
+  if (!latlngs || latlngs.length < 2) { if (doneLine) { routeLayer.removeLayer(doneLine); doneLine = null; } return; }
+  if (!doneLine || !routeLayer.hasLayer(doneLine)) doneLine = L.polyline(latlngs, { className: 'route-done', weight: 5, interactive: false }).addTo(routeLayer);
+  else doneLine.setLatLngs(latlngs);
+}
+export function setFollow(on) { follow = on; }
+export function isFollowing() { return follow; }
+export function followTo(lat, lon) {
+  if (!follow) return;
+  const z = Math.max(map.getZoom(), 15);
+  const p = paddingProvider();
+  const target = map.project([lat, lon], z);
+  const center = map.unproject(target.subtract(L.point((p.left - p.right) / 2, (p.top - p.bottom) / 2)), z);
+  auto();
+  map.setView(center, z, { animate: !reducedMotion() });
+}
+
+/* ---------- Freunde (Gruppen-Standort) ---------- */
+let friendLayer = null;
+export function setFriends(list) {
+  if (!friendLayer) friendLayer = L.layerGroup().addTo(map);
+  friendLayer.clearLayers();
+  for (const f of list) {
+    const initials = escapeHtml(f.name.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase());
+    L.marker([f.lat, f.lon], {
+      icon: L.divIcon({ className: '', html: `<div class="friend" style="--c:${f.color}"><span>${initials}</span></div>`, iconSize: [30, 30], iconAnchor: [15, 15] }),
+      zIndexOffset: 1100, keyboard: false,
+    }).addTo(friendLayer).bindTooltip(`${escapeHtml(f.name)} · ${escapeHtml(f.ago)}`, { direction: 'top', offset: [0, -14] });
+  }
+}
+
+/* ---------- Zusatzroute (Heimweg) ---------- */
+let extraLayer = null;
+export function drawExtraRoute(latlngs, dest) {
+  clearExtraRoute();
+  extraLayer = L.layerGroup().addTo(map);
+  L.polyline(latlngs, { className: 'route-casing', weight: 8, interactive: false }).addTo(extraLayer);
+  L.polyline(latlngs, { className: 'route-home', weight: 5, interactive: false }).addTo(extraLayer);
+  L.marker([dest.lat, dest.lon], { icon: L.divIcon({ className: '', html: `<div class="tm tm-home">${icon(dest.icon || 'flag', { size: 15, strokeWidth: 2.2 })}</div>`, iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 950 })
+    .addTo(extraLayer).bindTooltip(escapeHtml(dest.label || 'Ziel'), { direction: 'top', offset: [0, -14] });
+  auto();
+  map.fitBounds(L.latLngBounds(latlngs), { ...fitOptions(16), animate: !reducedMotion() });
+}
+export function clearExtraRoute() { if (extraLayer) { map.removeLayer(extraLayer); extraLayer = null; } }

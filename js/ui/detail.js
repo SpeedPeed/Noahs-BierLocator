@@ -15,6 +15,9 @@ import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS } from '../chain
 import { loadHistory, describe } from '../priceHistory.js';
 import { openDiary } from './diaryUi.js';
 import { openScanner } from './scanUi.js';
+import { photoMenu } from './ocrUi.js';
+import { bumpStat } from '../store.js';
+import { emit } from '../state.js';
 
 let dlg, current = null, onChange = () => {};
 
@@ -136,7 +139,8 @@ function render() {
         <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="0,00" required aria-label="Preis in Euro"><span>€</span></div>
         <select name="unit" aria-label="Gebinde">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
         <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}Melden</button>
-        <button type="button" class="btn btn-soft scan-btn" id="pdScan">${icon('scan', { size: 17 })}Barcode scannen</button>
+        <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 17 })}Barcode</button>
+        <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 17 })}Karte fotografieren</button>
         <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
       </form>
       <p class="fine">Preise älter als ${STALE_DAYS} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.</p>
@@ -232,6 +236,7 @@ function wireChainList(p) {
 function wire(p) {
   wireChainList(p);
   $('#pdCheckin').onclick = () => { closeDialog(dlg); openDiary(p); };
+  $('#pdPhoto').onclick = () => photoMenu(p, () => { render(); onChange(); });
   $('#pdScan').onclick = () => openScanner(p, found => {
     const form = $('#pdPriceForm');
     if (!form) return;
@@ -311,6 +316,8 @@ function wire(p) {
     submit.disabled = true;
     try {
       await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value });
+      bumpStat('prices');
+      emit('price-reported');
       toast('Preis gemeldet — danke! 🍻', { tone: 'good' });
       render(); onChange();
     } catch (err) {

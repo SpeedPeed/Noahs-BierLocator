@@ -31,7 +31,9 @@ export function statusBadge(st) {
 }
 
 // Qualität 0..1 für die Tourplanung: Typ + Bonus für Bewertung, Preis, Favorit, Wetter.
-export function tourQuality(place) {
+// `wx` = Wetter während der Tour ({ sunny, rainy }, aus der Vorhersage); ohne
+// Angabe zählt das aktuelle Wetter.
+export function tourQuality(place, wx = null) {
   let q = TYPE_META[place.type].tour;
   const s = getSummary(place.id);
   if (s.rating.avg) q += (s.rating.avg - 3) * 0.05;
@@ -40,7 +42,13 @@ export function tourQuality(place) {
   if (place.unnamed) q -= 0.15;
   const outdoor = place.type === 'biergarten' || place.tags.outdoor_seating === 'yes';
   const w = state.weather && state.weather.current;
-  if (outdoor && isBiergartenWeather(w)) q += 0.1;
-  if (place.type === 'biergarten' && isRainy(w)) q -= 0.25;
+  const sunny = wx ? wx.sunny : isBiergartenWeather(w);
+  const rainy = wx ? wx.rainy : isRainy(w);
+  if (outdoor && sunny) q += 0.12;
+  if (rainy) {
+    if (place.type === 'biergarten') q -= 0.3;
+    else if (INDOOR.has(place.type)) q += 0.08; // drinnen sitzen, wenn's schüttet
+  }
   return Math.max(0, Math.min(1, q));
 }
+const INDOOR = new Set(['pub', 'gasthaus', 'brewery', 'restaurant']);

@@ -28,7 +28,7 @@ export async function fetchWeather(lat, lon) {
   const params = new URLSearchParams({
     latitude: lat.toFixed(3), longitude: lon.toFixed(3),
     current: 'temperature_2m,weather_code,precipitation,wind_speed_10m',
-    hourly: 'temperature_2m,weather_code,precipitation_probability',
+    hourly: 'temperature_2m,weather_code,precipitation_probability,wind_speed_10m,wind_direction_10m',
     forecast_days: '3', timezone: 'auto',
   });
   const res = await fetchWithTimeout(`${OPEN_METEO_URL}?${params}`, {}, 10000);
@@ -36,6 +36,7 @@ export async function fetchWeather(lat, lon) {
   const d = await res.json();
   const hourly = (d.hourly.time || []).map((t, i) => ({
     time: new Date(t), temperature: d.hourly.temperature_2m[i], code: d.hourly.weather_code[i], precipProb: d.hourly.precipitation_probability[i],
+    wind: d.hourly.wind_speed_10m ? d.hourly.wind_speed_10m[i] : null, windFrom: d.hourly.wind_direction_10m ? d.hourly.wind_direction_10m[i] : null,
   }));
   const nowH = hourly.find(h => h.time.getTime() > Date.now() - 3600000);
   return {
@@ -51,5 +52,29 @@ export function weatherForWindow(weather, from, to) {
   if (!hrs.length) return null;
   const temps = hrs.map(h => h.temperature);
   const worst = hrs.reduce((a, b) => (b.code > a.code ? b : a));
-  return { min: Math.min(...temps), max: Math.max(...temps), rain: Math.max(...hrs.map(h => h.precipProb || 0)), code: worst.code };
+  const rain = Math.max(...hrs.map(h => h.precipProb || 0));
+  const max = Math.max(...temps);
+  return {
+    min: Math.min(...temps), max, rain, code: worst.code,
+    wind: windForWindow(hrs),
+    sunny: max >= 17 && worst.code <= 3 && rain < 40,
+    rainy: worst.code >= 51 || rain >= 55,
+  };
 }
+
+// Mittlerer Wind (Vektormittel der Richtung) über einen Zeitraum → { from, speed } | null
+export function windForWindow(hrs) {
+  const w = hrs.filter(h => h.wind != null && h.windFrom != null);
+  if (!w.length) return null;
+  let x = 0, y = 0, s = 0;
+  for (const h of w) {
+    x += Math.sin(h.windFrom * Math.PI / 180) * h.wind;
+    y += Math.cos(h.windFrom * Math.PI / 180) * h.wind;
+    s += h.wind;
+  }
+  const from = (Math.atan2(x, y) * 180 / Math.PI + 360) % 360;
+  return { from: Math.round(from), speed: Math.round(s / w.length) };
+}
+
+const DIRS = ['Nord', 'Nordost', 'Ost', 'Südost', 'Süd', 'Südwest', 'West', 'Nordwest'];
+export const windDirName = deg => DIRS[Math.round(deg / 45) % 8];

@@ -98,6 +98,11 @@ export function initFinder(opts) {
     const c = e.target.closest('[data-place]');
     if (c) openPlace(c.dataset.place);
   });
+  $('#dealCard').addEventListener('click', e => {
+    const c = e.target.closest('[data-place]');
+    if (c) openPlace(c.dataset.place);
+  });
+  $('#btnSurprise').addEventListener('click', () => emit('open-surprise'));
 
   renderEmpty();
   loadChainPrices().then(() => render());
@@ -250,6 +255,9 @@ export function render() {
   } else {
     cc.hidden = true;
   }
+  renderDeal(list);
+  $('#btnSurprise').hidden = !list.some(x => SURPRISE_TYPES.has(x.p.type));
+  renderListeners.forEach(fn => fn(list));
 
   const box = $('#results');
   if (loading) return;
@@ -260,6 +268,61 @@ export function render() {
   }
   box.innerHTML = list.slice(0, 120).map((x, i) => cardHtml(x, i)).join('')
     + (list.length > 120 ? `<p class="fine center">+ ${list.length - 120} weitere auf der Karte</p>` : '');
+}
+
+/* ---------- Lieblingsbier im Angebot ---------- */
+// Aktion für die Lieblingssorte (Vorlieben) in einer Filiale in der Nähe.
+export function favDeal(list) {
+  const q = (prefs.beerType || '').trim().toLowerCase();
+  if (q.length < 3) return null;
+  const words = q.split(/\s+/).filter(Boolean);
+  const byChain = new Map();
+  for (const x of list) {
+    const c = chainOf(x.p);
+    if (!c) continue;
+    const k = `${c.country}|${c.key}`;
+    const near = byChain.get(k);
+    if (!near || x.p.distance < near.distance) byChain.set(k, x.p);
+  }
+  let best = null;
+  for (const store of byChain.values()) {
+    for (const pr of chainPricesFor(store)) {
+      if (!pr.promo || pr.per05 == null) continue;
+      const hay = `${pr.beer} ${pr.package || ''}`.toLowerCase();
+      if (!words.every(w => hay.includes(w))) continue;
+      if (!best || pr.per05 < best.pr.per05 - 0.005 || (Math.abs(pr.per05 - best.pr.per05) < 0.005 && store.distance < best.p.distance)) best = { p: store, pr };
+    }
+  }
+  return best;
+}
+
+function renderDeal(list) {
+  const box = $('#dealCard');
+  const d = favDeal(list);
+  if (!d) { box.hidden = true; return; }
+  const { p, pr } = d;
+  const until = pr.valid_until ? ` · bis ${new Date(pr.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}` : '';
+  box.hidden = false;
+  box.innerHTML = `<button class="deal-inner" data-place="${p.id}">
+    <span class="deal-ico">${icon('tag', { size: 20 })}</span>
+    <span class="deal-text">
+      <span class="deal-kicker">Dein ${escapeHtml(prefs.beerType)} im Angebot</span>
+      <b>${escapeHtml(pr.beer)} <small>${escapeHtml(pr.package || '')}</small></b>
+      <span>${escapeHtml(CHAIN_LABELS[chainOf(p).key] || p.name)} · ${fmtDist(p.distance)}${until}</span>
+    </span>
+    <span class="deal-price">${pr.currency === 'CHF' ? 'CHF ' + pr.price.toFixed(2) : fmtEuro(pr.price)}</span>
+  </button>`;
+}
+
+/* ---------- Für Heatmap & Co. ---------- */
+const renderListeners = [];
+export function onRender(fn) { renderListeners.push(fn); }
+const SHOP_TYPES = new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
+const SURPRISE_TYPES = new Set(['pub', 'biergarten', 'brewery', 'gasthaus']);
+// Orte mit aktuellem Preis → [{ lat, lon, v, gastro }]
+export function pricedPoints(list) {
+  return list.filter(x => x.price && !x.price.stale && x.price.per05 != null)
+    .map(x => ({ lat: x.p.lat, lon: x.p.lon, v: x.price.per05, gastro: !SHOP_TYPES.has(x.p.type) }));
 }
 
 function stars(avg) {

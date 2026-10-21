@@ -202,7 +202,11 @@ export function generateVariants(pool, start, end, opts) {
     isOpenAt = null,           // (place, Date) → true | false | null
     startTime = new Date(), speedMps = 4.2, dwellSec = 30 * 60,
     maxVariants = 40,
+    wind = null,               // { from: Grad (woher der Wind kommt), speed: km/h } → Rückenwind am Ende bevorzugen
+    diversityKey = null,       // place → Schlüssel; gleiche Schlüssel in einer Tour werden bestraft ("bunt gemischt")
   } = opts;
+  const windW = wind ? windWeight(wind.speed) : 0;
+  const windTo = wind ? { x: -Math.sin(wind.from * Math.PI / 180), y: -Math.cos(wind.from * Math.PI / 180) } : null;
   const proj = makeProjection(start);
   const startXY = { x: 0, y: 0 };
   const endXY = roundtrip ? startXY : proj.toXY(end);
@@ -302,8 +306,16 @@ export function generateVariants(pool, start, end, opts) {
     const q = mean(chosen.map(qualityXY));
     const dev = mean(chosen.map((c, i) => d2(c, anchors[i]) / spacing));
     const unknownOpen = isOpenAt ? chosen.filter((c, i) => isOpenAt(c.place, etaFor(i)) === null).length / k : 0;
+    const headwind = windW ? lateHeadwind(pts, windTo) : 0;
+    let dupes = 0;
+    if (diversityKey) {
+      const keys = chosen.map(c => diversityKey(c.place)).filter(Boolean);
+      dupes = (keys.length - new Set(keys).size) / k;
+    }
 
     const score = 2.6 * lenErr
+      + windW * headwind
+      + 0.6 * dupes
       + 1.6 * cv
       + 3.0 * Math.max(0, 0.5 - minRatio)
       + 0.9 * crossings
@@ -316,11 +328,33 @@ export function generateVariants(pool, start, end, opts) {
       stops: chosen.map(c => c.place),
       anchors: anchors.map(a => proj.toLL(a.x, a.y)),
       spacing, curveLen: total, geomLen, estLen, score, shape: shape.name, key, relaxed: pass.relaxed,
-      metrics: { lenErr, cv, minRatio, crossings, spikes, quality: q, dev },
+      metrics: { lenErr, cv, minRatio, crossings, spikes, quality: q, dev, headwind, dupes },
     });
   }
   variants.sort((a, b) => a.score - b.score);
   return variants.slice(0, maxVariants);
+}
+
+/* ---------- Wind ---------- */
+// Wie stark der Wind die Tourwahl beeinflussen darf: unter ~10 km/h egal.
+export function windWeight(speedKmh) { return clamp((speedKmh - 9) / 22, 0, 0.7); }
+
+// Gegenwind-Anteil, gewichtet nach Position in der Tour: späte Etappen (nach ein
+// paar Bieren, auf dem Heimweg) zählen bis zu dreimal so viel wie die ersten.
+// −1 = nur Rückenwind, +1 = nur Gegenwind. Bei einer Rundtour heben sich hin und
+// zurück ungewichtet genau auf — erst die Gewichtung entscheidet die Richtung.
+export function lateHeadwind(pts, windTo) {
+  let sum = 0, wsum = 0;
+  const n = pts.length - 1;
+  for (let i = 1; i < pts.length; i++) {
+    const dx = pts[i].x - pts[i - 1].x, dy = pts[i].y - pts[i - 1].y;
+    const len = Math.hypot(dx, dy);
+    if (!len) continue;
+    const w = len * (0.5 + 1.5 * (i - 1) / Math.max(1, n - 1));
+    sum += w * -((dx * windTo.x + dy * windTo.y) / len);
+    wsum += w;
+  }
+  return wsum ? sum / wsum : 0;
 }
 
 // Alternative Orte für einen bestehenden Stopp (für "Stopp tauschen").

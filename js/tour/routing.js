@@ -60,6 +60,8 @@ async function brouter(points, profile, attempt = 1) {
     legs.push({
       distance: Math.max(0, cum[idx[i + 1]] - cum[idx[i]]),
       duration: Math.max(0, (times[idx[i + 1]] || 0) - (times[idx[i]] || 0)),
+      up: computeAscent(elevations.slice(idx[i], idx[i + 1] + 1)).up,
+      from: idx[i], to: idx[i + 1],
     });
   }
   const distance = Number(f.properties['track-length']) || cum[cum.length - 1];
@@ -79,7 +81,7 @@ async function osrm(points) {
   return {
     latlngs, elevations: latlngs.map(() => null), cum: cumulative(latlngs),
     distance: r.distance, duration: r.duration,
-    legs: r.legs.map(l => ({ distance: l.distance, duration: l.duration })),
+    legs: r.legs.map(l => ({ distance: l.distance, duration: l.duration, up: null })),
     ascent: { up: null, down: null }, bikeFriendly: false,
   };
 }
@@ -102,4 +104,28 @@ export async function routeThrough(points, style = 'trekking') {
   route.legs.forEach(l => { l.duration = leisure(l.distance) + (route.distance ? climb * l.distance / route.distance : 0); });
   route.overlap = overlapRatio(route.latlngs);
   return route;
+}
+
+// Bequemlichkeit gegen Ende der Tour (kleiner = besser): Höhenmeter und Gegenwind
+// ab dem 3. Stopp zählen, weil man da schon ein paar Bier intus hat.
+// wind: { from: Grad, speed: km/h } oder null.
+export function lateEffort(route, { lateFrom = 3, wind = null } = {}) {
+  const legs = route.legs;
+  const from = Math.min(lateFrom, Math.max(1, legs.length - 2));
+  let climb = 0, head = 0, len = 0;
+  for (let i = from; i < legs.length; i++) {
+    climb += legs[i].up || 0;
+    if (wind && legs[i].from != null) {
+      const a = route.latlngs[legs[i].from], b = route.latlngs[legs[i].to];
+      const dx = (b[1] - a[1]) * Math.cos(a[0] * Math.PI / 180), dy = b[0] - a[0];
+      const l = Math.hypot(dx, dy);
+      if (l) {
+        const to = { x: -Math.sin(wind.from * Math.PI / 180), y: -Math.cos(wind.from * Math.PI / 180) };
+        head += legs[i].distance * -((dx * to.x + dy * to.y) / l);
+        len += legs[i].distance;
+      }
+    }
+  }
+  const windPart = wind && len ? (head / len) * Math.max(0, wind.speed - 9) * 4 : 0; // ~ Hm-Äquivalent
+  return { climb, headwind: len ? head / len : 0, score: climb + windPart };
 }

@@ -9,6 +9,14 @@ import { chainOf } from '../js/chainPrices.js';
 import { evaluate, matches } from '../js/alerts.js';
 import { parsePackLabel } from '../js/prices.js';
 import { seededRandom, haversine } from '../js/util.js';
+import { projectOnRoute, newLive, updateLive, liveSchedule } from '../js/tour/live.js';
+import { lateHeadwind, windWeight } from '../js/tour/planner.js';
+import { lateEffort } from '../js/tour/routing.js';
+import { balances, settle } from '../js/settle.js';
+import { makeCard, completeLines, FREE } from '../js/bingo.js';
+import { evaluateBadges } from '../js/badges.js';
+import { parseMenuText } from '../js/prices.js';
+import { sampleAt, priceColor } from '../js/heatmap.js';
 
 const results = [];
 function test(name, fn) {
@@ -259,6 +267,155 @@ test('Tour-Link: kodieren & dekodieren', () => {
   eq(back.style, 'safety');
   ok(Math.abs(back.start.lat - 48.2) < 1e-5);
   eq(back.end, null);
+});
+
+/* ---------- Live-Tour ---------- */
+function fakeTour() {
+  // gerade Strecke nach Norden: Start → Stopp bei 1 km → Stopp bei 2 km → Ziel bei 3 km
+  const proj = makeProjection(START);
+  const latlngs = [], cum = [];
+  for (let i = 0; i <= 300; i++) { const p = proj.toLL(0, i * 10); latlngs.push([p.lat, p.lon]); cum.push(i * 10); }
+  const at = m => proj.toLL(0, m);
+  return {
+    start: START, end: at(3000), roundtrip: false, dwellSec: 1800, startTime: new Date(2026, 8, 28, 15, 0),
+    stops: [{ id: 'node/1', ...at(1000), name: 'A', type: 'pub', tags: {} }, { id: 'node/2', ...at(2000), name: 'B', type: 'pub', tags: {} }],
+    route: { latlngs, cum, distance: 3000, legs: [1000, 1000, 1000].map(d => ({ distance: d, duration: d / 4.2 })) },
+  };
+}
+test('Live: Position wird auf die Route projiziert', () => {
+  const t = fakeTour();
+  const p = makeProjection(START).toLL(30, 1234); // 30 m neben der Linie
+  const r = projectOnRoute(t.route, p);
+  ok(Math.abs(r.along - 1234) < 3, 'along ' + r.along);
+  ok(Math.abs(r.dist - 30) < 2, 'dist ' + r.dist);
+});
+test('Live: Ankunft, Abfahrt & Zeitplan', () => {
+  const t = fakeTour();
+  const proj = makeProjection(START);
+  const live = newLive(t.startTime.getTime());
+  const t0 = t.startTime.getTime();
+  let ev = updateLive(live, t, { ...proj.toLL(0, 500), accuracy: 10 }, t0 + 120000);
+  eq(ev.length, 0, 'unterwegs');
+  ok(Math.abs(live.progress - 500) < 5, 'Fortschritt 500 m');
+  const s1 = liveSchedule(t, live, t0 + 120000);
+  ok(Math.abs(s1.toNext - 500) < 5, 'noch 500 m zu Stopp 1');
+  ev = updateLive(live, t, { ...proj.toLL(5, 990), accuracy: 10 }, t0 + 600000);
+  eq(ev[0] && ev[0].type, 'arrive', 'Ankunft erkannt');
+  eq(live.here, 0);
+  const s2 = liveSchedule(t, live, t0 + 600000);
+  eq(s2.rows[0].status, 'here');
+  ok(s2.delayMin > 0, 'später als geplant (Plan: Ankunft nach 4 Min)');
+  ev = updateLive(live, t, { ...proj.toLL(0, 1300), accuracy: 10 }, t0 + 2400000);
+  eq(ev[0] && ev[0].type, 'leave', 'Abfahrt erkannt');
+  eq(live.next, 1);
+  eq(liveSchedule(t, live, t0 + 2400000).rows[0].status, 'done');
+});
+test('Live: ungenaues GPS wird ignoriert', () => {
+  const t = fakeTour();
+  const live = newLive();
+  updateLive(live, t, { ...makeProjection(START).toLL(0, 990), accuracy: 400 });
+  eq(live.here, null);
+});
+
+/* ---------- Wind & Anstiege ---------- */
+test('Wind: Rückenwind am Ende wird bevorzugt', () => {
+  // Rundtour nach Osten raus, nach Westen zurück. Wind aus Osten (90°) = Rückenwind zurück.
+  const out = [{ x: 0, y: 0 }, { x: 3000, y: 500 }, { x: 6000, y: 0 }, { x: 3000, y: -500 }, { x: 0, y: 0 }];
+  const to = { x: -Math.sin(Math.PI / 2), y: -Math.cos(Math.PI / 2) };
+  const h = lateHeadwind(out, to);
+  ok(h < 0, 'Heimweg mit Rückenwind sollte negativ sein: ' + h.toFixed(2));
+  ok(lateHeadwind(out, { x: -to.x, y: -to.y }) > 0, 'Wind aus Westen: Heimweg gegen den Wind');
+  ok(windWeight(5) === 0 && windWeight(30) > 0.5, 'Gewicht nach Windstärke');
+});
+test('Anstiege: Höhenmeter nach dem 3. Stopp zählen', () => {
+  const route = { legs: [{ up: 100 }, { up: 0 }, { up: 0 }, { up: 80 }, { up: 40 }], latlngs: [] };
+  eq(lateEffort(route).climb, 120);
+});
+
+/* ---------- Runden-Abrechnung ---------- */
+test('Abrechnung: wenige Überweisungen, Summe stimmt', () => {
+  const rounds = [
+    { payer: 'a', amount: 18, participants: ['a', 'b', 'c', 'd'] },
+    { payer: 'b', amount: 9, participants: ['a', 'b'] },
+    { payer: 'a', amount: 6, participants: ['c', 'd'] },
+  ];
+  const bal = balances(rounds, ['a', 'b', 'c', 'd']);
+  ok(Math.abs([...bal.values()].reduce((s, v) => s + v, 0)) < 1e-9, 'Salden summieren sich zu 0');
+  const tr = settle(bal);
+  ok(tr.length <= 3, 'höchstens n−1 Überweisungen');
+  const after = new Map(bal);
+  for (const t of tr) { after.set(t.from, after.get(t.from) + t.amount); after.set(t.to, after.get(t.to) - t.amount); }
+  ok([...after.values()].every(v => Math.abs(v) < 0.02), 'danach alles ausgeglichen');
+  eq(settle(balances([], ['a', 'b'])).length, 0, 'leer');
+});
+
+/* ---------- Bingo ---------- */
+test('Bingo: Karte reproduzierbar, Reihen erkannt', () => {
+  const a = makeCard('gruppe-K7PX3M'), b = makeCard('gruppe-K7PX3M');
+  eq(a.join(), b.join(), 'gleicher Seed = gleiche Karte');
+  eq(new Set(a).size, 9, 'keine doppelten Felder');
+  eq(a[4], FREE);
+  const m = Array(9).fill(false);
+  eq(completeLines(m).length, 0);
+  m[0] = m[8] = true; // Diagonale über die freie Mitte
+  eq(completeLines(m).length, 1);
+});
+
+/* ---------- Abzeichen ---------- */
+test('Abzeichen: Zählen aus Tagebuch & Touren', () => {
+  const at = new Date(2026, 5, 1, 10).getTime();
+  const diary = [
+    { beer: 'Zwickl', at, placeId: 'node/1', type: 'brewery', country: 'AT' },
+    { beer: 'zwickl', at, placeId: 'node/2', type: 'biergarten', country: 'DE' },
+    { beer: 'Radler', at, placeId: 'node/2', type: 'biergarten', country: 'CH' },
+    { beer: 'Weg', at, deleted: true },
+  ];
+  const b = Object.fromEntries(evaluateBadges({ diary, tours: [{ km: 55, mates: ['Kim'] }], stats: { prices: 2 } }).map(x => [x.id, x]));
+  ok(b.beer1.unlocked && !b.beer10.unlocked, 'Biere');
+  eq(b.sorts5.value, 2, 'Sorten ohne Groß/Klein');
+  ok(b.dach.unlocked, 'drei Länder');
+  ok(b.brew1.unlocked && b.km50.unlocked && b.group1.unlocked && b.price1.unlocked && b.early.unlocked, 'diverse');
+});
+
+/* ---------- Getränkekarte ---------- */
+test('Getränkekarte: Preise & Mengen aus OCR-Text', () => {
+  const txt = `GETRÄNKE
+Zipfer Märzen 0,3 l 3,40 0,5 l 4,40
+Gösser Zwickl ........ 0,5l  4,80 €
+Hausbier
+Seidl 3,20
+Krügerl 4,30
+Cola 0,33 3,50
+Wein 1/8 3,90`;
+  const c = parseMenuText(txt);
+  const find = (beer, unit) => c.find(x => x.beer.includes(beer) && x.unit === unit);
+  ok(find('Zipfer', '0.5l') && find('Zipfer', '0.5l').price === 4.4, 'Zipfer 0,5');
+  ok(find('Gösser', '0.5l') && find('Gösser', '0.5l').price === 4.8, 'Gösser mit Punkten');
+  const k = c.find(x => x.beer === 'Hausbier' && x.price === 4.3);
+  ok(k && k.unit === '0.5l', 'Krügerl unter Zeilen-Überschrift');
+  const seidl = c.find(x => x.beer === 'Hausbier' && x.price === 3.2);
+  ok(seidl && !seidl.ok, '0,3 l gibt es als Gebinde nicht → nicht vorausgewählt');
+  const cola = c.find(x => x.beer === 'Cola');
+  ok(cola && !cola.beerish, 'Cola ist kein Bier');
+  // So liefert die Texterkennung "0,5 l" tatsächlich: "0,51"
+  const o = parseMenuText('Zipfer Märzen 0,51 4,40\nGösser Zwickl 0,31 3,60\nStiegl 0,331 3,90');
+  eq(o[0].unit, '0.5l', '0,51 = 0,5 l');
+  ok(o[1].volL === 0.3 && !o[1].ok, '0,31 = 0,3 l (nicht als 0,5 l melden!)');
+  eq(o[2].unit, '0.33l', '0,331 = 0,33 l');
+  // Spaltenköpfe: Menge steht nur oben
+  const h = parseMenuText('Bier vom Fass   0,3 l   0,5 l\nStiegl Goldbräu   3,50   4,60\nWeißbier 4,90');
+  ok(h.find(x => x.price === 4.6).unit === '0.5l' && h.find(x => x.price === 3.5).volL === 0.3, 'Spalten');
+  const g = parseMenuText('Pils 4,20');
+  ok(g[0].guessed && g[0].unit === '0.5l', 'ohne Menge: geschätzt');
+});
+
+/* ---------- Heatmap ---------- */
+test('Heatmap: Mittelwert in der Nähe, leer weit weg', () => {
+  const pts = [{ lat: 48.2, lon: 16.37, v: 3 }, { lat: 48.201, lon: 16.37, v: 5 }];
+  const mid = sampleAt(48.2005, 16.37, pts);
+  ok(mid && Math.abs(mid.v - 4) < 0.05, 'Mitte ≈ 4');
+  eq(sampleAt(48.3, 16.37, pts), null, '11 km weg → nichts');
+  eq(priceColor(0).join(), '46,160,80');
 });
 
 /* ---------- Ausgabe ---------- */

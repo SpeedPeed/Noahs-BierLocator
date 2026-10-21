@@ -4,6 +4,7 @@ import { chainPricesFor } from '../chainPrices.js';
 import { parsePackLabel } from '../prices.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fetchWithTimeout } from '../util.js';
+import { prefs, savePrefs } from '../store.js';
 import { $, openDialog, closeDialog, toast } from './dom.js';
 
 let stream = null, raf = null;
@@ -105,7 +106,16 @@ function showResult(prod, place, onFound, dlg) {
       <b>${escapeHtml(prod.beer)}</b><small>${escapeHtml(prod.quantity)}${prod.isBeer ? '' : ' · laut Datenbank evtl. kein Bier'}</small>
       ${online.length ? `<p class="fine">Online bei dieser Kette: ${online.map(o => `${escapeHtml(o.package)} ${o.price.toFixed(2).replace('.', ',')} €`).join(' · ')}</p>` : ''}
       <button class="btn btn-primary" id="scanUse">${icon('check', { size: 17 })}Übernehmen &amp; Preis eintragen</button>
+      <button class="link-btn" id="scanFav">${icon('heart', { size: 14 })}Als Lieblingsbier merken</button>
     </div>`;
+  $('#scanFav').onclick = () => {
+    // Marke + Sorte reichen für die Suche nach Aktionen (ohne Gebinde-Angaben)
+    prefs.beerType = prod.beer.replace(/\b\d+([.,]\d+)?\s*(l|ml|cl)\b.*$/i, '').trim().slice(0, 40);
+    savePrefs();
+    const el = document.getElementById('prefBeer');
+    if (el) el.value = prefs.beerType;
+    toast(`Lieblingsbier: ${escapeHtml(prefs.beerType)} — Aktionen in der Nähe erscheinen jetzt unter „Bier finden“.`, { tone: 'good', ms: 4000 });
+  };
   $('#scanUse').onclick = () => {
     closeDialog(dlg);
     onFound({ beer: prod.beer, unit });
