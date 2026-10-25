@@ -55,10 +55,13 @@ def lonlat_to_px(lon, lat, z):
     return x, y
 
 
+HEADER = 150  # Höhe der Kopfzeile im Bild, die Route bleibt darunter
+
+
 def fit_zoom(lons, lats, width, height, pad=90):
     for z in range(16, 3, -1):
         xs, ys = zip(*(lonlat_to_px(lo, la, z) for lo, la in zip(lons, lats)))
-        if max(xs) - min(xs) <= width - 2 * pad and max(ys) - min(ys) <= height - 2 * pad:
+        if max(xs) - min(xs) <= width - 2 * pad and max(ys) - min(ys) <= height - HEADER - 2 * pad:
             return z
     return 4
 
@@ -82,7 +85,7 @@ def route_card(spot_key, out_path):
     pts = [lonlat_to_px(lo, la, z) for lo, la in zip(lons, lats)]
     cx = (min(p[0] for p in pts) + max(p[0] for p in pts)) / 2
     cy = (min(p[1] for p in pts) + max(p[1] for p in pts)) / 2
-    ox, oy = cx - W / 2, cy - H / 2  # linke obere Ecke im Weltpixel-Raster
+    ox, oy = cx - W / 2, cy - (H + HEADER) / 2  # Route mittig unter der Kopfzeile
 
     canvas = Image.new('RGB', (W, H), (240, 236, 228))
     for tx in range(int(ox // 256), int((ox + W) // 256) + 1):
@@ -240,7 +243,9 @@ def main():
         print(__doc__)
         sys.exit(2)
     spot_key, out = sys.argv[1], sys.argv[2]
-    manifest = json.load(open(os.path.join(out, 'manifest.json'), encoding='utf-8'))
+    # Ohne Manifest (capture ist ausgefallen) entstehen nur Routenkarte und GIF nicht, Kreise entfallen.
+    mpath = os.path.join(out, 'manifest.json')
+    manifest = json.load(open(mpath, encoding='utf-8')) if os.path.exists(mpath) else {'shots': {}}
     assets = []
 
     stats = route_card(spot_key, os.path.join(out, 'route.jpg'))
