@@ -59,14 +59,22 @@ def login():
     return call('com.atproto.server.createSession', {'identifier': HANDLE, 'password': pw})
 
 
+TAG_RE = re.compile(r'(?<!\w)#(\w{2,64})')
+
+
 def facets(text):
-    """Link-Facets mit UTF-8-Byte-Positionen, damit URLs im Post klickbar sind."""
+    """Link- und Hashtag-Facets mit UTF-8-Byte-Positionen, damit URLs und Tags klickbar sind."""
     out = []
     for m in URL_RE.finditer(text):
         start = len(text[:m.start()].encode())
         end = start + len(m.group().encode())
         out.append({'index': {'byteStart': start, 'byteEnd': end},
                     'features': [{'$type': 'app.bsky.richtext.facet#link', 'uri': m.group()}]})
+    for m in TAG_RE.finditer(text):
+        start = len(text[:m.start()].encode())
+        end = start + len(m.group().encode())
+        out.append({'index': {'byteStart': start, 'byteEnd': end},
+                    'features': [{'$type': 'app.bsky.richtext.facet#tag', 'tag': m.group(1)}]})
     return out
 
 
