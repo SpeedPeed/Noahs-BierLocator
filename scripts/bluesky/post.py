@@ -1,0 +1,145 @@
+"""Veröffentlicht Posts (optional mit Bildern und als Thread) auf dem Bluesky-Konto.
+
+    python scripts/bluesky/post.py thread.json            # echt posten
+    python scripts/bluesky/post.py thread.json --dry-run  # nur prüfen, nichts senden
+
+thread.json ist eine Liste. Jeder Eintrag wird ein Post, die folgenden antworten auf den ersten:
+    [
+      {"text": "…", "images": [{"path": "/…/route.jpg", "alt": "Beschreibung"}]},
+      {"text": "…"}
+    ]
+
+Das Passwort kommt aus der Umgebungsvariable app_passwort_bluesky (App-Passwort).
+Es wird nie ausgegeben. Ausgabe nur: URLs der Posts oder Fehlermeldungen.
+"""
+import datetime
+import io
+import json
+import os
+import re
+import sys
+import urllib.error
+import urllib.request
+
+from PIL import Image
+
+PDS = 'https://bsky.social/xrpc/'
+HANDLE = 'bierlocator.bsky.social'
+MAX_GRAPHEMES = 300
+MAX_IMAGE_BYTES = 950_000
+URL_RE = re.compile(r'https?://[^\s)]+')
+
+
+def call(method, body=None, token=None, raw=None, mime=None):
+    url = PDS + method
+    headers = {}
+    if token:
+        headers['Authorization'] = 'Bearer ' + token
+    if raw is not None:
+        data, headers['Content-Type'] = raw, mime
+    elif body is not None:
+        data, headers['Content-Type'] = json.dumps(body).encode(), 'application/json'
+    else:
+        data = None
+    req = urllib.request.Request(url, data=data, headers=headers, method='POST' if data is not None else 'GET')
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return json.loads(r.read() or b'{}')
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f'API-Fehler bei {method}: HTTP {e.code} {e.read()[:200].decode(errors="replace")}')
+
+
+def login():
+    pw = os.environ.get('app_passwort_bluesky')
+    if not pw:
+        raise SystemExit('Umgebungsvariable app_passwort_bluesky fehlt.')
+    return call('com.atproto.server.createSession', {'identifier': HANDLE, 'password': pw})
+
+
+def facets(text):
+    """Link-Facets mit UTF-8-Byte-Positionen, damit URLs im Post klickbar sind."""
+    out = []
+    for m in URL_RE.finditer(text):
+        start = len(text[:m.start()].encode())
+        end = start + len(m.group().encode())
+        out.append({'index': {'byteStart': start, 'byteEnd': end},
+                    'features': [{'$type': 'app.bsky.richtext.facet#link', 'uri': m.group()}]})
+    return out
+
+
+def graphemes(text):
+    # Näherung: Bluesky zählt Grapheme. Für deutschen Text mit Emoji reicht die Anzahl der Zeichen.
+    return len(text)
+
+
+def smaller_jpeg(path):
+    """Verkleinert ein Bild unter MAX_IMAGE_BYTES, falls nötig (JPEG)."""
+    raw = open(path, 'rb').read()
+    if len(raw) <= MAX_IMAGE_BYTES:
+        return raw, 'image/gif' if path.lower().endswith('.gif') else 'image/jpeg'
+    if path.lower().endswith('.gif'):
+        raise SystemExit(f'GIF zu groß ({len(raw)} Byte): {path}')
+    img = Image.open(path).convert('RGB')
+    for scale, quality in [(1.0, 80), (0.85, 78), (0.7, 75), (0.6, 70)]:
+        w, h = int(img.width * scale), int(img.height * scale)
+        buf = io.BytesIO()
+        img.resize((w, h), Image.LANCZOS).save(buf, 'JPEG', quality=quality, optimize=True)
+        if buf.tell() <= MAX_IMAGE_BYTES:
+            return buf.getvalue(), 'image/jpeg'
+    raise SystemExit(f'Bild auch verkleinert zu groß: {path}')
+
+
+def upload(session, path):
+    data, mime = smaller_jpeg(path)
+    res = call('com.atproto.repo.uploadBlob', token=session['accessJwt'], raw=data, mime=mime)
+    return res['blob']
+
+
+def main():
+    if len(sys.argv) < 2:
+        print(__doc__)
+        sys.exit(2)
+    thread = json.load(open(sys.argv[1], encoding='utf-8'))
+    dry = '--dry-run' in sys.argv
+
+    for i, post in enumerate(thread, start=1):
+        if graphemes(post['text']) > MAX_GRAPHEMES:
+            raise SystemExit(f'Post {i} ist zu lang ({graphemes(post["text"])} Zeichen, max. {MAX_GRAPHEMES}).')
+        if len(post.get('images', [])) > 4:
+            raise SystemExit(f'Post {i} hat mehr als vier Bilder.')
+        for img in post.get('images', []):
+            if not img.get('alt'):
+                raise SystemExit(f'Bild in Post {i} hat keinen Alt-Text.')
+
+    if dry:
+        print(f'Trockenlauf: {len(thread)} Post(s), keine Verbindung zum Netz.')
+        return
+
+    session = login()
+    root = parent = None
+    for i, post in enumerate(thread, start=1):
+        record = {
+            '$type': 'app.bsky.feed.post',
+            'text': post['text'],
+            'createdAt': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='milliseconds').replace('+00:00', 'Z'),
+        }
+        f = facets(post['text'])
+        if f:
+            record['facets'] = f
+        imgs = post.get('images', [])
+        if imgs:
+            record['embed'] = {'$type': 'app.bsky.embed.images', 'images': [
+                {'image': upload(session, im['path']), 'alt': im['alt']} for im in imgs]}
+        if root:
+            record['reply'] = {'root': root, 'parent': parent}
+        res = call('com.atproto.repo.createRecord', {
+            'repo': session['did'], 'collection': 'app.bsky.feed.post', 'record': record,
+        }, token=session['accessJwt'])
+        ref = {'uri': res['uri'], 'cid': res['cid']}
+        root = root or ref
+        parent = ref
+        print(f'https://bsky.app/profile/{HANDLE}/post/{res["uri"].split("/")[-1]}')
+
+
+if __name__ == '__main__':
+    main()
