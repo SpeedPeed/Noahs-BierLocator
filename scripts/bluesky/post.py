@@ -17,8 +17,11 @@ import io
 import json
 import os
 import re
+import subprocess
 import sys
+import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 from PIL import Image
@@ -95,6 +98,52 @@ def upload(session, path):
     return res['blob']
 
 
+VIDEO = 'https://video.bsky.app/xrpc/'
+
+
+def gif_to_mp4(gif_path):
+    """Bluesky spielt GIFs nur animiert, wenn sie als Video hochgeladen werden. Hier konvertieren wir."""
+    mp4 = gif_path[:-4] + '.mp4'
+    subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', gif_path,
+                    '-movflags', 'faststart', '-pix_fmt', 'yuv420p',
+                    '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', mp4], check=True)
+    return mp4
+
+
+def upload_video(session, path):
+    """Lädt ein MP4 über den Bluesky-Videodienst hoch und wartet, bis es verarbeitet ist."""
+    did = session['did']
+    # Service-Token für den Videodienst, Audience ist die PDS-DID des Kontos (aus dem DID-Dokument).
+    pds_host = urllib.parse.urlparse(session['didDoc']['service'][0]['serviceEndpoint']).hostname
+    svc = call('com.atproto.server.getServiceAuth?' + urllib.parse.urlencode({
+        'aud': 'did:web:' + pds_host, 'lxm': 'com.atproto.repo.uploadBlob'}), token=session['accessJwt'])['token']
+    data = open(path, 'rb').read()
+    job = _vreq(VIDEO + 'app.bsky.video.uploadVideo?' + urllib.parse.urlencode(
+        {'did': did, 'name': os.path.basename(path)}), svc, data, 'video/mp4')
+    job_id = job['jobId']
+    for _ in range(60):
+        status = _vreq(VIDEO + 'app.bsky.video.getJobStatus?' + urllib.parse.urlencode({'jobId': job_id}), svc)
+        js = status.get('jobStatus', {})
+        if js.get('state') == 'JOB_STATE_COMPLETED':
+            return js['blob']
+        if js.get('state') == 'JOB_STATE_FAILED':
+            raise SystemExit(f'Videoverarbeitung fehlgeschlagen: {js.get("error", "unbekannt")}')
+        time.sleep(3)
+    raise SystemExit('Videoverarbeitung dauert zu lange.')
+
+
+def _vreq(url, token, data=None, mime=None):
+    headers = {'Authorization': 'Bearer ' + token}
+    if data is not None:
+        headers['Content-Type'] = mime
+    req = urllib.request.Request(url, data=data, headers=headers, method='POST' if data is not None else 'GET')
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            return json.loads(r.read() or b'{}')
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f'Videodienst-Fehler: HTTP {e.code} {e.read()[:200].decode(errors="replace")}')
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
@@ -127,7 +176,16 @@ def main():
         if f:
             record['facets'] = f
         imgs = post.get('images', [])
-        if imgs:
+        gifs = [im for im in imgs if im['path'].lower().endswith('.gif')]
+        if gifs:
+            # GIFs als Video, sonst werden sie nicht animiert. Pro Post nur ein Video.
+            if len(imgs) != 1:
+                raise SystemExit(f'Post {i}: ein GIF darf nur allein im Post stehen.')
+            gif = gifs[0]
+            record['embed'] = {'$type': 'app.bsky.embed.video',
+                               'video': upload_video(session, gif_to_mp4(gif['path'])),
+                               'alt': gif['alt']}
+        elif imgs:
             record['embed'] = {'$type': 'app.bsky.embed.images', 'images': [
                 {'image': upload(session, im['path']), 'alt': im['alt']} for im in imgs]}
         if root:
