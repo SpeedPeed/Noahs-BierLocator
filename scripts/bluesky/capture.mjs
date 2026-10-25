@@ -93,9 +93,12 @@ await step('surprise', async () => {
   await page.click('#tabFind');
   await page.waitForSelector('#btnSurprise:not([hidden])', { timeout: 60000 });
   await page.click('#btnSurprise');
-  for (let i = 0; i < 12; i++) {
+  // Das Rad dreht sich erst nach „Drehen!“, davor sind alle Bilder gleich.
+  await page.waitForSelector('#wheelSpin', { timeout: 15000 });
+  await page.click('#wheelSpin');
+  for (let i = 0; i < 20; i++) {
     await page.screenshot({ path: join(outDir, `surprise-${String(i).padStart(2, '0')}.png`) });
-    await page.waitForTimeout(160);
+    await page.waitForTimeout(120);
   }
 });
 
