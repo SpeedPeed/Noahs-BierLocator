@@ -201,8 +201,41 @@ def make_gif(frame_dir, out_path):
     frames[0].save(out_path, save_all=True, append_images=frames[1:], duration=170, loop=0, optimize=True)
     return os.path.getsize(out_path) < 950_000
 
+TUTORIAL_STEPS = [
+    ('finden-annot.jpg',
+     'So findest du Bier in deiner Nähe: Standort erlauben, dann zeigt die Karte Orte im Umkreis. '
+     'Mit den Typ-Filtern wird es genauer.'),
+    ('tour-annot.jpg',
+     'Bier-Radtour planen: Länge, Stopps und Startzeit wählen. Die Stopps verteilt der Planer '
+     'gleichmäßig, und nur Lokale, die bei der Ankunft offen haben.'),
+    ('route.jpg',
+     'Die fertige Strecke kannst du als GPX-Datei exportieren oder per Link teilen. '
+     'https://speedpeed.github.io/Noahs-BierLocator'),
+]
+
+
+def tutorial_thread(out):
+    """Schreibt thread.json: ein Post pro Schritt, jeweils mit dem passenden Bild aus assets.json."""
+    assets = {a['file']: a['alt'] for a in json.load(open(os.path.join(out, 'assets.json'), encoding='utf-8'))['assets']}
+    thread = []
+    for n, (file, text) in enumerate(TUTORIAL_STEPS, start=1):
+        if file not in assets or not os.path.exists(os.path.join(out, file)):
+            continue
+        thread.append({'text': f'Tutorial {n}/{len(TUTORIAL_STEPS)}: {text}',
+                       'images': [{'path': os.path.join(out, file), 'alt': assets[file]}]})
+    if not thread:
+        raise SystemExit('Keine Bilder für das Tutorial vorhanden.')
+    path = os.path.join(out, 'thread.json')
+    json.dump(thread, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    return path
+
+
 
 def main():
+    if '--tutorial' in sys.argv:
+        sys.argv.remove('--tutorial')
+        print(tutorial_thread(sys.argv[2]))
+        return
     if len(sys.argv) != 3 or sys.argv[1] not in SPOTS:
         print(__doc__)
         sys.exit(2)
