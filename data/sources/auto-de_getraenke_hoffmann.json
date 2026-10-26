@@ -2,14 +2,28 @@
 {
 "country": "DE",
 "chain": "getraenke_hoffmann",
-"beer": "Bitburger Premium Pils",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 14.99,
+"beer": "Herren Premium",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 9.99,
 "promo": true,
 "source": "https://www.getraenke-hoffmann.de/angebote",
-"seen": "2026-10-12",
+"seen": "2026-10-26",
 "note": "Aktion (Bier)",
-"valid_until": "2026-10-17"
+"valid_until": "2026-10-31"
+},
+{
+"country": "DE",
+"chain": "getraenke_hoffmann",
+"beer": "Heineken Original Pure Malt Lager und Alkoholfrei 0,0 %",
+"unit": "other",
+"package": "28×0,25 l",
+"price": 18.99,
+"promo": true,
+"source": "https://www.getraenke-hoffmann.de/angebote",
+"seen": "2026-10-26",
+"volume_l": 7.0,
+"note": "Aktion (Original Pure Lager oder Alkoholfrei)",
+"valid_until": "2026-10-31"
 }
 ]

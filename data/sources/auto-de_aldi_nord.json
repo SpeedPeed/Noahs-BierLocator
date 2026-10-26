@@ -8,7 +8,7 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/pils-347.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -19,7 +19,7 @@
 "price": 0.39,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/pils-1033247.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -30,7 +30,7 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/helles-1040137.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -41,7 +41,7 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/00-prozent-1030077.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -52,7 +52,7 @@
 "price": 0.49,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/naturradler-1034905.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -63,7 +63,7 @@
 "price": 0.49,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/naturradler-alkoholfrei-1034907.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
@@ -74,7 +74,7 @@
 "price": 2.79,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/gold-318.html",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "volume_l": 3.0
 },
 {
@@ -86,7 +86,7 @@
 "price": 2.79,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/premium-pilsener-312.html",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "volume_l": 3.0
 },
 {
@@ -98,32 +98,21 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.aldi-nord.de/produkt/pils-2014.html",
-"seen": "2026-10-19"
+"seen": "2026-10-26"
 },
 {
 "country": "DE",
 "chain": "aldi_nord",
-"beer": "Krombacher Naturradler",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.79,
+"beer": "Guinness Draught Stout",
+"unit": "other",
+"package": "4×0,44 l",
+"price": 4.99,
 "promo": true,
-"source": "https://www.aldi-nord.de/produkt/naturradler-1023498.html",
-"seen": "2026-10-19",
-"note": "Aktion, statt UVP 0,99 €",
-"valid_until": "2026-10-24"
-},
-{
-"country": "DE",
-"chain": "aldi_nord",
-"beer": "Krombacher Pils",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.79,
-"promo": true,
-"source": "https://www.aldi-nord.de/produkt/pils-20140000004.html",
-"seen": "2026-10-19",
-"note": "Aktion, statt UVP 0,99 €",
-"valid_until": "2026-10-24"
+"source": "https://www.aldi-nord.de/produkt/draught-stout-7536.html",
+"seen": "2026-10-26",
+"volume_l": 1.76,
+"note": "Aktion ab 29.10., statt UVP 6,49 €",
+"valid_until": "2026-11-04",
+"valid_from": "2026-10-29"
 }
 ]

@@ -8,7 +8,7 @@
 "price": 0.85,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/cerveja-sagres-bier-mini-000000000000288216",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "volume_l": 0.25,
 "currency": "CHF"
 },
@@ -21,7 +21,7 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-panache-000000000000288237",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -33,7 +33,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/karlskrone-bier-lager-000000000000288250",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -45,7 +45,7 @@
 "price": 0.69,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-lager-000000000000288509",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -57,7 +57,7 @@
 "price": 1.89,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/schuetzengarten-bier-lager-000000000000288687",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -69,7 +69,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-naturtrueb-000000000000289300",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -81,7 +81,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-spezial-000000000000290392",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -93,7 +93,7 @@
 "price": 2.25,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/birra-moretti-premium-bier-lager-000000000000447082",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -105,7 +105,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-amber-000000000000483875",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -117,8 +117,21 @@
 "price": 1.75,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/corona-extra-000000000000507488",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "aldi",
+"beer": "Saveurs Suisses Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.77,
+"promo": true,
+"source": "https://www.aldi-suisse.ch/de/produkt/saveurs-suisses-bier-lager-000000000000546128",
+"seen": "2026-10-26",
+"currency": "CHF",
+"note": "Aktionsartikel, solange Vorrat"
 },
 {
 "country": "CH",
@@ -129,7 +142,7 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/karlskrone-bier-lager-000000000000550694",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -141,7 +154,7 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/karlskrone-weissbier-000000000000552327",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -153,7 +166,7 @@
 "price": 0.69,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/karlskrone-bier-pils-000000000000720832",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -165,7 +178,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-weizen-000000000000730533",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -177,7 +190,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/feldschloesschen-panache-zitrone-alkoholfrei-000000000000332136",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -189,7 +202,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/feldschloesschen-bier-lager-alkoholfrei-000000000000510949",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -201,7 +214,7 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/karlskrone-bier-alkoholfrei-000000000000550664",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 },
 {
@@ -213,7 +226,7 @@
 "price": 0.75,
 "promo": false,
 "source": "https://www.aldi-suisse.ch/de/produkt/st-gotthard-bier-alkoholfrei-000000000000715926",
-"seen": "2026-10-19",
+"seen": "2026-10-26",
 "currency": "CHF"
 }
 ]
