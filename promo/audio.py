@@ -266,7 +266,7 @@ for ev in plan['events']:
         p = ev['pan']
         s = s * np.array([np.sqrt(1 - max(0, p)), np.sqrt(1 + min(0, p))])
     i = int(ev['t'] * SR)
-    fx_bus[i: i + len(s)] += s * ev.get('gain', 1) * 0.55
+    fx_bus[i: i + len(s)] += s * ev.get('gain', 1) * 0.7
 fx_bus = reverb(fx_bus)[:total]
 
 music = np.zeros((total, 2))

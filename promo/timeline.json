@@ -1,7 +1,14 @@
 {
   "fps": 60,
-  "bpm": 110,
+  "bpm": 103.02,
   "offset": 0,
   "beats": 41.5,
-  "music": null
+  "music": {
+    "file": "music/ketsa-cool-and-crisp.mp3",
+    "start": 41.92,
+    "gain": 0.62,
+    "fadeIn": 0.02,
+    "fadeOut": 1.2,
+    "credit": "Musik: „Cool and Crisp“ von Ketsa · CC BY 4.0"
+  }
 }

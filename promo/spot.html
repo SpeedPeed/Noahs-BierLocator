@@ -71,6 +71,7 @@
   #flare { left: 50%; top: 740px; width: 1600px; height: 1600px; margin: -800px 0 0 -800px; border-radius: 50%;
     background: radial-gradient(circle, rgba(255,214,140,.9) 0%, rgba(246,176,62,.35) 12%, rgba(246,176,62,0) 45%); mix-blend-mode: screen; }
   #flareLine { left: 0; right: 0; top: 738px; height: 4px; background: linear-gradient(90deg, transparent, rgba(255,226,170,.95), transparent); mix-blend-mode: screen; }
+  #credit { left: 0; right: 0; bottom: 70px; text-align: center; font: 600 26px/1 Figtree; color: #8a7458; }
   #introWord { left: 0; right: 0; top: 1080px; text-align: center; font: 800 150px/1 'Bricolage Grotesque'; letter-spacing: -3px; color: var(--foam); }
 </style>
 </head>
@@ -113,6 +114,7 @@
   <div id="name" class="abs">Bier-Locator</div>
   <div id="bar" class="abs"></div>
   <div id="slogan" class="abs">Dein nächstes Bier ist näher, als du denkst.</div>
+  <div id="credit" class="abs"></div>
 </div>
 
 <script type="module">
@@ -143,6 +145,7 @@ const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const TL = await (await fetch('timeline.json')).json();
 const SPB = 60 / TL.bpm;                 // Sekunden pro Schlag
 const B = b => TL.offset + b * SPB;      // Schlag → Sekunde
+if (TL.music && TL.music.credit) document.querySelector('#credit').textContent = TL.music.credit;
 window.SFX = [];                         // Geräusche für audio.py: { t, type, gain, pan }
 const sfx = (beat, type, gain = 1, pan = 0) => window.SFX.push({ t: +B(beat).toFixed(3), type, gain, pan });
 
@@ -206,8 +209,8 @@ const ride = u => {
 };
 const bikeU = t => {
   if (t < B(22.5)) return 0;
-  if (t < B(26.2)) return lerp(0, 0.62, E.inOut(prog(t, B(22.5), B(26.2))));
-  if (t < B(27.6)) return lerp(0.62, 0.9, E.expoInOut(prog(t, B(26.2), B(27.6))));
+  if (t < B(26.6)) return lerp(0, 0.62, E.inOut(prog(t, B(22.5), B(26.6))));
+  if (t < B(28.0)) return lerp(0.62, 0.9, E.expoInOut(prog(t, B(26.6), B(28.0))));
   return 0.9;
 };
 const KEYS = [
@@ -239,9 +242,9 @@ function cameraAt(t) {
     // Radtour: hinter dem Rad her, beim Sprint tief über der Straße, dann zum Biergarten hoch
     const u = bikeU(t);
     const high = follow(u, 32, 62, 14), low = ride(u);
-    const lowMix = E.inOut(prog(b, 25.6, 26.4)) * (1 - E.inOut(prog(b, 27.7, 28.6)));
+    const lowMix = E.inOut(prog(b, 26.0, 26.8)) * (1 - E.inOut(prog(b, 28.0, 28.9)));
     pos = high.pos.clone().lerp(low.pos, lowMix); tgt = high.tgt.clone().lerp(low.tgt, lowMix);
-    const up = E.inOut(prog(b, 27.7, 29.4));
+    const up = E.inOut(prog(b, 28.0, 29.6));
     const g = { pos: GARDEN.clone().add(V(20, 40, 44)), tgt: GARDEN.clone().add(V(0, 1, 5)) };
     pos.lerp(g.pos, up); tgt.lerp(g.tgt, up);
   } else {
@@ -397,7 +400,7 @@ function renderUI(t, b) {
   pop(shopChip, b, 16.6, 17.6, { origin: '50% 100%' });
   // Navi-Banner während der Tour
   set(banner, { left: '84px', top: '640px' });
-  pop(banner, b, 23.0, 27.4, { origin: '0% 50%' });
+  pop(banner, b, 23.0, 27.8, { origin: '0% 50%' });
   const u = bikeU(t);
   const next = STOPS.findIndex(s => s > u + 0.005);
   const names = ['Kreuzbar', 'Beach Bar', 'Fischersteg', 'Biergarten am See'];
@@ -408,7 +411,7 @@ function renderUI(t, b) {
   // „Offen bis“ am Biergarten
   at(openPill, stopPins[3].position.clone().add(V(0, 5.2, 0)));
   set(openPill, { marginLeft: -openPill.offsetWidth / 2 + 'px', marginTop: -openPill.offsetHeight + 'px' });
-  pop(openPill, b, 27.8, 29.6, { origin: '50% 100%' });
+  pop(openPill, b, 28.1, 29.6, { origin: '50% 100%' });
   // Freunde am Biertisch
   avatars.forEach(({ n, plus, k }) => {
     const ang = (k / 4) * Math.PI * 2 + 0.6;
@@ -431,7 +434,7 @@ const lines = Array.from({ length: 34 }, (_, k) => {
   return { l, a, r0: 420 + (Math.sin(k * 3.1) * 0.5 + 0.5) * 200, ph: Math.sin(k * 5.7) * 0.5 + 0.5 };
 });
 function renderSpeed(b) {
-  const s = Math.sin(Math.PI * prog(b, 26.2, 27.6)) * (b > 26.2 && b < 27.6 ? 1 : 0);
+  const s = Math.sin(Math.PI * prog(b, 26.6, 28.0)) * (b > 26.6 && b < 28.0 ? 1 : 0);
   const s2 = Math.sin(Math.PI * prog(b, 35.6, 37.0)) * (b > 35.6 && b < 37 ? 1 : 0);
   const k2 = Math.max(s, s2);
   lines.forEach(({ l, a, r0, ph }) => {
@@ -470,7 +473,7 @@ function renderLogo(t, b) {
     morph = E.inOut(prog(b, 1.3, 2.0));
     level = E.in(prog(b, 1.9, 2.55));
     solid = b < 1.9;
-    const zoom = E.expoIn(prog(b, 2.5, 3.7));
+    const zoom = E.expoIn(prog(b, 2.6, 4.0));
     hole = b >= 1.9 ? lerp(RC, 2400, zoom) : 0;
     ringW = b >= 1.9 ? lerp(16, 120, zoom) : 0;
     logo.style.display = b < 2.6 ? '' : 'none';
@@ -513,6 +516,7 @@ function renderLogo(t, b) {
   set($('#bar'), { display: outro ? '' : 'none', width: 170 * bw + 'px', marginLeft: -85 * bw + 'px' });
   const s = E.out(prog(b, 39.7, 40.4));
   set($('#slogan'), { display: outro ? '' : 'none', opacity: s, transform: `translateY(${(1 - s) * 30}px)` });
+  set($('#credit'), { display: outro ? '' : 'none', opacity: E.out(prog(b, 39.8, 40.5)) });
   const fl = outro ? Math.exp(-Math.pow((b - 38.85) / 0.35, 2)) : 0;
   set($('#flare'), { opacity: fl, transform: `scale(${0.6 + fl * 0.5})` });
   set($('#flareLine'), { opacity: fl, transform: `scaleX(${0.4 + fl})` });
@@ -526,7 +530,7 @@ function popBubbles(p1, p2 = p1) {
 /* ================= Geräusch-Fahrplan ================= */
 sfx(0.0, 'drop', 0.8); sfx(0.5, 'pop', 0.6);
 sfx(1.3, 'morph', 0.6); sfx(1.9, 'drain', 0.7);
-sfx(2.3, 'riser', 0.9); sfx(3.6, 'impact', 1.0);
+sfx(2.6, 'riser', 0.9); sfx(4.0, 'impact', 1.0);
 ambient.forEach((p, k) => { if (k % 3 === 0) sfx(p.userData.drop + 0.08, 'plip', 0.35, (k % 5 - 2) / 3); });
 sfx(7.2, 'pop', 0.7, -0.3);
 for (let k = 0; k < 9; k++) if (k % 2 === 0) sfx(7.6 + k * 0.12, 'tick', 0.4, 0.2);
@@ -534,9 +538,9 @@ sfx(9.3, 'whoosh', 0.8); sfx(10.3, 'drop', 0.7); sfx(11.0, 'card', 1.0); sfx(11.
 sfx(15.0, 'whip', 1.0); sfx(16.3, 'drop', 0.7, -0.2); sfx(16.6, 'pop', 0.7);
 sfx(17.0, 'swoosh', 0.8); sfx(21.3, 'swoosh', 0.7);
 sfx(22.1, 'whoosh', 0.7);
-STOPS.forEach((u, n) => sfx([23.4, 24.4, 25.4, 27.5][n], 'plip', 0.8, 0.2));
-sfx(25.4, 'riser', 0.6); sfx(26.2, 'dash', 1.0); sfx(27.6, 'brake', 0.8);
-sfx(27.8, 'ding', 0.9);
+STOPS.forEach((u, n) => sfx([23.4, 24.4, 25.4, 27.9][n], 'plip', 0.8, 0.2));
+sfx(25.6, 'riser', 0.6); sfx(26.6, 'dash', 1.0); sfx(28.0, 'brake', 0.8);
+sfx(28.1, 'ding', 0.9);
 avatars.forEach((a, k) => sfx(29.9 + k * 0.5, 'pop', 0.6, (k - 1.5) / 2));
 avatars.forEach((a, k) => sfx(30.6 + k * 0.5, 'tick', 0.45));
 sfx(31.5, 'swoosh', 0.8); sfx(34.2, 'coin', 0.8); sfx(35.6, 'swoosh', 0.6);
@@ -552,15 +556,15 @@ window.seek = async t => {
   const sel = 1 + 0.25 * E.back(prog(b, 10.3, 10.8), 2) - 0.25 * prog(b, 15, 15.4);
   dropPin(pubPin, t, 10.3, PUB.y, sel);
   dropPin(shopPin, t, 16.3, SHOP.y);
-  dropPin(gardenPin, t, 27.75, 3.2, 1.2);
-  stopPins.forEach((p, n) => dropPin(p, t, [23.4, 24.4, 25.4, 27.5][n], 0, 1.3, 9));
-  if (b < 27.75) gardenPin.visible = false;
+  dropPin(gardenPin, t, 28.0, 3.2, 1.2);
+  stopPins.forEach((p, n) => dropPin(p, t, [23.4, 24.4, 25.4, 27.9][n], 0, 1.3, 9));
+  if (b < 28.0) gardenPin.visible = false;
   // Route & Rad
   const u = bikeU(t);
   W.route.set(u);
   W.route.mesh.visible = b >= 22.4; W.route.ghost.visible = b >= 22.4 && b < 30; W.route.ghost.material.opacity = 0.35 * clamp(prog(b, 22.4, 23.2));
   const bp = W.route.curve.getPointAt(u);
-  W.bike.position.set(bp.x, 0, bp.z); W.bike.visible = b >= 22.4 && b < 36 && !(b > 25.9 && b < 28.2);
+  W.bike.position.set(bp.x, 0, bp.z); W.bike.visible = b >= 22.4 && b < 36 && !(b > 26.3 && b < 28.6);
   // Standort-Puls
   const pp = ((t * 1.1) % 1);
   W.pulse.scale.setScalar(1 + pp * 3.2); W.pulse.material.opacity = 0.35 * (1 - pp);
