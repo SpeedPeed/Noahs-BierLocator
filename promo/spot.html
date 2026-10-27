@@ -3,280 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <title>Bier-Locator Werbespot</title>
-<!-- Komposition des Werbespots (1080×1920). Wird von promo/render.js Bild für Bild über
-     window.seek(t) angesteuert — keine CSS-Animationen, alles ist eine Funktion der Zeit. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@500;600;700&display=block">
+<!-- Komposition des Werbespots (1080×1920). promo/render.js steuert sie Bild für Bild über
+     window.seek(t) an — es gibt keine CSS-Animationen, alles ist eine Funktion der Zeit.
+     Zeiten sind in Schlägen (Beats) der Musik angegeben, siehe timeline.json. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@500;600;700;800&display=block">
+<script type="importmap">{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
 <style>
-  :root { --bg: #1a120a; --amber: #f6b03e; --amber-2: #df8510; --foam: #fff7e6; --muted: #d9c7a8; --red: #e5533d; }
+  :root { --malt: #1a120a; --ink: #2b1d0e; --amber: #f2a01c; --amber-2: #df8510; --foam: #fff7e6; --cream: #f6ead2; --muted: #7a6450; --green: #3e9a52; }
   html, body { margin: 0; background: #000; }
-  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: var(--foam);
-    background: radial-gradient(120% 70% at 50% 100%, #4a2f0f 0%, #2a1b0c 40%, var(--bg) 75%); font-family: Figtree, sans-serif; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Figtree, sans-serif; color: var(--ink); background: var(--malt); }
   .abs { position: absolute; }
-  #glow { left: 50%; top: 50%; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(246,176,62,.22), rgba(246,176,62,0) 60%); }
-  .bub { border-radius: 50%; border: 3px solid rgba(255,247,230,.09); background: rgba(255,247,230,.025); }
+  #world { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #tilt { inset: 0; pointer-events: none; backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(#000 0%, transparent 22%, transparent 74%, #000 100%); mask-image: linear-gradient(#000 0%, transparent 22%, transparent 74%, #000 100%); }
+  #topfade { left: 0; right: 0; top: 0; height: 760px; background: linear-gradient(rgba(246,234,210,.97) 0%, rgba(246,234,210,.85) 38%, rgba(246,234,210,0) 100%); }
+  #vignette { inset: 0; background: radial-gradient(130% 90% at 50% 55%, transparent 60%, rgba(60,35,10,.28) 100%); }
+  #speed { inset: 0; }
 
-  /* Einstieg */
-  #hook { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  #price { position: relative; font: 800 270px/1 'Bricolage Grotesque', sans-serif; color: var(--amber); letter-spacing: -6px; }
-  #strike { position: absolute; left: -5%; top: 50%; height: 26px; margin-top: -13px; background: var(--red); border-radius: 13px; transform-origin: left center; }
-  #q { margin-top: 26px; font: 800 96px/1.05 'Bricolage Grotesque', sans-serif; }
-  #ans { margin-top: 70px; font: 700 64px/1.1 'Bricolage Grotesque', sans-serif; color: var(--foam); padding: 18px 40px; border-radius: 99px; background: rgba(246,176,62,.16); border: 3px solid var(--amber); }
+  /* Dunkle Ebene mit Ring-Maske (Intro/Outro) */
+  #dark { inset: 0; }
 
-  /* Szenentexte */
-  .text { left: 90px; right: 90px; top: 150px; }
-  .kicker { display: inline-flex; align-items: center; gap: 14px; font: 700 30px/1 Figtree, sans-serif; letter-spacing: 4px; text-transform: uppercase; color: var(--amber); }
-  .kicker b { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--amber); color: #2b1a05; letter-spacing: 0; font-size: 26px; }
-  .title { margin-top: 26px; font: 800 100px/1.0 'Bricolage Grotesque', sans-serif; letter-spacing: -2px; }
-  .title span { display: inline-block; }
-  .sub { margin-top: 22px; font: 500 38px/1.3 Figtree, sans-serif; color: var(--muted); max-width: 900px; }
+  /* Texte */
+  .head { left: 84px; right: 84px; top: 170px; }
+  .head .kick { font: 800 30px/1 Figtree; letter-spacing: 5px; text-transform: uppercase; color: var(--amber-2); }
+  .head .t { margin-top: 20px; font: 800 104px/0.98 'Bricolage Grotesque'; letter-spacing: -2.5px; }
+  .head .t span { display: inline-block; }
+  .head .s { margin-top: 22px; font: 600 40px/1.25 Figtree; color: var(--muted); }
 
-  /* Handy */
-  #phone { left: 50%; top: 660px; width: 621px; height: 1302px; margin-left: -310.5px; border-radius: 78px; background: #0d0905;
-    box-shadow: 0 0 0 3px #3b2a18, 0 60px 120px rgba(0,0,0,.6), 0 0 160px rgba(246,176,62,.18); transform-origin: 50% 30%; }
-  #screen { position: absolute; left: 18px; top: 18px; width: 585px; height: 1266px; border-radius: 62px; overflow: hidden; background: #fbf4e6; }
-  #screen img { position: absolute; inset: 0; width: 100%; height: 100%; }
-  #finger { width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; background: rgba(255,255,255,.75); box-shadow: 0 6px 20px rgba(0,0,0,.35), inset 0 0 0 3px rgba(0,0,0,.08); }
-  #ripple { width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; border: 5px solid rgba(255,255,255,.9); }
+  /* UI-Elemente */
+  .card { background: #fff; border-radius: 36px; box-shadow: 0 30px 70px rgba(70,40,10,.22), 0 4px 14px rgba(70,40,10,.12); }
+  .pill { display: inline-flex; align-items: center; gap: 16px; padding: 20px 34px 20px 24px; border-radius: 99px; background: #fff; font: 700 36px/1 Figtree; box-shadow: 0 20px 50px rgba(70,40,10,.2); white-space: nowrap; }
+  .pill i { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--amber); color: #fff; font-style: normal; }
+  .banner { display: flex; align-items: center; gap: 24px; padding: 26px 34px; border-radius: 32px; background: var(--ink); color: var(--foam); box-shadow: 0 24px 60px rgba(40,20,5,.35); white-space: nowrap; }
+  .banner .ico { width: 76px; height: 76px; border-radius: 22px; background: var(--amber); display: grid; place-items: center; }
+  .banner b { display: block; font: 800 42px/1.05 'Bricolage Grotesque'; }
+  .banner small { display: block; margin-top: 6px; font: 600 30px/1 Figtree; color: #e8cfa6; }
+  .chip { padding: 14px 24px; border-radius: 99px; background: #fff; font: 800 40px/1 Figtree; box-shadow: 0 8px 22px rgba(70,40,10,.22); white-space: nowrap; transform-origin: 50% 100%; }
+  .avatar { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; color: #fff; font: 800 52px/1 'Bricolage Grotesque'; box-shadow: 0 0 0 7px #fff, 0 16px 40px rgba(40,20,5,.3); }
+  .plus { font: 800 40px/1 'Bricolage Grotesque'; color: var(--amber-2); text-shadow: 0 3px 0 #fff, 0 0 12px #fff; white-space: nowrap; }
 
-  /* Abschluss */
-  #outro { inset: 0; }
-  #logo { left: 50%; top: 520px; width: 420px; height: 420px; margin-left: -210px; }
-  #name { left: 0; right: 0; top: 1010px; text-align: center; font: 800 150px/1 'Bricolage Grotesque', sans-serif; letter-spacing: -3px; }
-  #bar { left: 50%; top: 1200px; height: 10px; border-radius: 5px; background: var(--amber); }
-  #slogan { left: 0; right: 0; top: 1250px; text-align: center; font: 500 46px/1.3 Figtree, sans-serif; color: var(--muted); }
+  #placeCard { width: 640px; padding: 36px 40px 34px; transform-origin: 0% 100%; }
+  #placeCard .tag { display: inline-block; padding: 8px 16px; border-radius: 99px; background: #fde9c2; color: #9a5a05; font: 800 24px/1 Figtree; letter-spacing: 1px; text-transform: uppercase; }
+  #placeCard h3 { margin: 16px 0 8px; font: 800 52px/1 'Bricolage Grotesque'; }
+  #placeCard .meta { font: 600 28px/1.3 Figtree; color: var(--muted); }
+  #placeCard .stars { color: #f2a01c; letter-spacing: 2px; }
+  #placeCard .price { margin-top: 22px; display: flex; align-items: baseline; gap: 14px; }
+  #placeCard .price b { font: 800 104px/1 'Bricolage Grotesque'; color: var(--amber-2); letter-spacing: -2px; }
+  #placeCard .price span { font: 600 28px/1.2 Figtree; color: var(--muted); }
+  #placeCard .btns { margin-top: 26px; display: flex; gap: 14px; }
+  #placeCard .btns div { padding: 18px 30px; border-radius: 99px; font: 800 30px/1 Figtree; background: #f4e9d3; }
+  #placeCard .btns div:first-child { background: var(--amber); color: #2b1a05; }
+
+  /* Handy mit echter App */
+  .phone { width: 560px; height: 1174px; border-radius: 72px; background: #120c06; box-shadow: 0 0 0 3px #3b2a18, 0 70px 140px rgba(30,15,0,.45); }
+  .phone .scr { position: absolute; left: 16px; top: 16px; width: 528px; height: 1142px; border-radius: 58px; overflow: hidden; background: #fbf4e6; }
+  .phone img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .finger { width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; background: rgba(255,255,255,.78); box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+  .ripple { width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; border: 5px solid rgba(255,255,255,.95); }
+
+  /* Logo & Abschluss */
+  #logoWrap { left: 50%; top: 560px; width: 440px; height: 440px; margin-left: -220px; }
+  #name { left: 0; right: 0; top: 1060px; text-align: center; font: 800 156px/1 'Bricolage Grotesque'; letter-spacing: -3px; color: var(--foam); }
+  #bar { left: 50%; top: 1250px; height: 10px; border-radius: 5px; background: var(--amber); }
+  #slogan { left: 0; right: 0; top: 1300px; text-align: center; font: 600 46px/1.3 Figtree; color: #d9c7a8; }
+  #flare { left: 50%; top: 740px; width: 1600px; height: 1600px; margin: -800px 0 0 -800px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,214,140,.9) 0%, rgba(246,176,62,.35) 12%, rgba(246,176,62,0) 45%); mix-blend-mode: screen; }
+  #flareLine { left: 0; right: 0; top: 738px; height: 4px; background: linear-gradient(90deg, transparent, rgba(255,226,170,.95), transparent); mix-blend-mode: screen; }
+  #introWord { left: 0; right: 0; top: 1080px; text-align: center; font: 800 150px/1 'Bricolage Grotesque'; letter-spacing: -3px; color: var(--foam); }
 </style>
 </head>
 <body>
 <div id="stage">
-  <div id="glow" class="abs"></div>
-  <div id="bubbles"></div>
-
-  <div id="hook" class="abs">
-    <div id="price">6,50 €<div id="strike"></div></div>
-    <div id="q">für EIN Bier?!</div>
-    <div id="ans">Geht auch billiger.</div>
-  </div>
-
-  <div id="texts"></div>
-
-  <div id="phone" class="abs">
-    <div id="screen"><img id="imgPrev" alt=""><img id="imgCur" alt="">
-      <div id="ripple" class="abs"></div><div id="finger" class="abs"></div></div>
-  </div>
-
-  <div id="outro" class="abs">
-    <svg id="logo" class="abs" viewBox="0 0 512 512">
-      <defs>
-        <linearGradient id="beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc94f"/><stop offset="1" stop-color="#df8510"/></linearGradient>
-        <clipPath id="pin"><path id="pinPath"/></clipPath>
-        <mask id="gap"><rect width="512" height="512" fill="#fff"/><circle id="gap1" cx="166" cy="84" fill="#000"/><circle id="gap2" cx="226" cy="52" fill="#000"/></mask>
-      </defs>
-      <g mask="url(#gap)">
-        <path id="glass" fill="rgba(255,247,230,.10)" stroke="rgba(255,247,230,.5)" stroke-width="8"/>
-        <g clip-path="url(#pin)">
-          <rect id="beerRect" x="0" width="512" height="600" fill="url(#beer)"/>
-          <g id="foamG"><path id="foamShade" fill="#c8740c" fill-opacity=".45" transform="translate(0 10)"/><path id="foam" fill="#fff7e6"/></g>
-          <g id="inner">
-            <path d="M160 236v116" stroke="#fff" stroke-opacity=".5" stroke-width="20" stroke-linecap="round"/>
-            <circle cx="296" cy="318" r="14" fill="#fff" fill-opacity=".55"/>
-            <circle cx="258" cy="382" r="9" fill="#fff" fill-opacity=".5"/>
-            <circle cx="232" cy="270" r="8" fill="#fff" fill-opacity=".5"/>
-          </g>
+  <canvas id="world"></canvas>
+  <div id="tilt" class="abs"></div>
+  <div id="vignette" class="abs"></div>
+  <svg id="speed" class="abs" viewBox="0 0 1080 1920"></svg>
+  <div id="track" class="abs" style="inset:0"></div>
+  <div id="topfade" class="abs"></div>
+  <div id="heads"></div>
+  <div id="ui" class="abs" style="inset:0"></div>
+  <svg id="dark" class="abs" viewBox="0 0 1080 1920">
+    <defs><mask id="hole"><rect width="1080" height="1920" fill="#fff"/><circle id="holeC" cx="540" cy="780" r="0" fill="#000"/></mask></defs>
+    <rect width="1080" height="1920" fill="#1a120a" mask="url(#hole)"/>
+    <circle id="ringC" cx="540" cy="780" r="0" fill="none" stroke="#f2a01c" stroke-width="18"/>
+  </svg>
+  <div id="flare" class="abs"></div><div id="flareLine" class="abs"></div>
+  <svg id="logoWrap" class="abs" viewBox="0 0 512 512" overflow="visible">
+    <defs>
+      <linearGradient id="beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc94f"/><stop offset="1" stop-color="#df8510"/></linearGradient>
+      <clipPath id="pinClip"><path id="clipPath"/></clipPath>
+      <mask id="gap"><rect x="-200" y="-200" width="912" height="912" fill="#fff"/><circle id="gap1" cx="166" cy="84" fill="#000"/><circle id="gap2" cx="226" cy="52" fill="#000"/></mask>
+    </defs>
+    <g mask="url(#gap)">
+      <path id="pinShape" fill="url(#beer)"/>
+      <g clip-path="url(#pinClip)">
+                <rect id="beerRect" x="0" width="512" height="700" fill="url(#beer)"/>
+        <g id="foamG"><path class="foamPath" fill="#c8740c" fill-opacity=".45" transform="translate(0 10)"/><path class="foamPath" fill="#fff7e6"/></g>
+        <g id="inner">
+          <path d="M160 236v116" stroke="#fff" stroke-opacity=".5" stroke-width="20" stroke-linecap="round"/>
+          <circle cx="296" cy="318" r="14" fill="#fff" fill-opacity=".55"/><circle cx="258" cy="382" r="9" fill="#fff" fill-opacity=".5"/><circle cx="232" cy="270" r="8" fill="#fff" fill-opacity=".5"/>
         </g>
       </g>
-      <circle id="pop1" cx="166" cy="84" r="31" fill="#fff7e6"/>
-      <circle id="pop2" cx="226" cy="52" r="21" fill="#fff7e6"/>
-    </svg>
-    <div id="name" class="abs">Bier-Locator</div>
-    <div id="bar" class="abs"></div>
-    <div id="slogan" class="abs"></div>
-  </div>
+    </g>
+    <circle id="pop1" cx="166" cy="84" fill="#fff7e6"/><circle id="pop2" cx="226" cy="52" fill="#fff7e6"/>
+  </svg>
+  <div id="introWord" class="abs">Durst?</div>
+  <div id="name" class="abs">Bier-Locator</div>
+  <div id="bar" class="abs"></div>
+  <div id="slogan" class="abs">Dein nächstes Bier ist näher, als du denkst.</div>
 </div>
 
 <script type="module">
-const PIN = 'M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z';
-const FOAM = 'M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z';
-const $ = s => document.querySelector(s);
-['#pinPath', '#glass'].forEach(s => $(s).setAttribute('d', PIN));
-['#foam', '#foamShade'].forEach(s => $(s).setAttribute('d', FOAM));
+import * as THREE from 'three';
+import { createWorld, makePin, C, CELL } from './world.js';
 
-/* ---------- Hilfen ---------- */
+/* ================= Hilfen ================= */
+const $ = s => document.querySelector(s);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const prog = (t, a, b) => clamp((t - a) / (b - a));
 const lerp = (a, b, p) => a + (b - a) * p;
-const easeOut = p => 1 - Math.pow(1 - p, 3);
-const easeIn = p => p * p * p;
-const easeInOut = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
-const easeBack = (p, s = 1.7) => 1 + (s + 1) * Math.pow(p - 1, 3) + s * Math.pow(p - 1, 2);
+const E = {
+  lin: p => p,
+  out: p => 1 - Math.pow(1 - p, 3),
+  in: p => p * p * p,
+  inOut: p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2),
+  quint: p => (p < 0.5 ? 16 * p ** 5 : 1 - Math.pow(-2 * p + 2, 5) / 2),
+  expoIn: p => (p === 0 ? 0 : Math.pow(2, 10 * p - 10)),
+  expoOut: p => (p === 1 ? 1 : 1 - Math.pow(2, -10 * p)),
+  expoInOut: p => (p === 0 ? 0 : p === 1 ? 1 : p < 0.5 ? Math.pow(2, 20 * p - 10) / 2 : (2 - Math.pow(2, -20 * p + 10)) / 2),
+  back: (p, s = 1.70158) => 1 + (s + 1) * Math.pow(p - 1, 3) + s * Math.pow(p - 1, 2),
+  bounce: p => { const n = 7.5625, d = 2.75; if (p < 1 / d) return n * p * p; if (p < 2 / d) return n * (p -= 1.5 / d) * p + 0.75; if (p < 2.5 / d) return n * (p -= 2.25 / d) * p + 0.9375; return n * (p -= 2.625 / d) * p + 0.984375; },
+};
 const set = (el, css) => Object.assign(el.style, css);
+const el = (html, parent = $('#ui')) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const n = d.firstChild; n.classList.add('abs'); parent.appendChild(n); return n; };
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
 
 const TL = await (await fetch('timeline.json')).json();
-const clips = {};
-for (const sc of TL.scenes) clips[sc.clip] = await (await fetch(`build/clips/${sc.clip}/meta.json`)).json();
-$('#slogan').textContent = TL.outro.slogan;
-$('#name').textContent = TL.outro.name;
+const SPB = 60 / TL.bpm;                 // Sekunden pro Schlag
+const B = b => TL.offset + b * SPB;      // Schlag → Sekunde
+window.SFX = [];                         // Geräusche für audio.py: { t, type, gain, pan }
+const sfx = (beat, type, gain = 1, pan = 0) => window.SFX.push({ t: +B(beat).toFixed(3), type, gain, pan });
 
-// Quellzeit im Clip → Videozeit (über die Schnitt-Segmente), und umgekehrt
-const srcAt = (sc, t) => {
-  for (const [a, b, sa, sb] of sc.segments) if (t >= a && t < b) return lerp(sa, sb, (t - a) / (b - a));
-  const last = sc.segments[sc.segments.length - 1];
-  return t < sc.segments[0][0] ? sc.segments[0][2] : last[3];
+/* ================= 3D-Welt ================= */
+const W = createWorld($('#world'));
+const cam = W.camera;
+W.user.scale.setScalar(2.2); W.bike.scale.setScalar(1.6);
+const U = V(CELL / 2, 0, CELL / 2);                 // „Du bist hier“
+const PUB = W.special.pub.pos, SHOP = W.special.shop.pos, GARDEN = W.special.garden;
+
+// Umgebungs-Pins, fallen in Wellen
+const R = (() => { let s = 99; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+const pinColors = [C.amber, C.amber, C.amber, C.green, C.brew, C.amber, C.blue];
+const ambient = [];
+for (let k = 0; k < 34; k++) {
+  const i = Math.round((R() - 0.5) * 9), j = Math.round((R() - 0.5) * 8);
+  if (Math.abs(i) + Math.abs(j) === 0 || (i === 1 && j === -1) || (i === -2 && j === 1) || (i === 2 && j === 2)) continue;
+  const color = pinColors[k % pinColors.length];
+  const p = makePin({ color, r: 1.7, foam: color === C.amber });
+  const x = i * CELL + (R() - 0.5) * 4, z = j * CELL + (R() - 0.5) * 4;
+  p.position.set(x, 0, z);
+  const dist = Math.hypot(x - U.x, z - U.z);
+  p.userData = { ...p.userData, y: 4 + R() * 1.5, drop: 5.2 + Math.min(1.6, dist / 30) + (k % 4) * 0.25 };
+  W.pins.add(p); ambient.push(p);
+}
+const pubPin = makePin({ color: C.amber, r: 1.6 }); pubPin.position.copy(PUB); W.pins.add(pubPin);
+const shopPin = makePin({ color: C.blue, r: 1.6, foam: false, ring: true }); shopPin.position.copy(SHOP); W.pins.add(shopPin);
+const gardenPin = makePin({ color: C.green, r: 1.6, foam: false, ring: true }); gardenPin.position.set(GARDEN.x, 3.2, GARDEN.z); W.pins.add(gardenPin);
+
+// Tour-Stopps gleichmäßig verteilt
+const STOPS = [0.2, 0.42, 0.64, 0.9];
+const stopPins = STOPS.map((u, n) => {
+  const p = makePin({ color: n === 3 ? C.green : C.amber, r: 1.25, foam: n !== 3 });
+  const pt = W.route.curve.getPointAt(u), tan = W.route.curve.getTangentAt(u);
+  const side = V(-tan.z, 0, tan.x).multiplyScalar(2.6);
+  p.position.set(pt.x + side.x, 0, pt.z + side.z);
+  W.pins.add(p);
+  return p;
+});
+
+function dropPin(p, t, beat, y = 0, big = 1, fall = 28) {
+  const d = prog(t, B(beat), B(beat) + 0.42);
+  p.visible = t >= B(beat);
+  p.position.y = y + (1 - E.bounce(d)) * fall;
+  const sq = d > 0.35 && d < 0.6 ? 1 - Math.sin((d - 0.35) / 0.25 * Math.PI) * 0.18 : 1;
+  p.scale.set(big / Math.sqrt(sq), big * sq, big / Math.sqrt(sq));
+}
+
+/* ================= Kamera ================= */
+// Schlüsselbilder: [Schlag, Position, Blickziel, Easing bis zum nächsten]
+const camAt = {};
+const follow = (u, back, up, side = 0) => {
+  const p = W.route.curve.getPointAt(clamp(u, 0, 1)), tn = W.route.curve.getTangentAt(clamp(u, 0, 1));
+  const s = V(-tn.z, 0, tn.x);
+  return { pos: p.clone().addScaledVector(tn, -back).add(V(0, up, 0)).addScaledVector(s, side), tgt: p.clone().addScaledVector(tn, 5).add(V(0, 0.5, 0)) };
 };
-const outAt = (sc, src) => {
-  for (const [a, b, sa, sb] of sc.segments) if (src >= sa && src <= sb) return lerp(a, b, (src - sa) / (sb - sa));
-  return null;
+// Fahrerperspektive für den Sprint: knapp über der Straße, Blick nach vorn
+const ride = u => {
+  const p = W.route.curve.getPointAt(clamp(u, 0, 1)), tn = W.route.curve.getTangentAt(clamp(u, 0, 1));
+  return { pos: p.clone().addScaledVector(tn, -3).add(V(0, 3.2, 0)), tgt: p.clone().addScaledVector(tn, 24).add(V(0, 1.2, 0)) };
 };
+const bikeU = t => {
+  if (t < B(22.5)) return 0;
+  if (t < B(26.2)) return lerp(0, 0.62, E.inOut(prog(t, B(22.5), B(26.2))));
+  if (t < B(27.6)) return lerp(0.62, 0.9, E.expoInOut(prog(t, B(26.2), B(27.6))));
+  return 0.9;
+};
+const KEYS = [
+  [2.4, U.clone().add(V(1, 26, 8)), U, 'out'],
+  [4.0, U.clone().add(V(8, 36, 28)), U.clone().add(V(0, 0, -3)), 'out'],
+  [9.2, U.clone().add(V(40, 70, 92)), V(-2, 0, -10), 'inOut'],
+  [10.6, PUB.clone().add(V(24, 42, 62)), PUB.clone().add(V(-2, 3, 7)), 'lin'],
+  [15.4, PUB.clone().add(V(17, 33, 50)), PUB.clone().add(V(-2, 3, 7)), 'quint'],
+  [16.4, SHOP.clone().add(V(-18, 40, 60)), SHOP.clone().add(V(8, 3, 7)), 'lin'],
+  [21.2, SHOP.clone().add(V(-13, 32, 50)), SHOP.clone().add(V(8, 3, 7)), 'inOut'],
+  [22.6, 'follow', null, 'lin'],
+];
+function cameraAt(t) {
+  let pos, tgt;
+  const b = (t - TL.offset) / SPB;
+  if (b < 22.6) {
+    let k = 0;
+    while (k < KEYS.length - 2 && b >= KEYS[k + 1][0]) k++;
+    const [b0, p0, t0, ease] = KEYS[k], [b1, p1, t1] = KEYS[k + 1];
+    if (p1 === 'follow') {
+      const f = follow(0.02, 32, 62, 14);
+      const pp = E.inOut(prog(b, b0, b1));
+      pos = p0.clone().lerp(f.pos, pp); tgt = t0.clone().lerp(f.tgt, pp);
+    } else {
+      const pp = E[ease](prog(b, b0, b1));
+      pos = p0.clone().lerp(p1, pp); tgt = t0.clone().lerp(t1, pp);
+    }
+  } else if (b < 29.6) {
+    // Radtour: hinter dem Rad her, beim Sprint tief über der Straße, dann zum Biergarten hoch
+    const u = bikeU(t);
+    const high = follow(u, 32, 62, 14), low = ride(u);
+    const lowMix = E.inOut(prog(b, 25.6, 26.4)) * (1 - E.inOut(prog(b, 27.7, 28.6)));
+    pos = high.pos.clone().lerp(low.pos, lowMix); tgt = high.tgt.clone().lerp(low.tgt, lowMix);
+    const up = E.inOut(prog(b, 27.7, 29.4));
+    const g = { pos: GARDEN.clone().add(V(20, 40, 44)), tgt: GARDEN.clone().add(V(0, 1, 5)) };
+    pos.lerp(g.pos, up); tgt.lerp(g.tgt, up);
+  } else {
+    // Biergarten: langsame Kreisfahrt, dann Explosion nach oben
+    const a = lerp(0, -0.55, prog(b, 29.4, 36));
+    const r = 20.5;
+    pos = GARDEN.clone().add(V(20, 40, 44).applyAxisAngle(V(0, 1, 0), a));
+    void r;
+    tgt = GARDEN.clone().add(V(0, 1, 5));
+    const boom = E.expoIn(prog(b, 35.6, 37.2));
+    pos.lerp(GARDEN.clone().add(V(4, 420, 6)), boom);
+  }
+  // leichtes Handkamera-Schweben
+  pos.x += Math.sin(t * 0.9) * 0.25; pos.y += Math.sin(t * 1.3) * 0.18;
+  cam.position.copy(pos); cam.lookAt(tgt);
+  cam.updateMatrixWorld();
+}
+const toScreen = v => { const p = v.clone().project(cam); return { x: (p.x + 1) / 2 * 1080, y: (1 - p.y) / 2 * 1920, behind: p.z > 1 }; };
+
+/* ================= Texte ================= */
+const HEADS = [
+  { b: 4.0, e: 6.6, kick: 'Bregenz · jetzt', t: 'Du bist hier.' },
+  { b: 6.6, e: 9.6, kick: 'Bier finden', t: 'Und das Bier<br>überall um dich.' },
+  { b: 9.9, e: 12.4, kick: 'Echte Preise', t: 'Was das Bier<br>wirklich kostet.' },
+  { b: 12.4, e: 15.4, kick: 'Echte Preise', t: 'Gemeldet von<br>Leuten wie dir.' },
+  { b: 16.2, e: 21.4, kick: 'Supermarkt', t: 'Oder gleich<br>den Kasten.', s: 'Online-Preise der Supermärkte, direkt in der App.' },
+  { b: 22.4, e: 25.2, kick: 'Bier-Radtour', t: 'Die perfekte<br>Radtour.' },
+  { b: 25.2, e: 29.6, kick: 'Bier-Radtour', t: 'Jeder Stopp hat<br>offen, wenn du<br>ankommst.' },
+  { b: 29.8, e: 32.6, kick: 'Meine Runde', t: 'Und wer zahlt<br>die nächste<br>Runde?' },
+  { b: 32.6, e: 35.6, kick: 'Meine Runde', t: 'Die App<br>weiß es.', s: 'Biere zählen, Runden abrechnen.' },
+];
+const heads = HEADS.map(h => {
+  const n = el(`<div class="head"><div class="kick">${h.kick}</div><div class="t">${h.t.split(/(<br>| )/).filter(w => w && w !== ' ').map(w => (w === '<br>' ? '<br>' : `<span>${w}</span>`)).join(' ')}</div>${h.s ? `<div class="s">${h.s}</div>` : ''}</div>`, $('#heads'));
+  return { ...h, n, words: [...n.querySelectorAll('.t span')], kick: n.querySelector('.kick'), sub: n.querySelector('.s') };
+});
+function renderHeads(b) {
+  let anyOn = false;
+  heads.forEach((h, i) => {
+    const on = b >= h.b - 0.01 && b < h.e + 0.4;
+    h.n.style.display = on ? '' : 'none';
+    if (!on) return;
+    anyOn = true;
+    const prev = heads[i - 1];
+    const sameKick = prev && prev.kick.textContent === h.kick.textContent && Math.abs(prev.e - h.b) < 0.05;
+    const out = E.in(prog(b, h.e, h.e + 0.35));
+    set(h.n, { opacity: 1 - out, transform: `translateY(${-50 * out}px)` });
+    const k = sameKick ? 1 : E.out(prog(b, h.b, h.b + 0.5));
+    set(h.kick, { opacity: k, transform: `translateX(${(1 - k) * -50}px)` });
+    h.words.forEach((w, wi) => {
+      const p = E.back(prog(b, h.b + 0.05 + wi * 0.09, h.b + 0.6 + wi * 0.09), 1.6);
+      set(w, { opacity: clamp(p * 1.6), transform: `translateY(${(1 - p) * 90}px) rotate(${(1 - p) * 4}deg)` });
+    });
+    if (h.sub) { const s = E.out(prog(b, h.b + 0.6, h.b + 1.1)); set(h.sub, { opacity: s, transform: `translateY(${(1 - s) * 24}px)` }); }
+  });
+  $('#topfade').style.opacity = anyOn ? 1 : clamp(1 - prog(b, 35.6, 36.2));
+}
+
+/* ================= UI-Elemente ================= */
+const ICON = {
+  pin: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>',
+  bike: '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#2b1a05" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17 9 9h6l3.5 8M9 9 12 17h-6.5M15 9l-1.5-3H11"/></svg>',
+  check: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>',
+  cart: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.3a1.6 1.6 0 0 0 1.6-1.2L21 8H6.6"/></svg>',
+};
+const youPill = el(`<div class="pill"><i>${ICON.pin}</i>69 Lokale in der Nähe</div>`);
+const priceChips = ambient.slice(0, 9).map((p, k) => ({ p, n: el(`<div class="chip">${['3,60', '4,20', '3,90', '4,50', '3,40', '4,10', '3,80', '4,60', '3,50'][k]} €</div>`, $('#track')) }));
+const card = el(`<div id="placeCard" class="card">
+  <span class="tag">Kneipe · 350 m</span>
+  <h3>Zum Goldenen Hopfen</h3>
+  <div class="meta"><span class="stars">★★★★★</span> 4,7 · Offen bis 01:00</div>
+  <div class="price"><b>3,90 €</b><span>pro 0,5 l Helles<br>gemeldet vor 2 Std.</span></div>
+  <div class="btns"><div>Route</div><div>Merken</div><div>Preis melden</div></div></div>`);
+const shopChip = el(`<div class="pill" style="background:#2f7fc1;color:#fff"><i style="background:#fff3">${ICON.cart}</i>ab 0,55 €</div>`, $('#track'));
+const banner = el(`<div class="banner"><div class="ico">${ICON.bike}</div><div><b id="bnT">Stopp 1 · Kreuzbar</b><small id="bnS">in 1,2 km · 4 Min</small></div></div>`);
+const openPill = el(`<div class="pill"><i style="background:#3e9a52">${ICON.check}</i>Offen bis 23:00</div>`, $('#track'));
+const FRIENDS = [['N', '#6a4fd0'], ['L', '#e8921b'], ['J', '#3e9a52'], ['M', '#2f7fc1']];
+const avatars = FRIENDS.map(([l, c], k) => ({ n: el(`<div class="avatar" style="background:${c}">${l}</div>`, $('#track')), plus: el(`<div class="plus">+1 Bier</div>`, $('#track')), k }));
+const settle = el(`<div class="pill" style="font-size:34px"><i style="background:#6a4fd0">${ICON.check}</i>Jonas → Noah · 11,90 €</div>`);
+
+/* Handys mit echten App-Aufnahmen */
+const clips = {};
+for (const c of ['find', 'tour', 'group']) clips[c] = await (await fetch(`build/clips/${c}/meta.json`)).json();
 const frameAt = (clip, src) => {
-  const fr = clips[clip].frames;
-  let lo = 0, hi = fr.length - 1;
+  const fr = clips[clip].frames; let lo = 0, hi = fr.length - 1;
   while (lo < hi) { const m = (lo + hi + 1) >> 1; if (fr[m].t <= src) lo = m; else hi = m - 1; }
   return `build/clips/${clip}/${fr[lo].file}`;
 };
-window.taps = TL.scenes.flatMap(sc => clips[sc.clip].taps.map(tp => ({ sc, x: tp.x, y: tp.y, show: outAt(sc, tp.t), hit: outAt(sc, tp.t + TL.tapDelay) })))
-  .filter(tp => tp.show != null && tp.hit != null);
-
-/* ---------- Schwebende Bläschen im Hintergrund ---------- */
-const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
-const bubbles = Array.from({ length: 22 }, (_, i) => {
-  const el = document.createElement('div'); el.className = 'abs bub'; $('#bubbles').appendChild(el);
-  const size = 14 + rnd(i, 1) * 46;
-  set(el, { width: size + 'px', height: size + 'px' });
-  return { el, x: rnd(i, 2) * 1080, y0: rnd(i, 3) * 2200, speed: 40 + rnd(i, 4) * 90, wob: rnd(i, 5) * 6 };
-});
-
-/* ---------- Szenentexte ---------- */
-const blocks = [];
-TL.scenes.forEach((sc, si) => sc.texts.forEach((tx, ti) => {
-  const el = document.createElement('div'); el.className = 'abs text';
-  const words = tx.title.split(/(<br>| )/).filter(w => w && w !== ' ');
-  el.innerHTML = `<div class="kicker"><b>${si + 1}</b>${sc.kicker}</div>
-    <div class="title">${words.map(w => (w === '<br>' ? '<br>' : `<span>${w}</span>`)).join(' ')}</div><div class="sub">${tx.sub}</div>`;
-  $('#texts').appendChild(el);
-  const next = sc.texts[ti + 1];
-  blocks.push({ el, start: tx.at, end: next ? next.at : sc.end, first: ti === 0, last: !next,
-    words: [...el.querySelectorAll('.title span')], kicker: el.querySelector('.kicker'), sub: el.querySelector('.sub') });
-}));
-
-function renderTexts(t) {
-  for (const b of blocks) {
-    const on = t >= b.start - 0.01 && t < b.end + 0.3;
-    b.el.style.display = on ? '' : 'none';
-    if (!on) continue;
-    const out = easeIn(prog(t, b.end - 0.22, b.end));
-    set(b.el, { opacity: 1 - out, transform: `translateY(${-40 * out}px)` });
-    const k = b.first ? easeOut(prog(t, b.start, b.start + 0.35)) : 1;
-    set(b.kicker, { opacity: k, transform: `translateX(${(1 - k) * -40}px)` });
-    b.words.forEach((w, i) => {
-      const p = easeBack(prog(t, b.start + 0.06 + i * 0.06, b.start + 0.5 + i * 0.06), 1.4);
-      set(w, { opacity: clamp(p * 1.5), transform: `translateY(${(1 - p) * 70}px)` });
-    });
-    const s = easeOut(prog(t, b.start + 0.3, b.start + 0.7));
-    set(b.sub, { opacity: s, transform: `translateY(${(1 - s) * 24}px)` });
-  }
+function makePhone() {
+  const n = el(`<div class="phone"><div class="scr"><img alt=""><div class="ripple abs"></div><div class="finger abs"></div></div></div>`);
+  return { n, img: n.querySelector('img'), finger: n.querySelector('.finger'), ripple: n.querySelector('.ripple'), shown: '' };
 }
-
-/* ---------- Einstieg ---------- */
-function renderHook(t) {
-  const end = TL.hook.end;
-  $('#hook').style.display = t < end + 0.05 ? '' : 'none';
-  if (t >= end + 0.05) return;
-  const p = prog(t, 0.28, 0.62), pe = easeBack(p, 2.2);
-  const shake = t > 1.15 && t < 1.45 ? Math.sin(t * 90) * 10 * (1 - prog(t, 1.15, 1.45)) : 0;
-  set($('#price'), { opacity: clamp(p * 4), transform: `translateX(${shake}px) scale(${lerp(2.4, 1, pe)})` });
-  const s = easeOut(prog(t, 1.1, 1.3));
-  set($('#strike'), { width: `${110 * s}%`, transform: 'rotate(-7deg)' });
-  const q = easeBack(prog(t, 0.62, 0.95), 1.6);
-  set($('#q'), { opacity: clamp(q * 2), transform: `translateY(${(1 - q) * 80}px)` });
-  const a = easeBack(prog(t, 1.32, 1.6), 2);
-  set($('#ans'), { opacity: clamp(a * 2), transform: `scale(${lerp(0.6, 1, a)})` });
-  const out = easeIn(prog(t, 1.72, end));
-  set($('#hook'), { opacity: 1 - out, transform: `translateY(${-260 * out}px)` });
-}
-
-/* ---------- Handy ---------- */
-const S = 585 / 390; // App-Pixel → Bildschirm im Video
-let shownCur = '', shownPrev = '';
-async function renderPhone(t) {
-  const first = TL.scenes[0], lastEnd = TL.scenes[TL.scenes.length - 1].end;
-  const visible = t >= first.start - 0.05 && t < lastEnd + 0.6;
-  $('#phone').style.display = visible ? '' : 'none';
-  if (!visible) return;
-  const enter = easeBack(prog(t, first.start, first.start + 0.7), 1.2);
-  const exit = easeIn(prog(t, lastEnd, lastEnd + 0.5));
-  const y = (1 - enter) * 1500 + exit * 1700 + Math.sin(t * 1.7) * 8;
-  const rot = Math.sin(t * 1.3) * 1.1 + exit * 8 + (1 - enter) * 6;
-  const sc = TL.scenes.findLast(s => t >= s.start) || first;
-  const push = 1 + 0.035 * prog(t, sc.start, sc.end);
-  set($('#phone'), { transform: `translateY(${y}px) rotate(${rot}deg) scale(${push})` });
-
-  // Bildschirm: aktueller Clip, beim Szenenwechsel schiebt sich der neue herein
-  const cur = frameAt(sc.clip, srcAt(sc, Math.min(t, sc.end - 0.001)));
-  const idx = TL.scenes.indexOf(sc);
-  const tr = idx > 0 ? easeInOut(prog(t, sc.start, sc.start + 0.35)) : 1;
-  const prevSc = TL.scenes[idx - 1];
-  const prev = prevSc && tr < 1 ? frameAt(prevSc.clip, srcAt(prevSc, prevSc.end - 0.001)) : '';
-  const imgCur = $('#imgCur'), imgPrev = $('#imgPrev');
+const PHONES = [
+  { clip: 'find', b0: 17.2, b1: 21.3, s0: 4.6, s1: 8.2, x: 470, y: 640, ph: makePhone() },
+  { clip: 'group', b0: 31.6, b1: 35.6, s0: 2.6, s1: 9.3, x: 470, y: 640, ph: makePhone() },
+];
+const S_APP = 528 / 390;
+async function renderPhones(t, b) {
   const loads = [];
-  if (cur !== shownCur) { imgCur.src = cur; shownCur = cur; loads.push(imgCur.decode().catch(() => {})); }
-  if (prev !== shownPrev) { if (prev) { imgPrev.src = prev; loads.push(imgPrev.decode().catch(() => {})); } shownPrev = prev; }
-  imgPrev.style.display = prev ? '' : 'none';
-  set(imgCur, { transform: `translateX(${(1 - tr) * 100}%)`, boxShadow: tr < 1 ? '-30px 0 60px rgba(0,0,0,.3)' : 'none' });
-  set(imgPrev, { transform: `translateX(${-30 * tr}%)`, filter: `brightness(${1 - 0.4 * tr})` });
-
-  // Finger
-  const tap = window.taps.find(tp => t >= tp.show - 0.18 && t < tp.hit + 0.4);
-  const f = $('#finger'), r = $('#ripple');
-  if (tap) {
-    const appear = easeOut(prog(t, tap.show - 0.18, tap.show));
-    const leave = prog(t, tap.hit + 0.15, tap.hit + 0.4);
-    const press = t >= tap.hit - 0.06 && t < tap.hit + 0.12 ? 0.82 : 1;
-    set(f, { display: '', left: tap.x * S + 'px', top: tap.y * S + 'px', opacity: appear * (1 - leave), transform: `scale(${lerp(1.4, 1, appear) * press})` });
-    const rp = prog(t, tap.hit, tap.hit + 0.4);
-    set(r, { display: rp > 0 && rp < 1 ? '' : 'none', left: tap.x * S + 'px', top: tap.y * S + 'px', opacity: 1 - rp, transform: `scale(${1 + rp * 1.6})` });
-  } else { f.style.display = 'none'; r.style.display = 'none'; }
+  for (const P of PHONES) {
+    const on = b >= P.b0 && b < P.b1 + 0.6;
+    P.ph.n.style.display = on ? '' : 'none';
+    if (!on) continue;
+    const inP = E.back(prog(b, P.b0, P.b0 + 0.9), 1.1), outP = E.in(prog(b, P.b1, P.b1 + 0.5));
+    set(P.ph.n, {
+      left: P.x + 'px', top: P.y + 'px',
+      transform: `perspective(2400px) translate(${outP * 900}px, ${(1 - inP) * 1500}px) rotateX(${(1 - inP) * 38}deg) rotateY(${-10 + outP * -40}deg) rotateZ(${4 - inP * 4 + outP * 8}deg)`,
+    });
+    const src = lerp(P.s0, P.s1, prog(b, P.b0, P.b1));
+    const f = frameAt(P.clip, src);
+    if (f !== P.ph.shown) { P.ph.img.src = f; P.ph.shown = f; loads.push(P.ph.img.decode().catch(() => {})); }
+    // Finger (Zeit in der Aufnahme → Schlag)
+    const tap = clips[P.clip].taps.map(tp => ({ ...tp, show: tp.t, hit: tp.t + 0.16 })).find(tp => src >= tp.show - 0.2 && src < tp.hit + 0.45 && tp.show >= P.s0);
+    if (tap) {
+      const a = E.out(prog(src, tap.show - 0.2, tap.show)), l = prog(src, tap.hit + 0.15, tap.hit + 0.45);
+      const press = src >= tap.hit - 0.06 && src < tap.hit + 0.12 ? 0.82 : 1;
+      set(P.ph.finger, { display: '', left: tap.x * S_APP + 'px', top: tap.y * S_APP + 'px', opacity: a * (1 - l), transform: `scale(${lerp(1.4, 1, a) * press})` });
+      const rp = prog(src, tap.hit, tap.hit + 0.4);
+      set(P.ph.ripple, { display: rp > 0 && rp < 1 ? '' : 'none', left: tap.x * S_APP + 'px', top: tap.y * S_APP + 'px', opacity: 1 - rp, transform: `scale(${1 + rp * 1.6})` });
+    } else { P.ph.finger.style.display = 'none'; P.ph.ripple.style.display = 'none'; }
+  }
   await Promise.all(loads);
 }
-
-/* ---------- Abschluss ---------- */
-function renderOutro(t) {
-  const o = TL.outro.start;
-  $('#outro').style.display = t >= o ? '' : 'none';
-  if (t < o) return;
-  const drop = easeBack(prog(t, o + 0.05, o + 0.55), 1.5);
-  set($('#logo'), { opacity: clamp(prog(t, o + 0.05, o + 0.2)), transform: `translateY(${(1 - drop) * -700}px) scale(${1 + 0.03 * Math.sin(Math.max(0, t - o - 2) * 2.4)})` });
-  const fill = easeInOut(prog(t, o + 0.35, o + 1.45));
-  const off = (1 - fill) * 330;
-  $('#foamG').setAttribute('transform', `translate(0 ${off})`);
-  $('#beerRect').setAttribute('y', 175 + off);
-  $('#glass').setAttribute('stroke-opacity', 1 - fill);
-  $('#inner').setAttribute('opacity', prog(t, o + 1.2, o + 1.6));
-  [['#pop1', '#gap1', 31, o + 1.5], ['#pop2', '#gap2', 21, o + 1.6]].forEach(([c, g, r, at]) => {
-    const p = easeBack(prog(t, at, at + 0.3), 2.4);
-    $(c).setAttribute('r', Math.max(0, r * p));
-    $(g).setAttribute('r', Math.max(0, (r + 11) * p));
-  });
-  const n = easeBack(prog(t, o + 0.95, o + 1.45), 1.3);
-  set($('#name'), { opacity: clamp(n * 2), transform: `translateY(${(1 - n) * 90}px)` });
-  const b = easeOut(prog(t, o + 1.3, o + 1.75));
-  set($('#bar'), { width: 160 * b + 'px', marginLeft: -80 * b + 'px' });
-  const s = easeOut(prog(t, o + 1.6, o + 2.1));
-  set($('#slogan'), { opacity: s, transform: `translateY(${(1 - s) * 30}px)` });
-  set($('#glow'), { transform: `scale(${0.8 + 0.25 * fill})` });
+// Tipp-Geräusche der Handy-Ausschnitte
+for (const P of PHONES) for (const tp of clips[P.clip].taps) {
+  const src = tp.t + 0.16;
+  if (src >= P.s0 && src <= P.s1) sfx(lerp(P.b0, P.b1, (src - P.s0) / (P.s1 - P.s0)), 'tap', 0.9, 0.2);
 }
 
-window.seek = async t => {
-  bubbles.forEach(b => {
-    const y = ((b.y0 - t * b.speed) % 2200 + 2200) % 2200 - 140;
-    set(b.el, { transform: `translate(${b.x + Math.sin(t * 1.5 + b.wob) * 14}px, ${y}px)` });
+const pop = (n, b, b0, b1, { from = 0.4, origin } = {}) => {
+  const i = E.back(prog(b, b0, b0 + 0.5), 2.2), o = E.in(prog(b, b1, b1 + 0.3));
+  const s = lerp(from, 1, i) * (1 - o * 0.6);
+  n.style.display = b >= b0 && b < b1 + 0.3 ? '' : 'none';
+  set(n, { opacity: clamp(i * 3) * (1 - o), transform: `scale(${s})`, ...(origin ? { transformOrigin: origin } : {}) });
+};
+const at = (n, v, dx = 0, dy = 0) => { const s = toScreen(v); set(n, { left: s.x + dx + 'px', top: s.y + dy + 'px' }); return s; };
+
+function renderUI(t, b) {
+  // Standort-Pille
+  pop(youPill, b, 7.2, 9.4); set(youPill, { left: '84px', top: '620px' });
+  // Preis-Chips über den Pins
+  priceChips.forEach(({ p, n }, k) => {
+    const v = p.position.clone().add(V(0, p.userData.height * p.scale.y + 0.6, 0));
+    const s = at(n, v); set(n, { marginLeft: -n.offsetWidth / 2 + 'px', marginTop: -n.offsetHeight + 'px' });
+    pop(n, b, 7.6 + k * 0.12, 9.4);
+    if (s.behind) n.style.display = 'none';
   });
-  if (t < TL.outro.start) set($('#glow'), { transform: `scale(${1 + 0.04 * Math.sin(t * 2)})` });
-  renderHook(t);
-  renderTexts(t);
-  renderOutro(t);
-  await renderPhone(t);
+  // Lokal-Karte am Pin
+  set(card, { left: '84px', top: '1230px' });
+  pop(card, b, 11.0, 15.0, { from: 0.2, origin: '30% 0%' });
+  // Supermarkt-Chip
+  at(shopChip, SHOP.clone().add(V(0, 5.6, 0)));
+  set(shopChip, { marginLeft: -shopChip.offsetWidth / 2 + 'px', marginTop: -shopChip.offsetHeight + 'px' });
+  pop(shopChip, b, 16.6, 17.6, { origin: '50% 100%' });
+  // Navi-Banner während der Tour
+  set(banner, { left: '84px', top: '640px' });
+  pop(banner, b, 23.0, 27.4, { origin: '0% 50%' });
+  const u = bikeU(t);
+  const next = STOPS.findIndex(s => s > u + 0.005);
+  const names = ['Kreuzbar', 'Beach Bar', 'Fischersteg', 'Biergarten am See'];
+  const ni = next < 0 ? 3 : next;
+  $('#bnT').textContent = `Stopp ${ni + 1} · ${names[ni]}`;
+  const rest = Math.max(0.1, (STOPS[ni] - u) * 6.1);
+  $('#bnS').textContent = `in ${rest.toFixed(1).replace('.', ',')} km · offen ✓`;
+  // „Offen bis“ am Biergarten
+  at(openPill, stopPins[3].position.clone().add(V(0, 5.2, 0)));
+  set(openPill, { marginLeft: -openPill.offsetWidth / 2 + 'px', marginTop: -openPill.offsetHeight + 'px' });
+  pop(openPill, b, 27.8, 29.6, { origin: '50% 100%' });
+  // Freunde am Biertisch
+  avatars.forEach(({ n, plus, k }) => {
+    const ang = (k / 4) * Math.PI * 2 + 0.6;
+    const v = GARDEN.clone().add(V(Math.cos(ang) * 4.2, 3, Math.sin(ang) * 4.2));
+    at(n, v, -55, -55);
+    pop(n, b, 29.9 + k * 0.5, 35.4);
+    at(plus, v, -50, -150);
+    const pp = prog(b, 30.6 + k * 0.5, 31.6 + k * 0.5);
+    set(plus, { display: pp > 0 && pp < 1 ? '' : 'none', opacity: Math.sin(pp * Math.PI), transform: `translateY(${-70 * E.out(pp)}px)` });
+  });
+  pop(settle, b, 34.2, 35.5); set(settle, { left: '84px', top: '1790px' });
+}
+
+/* ================= Speed-Lines ================= */
+const lines = Array.from({ length: 34 }, (_, k) => {
+  const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l.setAttribute('stroke', '#fffaf0'); l.setAttribute('stroke-linecap', 'round');
+  $('#speed').appendChild(l);
+  const a = (k / 34) * Math.PI * 2 + Math.sin(k * 7.3) * 0.2;
+  return { l, a, r0: 420 + (Math.sin(k * 3.1) * 0.5 + 0.5) * 200, ph: Math.sin(k * 5.7) * 0.5 + 0.5 };
+});
+function renderSpeed(b) {
+  const s = Math.sin(Math.PI * prog(b, 26.2, 27.6)) * (b > 26.2 && b < 27.6 ? 1 : 0);
+  const s2 = Math.sin(Math.PI * prog(b, 35.6, 37.0)) * (b > 35.6 && b < 37 ? 1 : 0);
+  const k2 = Math.max(s, s2);
+  lines.forEach(({ l, a, r0, ph }) => {
+    const r = r0 + ((ph + b * 3) % 1) * 500;
+    const len = 120 + 300 * k2;
+    const cx = 540, cy = 1000;
+    l.setAttribute('x1', cx + Math.cos(a) * r); l.setAttribute('y1', cy + Math.sin(a) * r * 1.4);
+    l.setAttribute('x2', cx + Math.cos(a) * (r + len)); l.setAttribute('y2', cy + Math.sin(a) * (r + len) * 1.4);
+    l.setAttribute('stroke-width', 5 + 6 * k2);
+    l.setAttribute('opacity', 0.75 * k2);
+  });
+  $('#tilt').style.backdropFilter = `blur(${7 + 10 * k2}px)`;
+}
+
+/* ================= Intro & Outro (Ring, Logo) ================= */
+// Pin- und Kreisform mit gleicher Befehlsfolge → lässt sich ineinander überblenden
+const PIN = [[256, 476], [224, 412, 100, 332, 100, 210], [100, 123.8, 169.8, 54, 256, 54], [342.2, 54, 412, 123.8, 412, 210], [412, 332, 288, 412, 256, 476]];
+const CIR = [[256, 366], [169.8, 366, 100, 296.2, 100, 210], [100, 123.8, 169.8, 54, 256, 54], [342.2, 54, 412, 123.8, 412, 210], [412, 296.2, 342.2, 366, 256, 366]];
+const shape = p => {
+  const m = PIN.map((seg, i) => seg.map((v, j) => lerp(v, CIR[i][j], p)));
+  return `M${m[0].join(' ')}` + m.slice(1).map(s => `C${s.join(' ')}`).join('') + 'Z';
+};
+document.querySelectorAll('.foamPath').forEach(n => n.setAttribute('d', 'M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z'));
+const ringCenterY = 560 + 210 / 512 * 440;
+
+function renderLogo(t, b) {
+  const intro = b < 4;
+  const outro = b >= 36;
+  const logo = $('#logoWrap');
+  const RC = 156 / 512 * 440; // Kreisradius des Logos auf der Bühne
+  let hole = 0, ringW = 0, dark = 0, morph = 0, level = 0, solid = true;
+  if (intro) {
+    // 0–0,5 Logo fällt rein · 1,3–2 Pin → Kreis · 1,9–2,5 Bier läuft ab, dahinter die Stadt · 2,5–3,7 Flug durch den Ring
+    dark = 1;
+    const drop = E.back(prog(b, 0, 0.55), 1.6);
+    morph = E.inOut(prog(b, 1.3, 2.0));
+    level = E.in(prog(b, 1.9, 2.55));
+    solid = b < 1.9;
+    const zoom = E.expoIn(prog(b, 2.5, 3.7));
+    hole = b >= 1.9 ? lerp(RC, 2400, zoom) : 0;
+    ringW = b >= 1.9 ? lerp(16, 120, zoom) : 0;
+    logo.style.display = b < 2.6 ? '' : 'none';
+    set(logo, { transform: `translateY(${(1 - drop) * -900}px)`, opacity: clamp(prog(b, 0, 0.12)) });
+    popBubbles(1 - E.in(prog(b, 1.2, 1.5)));
+    set($('#introWord'), { display: b < 2.4 ? '' : 'none', opacity: clamp(prog(b, 0.5, 0.75)) * (1 - prog(b, 1.5, 1.9)), transform: `translateY(${(1 - E.back(prog(b, 0.5, 0.95), 2)) * 80}px)` });
+  } else if (outro) {
+    // 36–37,4 Loch schließt sich zum Ring · 37,4–38,3 Bier steigt im Ring · 38,3–38,9 Kreis → Pin
+    $('#introWord').style.display = 'none';
+    dark = clamp(prog(b, 36.0, 36.2));
+    const close = E.expoOut(prog(b, 36.0, 37.4));
+    level = 1 - E.inOut(prog(b, 37.4, 38.3));
+    solid = b >= 38.3;
+    morph = 1 - E.inOut(prog(b, 38.3, 38.9));
+    hole = b < 38.3 ? lerp(2400, RC, close) : 0;
+    ringW = b < 38.3 ? lerp(120, 16, close) : 0;
+    logo.style.display = b >= 37.4 ? '' : 'none';
+    popBubbles(E.back(prog(b, 38.8, 39.15), 2.4), E.back(prog(b, 38.95, 39.3), 2.4));
+    set(logo, { transform: `scale(${1 + 0.025 * Math.sin(Math.max(0, b - 39.3) * 1.6)})`, opacity: 1 });
+  } else {
+    logo.style.display = 'none'; $('#introWord').style.display = 'none';
+  }
+  if (intro || outro) {
+    const d = shape(morph);
+    $('#pinShape').setAttribute('d', d); $('#clipPath').setAttribute('d', d);
+    $('#pinShape').setAttribute('fill', solid ? 'url(#beer)' : 'none');
+    const off = level * 340;
+    $('#foamG').setAttribute('transform', `translate(0 ${off})`); $('#beerRect').setAttribute('y', 175 + off);
+    $('#inner').setAttribute('opacity', 1 - level);
+  }
+  $('#dark').style.display = dark > 0 && (intro || outro) ? '' : 'none';
+  $('#dark').style.opacity = dark;
+  $('#holeC').setAttribute('r', hole); $('#ringC').setAttribute('r', hole);
+  $('#holeC').setAttribute('cy', ringCenterY); $('#ringC').setAttribute('cy', ringCenterY);
+  $('#ringC').setAttribute('stroke-width', ringW); $('#ringC').style.display = ringW > 0 ? '' : 'none';
+  // Name, Slogan, Lichtblitz
+  const n = E.back(prog(b, 38.9, 39.6), 1.3);
+  set($('#name'), { display: outro ? '' : 'none', opacity: clamp(n * 2), transform: `translateY(${(1 - n) * 110}px)` });
+  const bw = E.out(prog(b, 39.4, 40.0));
+  set($('#bar'), { display: outro ? '' : 'none', width: 170 * bw + 'px', marginLeft: -85 * bw + 'px' });
+  const s = E.out(prog(b, 39.7, 40.4));
+  set($('#slogan'), { display: outro ? '' : 'none', opacity: s, transform: `translateY(${(1 - s) * 30}px)` });
+  const fl = outro ? Math.exp(-Math.pow((b - 38.85) / 0.35, 2)) : 0;
+  set($('#flare'), { opacity: fl, transform: `scale(${0.6 + fl * 0.5})` });
+  set($('#flareLine'), { opacity: fl, transform: `scaleX(${0.4 + fl})` });
+}
+function popBubbles(p1, p2 = p1) {
+  [['#pop1', '#gap1', 31, p1], ['#pop2', '#gap2', 21, p2]].forEach(([c, g, r, p]) => {
+    $(c).setAttribute('r', Math.max(0, r * p)); $(g).setAttribute('r', Math.max(0, (r + 11) * p));
+  });
+}
+
+/* ================= Geräusch-Fahrplan ================= */
+sfx(0.0, 'drop', 0.8); sfx(0.5, 'pop', 0.6);
+sfx(1.3, 'morph', 0.6); sfx(1.9, 'drain', 0.7);
+sfx(2.3, 'riser', 0.9); sfx(3.6, 'impact', 1.0);
+ambient.forEach((p, k) => { if (k % 3 === 0) sfx(p.userData.drop + 0.08, 'plip', 0.35, (k % 5 - 2) / 3); });
+sfx(7.2, 'pop', 0.7, -0.3);
+for (let k = 0; k < 9; k++) if (k % 2 === 0) sfx(7.6 + k * 0.12, 'tick', 0.4, 0.2);
+sfx(9.3, 'whoosh', 0.8); sfx(10.3, 'drop', 0.7); sfx(11.0, 'card', 1.0); sfx(11.3, 'coin', 0.6, 0.2);
+sfx(15.0, 'whip', 1.0); sfx(16.3, 'drop', 0.7, -0.2); sfx(16.6, 'pop', 0.7);
+sfx(17.0, 'swoosh', 0.8); sfx(21.3, 'swoosh', 0.7);
+sfx(22.1, 'whoosh', 0.7);
+STOPS.forEach((u, n) => sfx([23.4, 24.4, 25.4, 27.5][n], 'plip', 0.8, 0.2));
+sfx(25.4, 'riser', 0.6); sfx(26.2, 'dash', 1.0); sfx(27.6, 'brake', 0.8);
+sfx(27.8, 'ding', 0.9);
+avatars.forEach((a, k) => sfx(29.9 + k * 0.5, 'pop', 0.6, (k - 1.5) / 2));
+avatars.forEach((a, k) => sfx(30.6 + k * 0.5, 'tick', 0.45));
+sfx(31.5, 'swoosh', 0.8); sfx(34.2, 'coin', 0.8); sfx(35.6, 'swoosh', 0.6);
+sfx(35.4, 'riser', 0.9); sfx(36.0, 'boom', 1.0);
+sfx(37.4, 'pour', 0.8); sfx(38.8, 'clink', 1.0); sfx(38.85, 'impact', 0.9);
+
+/* ================= Bild berechnen ================= */
+let lastB = -1;
+window.seek = async t => {
+  const b = (t - TL.offset) / SPB;
+  // Pins
+  ambient.forEach(p => dropPin(p, t, p.userData.drop, p.userData.y));
+  const sel = 1 + 0.25 * E.back(prog(b, 10.3, 10.8), 2) - 0.25 * prog(b, 15, 15.4);
+  dropPin(pubPin, t, 10.3, PUB.y, sel);
+  dropPin(shopPin, t, 16.3, SHOP.y);
+  dropPin(gardenPin, t, 27.75, 3.2, 1.2);
+  stopPins.forEach((p, n) => dropPin(p, t, [23.4, 24.4, 25.4, 27.5][n], 0, 1.3, 9));
+  if (b < 27.75) gardenPin.visible = false;
+  // Route & Rad
+  const u = bikeU(t);
+  W.route.set(u);
+  W.route.mesh.visible = b >= 22.4; W.route.ghost.visible = b >= 22.4 && b < 30; W.route.ghost.material.opacity = 0.35 * clamp(prog(b, 22.4, 23.2));
+  const bp = W.route.curve.getPointAt(u);
+  W.bike.position.set(bp.x, 0, bp.z); W.bike.visible = b >= 22.4 && b < 36 && !(b > 25.9 && b < 28.2);
+  // Standort-Puls
+  const pp = ((t * 1.1) % 1);
+  W.pulse.scale.setScalar(1 + pp * 3.2); W.pulse.material.opacity = 0.35 * (1 - pp);
+  cameraAt(t);
+  W.renderer.render(W.scene, cam);
+  renderHeads(b);
+  renderUI(t, b);
+  renderSpeed(b);
+  renderLogo(t, b);
+  await renderPhones(t, b);
+  lastB = b;
 };
 await document.fonts.ready;
+await window.seek(0);
 window.ready = true;
 </script>
 </body>

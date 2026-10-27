@@ -1,253 +1,299 @@
-"""Soundtrack für den Werbespot: kleiner Blasmusik-Beat (Umpa-Umpa, 120 BPM, F-Dur)
-plus Geräusche (Kronkorken, Kasse, Wischer, Tipps, Einschenken, Anstoßen).
-Alles wird hier synthetisiert — keine fremden Samples, also lizenzfrei.
+"""Tonspur für den Werbespot: Musik (frei lizenziert, siehe timeline.json → music) plus
+Soundeffekte, die hier synthetisiert werden. Den Fahrplan der Effekte (Zeit, Art, Lautstärke,
+Panorama) erzeugt promo/spot.html, render.js schreibt ihn nach build/sfx.json.
 
-    python promo/audio.py [build/sfx.json] [build/audio.wav]
-
-sfx.json (schreibt promo/render.js) enthält die Zeitpunkte der Finger-Tipps im Video.
+    python promo/audio.py build/sfx.json build/audio.wav
 """
 import json
 import os
+import subprocess
 import sys
 import wave
 
 import numpy as np
 
-SR = 44100
-BPM = 120
-BEAT = 60 / BPM
-BAR = 4 * BEAT
-LENGTH = 24.0
-rng = np.random.default_rng(7)
-
+SR = 48000
 HERE = os.path.dirname(os.path.abspath(__file__))
 SFX_JSON = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'build', 'sfx.json')
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, 'build', 'audio.wav')
+plan = json.load(open(SFX_JSON))
+LENGTH = plan['duration']
+rng = np.random.default_rng(11)
 
-mix = np.zeros((int(SR * (LENGTH + 1)), 2))
 
-
+# ---------- Bausteine ----------
 def t_(dur):
     return np.arange(int(SR * dur)) / SR
-
-
-def env(dur, a=0.005, d=0.2, sustain=0.0, r=0.05):
-    """Hüllkurve: Attack, exponentieller Decay Richtung Sustain, kurzer Release am Ende."""
-    t = t_(dur)
-    e = sustain + (1 - sustain) * np.exp(-t / max(d, 1e-4))
-    e *= np.clip(t / a, 0, 1)
-    rel = int(SR * r)
-    if rel and len(e) > rel:
-        e[-rel:] *= np.linspace(1, 0, rel)
-    return e
-
-
-def lowpass(x, cutoff):
-    """Einfacher Tiefpass erster Ordnung (cutoff darf ein Array sein)."""
-    cutoff = np.broadcast_to(cutoff, x.shape)
-    a = 1 - np.exp(-2 * np.pi * cutoff / SR)
-    y = np.empty_like(x)
-    acc = 0.0
-    for i in range(len(x)):
-        acc += a[i] * (x[i] - acc)
-        y[i] = acc
-    return y
-
-
-def highpass(x, cutoff):
-    return x - lowpass(x, cutoff)
-
-
-def add(sig, at, gain=1.0, pan=0.0):
-    i = int(at * SR)
-    if i >= len(mix):
-        return
-    sig = sig[: len(mix) - i] * gain
-    mix[i:i + len(sig), 0] += sig * np.sqrt(0.5 * (1 - pan))
-    mix[i:i + len(sig), 1] += sig * np.sqrt(0.5 * (1 + pan))
-
-
-def note(name):
-    names = {'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'Eb': 3, 'E': 4, 'F': 5, 'F#': 6, 'G': 7, 'Ab': 8, 'A': 9, 'Bb': 10, 'B': 11}
-    n, octave = name[:-1], int(name[-1])
-    return 440 * 2 ** ((names[n] + 12 * (octave + 1) - 69) / 12)
-
-
-# ---------- Instrumente ----------
-def tuba(freq, dur=0.32):
-    t = t_(dur)
-    f = freq * (1 + 0.04 * np.exp(-t / 0.02))  # leichtes Anblasen
-    ph = 2 * np.pi * np.cumsum(f) / SR
-    x = np.sin(ph) + 0.45 * np.sin(2 * ph) + 0.2 * np.sin(3 * ph)
-    return np.tanh(1.4 * x) * env(dur, a=0.012, d=0.22, r=0.06)
-
-
-def accordion(freqs, dur=0.2):
-    t = t_(dur)
-    x = np.zeros_like(t)
-    trem = 1 + 0.12 * np.sin(2 * np.pi * 6 * t)
-    for f in freqs:
-        for det in (0.997, 1.003):
-            ph = (f * det * t) % 1
-            x += (2 * ph - 1) * 0.5
-    x = lowpass(x / len(freqs), 2600)
-    return x * trem * env(dur, a=0.008, d=0.12, sustain=0.35, r=0.05)
-
-
-def glock(freq, dur=0.9):
-    t = t_(dur)
-    x = np.sin(2 * np.pi * freq * t) + 0.35 * np.sin(2 * np.pi * freq * 2.76 * t) * np.exp(-t / 0.08)
-    return x * env(dur, a=0.002, d=0.35, r=0.1)
-
-
-def kick():
-    t = t_(0.35)
-    f = 45 + 85 * np.exp(-t / 0.03)
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * env(0.35, a=0.001, d=0.14)
 
 
 def noise(dur):
     return rng.uniform(-1, 1, int(SR * dur))
 
 
-def clap():
-    x = np.zeros(int(SR * 0.22))
-    for off in (0.0, 0.011, 0.022):
-        n = highpass(noise(0.2), 900) * env(0.2, a=0.001, d=0.05 if off < 0.02 else 0.09)
-        i = int(off * SR)
-        x[i:i + len(n)] += n[: len(x) - i]
-    return lowpass(x, 5000) * 0.8
-
-
-def hat(open_=False):
-    d = 0.18 if open_ else 0.045
-    return highpass(noise(d + 0.05), 7000) * env(d + 0.05, a=0.001, d=d / 2)
-
-
-def snare():
-    return 0.7 * highpass(noise(0.18), 1200) * env(0.18, a=0.001, d=0.05) + 0.4 * np.sin(2 * np.pi * 190 * t_(0.18)) * env(0.18, a=0.001, d=0.03)
-
-
-# ---------- Geräusche ----------
-def cap_pop():
-    t = t_(0.12)
-    f = 1100 * np.exp(-t / 0.025) + 280
-    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * env(0.12, a=0.001, d=0.03)
-    click = highpass(noise(0.12), 2500) * env(0.12, a=0.0005, d=0.004)
-    return 0.8 * tone + 0.6 * click
-
-
-def ding():
-    t = t_(1.4)
-    x = sum(a * np.sin(2 * np.pi * 2093 * m * t) * np.exp(-t / d) for m, a, d in ((1, 1, 0.5), (2.76, 0.5, 0.2), (5.4, 0.25, 0.08)))
-    return x * env(1.4, a=0.001, d=10, sustain=1, r=0.2) * 0.6
-
-
-def whoosh(dur=0.45):
+def env(dur, a=0.005, d=0.2, r=0.02):
     t = t_(dur)
-    cutoff = 400 + 5000 * (t / dur) ** 2
-    x = lowpass(noise(dur), cutoff)
-    shape = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 2
-    return x * shape * 1.6
+    e = np.exp(-t / max(d, 1e-4)) * np.clip(t / max(a, 1e-5), 0, 1)
+    n = int(SR * r)
+    if n and len(e) > n:
+        e[-n:] *= np.linspace(1, 0, n)
+    return e
+
+
+def svf(x, cutoff, q=0.7, mode='bp'):
+    """State-Variable-Filter (Chamberlin). cutoff/q dürfen Arrays sein (Sweeps)."""
+    cutoff = np.broadcast_to(np.asarray(cutoff, float), x.shape)
+    q = np.broadcast_to(np.asarray(q, float), x.shape)
+    f = 2 * np.sin(np.pi * np.clip(cutoff, 20, SR / 6) / SR)
+    damp = 1 / q
+    lo = bp = 0.0
+    out = np.empty_like(x)
+    for i in range(len(x)):
+        hi = x[i] - lo - damp[i] * bp
+        bp += f[i] * hi
+        lo += f[i] * bp
+        out[i] = bp if mode == 'bp' else lo if mode == 'lp' else hi
+    return out
+
+
+def chirp(f0, f1, dur, curve=3.0):
+    t = t_(dur)
+    f = f0 + (f1 - f0) * (1 - np.exp(-curve * t / dur)) / (1 - np.exp(-curve))
+    return np.sin(2 * np.pi * np.cumsum(f) / SR)
+
+
+def stereo(x, pan=0.0, sweep=0.0):
+    """Mono → Stereo; sweep bewegt das Panorama über die Dauer (Vorbeiflug)."""
+    p = np.clip(pan + sweep * np.linspace(-1, 1, len(x)), -1, 1)
+    return np.stack([x * np.sqrt(0.5 * (1 - p)), x * np.sqrt(0.5 * (1 + p))], 1)
+
+
+def norm(x, peak=1.0):
+    m = np.max(np.abs(x)) or 1
+    return x / m * peak
+
+
+# ---------- Effekte ----------
+def whoosh(dur=0.6, f0=300, f1=4000, q=1.4, sweep=0.9):
+    t = t_(dur)
+    k = (t / dur)
+    cut = f0 * (f1 / f0) ** k
+    x = svf(noise(dur), cut, q)
+    x += 0.25 * svf(noise(dur), cut * 2.1, 3)
+    shape = np.sin(np.pi * np.clip(k, 0, 1) ** 0.7) ** 2
+    return stereo(norm(x * shape), sweep=sweep)
+
+
+def whip():
+    return whoosh(0.32, 600, 7000, 2.0, 1.0)
+
+
+def swoosh():
+    return whoosh(0.45, 400, 3500, 1.2, -0.8)
+
+
+def riser(dur=1.2):
+    t = t_(dur)
+    k = t / dur
+    x = svf(noise(dur), 300 * (25 ** k), 2.5) * 0.7
+    x += 0.35 * chirp(180, 900, dur, 1.5) * (0.5 + 0.5 * np.sin(2 * np.pi * (4 + 18 * k) * t))
+    return stereo(norm(x * k ** 1.6), sweep=0.2)
+
+
+def boom(dur=2.2):
+    t = t_(dur)
+    sub = np.tanh(2.2 * chirp(78, 32, dur, 4)) * env(dur, 0.004, 0.55)
+    body = svf(noise(dur), 160, 0.8, 'lp') * env(dur, 0.002, 0.18) * 1.6
+    crack = svf(noise(0.25), 2500, 0.7, 'hp') * env(0.25, 0.0005, 0.03)
+    x = sub + body
+    x[: len(crack)] += crack * 0.5
+    return stereo(norm(x))
+
+
+def impact():
+    t = t_(1.2)
+    x = np.tanh(2 * chirp(110, 45, 1.2, 5)) * env(1.2, 0.002, 0.22)
+    x += svf(noise(1.2), 900, 0.6, 'lp') * env(1.2, 0.001, 0.07)
+    x += 0.4 * svf(noise(1.2), 6000, 0.7, 'hp') * env(1.2, 0.001, 0.25)  # Becken-Hauch
+    return stereo(norm(x))
+
+
+def bubble_pop(f0=420, f1=1400, dur=0.07):
+    x = chirp(f0, f1, dur, 2) * env(dur, 0.001, dur / 3)
+    return x
+
+
+def pop():
+    x = np.zeros(int(SR * 0.16))
+    b = bubble_pop(380, 1500, 0.07)
+    x[: len(b)] += b
+    x += svf(noise(0.16), 3000, 1.5) * env(0.16, 0.0005, 0.008) * 0.5
+    return stereo(norm(x))
+
+
+def plip():
+    x = 0.7 * np.sin(2 * np.pi * 190 * t_(0.25)) * env(0.25, 0.001, 0.05)
+    x += svf(noise(0.25), 1800, 2.0) * env(0.25, 0.0005, 0.012)
+    b = bubble_pop(600, 1800, 0.05) * 0.5
+    x[200:200 + len(b)] += b
+    return stereo(norm(x))
+
+
+def tick():
+    x = svf(noise(0.05), 5200, 3) * env(0.05, 0.0003, 0.006)
+    x += 0.4 * np.sin(2 * np.pi * 2400 * t_(0.05)) * env(0.05, 0.0003, 0.01)
+    return stereo(norm(x))
 
 
 def tap():
-    return lowpass(highpass(noise(0.03), 1500), 6000) * env(0.03, a=0.0005, d=0.006) * 0.9
+    return stereo(norm(svf(noise(0.04), 2600, 1.2) * env(0.04, 0.0003, 0.005)))
 
 
-def pour(dur=1.3):
-    t = t_(dur)
-    x = lowpass(noise(dur), 1200 + 600 * np.sin(2 * np.pi * 3 * t)) * 0.5
-    for _ in range(70):  # Bläschen
-        at = rng.uniform(0, dur - 0.05)
-        f = rng.uniform(900, 2600)
-        b = np.sin(2 * np.pi * f * (1 + 0.6 * t_(0.04) / 0.04) * t_(0.04)) * env(0.04, a=0.002, d=0.01)
+def card():
+    x = np.zeros(int(SR * 0.5))
+    p = pop()[:, 0]
+    x[: len(p)] += p
+    s = whoosh(0.3, 1500, 6000, 0.9, 0)[:, 0] * 0.35
+    x[: len(s)] += s
+    return stereo(norm(x))
+
+
+def coin():
+    t = t_(0.7)
+    x = sum(a * np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, a, d in ((2637, 1, 0.12), (3520, 0.7, 0.09), (5274, 0.4, 0.05)))
+    y = np.zeros(int(SR * 0.8))
+    y[: len(x)] += x
+    y[int(0.07 * SR): int(0.07 * SR) + len(x)] += 0.6 * x
+    return stereo(norm(y * 1.0))
+
+
+def ding():
+    t = t_(1.5)
+    x = sum(a * np.sin(2 * np.pi * 1568 * m * t) * np.exp(-t / d) for m, a, d in ((1, 1, 0.6), (2.0, 0.35, 0.3), (3.01, 0.2, 0.12), (4.2, 0.1, 0.06)))
+    return stereo(norm(x * env(1.5, 0.001, 10)))
+
+
+def dash():
+    x = whoosh(1.0, 200, 6000, 0.9, 0.0)[:, 0]
+    x += 0.3 * chirp(120, 520, 1.0, 1.0) * np.sin(np.pi * np.linspace(0, 1, int(SR * 1.0)))
+    return stereo(norm(x), sweep=0.3)
+
+
+def brake():
+    t = t_(0.5)
+    x = svf(noise(0.5), 2400 - 1400 * t / 0.5, 6) * env(0.5, 0.01, 0.15) * 0.6
+    x += np.sin(2 * np.pi * 70 * t) * env(0.5, 0.002, 0.08)
+    return stereo(norm(x))
+
+
+def morph():
+    t = t_(0.7)
+    x = np.sin(2 * np.pi * np.cumsum(220 + 160 * np.sin(np.pi * t / 0.7)) / SR) * np.sin(np.pi * t / 0.7) ** 2
+    x += 0.3 * svf(noise(0.7), 800, 1.0) * np.sin(np.pi * t / 0.7)
+    return stereo(norm(x))
+
+
+def bubbles(dur, n, f_lo, f_hi, falling=False):
+    x = np.zeros(int(SR * dur))
+    for k in range(n):
+        at = rng.uniform(0, dur - 0.08)
+        f0 = rng.uniform(f_lo, f_hi) * ((1 - 0.5 * at / dur) if falling else 1)
+        b = bubble_pop(f0, f0 * rng.uniform(2, 3.2), rng.uniform(0.03, 0.07)) * rng.uniform(0.25, 1)
         i = int(at * SR)
-        x[i:i + len(b)] += b * rng.uniform(0.05, 0.18)
-    shape = np.clip(t / 0.15, 0, 1) * np.clip((dur - t) / 0.4, 0, 1)
-    return x * shape
+        x[i: i + len(b)] += b
+    return x
+
+
+def drain():
+    x = bubbles(0.8, 26, 250, 700, falling=True)
+    x += 0.4 * svf(noise(0.8), 500, 1.5) * np.linspace(1, 0, int(SR * 0.8))
+    return stereo(norm(x))
+
+
+def pour():
+    dur = 1.3
+    t = t_(dur)
+    x = svf(noise(dur), 900 + 500 * np.sin(2 * np.pi * 2.3 * t), 1.0) * 0.6
+    x += bubbles(dur, 90, 500, 1600)
+    shape = np.clip(t / 0.08, 0, 1) * np.clip((dur - t) / 0.35, 0, 1)
+    return stereo(norm(x * shape))
 
 
 def clink():
-    t = t_(1.2)
-    x = sum(a * np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, a, d in ((2637, 1, 0.35), (3951, 0.6, 0.25), (6100, 0.35, 0.1), (1760, 0.3, 0.4)))
-    return x * env(1.2, a=0.0008, d=10, sustain=1, r=0.2) * 0.5
+    t = t_(1.6)
+    one = sum(a * np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, a, d in ((2380, 1, 0.5), (3610, 0.7, 0.35), (5230, 0.45, 0.18), (6890, 0.25, 0.09)))
+    two = sum(a * np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, a, d in ((2610, 1, 0.45), (3990, 0.6, 0.3), (5790, 0.35, 0.15)))
+    x = np.zeros(int(SR * 1.7))
+    x[: len(one)] += one
+    x[int(0.035 * SR): int(0.035 * SR) + len(two)] += 0.8 * two
+    x[: 300] += svf(noise(300 / SR), 4000, 1)[:300] * 0.6
+    return np.stack([x * 0.8, np.roll(x, 40) * 0.8], 1) / np.max(np.abs(x))
 
 
-def crash():
-    return highpass(noise(1.6), 4000) * env(1.6, a=0.001, d=0.45) * 0.5
+def drop():
+    return stereo(norm(np.tanh(1.5 * chirp(160, 50, 0.4, 4)) * env(0.4, 0.002, 0.1) + 0.3 * svf(noise(0.4), 1200, 1) * env(0.4, 0.001, 0.02)))
 
 
-# ---------- Arrangement ----------
-CHORDS = {
-    'F': (['F2', 'C2'], ['A3', 'C4', 'F4']),
-    'C7': (['C2', 'G1'], ['Bb3', 'C4', 'E4']),
-    'Bb': (['Bb1', 'F2'], ['Bb3', 'D4', 'F4']),
+FX = {
+    'whoosh': swoosh, 'swoosh': swoosh, 'whip': whip, 'riser': riser, 'boom': boom, 'impact': impact,
+    'pop': pop, 'plip': plip, 'tick': tick, 'tap': tap, 'card': card, 'coin': coin, 'ding': ding,
+    'dash': dash, 'brake': brake, 'morph': morph, 'drain': drain, 'pour': pour, 'clink': clink, 'drop': drop,
 }
-# Takt 1 = Einstieg (0–2 s), Takte 2–10 = Groove, Takte 11–12 = Logo
-PROGRESSION = ['F', 'F', 'C7', 'F', 'Bb', 'F', 'C7', 'F', 'C7']
 
-# Einstieg: Kronkorken, Kasse, Trommelwirbel in den ersten Groove-Takt
-add(cap_pop(), 0.02, 0.9)
-add(ding(), 0.32, 0.55, pan=0.2)
-add(tuba(note('F1'), 0.5), 0.32, 0.7)
-for i in range(8):
-    add(snare(), 1.0 + i * BEAT / 4, 0.25 + 0.06 * i)
 
-for b, name in enumerate(PROGRESSION):
-    bar0 = BAR * (b + 1)
-    bass, chord = CHORDS[name]
-    freqs = [note(n) for n in chord]
-    for beat in range(4):
-        at = bar0 + beat * BEAT
-        if beat % 2 == 0:
-            add(kick(), at, 0.7)
-            add(tuba(note(bass[beat // 2])), at, 0.75)
-        else:
-            add(clap(), at, 0.35)
-            add(accordion(freqs), at, 0.5, pan=0.15)
-            add(accordion(freqs, 0.12), at + BEAT / 2, 0.25, pan=0.15)  # Nachschlag
-        add(hat(), at + BEAT / 2, 0.22, pan=-0.3)
-        add(hat(), at, 0.12, pan=-0.3)
-    if b == len(PROGRESSION) - 1:  # Wirbel ins Finale
-        for i in range(8):
-            add(snare(), bar0 + 2 * BEAT + i * BEAT / 4, 0.25 + 0.05 * i)
+def reverb(x, secs=0.9, wet=0.18):
+    """Kleiner Hall: Faltung mit abklingendem, gefiltertem Rauschen (FFT)."""
+    n = int(SR * secs)
+    ir = rng.normal(0, 1, (n, 2)) * np.exp(-np.arange(n) / (SR * secs / 5))[:, None]
+    ir[:, 0] = svf(ir[:, 0], 5000, 0.7, 'lp')
+    ir[:, 1] = svf(ir[:, 1], 5000, 0.7, 'lp')
+    ir /= np.sqrt((ir ** 2).sum(0))
+    m = len(x) + n
+    size = 1 << (m - 1).bit_length()
+    y = np.stack([np.fft.irfft(np.fft.rfft(x[:, c], size) * np.fft.rfft(ir[:, c], size), size)[: len(x)] for c in range(2)], 1)
+    return x + wet * y
 
-# Glockenspiel-Motiv zu jedem Szenenstart (2 s, 8 s, 14 s)
-for start in (2.0, 8.0, 14.0):
-    for i, n in enumerate(['C5', 'F5', 'A5', 'C6']):
-        add(glock(note(n)), start + i * BEAT / 2, 0.22, pan=-0.2 + 0.13 * i)
 
-# Wischer vor jedem Szenenwechsel
-for at in (1.62, 7.62, 13.62, 19.62):
-    add(whoosh(), at, 0.35)
+# ---------- Mischen ----------
+total = int(SR * LENGTH)
+fx_bus = np.zeros((total + SR * 3, 2))
+cache = {}
+for ev in plan['events']:
+    kind = ev['type']
+    if kind not in cache:
+        cache[kind] = FX[kind]()
+    s = cache[kind]
+    if ev.get('pan'):
+        p = ev['pan']
+        s = s * np.array([np.sqrt(1 - max(0, p)), np.sqrt(1 + min(0, p))])
+    i = int(ev['t'] * SR)
+    fx_bus[i: i + len(s)] += s * ev.get('gain', 1) * 0.55
+fx_bus = reverb(fx_bus)[:total]
 
-# Finale: Akkord + Becken, Einschenken, Anstoßen, Umpa-Schluss
-end = BAR * 10
-add(crash(), end, 0.6)
-add(kick(), end, 1.0)
-add(tuba(note('F1'), 1.0), end, 0.8)
-add(accordion([note(n) for n in ['F3', 'A3', 'C4', 'F4']], 1.1), end, 0.38)
-add(pour(), end + 0.3, 0.5)
-add(clink(), end + 1.55, 0.7, pan=-0.15)
-add(clink(), end + 1.62, 0.5, pan=0.2)
-add(tuba(note('C2'), 0.4), end + 2.5, 0.6)
-add(kick(), end + 2.5, 0.7)
-add(tuba(note('F1'), 1.0), end + 3.0, 0.7)
-add(kick(), end + 3.0, 0.9)
-add(accordion([note(n) for n in ['A3', 'C4', 'F4']], 0.6), end + 3.0, 0.3)
+music = np.zeros((total, 2))
+m = plan.get('music')
+if m:
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(m.get('start', 0)), '-i', os.path.join(HERE, m['file']),
+                          '-t', str(LENGTH + 1), '-f', 's16le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
+    a = np.frombuffer(raw, '<i2').reshape(-1, 2) / 32768.0
+    a = a[:total]
+    music[: len(a)] = a * m.get('gain', 1.0)
+    fi, fo = int(SR * m.get('fadeIn', 0.05)), int(SR * m.get('fadeOut', 1.5))
+    music[:fi] *= np.linspace(0, 1, fi)[:, None]
+    end = min(len(a), total)
+    music[end - fo:end] *= np.linspace(1, 0, fo)[:, None]
+    # Ducking: Musik bei großen Effekten kurz leiser
+    duck = np.ones(total)
+    for ev in plan['events']:
+        if ev['type'] in ('boom', 'impact', 'dash'):
+            i = int(ev['t'] * SR)
+            n = int(SR * 0.6)
+            seg = duck[i:i + n]
+            seg[:] = np.minimum(seg, 1 - 0.35 * np.exp(-np.arange(len(seg)) / (SR * 0.25)))
+    music *= duck[:, None]
 
-# Finger-Tipps aus dem Video
-if os.path.exists(SFX_JSON):
-    for at in json.load(open(SFX_JSON)).get('taps', []):
-        add(tap(), at, 0.45)
-
-# ---------- Ausgabe ----------
-out = mix[: int(SR * LENGTH)]
-fade = int(SR * 0.6)
-out[-fade:] *= np.linspace(1, 0, fade)[:, None]
-out = np.tanh(out * 1.1)  # sanft begrenzen
-out /= np.max(np.abs(out)) / 0.89
+out = music + fx_bus
+out = np.tanh(out * 1.05)
+out /= max(1e-9, np.max(np.abs(out))) / 0.95
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with wave.open(OUT, 'wb') as w:
     w.setnchannels(2)
