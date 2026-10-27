@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><defs>
+    <linearGradient id="bl-beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc94f"/><stop offset="1" stop-color="#df8510"/></linearGradient>
+    <clipPath id="bl-pin"><path d="M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z"/></clipPath>
+    <mask id="bl-gap"><rect width="512" height="512" fill="#fff"/><circle cx="166" cy="84" r="42" fill="#000"/><circle cx="226" cy="52" r="32" fill="#000"/></mask>
+  </defs>
+  <g mask="url(#bl-gap)">
+    <path d="M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z" fill="url(#bl-beer)"/>
+    <g clip-path="url(#bl-pin)">
+      <path d="M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z" fill="#c8740c" fill-opacity=".45" transform="translate(0 10)"/>
+      <path d="M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z" fill="#fff7e6"/>
+      <path d="M160 236v116" stroke="#fff" stroke-opacity=".5" stroke-width="20" stroke-linecap="round"/>
+      <circle cx="296" cy="318" r="14" fill="#fff" fill-opacity=".55"/>
+      <circle cx="258" cy="382" r="9" fill="#fff" fill-opacity=".5"/>
+      <circle cx="232" cy="270" r="8" fill="#fff" fill-opacity=".5"/>
+    </g>
+  </g>
+  <circle cx="166" cy="84" r="31" fill="#fff7e6"/><circle cx="226" cy="52" r="21" fill="#fff7e6"/></g></svg>

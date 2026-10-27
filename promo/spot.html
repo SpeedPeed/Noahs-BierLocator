@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Bier-Locator Werbespot</title>
+<!-- Komposition des Werbespots (1080×1920). Wird von promo/render.js Bild für Bild über
+     window.seek(t) angesteuert — keine CSS-Animationen, alles ist eine Funktion der Zeit. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@500;600;700&display=block">
+<style>
+  :root { --bg: #1a120a; --amber: #f6b03e; --amber-2: #df8510; --foam: #fff7e6; --muted: #d9c7a8; --red: #e5533d; }
+  html, body { margin: 0; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: var(--foam);
+    background: radial-gradient(120% 70% at 50% 100%, #4a2f0f 0%, #2a1b0c 40%, var(--bg) 75%); font-family: Figtree, sans-serif; }
+  .abs { position: absolute; }
+  #glow { left: 50%; top: 50%; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(246,176,62,.22), rgba(246,176,62,0) 60%); }
+  .bub { border-radius: 50%; border: 3px solid rgba(255,247,230,.09); background: rgba(255,247,230,.025); }
+
+  /* Einstieg */
+  #hook { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  #price { position: relative; font: 800 270px/1 'Bricolage Grotesque', sans-serif; color: var(--amber); letter-spacing: -6px; }
+  #strike { position: absolute; left: -5%; top: 50%; height: 26px; margin-top: -13px; background: var(--red); border-radius: 13px; transform-origin: left center; }
+  #q { margin-top: 26px; font: 800 96px/1.05 'Bricolage Grotesque', sans-serif; }
+  #ans { margin-top: 70px; font: 700 64px/1.1 'Bricolage Grotesque', sans-serif; color: var(--foam); padding: 18px 40px; border-radius: 99px; background: rgba(246,176,62,.16); border: 3px solid var(--amber); }
+
+  /* Szenentexte */
+  .text { left: 90px; right: 90px; top: 150px; }
+  .kicker { display: inline-flex; align-items: center; gap: 14px; font: 700 30px/1 Figtree, sans-serif; letter-spacing: 4px; text-transform: uppercase; color: var(--amber); }
+  .kicker b { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--amber); color: #2b1a05; letter-spacing: 0; font-size: 26px; }
+  .title { margin-top: 26px; font: 800 100px/1.0 'Bricolage Grotesque', sans-serif; letter-spacing: -2px; }
+  .title span { display: inline-block; }
+  .sub { margin-top: 22px; font: 500 38px/1.3 Figtree, sans-serif; color: var(--muted); max-width: 900px; }
+
+  /* Handy */
+  #phone { left: 50%; top: 660px; width: 621px; height: 1302px; margin-left: -310.5px; border-radius: 78px; background: #0d0905;
+    box-shadow: 0 0 0 3px #3b2a18, 0 60px 120px rgba(0,0,0,.6), 0 0 160px rgba(246,176,62,.18); transform-origin: 50% 30%; }
+  #screen { position: absolute; left: 18px; top: 18px; width: 585px; height: 1266px; border-radius: 62px; overflow: hidden; background: #fbf4e6; }
+  #screen img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #finger { width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; background: rgba(255,255,255,.75); box-shadow: 0 6px 20px rgba(0,0,0,.35), inset 0 0 0 3px rgba(0,0,0,.08); }
+  #ripple { width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; border: 5px solid rgba(255,255,255,.9); }
+
+  /* Abschluss */
+  #outro { inset: 0; }
+  #logo { left: 50%; top: 520px; width: 420px; height: 420px; margin-left: -210px; }
+  #name { left: 0; right: 0; top: 1010px; text-align: center; font: 800 150px/1 'Bricolage Grotesque', sans-serif; letter-spacing: -3px; }
+  #bar { left: 50%; top: 1200px; height: 10px; border-radius: 5px; background: var(--amber); }
+  #slogan { left: 0; right: 0; top: 1250px; text-align: center; font: 500 46px/1.3 Figtree, sans-serif; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="glow" class="abs"></div>
+  <div id="bubbles"></div>
+
+  <div id="hook" class="abs">
+    <div id="price">6,50 €<div id="strike"></div></div>
+    <div id="q">für EIN Bier?!</div>
+    <div id="ans">Geht auch billiger.</div>
+  </div>
+
+  <div id="texts"></div>
+
+  <div id="phone" class="abs">
+    <div id="screen"><img id="imgPrev" alt=""><img id="imgCur" alt="">
+      <div id="ripple" class="abs"></div><div id="finger" class="abs"></div></div>
+  </div>
+
+  <div id="outro" class="abs">
+    <svg id="logo" class="abs" viewBox="0 0 512 512">
+      <defs>
+        <linearGradient id="beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc94f"/><stop offset="1" stop-color="#df8510"/></linearGradient>
+        <clipPath id="pin"><path id="pinPath"/></clipPath>
+        <mask id="gap"><rect width="512" height="512" fill="#fff"/><circle id="gap1" cx="166" cy="84" fill="#000"/><circle id="gap2" cx="226" cy="52" fill="#000"/></mask>
+      </defs>
+      <g mask="url(#gap)">
+        <path id="glass" fill="rgba(255,247,230,.10)" stroke="rgba(255,247,230,.5)" stroke-width="8"/>
+        <g clip-path="url(#pin)">
+          <rect id="beerRect" x="0" width="512" height="600" fill="url(#beer)"/>
+          <g id="foamG"><path id="foamShade" fill="#c8740c" fill-opacity=".45" transform="translate(0 10)"/><path id="foam" fill="#fff7e6"/></g>
+          <g id="inner">
+            <path d="M160 236v116" stroke="#fff" stroke-opacity=".5" stroke-width="20" stroke-linecap="round"/>
+            <circle cx="296" cy="318" r="14" fill="#fff" fill-opacity=".55"/>
+            <circle cx="258" cy="382" r="9" fill="#fff" fill-opacity=".5"/>
+            <circle cx="232" cy="270" r="8" fill="#fff" fill-opacity=".5"/>
+          </g>
+        </g>
+      </g>
+      <circle id="pop1" cx="166" cy="84" r="31" fill="#fff7e6"/>
+      <circle id="pop2" cx="226" cy="52" r="21" fill="#fff7e6"/>
+    </svg>
+    <div id="name" class="abs">Bier-Locator</div>
+    <div id="bar" class="abs"></div>
+    <div id="slogan" class="abs"></div>
+  </div>
+</div>
+
+<script type="module">
+const PIN = 'M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z';
+const FOAM = 'M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z';
+const $ = s => document.querySelector(s);
+['#pinPath', '#glass'].forEach(s => $(s).setAttribute('d', PIN));
+['#foam', '#foamShade'].forEach(s => $(s).setAttribute('d', FOAM));
+
+/* ---------- Hilfen ---------- */
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, p) => a + (b - a) * p;
+const easeOut = p => 1 - Math.pow(1 - p, 3);
+const easeIn = p => p * p * p;
+const easeInOut = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+const easeBack = (p, s = 1.7) => 1 + (s + 1) * Math.pow(p - 1, 3) + s * Math.pow(p - 1, 2);
+const set = (el, css) => Object.assign(el.style, css);
+
+const TL = await (await fetch('timeline.json')).json();
+const clips = {};
+for (const sc of TL.scenes) clips[sc.clip] = await (await fetch(`build/clips/${sc.clip}/meta.json`)).json();
+$('#slogan').textContent = TL.outro.slogan;
+$('#name').textContent = TL.outro.name;
+
+// Quellzeit im Clip → Videozeit (über die Schnitt-Segmente), und umgekehrt
+const srcAt = (sc, t) => {
+  for (const [a, b, sa, sb] of sc.segments) if (t >= a && t < b) return lerp(sa, sb, (t - a) / (b - a));
+  const last = sc.segments[sc.segments.length - 1];
+  return t < sc.segments[0][0] ? sc.segments[0][2] : last[3];
+};
+const outAt = (sc, src) => {
+  for (const [a, b, sa, sb] of sc.segments) if (src >= sa && src <= sb) return lerp(a, b, (src - sa) / (sb - sa));
+  return null;
+};
+const frameAt = (clip, src) => {
+  const fr = clips[clip].frames;
+  let lo = 0, hi = fr.length - 1;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (fr[m].t <= src) lo = m; else hi = m - 1; }
+  return `build/clips/${clip}/${fr[lo].file}`;
+};
+window.taps = TL.scenes.flatMap(sc => clips[sc.clip].taps.map(tp => ({ sc, x: tp.x, y: tp.y, show: outAt(sc, tp.t), hit: outAt(sc, tp.t + TL.tapDelay) })))
+  .filter(tp => tp.show != null && tp.hit != null);
+
+/* ---------- Schwebende Bläschen im Hintergrund ---------- */
+const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
+const bubbles = Array.from({ length: 22 }, (_, i) => {
+  const el = document.createElement('div'); el.className = 'abs bub'; $('#bubbles').appendChild(el);
+  const size = 14 + rnd(i, 1) * 46;
+  set(el, { width: size + 'px', height: size + 'px' });
+  return { el, x: rnd(i, 2) * 1080, y0: rnd(i, 3) * 2200, speed: 40 + rnd(i, 4) * 90, wob: rnd(i, 5) * 6 };
+});
+
+/* ---------- Szenentexte ---------- */
+const blocks = [];
+TL.scenes.forEach((sc, si) => sc.texts.forEach((tx, ti) => {
+  const el = document.createElement('div'); el.className = 'abs text';
+  const words = tx.title.split(/(<br>| )/).filter(w => w && w !== ' ');
+  el.innerHTML = `<div class="kicker"><b>${si + 1}</b>${sc.kicker}</div>
+    <div class="title">${words.map(w => (w === '<br>' ? '<br>' : `<span>${w}</span>`)).join(' ')}</div><div class="sub">${tx.sub}</div>`;
+  $('#texts').appendChild(el);
+  const next = sc.texts[ti + 1];
+  blocks.push({ el, start: tx.at, end: next ? next.at : sc.end, first: ti === 0, last: !next,
+    words: [...el.querySelectorAll('.title span')], kicker: el.querySelector('.kicker'), sub: el.querySelector('.sub') });
+}));
+
+function renderTexts(t) {
+  for (const b of blocks) {
+    const on = t >= b.start - 0.01 && t < b.end + 0.3;
+    b.el.style.display = on ? '' : 'none';
+    if (!on) continue;
+    const out = easeIn(prog(t, b.end - 0.22, b.end));
+    set(b.el, { opacity: 1 - out, transform: `translateY(${-40 * out}px)` });
+    const k = b.first ? easeOut(prog(t, b.start, b.start + 0.35)) : 1;
+    set(b.kicker, { opacity: k, transform: `translateX(${(1 - k) * -40}px)` });
+    b.words.forEach((w, i) => {
+      const p = easeBack(prog(t, b.start + 0.06 + i * 0.06, b.start + 0.5 + i * 0.06), 1.4);
+      set(w, { opacity: clamp(p * 1.5), transform: `translateY(${(1 - p) * 70}px)` });
+    });
+    const s = easeOut(prog(t, b.start + 0.3, b.start + 0.7));
+    set(b.sub, { opacity: s, transform: `translateY(${(1 - s) * 24}px)` });
+  }
+}
+
+/* ---------- Einstieg ---------- */
+function renderHook(t) {
+  const end = TL.hook.end;
+  $('#hook').style.display = t < end + 0.05 ? '' : 'none';
+  if (t >= end + 0.05) return;
+  const p = prog(t, 0.28, 0.62), pe = easeBack(p, 2.2);
+  const shake = t > 1.15 && t < 1.45 ? Math.sin(t * 90) * 10 * (1 - prog(t, 1.15, 1.45)) : 0;
+  set($('#price'), { opacity: clamp(p * 4), transform: `translateX(${shake}px) scale(${lerp(2.4, 1, pe)})` });
+  const s = easeOut(prog(t, 1.1, 1.3));
+  set($('#strike'), { width: `${110 * s}%`, transform: 'rotate(-7deg)' });
+  const q = easeBack(prog(t, 0.62, 0.95), 1.6);
+  set($('#q'), { opacity: clamp(q * 2), transform: `translateY(${(1 - q) * 80}px)` });
+  const a = easeBack(prog(t, 1.32, 1.6), 2);
+  set($('#ans'), { opacity: clamp(a * 2), transform: `scale(${lerp(0.6, 1, a)})` });
+  const out = easeIn(prog(t, 1.72, end));
+  set($('#hook'), { opacity: 1 - out, transform: `translateY(${-260 * out}px)` });
+}
+
+/* ---------- Handy ---------- */
+const S = 585 / 390; // App-Pixel → Bildschirm im Video
+let shownCur = '', shownPrev = '';
+async function renderPhone(t) {
+  const first = TL.scenes[0], lastEnd = TL.scenes[TL.scenes.length - 1].end;
+  const visible = t >= first.start - 0.05 && t < lastEnd + 0.6;
+  $('#phone').style.display = visible ? '' : 'none';
+  if (!visible) return;
+  const enter = easeBack(prog(t, first.start, first.start + 0.7), 1.2);
+  const exit = easeIn(prog(t, lastEnd, lastEnd + 0.5));
+  const y = (1 - enter) * 1500 + exit * 1700 + Math.sin(t * 1.7) * 8;
+  const rot = Math.sin(t * 1.3) * 1.1 + exit * 8 + (1 - enter) * 6;
+  const sc = TL.scenes.findLast(s => t >= s.start) || first;
+  const push = 1 + 0.035 * prog(t, sc.start, sc.end);
+  set($('#phone'), { transform: `translateY(${y}px) rotate(${rot}deg) scale(${push})` });
+
+  // Bildschirm: aktueller Clip, beim Szenenwechsel schiebt sich der neue herein
+  const cur = frameAt(sc.clip, srcAt(sc, Math.min(t, sc.end - 0.001)));
+  const idx = TL.scenes.indexOf(sc);
+  const tr = idx > 0 ? easeInOut(prog(t, sc.start, sc.start + 0.35)) : 1;
+  const prevSc = TL.scenes[idx - 1];
+  const prev = prevSc && tr < 1 ? frameAt(prevSc.clip, srcAt(prevSc, prevSc.end - 0.001)) : '';
+  const imgCur = $('#imgCur'), imgPrev = $('#imgPrev');
+  const loads = [];
+  if (cur !== shownCur) { imgCur.src = cur; shownCur = cur; loads.push(imgCur.decode().catch(() => {})); }
+  if (prev !== shownPrev) { if (prev) { imgPrev.src = prev; loads.push(imgPrev.decode().catch(() => {})); } shownPrev = prev; }
+  imgPrev.style.display = prev ? '' : 'none';
+  set(imgCur, { transform: `translateX(${(1 - tr) * 100}%)`, boxShadow: tr < 1 ? '-30px 0 60px rgba(0,0,0,.3)' : 'none' });
+  set(imgPrev, { transform: `translateX(${-30 * tr}%)`, filter: `brightness(${1 - 0.4 * tr})` });
+
+  // Finger
+  const tap = window.taps.find(tp => t >= tp.show - 0.18 && t < tp.hit + 0.4);
+  const f = $('#finger'), r = $('#ripple');
+  if (tap) {
+    const appear = easeOut(prog(t, tap.show - 0.18, tap.show));
+    const leave = prog(t, tap.hit + 0.15, tap.hit + 0.4);
+    const press = t >= tap.hit - 0.06 && t < tap.hit + 0.12 ? 0.82 : 1;
+    set(f, { display: '', left: tap.x * S + 'px', top: tap.y * S + 'px', opacity: appear * (1 - leave), transform: `scale(${lerp(1.4, 1, appear) * press})` });
+    const rp = prog(t, tap.hit, tap.hit + 0.4);
+    set(r, { display: rp > 0 && rp < 1 ? '' : 'none', left: tap.x * S + 'px', top: tap.y * S + 'px', opacity: 1 - rp, transform: `scale(${1 + rp * 1.6})` });
+  } else { f.style.display = 'none'; r.style.display = 'none'; }
+  await Promise.all(loads);
+}
+
+/* ---------- Abschluss ---------- */
+function renderOutro(t) {
+  const o = TL.outro.start;
+  $('#outro').style.display = t >= o ? '' : 'none';
+  if (t < o) return;
+  const drop = easeBack(prog(t, o + 0.05, o + 0.55), 1.5);
+  set($('#logo'), { opacity: clamp(prog(t, o + 0.05, o + 0.2)), transform: `translateY(${(1 - drop) * -700}px) scale(${1 + 0.03 * Math.sin(Math.max(0, t - o - 2) * 2.4)})` });
+  const fill = easeInOut(prog(t, o + 0.35, o + 1.45));
+  const off = (1 - fill) * 330;
+  $('#foamG').setAttribute('transform', `translate(0 ${off})`);
+  $('#beerRect').setAttribute('y', 175 + off);
+  $('#glass').setAttribute('stroke-opacity', 1 - fill);
+  $('#inner').setAttribute('opacity', prog(t, o + 1.2, o + 1.6));
+  [['#pop1', '#gap1', 31, o + 1.5], ['#pop2', '#gap2', 21, o + 1.6]].forEach(([c, g, r, at]) => {
+    const p = easeBack(prog(t, at, at + 0.3), 2.4);
+    $(c).setAttribute('r', Math.max(0, r * p));
+    $(g).setAttribute('r', Math.max(0, (r + 11) * p));
+  });
+  const n = easeBack(prog(t, o + 0.95, o + 1.45), 1.3);
+  set($('#name'), { opacity: clamp(n * 2), transform: `translateY(${(1 - n) * 90}px)` });
+  const b = easeOut(prog(t, o + 1.3, o + 1.75));
+  set($('#bar'), { width: 160 * b + 'px', marginLeft: -80 * b + 'px' });
+  const s = easeOut(prog(t, o + 1.6, o + 2.1));
+  set($('#slogan'), { opacity: s, transform: `translateY(${(1 - s) * 30}px)` });
+  set($('#glow'), { transform: `scale(${0.8 + 0.25 * fill})` });
+}
+
+window.seek = async t => {
+  bubbles.forEach(b => {
+    const y = ((b.y0 - t * b.speed) % 2200 + 2200) % 2200 - 140;
+    set(b.el, { transform: `translate(${b.x + Math.sin(t * 1.5 + b.wob) * 14}px, ${y}px)` });
+  });
+  if (t < TL.outro.start) set($('#glow'), { transform: `scale(${1 + 0.04 * Math.sin(t * 2)})` });
+  renderHook(t);
+  renderTexts(t);
+  renderOutro(t);
+  await renderPhone(t);
+};
+await document.fonts.ready;
+window.ready = true;
+</script>
+</body>
+</html>

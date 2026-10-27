@@ -1,0 +1,35 @@
+{
+  "fps": 30,
+  "duration": 24,
+  "tapDelay": 0.16,
+  "hook": { "start": 0, "end": 2.0 },
+  "scenes": [
+    {
+      "clip": "find", "start": 2.0, "end": 8.0,
+      "segments": [[2.0, 3.2, 0.2, 1.2], [3.2, 5.6, 1.2, 4.45], [5.6, 8.0, 4.45, 7.9]],
+      "kicker": "Bier finden",
+      "texts": [
+        { "at": 2.0, "title": "Alle Bierlokale<br>um dich rum.", "sub": "Kneipen, Biergärten, Brauereien – live auf der Karte." },
+        { "at": 5.4, "title": "Und wo’s am<br>billigsten ist.", "sub": "Preise von der Community plus Online-Preise der Supermärkte." }
+      ]
+    },
+    {
+      "clip": "tour", "start": 8.0, "end": 14.0,
+      "segments": [[8.0, 9.3, 0.2, 1.5], [9.3, 10.4, 2.5, 3.9], [10.4, 11.5, 3.9, 8.15], [11.5, 14.0, 8.15, 13.2]],
+      "kicker": "Bier-Radtour",
+      "texts": [
+        { "at": 8.0, "title": "Die perfekte<br>Bier-Radtour.", "sub": "Stopps gleichmäßig verteilt – und offen, wenn du ankommst." }
+      ]
+    },
+    {
+      "clip": "group", "start": 14.0, "end": 20.0,
+      "segments": [[14.0, 15.6, 1.2, 2.9], [15.6, 17.4, 2.9, 5.0], [17.4, 20.0, 5.6, 9.3]],
+      "kicker": "Meine Runde",
+      "texts": [
+        { "at": 14.0, "title": "Wer zahlt die<br>nächste Runde?", "sub": "Biere zählen mit deinen Leuten – live in der Gruppe." },
+        { "at": 17.4, "title": "Die App<br>weiß es.", "sub": "Abrechnung inklusive. Ganz ohne Streit." }
+      ]
+    }
+  ],
+  "outro": { "start": 20.0, "name": "Bier-Locator", "slogan": "Dein nächstes Bier ist näher, als du denkst." }
+}

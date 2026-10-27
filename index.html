@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#fbf4e6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#16110c" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -35,11 +36,14 @@
 <header class="topbar">
   <button class="brand" id="btnBrand" aria-label="Bier-Locator — Info">
     <span class="brand-glass" aria-hidden="true">
-      <svg viewBox="0 0 32 32" width="30" height="30"><defs><clipPath id="glassClip"><path d="M8 7h14l-1.6 19a2.2 2.2 0 0 1-2.2 2h-6.4a2.2 2.2 0 0 1-2.2-2z"/></clipPath></defs>
-        <g clip-path="url(#glassClip)"><rect class="bg-beer" x="0" y="11" width="32" height="22"/><circle class="bubble b1" cx="12" cy="24" r="1"/><circle class="bubble b2" cx="17" cy="26" r="0.8"/><circle class="bubble b3" cx="15" cy="22" r="0.7"/></g>
-        <path class="bg-foam" d="M7 9.5a3 3 0 0 1 3.4-3 3.6 3.6 0 0 1 6.2-.6 3 3 0 0 1 5.6 1.6v2.2H7z"/>
-        <path d="M8 7h14l-1.6 19a2.2 2.2 0 0 1-2.2 2h-6.4a2.2 2.2 0 0 1-2.2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M22 11h2.2a2.3 2.3 0 0 1 2.3 2.3v3.4a2.3 2.3 0 0 1-2.3 2.3h-2.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 512 512" width="32" height="32"><defs><linearGradient id="hdrBeer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc94f"/><stop offset="1" stop-color="#df8510"/></linearGradient>
+        <clipPath id="hdrPin"><path d="M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z"/></clipPath>
+        <mask id="hdrGap"><rect width="512" height="512" fill="#fff"/><circle cx="166" cy="84" r="46" fill="#000"/><circle cx="226" cy="52" r="36" fill="#000"/></mask></defs>
+        <g mask="url(#hdrGap)"><path d="M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z" fill="url(#hdrBeer)"/>
+          <g clip-path="url(#hdrPin)"><path class="bg-foam" d="M80 30H432V178q-22-16-44 0t-44 0v44a17 17 0 0 1-34 0v-44q-22-16-44 0t-44 0t-44 0t-44 0t-44 0z"/>
+            <circle class="bubble b1" cx="296" cy="380" r="18"/><circle class="bubble b2" cx="214" cy="410" r="14"/><circle class="bubble b3" cx="250" cy="340" r="12"/></g>
+          <path class="bg-outline" d="M256 476C224 412 100 332 100 210a156 156 0 0 1 312 0c0 122-124 202-156 266z"/></g>
+        <circle class="bg-foam bg-pop" cx="166" cy="84" r="31"/><circle class="bg-foam bg-pop" cx="226" cy="52" r="21"/></svg>
     </span>
     <span class="brand-text">Bier&shy;Locator</span>
   </button>

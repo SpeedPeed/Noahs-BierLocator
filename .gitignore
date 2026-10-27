@@ -7,3 +7,4 @@ Thumbs.db
 *.exe
 *.msi
 scripts/local_update.log
+promo/build/

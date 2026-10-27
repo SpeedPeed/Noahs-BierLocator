@@ -168,12 +168,14 @@ kbd { font-family: inherit; font-size: 12px; padding: 1px 6px; border: 1px solid
   background: var(--panel); border-radius: 99px; box-shadow: var(--shadow-md); color: var(--text);
 }
 .brand-glass { display: grid; color: var(--text); }
-.bg-beer { fill: var(--accent); animation: beer-slosh 4s ease-in-out infinite; transform-origin: 50% 100%; }
-.bg-foam { fill: var(--foam); stroke: currentColor; stroke-width: 1.2; }
-.bubble { fill: #fff6; animation: bubble 2.4s linear infinite; }
+.bg-foam { fill: var(--foam); }
+.bg-outline { fill: none; stroke: currentColor; stroke-opacity: .55; stroke-width: 18; }
+.bg-pop { stroke: currentColor; stroke-opacity: .55; stroke-width: 14; }
+[data-theme="dark"] .bg-outline, [data-theme="dark"] .bg-pop { stroke-opacity: 0; }
+.bubble { fill: #fff8; animation: brand-bubble 2.4s linear infinite; }
 .bubble.b2 { animation-delay: .8s; } .bubble.b3 { animation-delay: 1.6s; }
+@keyframes brand-bubble { from { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-150px); opacity: 0; } }
 @keyframes bubble { from { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-14px); opacity: 0; } }
-@keyframes beer-slosh { 0%, 100% { transform: skewY(0deg); } 50% { transform: skewY(-3deg); } }
 .brand-text { display: none; }
 
 .searchbox { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; }

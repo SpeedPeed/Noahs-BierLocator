@@ -1,4 +1,6 @@
-# 🍺 Bier-Locator
+<p align="center"><img src="icons/logo.svg" width="128" alt="Bier-Locator Logo"></p>
+
+# Bier-Locator
 
 Findet Kneipen, Gasthäuser, Biergärten, Brauereien und Läden in der Nähe,
 vergleicht Bierpreise und plant **gleichmäßige Fahrrad-Biertouren**. Gemacht fürs

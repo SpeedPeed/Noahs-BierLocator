@@ -211,7 +211,7 @@ function convertLegacy(localData) {
 
 function openAbout() {
   $('#aboutBody').innerHTML = `
-    <h2 id="aboutTitle" class="dlg-title">${icon('beerMug', { size: 22 })}Bier-Locator</h2>
+    <h2 id="aboutTitle" class="dlg-title"><img src="icons/logo.svg" width="28" height="28" alt="">Bier-Locator</h2>
     <p>Findet Kneipen, Biergärten, Brauereien und Läden in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.</p>
     <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 18 })}<div>${isShared()
       ? '<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.'
