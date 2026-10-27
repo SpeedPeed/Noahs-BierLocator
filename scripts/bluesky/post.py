@@ -149,7 +149,11 @@ def _vreq(url, token, data=None, mime=None):
         with urllib.request.urlopen(req, timeout=120) as r:
             return json.loads(r.read() or b'{}')
     except urllib.error.HTTPError as e:
-        raise SystemExit(f'Videodienst-Fehler: HTTP {e.code} {e.read()[:200].decode(errors="replace")}')
+        body = json.loads(e.read() or b'{}')
+        # 409 „already_exists“: dieselbe Datei ist schon verarbeitet, der Job liefert den Blob.
+        if e.code == 409 and body.get('jobId'):
+            return body
+        raise SystemExit(f'Videodienst-Fehler: HTTP {e.code} {json.dumps(body)[:200]}')
 
 
 def main():
@@ -184,8 +188,17 @@ def main():
         if f:
             record['facets'] = f
         imgs = post.get('images', [])
+        videos = [im for im in imgs if im['path'].lower().endswith('.mp4')]
         gifs = [im for im in imgs if im['path'].lower().endswith('.gif')]
-        if gifs:
+        if videos:
+            # Ein echtes Video (MP4) direkt hochladen, nur allein im Post.
+            if len(imgs) != 1:
+                raise SystemExit(f'Post {i}: ein Video darf nur allein im Post stehen.')
+            vid = videos[0]
+            record['embed'] = {'$type': 'app.bsky.embed.video',
+                               'video': upload_video(session, vid['path']),
+                               'alt': vid['alt']}
+        elif gifs:
             # GIFs als Video, sonst werden sie nicht animiert. Pro Post nur ein Video.
             if len(imgs) != 1:
                 raise SystemExit(f'Post {i}: ein GIF darf nur allein im Post stehen.')
