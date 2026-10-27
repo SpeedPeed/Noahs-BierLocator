@@ -15,7 +15,7 @@
     },
     {
       "clip": "tour", "start": 8.0, "end": 14.0,
-      "segments": [[8.0, 9.3, 0.2, 1.5], [9.3, 10.4, 2.5, 3.9], [10.4, 11.5, 3.9, 8.15], [11.5, 14.0, 8.15, 13.2]],
+      "segments": [[8.0, 9.3, 0.2, 1.5], [9.3, 10.4, 2.5, 3.9], [10.4, 10.8, 3.9, 4.3], [10.8, 14.0, 8.45, 13.2]],
       "kicker": "Bier-Radtour",
       "texts": [
         { "at": 8.0, "title": "Die perfekte<br>Bier-Radtour.", "sub": "Stopps gleichmäßig verteilt – und offen, wenn du ankommst." }
