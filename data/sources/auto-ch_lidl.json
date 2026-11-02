@@ -2,16 +2,44 @@
 {
 "country": "CH",
 "chain": "lidl",
-"beer": "Super Bock Bier",
+"beer": "Corona Extra Bier",
 "unit": "other",
 "package": "6×0,33 l",
-"price": 6.36,
+"price": 5.95,
 "promo": true,
-"source": "https://www.lidl.ch/p/de-CH/super-bock-bier-aktion-nur-in-der-westschweiz-gueltig/p10060845",
-"seen": "2026-10-26",
+"source": "https://www.lidl.ch/p/de-CH/corona-extra-bier/p10061301",
+"seen": "2026-11-02",
 "volume_l": 1.98,
 "currency": "CHF",
-"note": "Aktion, statt CHF 7.95; Aktion nur in der Westschweiz gültig",
-"valid_until": "2026-10-28"
+"note": "Aktion, statt CHF 10.49",
+"valid_until": "2026-11-04"
+},
+{
+"country": "CH",
+"chain": "lidl",
+"beer": "Corona Cero alkoholfreies Bier",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 5.95,
+"promo": true,
+"source": "https://www.lidl.ch/p/de-CH/corona-cero-alkoholfreies-bier/p10061325",
+"seen": "2026-11-02",
+"volume_l": 1.98,
+"currency": "CHF",
+"note": "Aktion"
+},
+{
+"country": "CH",
+"chain": "lidl",
+"beer": "Feldschlösschen Original",
+"unit": "other",
+"package": "15×0,5 l",
+"price": 17.25,
+"promo": true,
+"source": "https://www.lidl.ch/p/de-CH/feldschloesschen-original/p10061302",
+"seen": "2026-11-02",
+"volume_l": 7.5,
+"currency": "CHF",
+"note": "Aktion"
 }
 ]
