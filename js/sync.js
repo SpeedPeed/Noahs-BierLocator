@@ -75,7 +75,7 @@ export function loadQr() {
   if (!qrLib) {
     qrLib = new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';
+      s.src = './vendor/qrcode.min.js';
       s.onload = () => resolve(window.qrcode);
       s.onerror = () => reject(new Error('QR-Code konnte nicht geladen werden'));
       document.head.appendChild(s);

@@ -92,7 +92,7 @@ function renderShell() {
       <div id="bacLegalRows"></div>
     </div>
     <div class="bac-facts" id="bacFacts"></div>
-    <p class="fine bac-disclaimer">Statistische Schätzung (Watson-Körperwasser, Resorption & Abbau ca. 0,15 ‰/h). Tagesform, Medikamente und Gewöhnung verändern den echten Wert stark. Kein medizinischer oder rechtlicher Rat — im Zweifel <b>nicht fahren</b>. Bei Erbrechen, Verwirrtheit oder Bewusstlosigkeit sofort den Notruf <b id="bacEmergency"></b> wählen.</p>
+    <p class="fine bac-disclaimer">Statistische Schätzung (Watson-Körperwasser, Resorption & Abbau ca. 0,15 ‰/h). Tagesform, Medikamente und Gewöhnung verändern den echten Wert stark. Kein medizinischer oder rechtlicher Rat und keine Aussage darüber, ob du fahrtüchtig bist — im Zweifel <b>nicht fahren</b>. Bei Erbrechen, Verwirrtheit oder Bewusstlosigkeit sofort den Notruf <b id="bacEmergency"></b> wählen.</p>
   `;
   wire();
 }

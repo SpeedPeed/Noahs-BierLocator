@@ -96,7 +96,7 @@ kbd { font-family: inherit; font-size: 12px; padding: 1px 6px; border: 1px solid
 #map { position: fixed; inset: 0; z-index: 0; background: var(--bg-soft); }
 .leaflet-container { font-family: var(--font-body); background: var(--bg-soft); }
 .base-tiles { filter: saturate(.8) sepia(.12) brightness(1.02); }
-.tiles-dark .base-tiles { filter: invert(1) hue-rotate(185deg) brightness(.82) contrast(.92) saturate(.55) sepia(.18); }
+.tiles-dark .base-tiles { filter: brightness(.95) sepia(.12); }
 .leaflet-control-attribution { font-size: 10px; background: color-mix(in srgb, var(--panel) 80%, transparent) !important; color: var(--muted); border-radius: 8px 0 0 0; }
 .leaflet-control-attribution a { color: var(--text-soft); }
 .leaflet-bar a { background: var(--panel); color: var(--text); border-color: var(--line); }
@@ -1046,6 +1046,10 @@ svg.tour-thumb circle { fill: var(--text); }
 .ocr-raw pre { white-space: pre-wrap; font-size: 11.5px; max-height: 160px; overflow: auto; background: var(--bg-soft); padding: 8px; border-radius: 8px; }
 
 .backup-box { margin-top: 18px; padding-top: 14px; border-top: 1.5px solid var(--line); }
+.wipe-box { margin-top: 14px; }
+.wipe-box summary { list-style: none; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 13px; }
+.wipe-box summary::-webkit-details-marker { display: none; }
+.wipe-box .danger-btn { color: var(--bad); margin-top: 4px; }
 .ah-near { display: block; font-weight: 600; color: var(--muted); font-size: 11px; }
 
 /* Konfetti */

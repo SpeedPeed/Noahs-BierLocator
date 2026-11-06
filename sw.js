@@ -1,9 +1,9 @@
 'use strict';
 // Service Worker: App-Hülle offline verfügbar machen.
 // App-Dateien: zuerst Netzwerk (Updates kommen sofort an), offline aus dem Cache.
-// Kartenkacheln, Schriften & Bibliotheken: Cache zuerst, im Hintergrund aktualisieren.
+// Kartenkacheln: Cache zuerst, im Hintergrund aktualisieren.
 // Live-Daten (Overpass, Routing, Wetter, Supabase) werden nicht gecacht.
-const VERSION = 'v4.0.0';
+const VERSION = 'v4.1.0';
 const SHELL_CACHE = `bierlocator-shell-${VERSION}`;
 const RUNTIME_CACHE = 'bierlocator-runtime-v2';
 
@@ -21,9 +21,13 @@ const SHELL_FILES = [
   './js/ui/liveUi.js', './js/ui/homeUi.js', './js/ui/funUi.js', './js/ui/badgesUi.js', './js/ui/wrappedUi.js', './js/ui/ocrUi.js',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-192-maskable.png', './icons/icon-512-maskable.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',
+  './datenschutz.html',
+  './vendor/leaflet/leaflet.js', './vendor/leaflet/leaflet.css', './vendor/leaflet/leaflet.markercluster.js',
+  './vendor/leaflet/MarkerCluster.css', './vendor/qrcode.min.js', './vendor/fonts/fonts.css',
+  './vendor/fonts/figtree-latin.woff2', './vendor/fonts/bricolage-latin.woff2',
 ];
 
-const CACHE_FIRST_HOSTS = ['tile.openstreetmap.org', 'fonts.googleapis.com', 'fonts.gstatic.com', 'unpkg.com'];
+const CACHE_FIRST_HOSTS = ['tiles.stadiamaps.com'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(c => c.addAll(SHELL_FILES)).then(() => self.skipWaiting()));

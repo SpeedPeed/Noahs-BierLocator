@@ -5,6 +5,7 @@ import { escapeHtml, timeAgo } from '../util.js';
 import { $, openDialog, closeDialog, toast } from './dom.js';
 import { shareLink } from '../share.js';
 import { emit } from '../state.js';
+import { deleteServerData, isShared } from '../community.js';
 
 // Datei-Backup (früher eigene Menüpunkte) — gibt's in jedem Zustand des Dialogs.
 const BACKUP = `<div class="backup-box">
@@ -18,6 +19,40 @@ function wireBackup() {
   document.querySelectorAll('#syncBody [data-backup]').forEach(b => b.onclick = () => emit(b.dataset.backup === 'export' ? 'backup-export' : 'backup-import'));
 }
 
+// Datenschutz: alles löschen (Server + dieses Gerät). Eingeklappt, damit's nicht stört.
+const WIPE = `<details class="wipe-box">
+    <summary>${icon('trash', { size: 15 })}Meine Daten löschen</summary>
+    <p class="fine">Löscht deine gemeldeten Preise, Bewertungen, Preisalarme, Gruppen-Mitgliedschaften und den Geräte-Sync am Server
+      sowie Favoriten, Tagebuch, Touren und Einstellungen auf diesem Gerät. Das lässt sich nicht rückgängig machen.
+      Andere verbundene Geräte vorher trennen, sonst laden sie ihre Daten wieder hoch.</p>
+    <button class="btn btn-soft danger-btn" id="wipeBtn">${icon('trash', { size: 16 })}Alles unwiderruflich löschen</button>
+  </details>`;
+
+async function wipeAll() {
+  if (!confirm('Wirklich alle deine Bier-Locator-Daten löschen — am Server und auf diesem Gerät?')) return;
+  const btn = $('#wipeBtn');
+  btn.disabled = true;
+  try {
+    if (isShared()) await deleteServerData(syncCode());
+    try {
+      const reg = await navigator.serviceWorker?.getRegistration();
+      const sub = reg && await reg.pushManager?.getSubscription();
+      if (sub) await sub.unsubscribe();
+    } catch (e) { /* kein Push */ }
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && (k.startsWith('bl_') || k.startsWith('bierlocator'))) keys.push(k);
+    }
+    keys.forEach(k => localStorage.removeItem(k));
+    toast('Alle Daten gelöscht — lädt neu…', { tone: 'good' });
+    setTimeout(() => location.reload(), 1200);
+  } catch (e) {
+    btn.disabled = false;
+    toast('Löschen fehlgeschlagen: ' + e.message, { tone: 'bad', ms: 5000 });
+  }
+}
+
 export async function openSync() {
   const dlg = $('#syncDialog');
   await render();
@@ -26,8 +61,9 @@ export async function openSync() {
 
 async function render() {
   await renderInner();
-  $('#syncBody').insertAdjacentHTML('beforeend', BACKUP);
+  $('#syncBody').insertAdjacentHTML('beforeend', BACKUP + WIPE);
   wireBackup();
+  $('#wipeBtn').onclick = wipeAll;
 }
 
 async function renderInner() {

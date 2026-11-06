@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Datenschutz &amp; Impressum · Bier-Locator</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+  :root { --bg: #fbf4e6; --panel: #fffdf8; --text: #2a1f14; --muted: #6f6152; --line: #eadfca; --accent: #b4650f; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #16110c; --panel: #211a13; --text: #f3e9da; --muted: #b5a690; --line: #3a2f23; --accent: #f0a640; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 'Figtree', system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1, h2 { font-family: 'Bricolage Grotesque', 'Figtree', system-ui, sans-serif; line-height: 1.2; }
+  h1 { font-size: 26px; margin: 8px 0 4px; }
+  h2 { font-size: 19px; margin: 28px 0 8px; }
+  h3 { font-size: 15.5px; margin: 18px 0 4px; }
+  p, li { color: var(--text); }
+  ul { padding-left: 20px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .muted { color: var(--muted); font-size: 13.5px; }
+  .back { display: inline-block; margin-bottom: 6px; font-weight: 700; text-decoration: none; }
+  .box { background: var(--panel); border: 1.5px solid var(--line); border-radius: 14px; padding: 4px 16px; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 700; }
+  @media (max-width: 560px) { table, tbody, tr, td { display: block; } thead { display: none; } td { border: none; padding: 2px 0; } tr { padding: 10px 0; border-bottom: 1px solid var(--line); } td:first-child { font-weight: 700; } }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← Zurück zur App</a>
+  <h1>Datenschutz &amp; Impressum</h1>
+  <p class="muted">Stand: November 2026</p>
+
+  <h2 id="impressum">Impressum</h2>
+  <!-- TODO vor dem Veröffentlichen ausfüllen: Name, Ort, E-Mail -->
+  <div class="box">
+    <p><b>Betreiber:</b> Peter Zettl<br>
+       <b>Ort:</b> Vorarlberg, Österreich<br>
+       <b>Kontakt:</b> <a href="mailto:pzettl08@gmail.com">pzettl08@gmail.com</a></p>
+    <p class="muted">Privates, nicht-kommerzielles Hobbyprojekt ohne Werbung und ohne Einnahmen.</p>
+  </div>
+
+  <h2>Kurz gesagt</h2>
+  <ul>
+    <li>Kein Konto, kein Login, keine Werbung, kein Tracking, keine Analyse-Dienste.</li>
+    <li>Fast alles (Favoriten, Tagebuch, Touren, Promille-Rechner) bleibt <b>nur auf deinem Gerät</b>.</li>
+    <li>Am Server landet nur, was du selbst teilst: Preise, Bewertungen, Preisalarme, „Meine Runde“ und – wenn du ihn einschaltest – der Geräte-Sync.</li>
+    <li>Dein Standort wird nicht gespeichert, außer du teilst ihn ausdrücklich mit deiner Runde.</li>
+    <li>Alles löschen: Menü → <b>Geräte &amp; Backup</b> → <b>Meine Daten löschen</b>.</li>
+  </ul>
+
+  <h2>Verantwortlicher</h2>
+  <p>Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) bzw. des Schweizer Datenschutzgesetzes ist der oben im Impressum genannte Betreiber.</p>
+
+  <h2>Welche Daten wofür</h2>
+
+  <h3>Auf deinem Gerät</h3>
+  <p>Einstellungen, Favoriten, Tagebuch, gefahrene Touren, Abzeichen, Preisalarme und die Angaben im Promille-Rechner (Geschlecht, Gewicht, Größe, Alter, Getränke) werden im Speicher deines Browsers bzw. der App abgelegt. Sie verlassen das Gerät nicht, außer du schaltest den Geräte-Sync ein (siehe unten). Löschen: über „Meine Daten löschen“ oder indem du die App-Daten löschst.</p>
+
+  <h3>Anonyme Geräte-ID</h3>
+  <p>Beim ersten Start erzeugt die App eine zufällige geheime ID. Am Server wird nur ein nicht umkehrbarer Hash (SHA-256) davon gespeichert. Damit zählt pro Gerät eine Bewertung, du kannst deine eigenen Preise löschen und es gibt ein Tageslimit gegen Spam. Ein Rückschluss auf deine Person ist ohne dein Gerät nicht möglich.</p>
+
+  <h3>Preise &amp; Bewertungen (für alle sichtbar)</h3>
+  <p>Wenn du einen Preis meldest oder ein Lokal bewertest, speichern wir: Lokal (OpenStreetMap-ID), Sorte, Preis, Gebinde, Sterne, Zeitpunkt und den Hash deiner Geräte-ID. Preise und Bewertungen sind für alle Nutzer sichtbar – ohne Namen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (du nutzt die Funktion aktiv). Speicherdauer: bis du sie löschst; alte Preise werden in der App ausgegraut.</p>
+
+  <h3>Preisalarme (Push-Benachrichtigungen)</h3>
+  <p>Schaltest du Preisalarme ein, speichern wir dein Push-Abo (eine technische Adresse deines Browsers) und deine Wunschpreise, um dich nach dem wöchentlichen Preis-Update zu benachrichtigen. Zugestellt wird über den Push-Dienst deines Browsers (bei Chrome: Google Firebase Cloud Messaging). Ausschalten oder „Meine Daten löschen“ entfernt das Abo.</p>
+
+  <h3>„Meine Runde“ (Gruppe)</h3>
+  <p>Wenn du eine Runde erstellst oder beitrittst, speichern wir den Namen der Runde, deinen selbst gewählten Spitznamen, gezählte Biere, Abstimmungen und eingetragene Runden (Betrag, Teilnehmende, Lokal). Sichtbar ist das nur für Leute mit dem Gruppencode. <b>Live-Standort:</b> nur wenn du ihn selbst einschaltest; er ist für die Gruppe 15 Minuten lang sichtbar und wird beim Ausschalten entfernt. Gruppen sind nach 7 Tagen nicht mehr abrufbar und werden danach automatisch gelöscht. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und b DSGVO.</p>
+
+  <h3>Geräte-Sync (freiwillig)</h3>
+  <p>Schaltest du den Sync ein, werden Favoriten, Vorlieben, Tagebuch, Touren (ohne GPS-Spur), Preisalarme und die Angaben des Promille-Rechners am Server unter dem Hash deines Sync-Codes gespeichert, damit deine anderen Geräte sie abrufen können. Wer den Code kennt, kann diese Daten sehen – teile ihn nur mit eigenen Geräten. Da der Promille-Rechner Angaben zu Alkoholkonsum und Körperdaten enthält, erfolgt der Upload nur mit deiner Einwilligung durch das Einschalten (Art. 9 Abs. 2 lit. a DSGVO). Widerruf: Sync trennen und „Meine Daten löschen“.</p>
+
+  <h3>Getränkekarte fotografieren &amp; Barcode-Scanner</h3>
+  <p>Die Texterkennung läuft komplett auf deinem Gerät; das Foto wird nicht hochgeladen. Beim Barcode-Scan wird nur die Barcode-Nummer an Open Food Facts gesendet, um das Produkt zu erkennen. Gemeldet wird nur, was du selbst abhakst.</p>
+
+  <h3>Standort</h3>
+  <p>Deinen GPS-Standort nutzt die App nur, wenn du es erlaubst, um Orte in der Nähe zu finden, Touren zu planen und die Live-Tour anzuzeigen. Dafür werden Koordinaten bzw. Kartenausschnitte an die unten genannten Kartendienste geschickt. Gespeichert wird der Standort von uns nicht (Ausnahme: Live-Standort in „Meine Runde“, siehe oben).</p>
+
+  <h2>Eingebundene Dienste</h2>
+  <p>Für Karte, Suche, Routen und Wetter fragt die App direkt bei diesen Diensten an. Dabei sehen sie deine IP-Adresse und die jeweilige Anfrage (z. B. Kartenausschnitt, Suchbegriff, Start/Ziel einer Route). Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (Funktion der App).</p>
+  <table>
+    <thead><tr><th>Dienst</th><th>Wofür</th><th>Was wird übertragen</th></tr></thead>
+    <tbody>
+      <tr><td>GitHub Pages (GitHub Inc., USA)</td><td>Hosting der App</td><td>IP-Adresse, aufgerufene Datei (Server-Protokolle)</td></tr>
+      <tr><td>Supabase (Supabase Inc.; Datenbank in eu-west-1)</td><td>Preise, Bewertungen, Runde, Sync, Preisalarme</td><td>die oben beschriebenen Daten, IP-Adresse</td></tr>
+      <tr><td>Stadia Maps (Stadia Maps Inc., USA)</td><td>Kartenkacheln</td><td>IP-Adresse, Kartenausschnitt</td></tr>
+      <tr><td>Overpass API (OpenStreetMap-Community, mehrere Server in der EU/Russland)</td><td>Lokale &amp; Läden finden</td><td>IP-Adresse, Kartenausschnitt</td></tr>
+      <tr><td>Photon (komoot GmbH, Deutschland)</td><td>Orts- und Adresssuche</td><td>IP-Adresse, Suchbegriff, ungefährer Kartenausschnitt</td></tr>
+      <tr><td>BRouter (brouter.de) / FOSSGIS e.V. (OSRM)</td><td>Radrouten</td><td>IP-Adresse, Koordinaten der Stopps</td></tr>
+      <tr><td>Open-Meteo (Schweiz)</td><td>Wetter</td><td>IP-Adresse, ungefähre Koordinaten</td></tr>
+      <tr><td>Open Food Facts (Frankreich)</td><td>Barcode-Scanner</td><td>IP-Adresse, Barcode-Nummer</td></tr>
+      <tr><td>jsDelivr (CDN)</td><td>Texterkennung &amp; Barcode-Erkennung (nur bei Benutzung geladen)</td><td>IP-Adresse</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Links zu Google Maps, Websites der Lokale oder Shops öffnen fremde Seiten erst, wenn du darauf tippst; dort gelten deren Datenschutzbestimmungen.</p>
+
+  <h2>Deine Rechte</h2>
+  <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit (Menü → Geräte &amp; Backup → Exportieren) und Widerspruch sowie das Recht, eine Einwilligung jederzeit zu widerrufen. Da wir dich nicht kennen, können wir Daten nur über deine Geräte-ID zuordnen – am einfachsten nutzt du deshalb <b>„Meine Daten löschen“</b> in der App. Für alles andere schreib an die Kontaktadresse oben.</p>
+  <p>Beschwerden kannst du bei einer Datenschutz-Aufsichtsbehörde einreichen, z. B. der österreichischen <a href="https://www.dsb.gv.at/" rel="noopener">Datenschutzbehörde</a>, der Behörde deines deutschen Bundeslandes oder dem Schweizer <a href="https://www.edoeb.admin.ch/" rel="noopener">EDÖB</a>.</p>
+
+  <h2>Hinweise</h2>
+  <ul>
+    <li>Online-Preise der Supermarktketten stammen aus deren öffentlichen Online-Shops, Community-Preise von Nutzern. Alle Angaben ohne Gewähr. Der Bier-Locator steht in keiner Verbindung zu den genannten Händlern.</li>
+    <li>Der Promille-Rechner liefert nur eine grobe Schätzung und sagt nichts darüber aus, ob du fahrtüchtig bist. Wer trinkt, fährt nicht – auch nicht mit dem Rad.</li>
+    <li>Die App richtet sich an Erwachsene bzw. Personen im gesetzlichen Mindestalter für Alkohol.</li>
+    <li>Kartendaten © OpenStreetMap-Mitwirkende (ODbL), Kartenstil © Stadia Maps, © OpenMapTiles.</li>
+  </ul>
+</main>
+</body>
+</html>

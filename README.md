@@ -98,7 +98,8 @@ Updates nicht mehr über die bestehende App installieren.
 Diese Funktionen brauchen zusätzlich [`supabase/002_features.sql`](supabase/002_features.sql)
 (einmal im Supabase SQL-Editor ausführen). „Meine Runde“ mit Live-Standort, Abrechnung und Abstimmung
 braucht zusätzlich [`supabase/003_runde.sql`](supabase/003_runde.sql) — ohne läuft die Gruppe wie bisher
-(Biere zählen, Stopps bewerten). Preisalarme per Push verschickt der GitHub-Job
+(Biere zählen, Stopps bewerten). „Meine Daten löschen“ (Menü → Geräte & Backup) braucht
+[`supabase/004_datenschutz.sql`](supabase/004_datenschutz.sql). Preisalarme per Push verschickt der GitHub-Job
 „Preisalarme verschicken“ nach jedem Preis-Update; er braucht die Secrets `ALERTS_TOKEN`
 und `VAPID_PRIVATE_KEY`.
 
@@ -174,6 +175,8 @@ Jeder Eintrag wird auf Plausibilität geprüft (z.B. keine Einzeldose über 5 �
 ## Technik
 
 Reines HTML/CSS/JavaScript mit ES-Modulen — **kein Build-Schritt**.
+Leaflet, Markercluster, QR-Code und Schriften liegen selbst gehostet in `vendor/` (keine Google-Fonts-/CDN-Anfragen).
+Datenschutzerklärung & Impressum: [`datenschutz.html`](datenschutz.html).
 
 ```
 index.html, styles.css, sw.js, manifest.json
@@ -193,8 +196,8 @@ supabase/schema.sql   Datenbank für geteilte Preise (+ 002_features.sql, 003_ru
 tests/                Browser-Tests
 ```
 
-Datenquellen (alle ohne API-Key): OpenStreetMap/Overpass (Orte), OSM-Kacheln
-(Karte), Photon/Komoot (Suche), BRouter (Radrouten, Fallback OSRM/FOSSGIS),
+Datenquellen (alle ohne API-Key im Code): OpenStreetMap/Overpass (Orte), Stadia Maps
+(Kartenkacheln, Domain im Stadia-Dashboard freigeschaltet), Photon/Komoot (Suche), BRouter (Radrouten, Fallback OSRM/FOSSGIS),
 Open-Meteo (Wetter).
 
 *Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht. Auch nicht mit dem Rad.*

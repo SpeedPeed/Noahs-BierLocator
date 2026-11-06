@@ -168,6 +168,18 @@ export async function migrateLocalToShared() {
   return n;
 }
 
+// "Meine Daten löschen": alles zu dieser Geräte-ID (und optional dem Sync-Profil)
+// am Server entfernen. Braucht supabase/004_datenschutz.sql.
+export async function deleteServerData(syncCode) {
+  if (!isShared()) return null;
+  try {
+    return await rpc('delete_my_data', { p_secret: deviceSecret(), p_sync_code: syncCode || null });
+  } catch (e) {
+    if (/delete_my_data|404|function/i.test(e.message)) throw new Error('Löschen am Server ist noch nicht eingerichtet — bitte später nochmal versuchen.');
+    throw e;
+  }
+}
+
 export function exportLocalCommunity() { return isShared() ? null : loadLocal(); }
 export function importLocalCommunity(data) {
   if (!data || isShared()) return;

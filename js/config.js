@@ -20,6 +20,19 @@ export const BROUTER_URL = 'https://brouter.de/brouter';
 export const OSRM_BASE = 'https://routing.openstreetmap.de/routed-bike';
 export const OPEN_METEO_URL = 'https://api.open-meteo.com/v1/forecast';
 
+// Kartenkacheln: Stadia Maps (Gratis-Kontingent). Die OSM-eigenen Kachelserver
+// verbieten das Verteilen einer App ohne Erlaubnis. Stadia braucht keinen Key im
+// Code — die Domain wird einmal im Stadia-Dashboard eingetragen; localhost geht immer.
+// {r} = @2x-Kacheln auf hochauflösenden Displays.
+export const MAP_TILES = {
+  light: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
+  dark: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+  maxZoom: 20,
+  attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> '
+    + '&copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> '
+    + '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende',
+};
+
 export const MAX_PLACES = 600;
 export const DEFAULT_VIEW = { lat: 47.6, lon: 12.2, zoom: 6 }; // DACH
 

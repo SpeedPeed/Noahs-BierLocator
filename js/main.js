@@ -221,7 +221,7 @@ function openAbout() {
     <h3 class="pd-h">${icon('map', { size: 16 })}Datenquellen</h3>
     <ul class="about-list">
       <li><b>Orte:</b> OpenStreetMap via Overpass API</li>
-      <li><b>Karte:</b> © OpenStreetMap-Mitwirkende</li>
+      <li><b>Karte:</b> Stadia Maps · © OpenMapTiles · © OpenStreetMap-Mitwirkende</li>
       <li><b>Suche:</b> Photon (Komoot)</li>
       <li><b>Radrouten:</b> BRouter (Fallback: OSRM/FOSSGIS)</li>
       <li><b>Wetter:</b> Open-Meteo</li>
@@ -236,7 +236,9 @@ function openAbout() {
       <li>Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.</li>
       <li>Taste <kbd>/</kbd> springt in die Suche.</li>
     </ul>
-    <p class="fine">Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.</p>`;
+    <p class="fine">Online-Preise ohne Gewähr — der Bier-Locator steht in keiner Verbindung zu den Händlern.</p>
+    <p class="fine">Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.</p>
+    <p class="fine center"><a href="datenschutz.html">Datenschutz &amp; Impressum</a></p>`;
   openDialog($('#aboutDialog'));
 }
 

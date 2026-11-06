@@ -1,7 +1,7 @@
 // Leaflet-Karte: Kacheln passend zum Theme, Ortsmarker mit Clustering,
 // Standortpunkt, animierte Tourlinie.
 /* global L */
-import { DEFAULT_VIEW } from './config.js';
+import { DEFAULT_VIEW, MAP_TILES } from './config.js';
 import { TYPE_META } from './places.js';
 import { icon } from './icons.js';
 import { escapeHtml } from './util.js';
@@ -14,10 +14,6 @@ let autoTimer;
 const auto = () => { programmatic = true; clearTimeout(autoTimer); autoTimer = setTimeout(() => { programmatic = false; }, 1500); };
 let paddingProvider = () => ({ top: 80, bottom: 40, left: 20, right: 20 });
 
-// OSM-Standardkacheln (kein API-Key nötig). Im dunklen Design werden sie per
-// CSS-Filter invertiert (siehe .tiles-dark in styles.css).
-const TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende';
 
 export function initMap({ onMoveEnd } = {}) {
   map = L.map('map', { zoomControl: false, attributionControl: true, tapTolerance: 20, maxZoom: 20, minZoom: 3 })
@@ -47,9 +43,13 @@ export function initMap({ onMoveEnd } = {}) {
   return map;
 }
 
+// Kacheln passend zum Theme (eigener dunkler Kartenstil, kein CSS-Filter).
 export function setMapTheme(theme) {
+  const url = theme === 'dark' ? MAP_TILES.dark : MAP_TILES.light;
   if (!tiles) {
-    tiles = L.tileLayer(TILE_URL, { maxZoom: 19, maxNativeZoom: 19, attribution: ATTRIBUTION, className: 'base-tiles' }).addTo(map);
+    tiles = L.tileLayer(url, { maxZoom: MAP_TILES.maxZoom, maxNativeZoom: MAP_TILES.maxZoom, attribution: MAP_TILES.attribution, className: 'base-tiles' }).addTo(map);
+  } else if (tiles._url !== url) {
+    tiles.setUrl(url);
   }
   map.getContainer().classList.toggle('tiles-dark', theme === 'dark');
 }
