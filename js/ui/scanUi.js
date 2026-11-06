@@ -6,6 +6,7 @@ import { icon } from '../icons.js';
 import { escapeHtml, fetchWithTimeout } from '../util.js';
 import { prefs, savePrefs } from '../store.js';
 import { $, openDialog, closeDialog, toast } from './dom.js';
+import { t, money, pkg } from '../i18n.js';
 
 let stream = null, raf = null;
 
@@ -30,12 +31,12 @@ function stop() {
 export async function openScanner(place, onFound) {
   const dlg = $('#scanDialog');
   $('#scanBody').innerHTML = `
-    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 22 })}Barcode scannen</h2>
+    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 22 })}${t('Barcode scannen')}</h2>
     <div class="scan-view"><video id="scanVideo" playsinline muted></video><div class="scan-frame"></div></div>
-    <p class="fine center" id="scanHint">Halte den Strichcode der Dose, Flasche oder Kiste in den Rahmen.</p>
+    <p class="fine center" id="scanHint">${t('Halte den Strichcode der Dose, Flasche oder Kiste in den Rahmen.')}</p>
     <form class="sync-join" id="scanManual">
-      <input id="scanEan" inputmode="numeric" placeholder="… oder Nummer eintippen" pattern="[0-9]{8,14}" autocomplete="off">
-      <button class="btn btn-soft" type="submit">Suchen</button>
+      <input id="scanEan" inputmode="numeric" placeholder="${t('… oder Nummer eintippen')}" pattern="[0-9]{8,14}" autocomplete="off">
+      <button class="btn btn-soft" type="submit">${t('Suchen')}</button>
     </form>
     <div id="scanResult"></div>`;
   openDialog(dlg);
@@ -43,14 +44,14 @@ export async function openScanner(place, onFound) {
 
   const handle = async code => {
     stop();
-    $('#scanHint').textContent = `Gefunden: ${code} — suche Produkt…`;
+    $('#scanHint').textContent = t('Gefunden: {code} — suche Produkt…', { code });
     const prod = await lookup(code);
     showResult(prod, place, onFound, dlg);
   };
   $('#scanManual').onsubmit = e => { e.preventDefault(); const v = $('#scanEan').value.trim(); if (/^\d{8,14}$/.test(v)) handle(v); };
 
   try {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('Kamera wird von diesem Browser nicht unterstützt.');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error(t('Kamera wird von diesem Browser nicht unterstützt.'));
     const detector = await getDetector();
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 } }, audio: false });
     const video = $('#scanVideo');
@@ -70,7 +71,7 @@ export async function openScanner(place, onFound) {
     };
     raf = requestAnimationFrame(tick);
   } catch (e) {
-    $('#scanHint').textContent = e.name === 'NotAllowedError' ? 'Kamerazugriff nicht erlaubt — tipp die Nummer unter dem Strichcode ein.' : `${e.message} Tipp die Nummer unter dem Strichcode ein.`;
+    $('#scanHint').textContent = e.name === 'NotAllowedError' ? t('Kamerazugriff nicht erlaubt — tipp die Nummer unter dem Strichcode ein.') : t('{error} Tipp die Nummer unter dem Strichcode ein.', { error: e.message });
     $('.scan-view').hidden = true;
   }
 }
@@ -93,7 +94,7 @@ async function lookup(ean) {
 function showResult(prod, place, onFound, dlg) {
   const box = $('#scanResult');
   if (!prod.found) {
-    box.innerHTML = `<div class="notice">${icon('info', { size: 18 })}<div>${prod.error ? 'Produktdatenbank nicht erreichbar.' : 'Produkt nicht in der Datenbank.'} Trag die Sorte einfach selbst ein.</div></div>`;
+    box.innerHTML = `<div class="notice">${icon('info', { size: 18 })}<div>${prod.error ? t('Produktdatenbank nicht erreichbar. Trag die Sorte einfach selbst ein.') : t('Produkt nicht in der Datenbank. Trag die Sorte einfach selbst ein.')}</div></div>`;
     return;
   }
   const unit = parsePackLabel(prod.quantity);
@@ -103,10 +104,10 @@ function showResult(prod, place, onFound, dlg) {
     .sort((a, b) => (a.unit === unit ? 0 : 1) - (b.unit === unit ? 0 : 1) || a.promo - b.promo).slice(0, 3) : [];
   box.innerHTML = `
     <div class="scan-hit">
-      <b>${escapeHtml(prod.beer)}</b><small>${escapeHtml(prod.quantity)}${prod.isBeer ? '' : ' · laut Datenbank evtl. kein Bier'}</small>
-      ${online.length ? `<p class="fine">Online bei dieser Kette: ${online.map(o => `${escapeHtml(o.package)} ${o.price.toFixed(2).replace('.', ',')} €`).join(' · ')}</p>` : ''}
-      <button class="btn btn-primary" id="scanUse">${icon('check', { size: 17 })}Übernehmen &amp; Preis eintragen</button>
-      <button class="link-btn" id="scanFav">${icon('heart', { size: 14 })}Als Lieblingsbier merken</button>
+      <b>${escapeHtml(prod.beer)}</b><small>${escapeHtml(prod.quantity)}${prod.isBeer ? '' : ' · ' + t('laut Datenbank evtl. kein Bier')}</small>
+      ${online.length ? `<p class="fine">${t('Online bei dieser Kette: {list}', { list: online.map(o => `${escapeHtml(pkg(o.package))} ${money(o.price, o.currency)}`).join(' · ') })}</p>` : ''}
+      <button class="btn btn-primary" id="scanUse">${icon('check', { size: 17 })}${t('Übernehmen &amp; Preis eintragen')}</button>
+      <button class="link-btn" id="scanFav">${icon('heart', { size: 14 })}${t('Als Lieblingsbier merken')}</button>
     </div>`;
   $('#scanFav').onclick = () => {
     // Marke + Sorte reichen für die Suche nach Aktionen (ohne Gebinde-Angaben)
@@ -114,12 +115,12 @@ function showResult(prod, place, onFound, dlg) {
     savePrefs();
     const el = document.getElementById('prefBeer');
     if (el) el.value = prefs.beerType;
-    toast(`Lieblingsbier: ${escapeHtml(prefs.beerType)} — Aktionen in der Nähe erscheinen jetzt unter „Bier finden“.`, { tone: 'good', ms: 4000 });
+    toast(t('Lieblingsbier: {beer} — Aktionen in der Nähe erscheinen jetzt unter „Bier finden“.', { beer: escapeHtml(prefs.beerType) }), { tone: 'good', ms: 4000 });
   };
   $('#scanUse').onclick = () => {
     closeDialog(dlg);
     onFound({ beer: prod.beer, unit });
-    toast('Jetzt nur noch den Preis vom Regal eintippen', { ms: 2500 });
+    toast(t('Jetzt nur noch den Preis vom Regal eintippen'), { ms: 2500 });
   };
 }
 

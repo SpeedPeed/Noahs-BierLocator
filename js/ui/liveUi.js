@@ -13,6 +13,7 @@ import { renderTour, getTour, setTour, swapStop, currentTourLink } from './tourU
 import { openDiary } from './diaryUi.js';
 import { setSheet, mobile } from './sheet.js';
 import * as mapview from '../map.js';
+import { t } from '../i18n.js';
 
 const KEY = 'bl_live_v1';
 let watchId = null, wakeLock = null, lastRender = 0, lastTimeline = 0, lastSave = 0, lastPos = null;
@@ -35,8 +36,8 @@ export function initLive({ onGroupTick, onGroupStop, groupMembers, setMode }) {
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) { saved = null; }
   if (saved && saved.live && Date.now() - saved.live.startedAt < 16 * 3600000) {
-    setTimeout(() => toast('Deine Biertour läuft noch.', {
-      ms: 9000, action: { label: 'Fortsetzen', run: () => { setTour(reviveTour(saved.tour)); setMode('tour'); start(saved.live); } },
+    setTimeout(() => toast(t('Deine Biertour läuft noch.'), {
+      ms: 9000, action: { label: t('Fortsetzen'), run: () => { setTour(reviveTour(saved.tour)); setMode('tour'); start(saved.live); } },
     }), 1500);
   } else if (saved) localStorage.removeItem(KEY);
 }
@@ -46,8 +47,8 @@ export const isLive = () => !!state.live;
 /* ---------- Start / Ende ---------- */
 function start(resume = null) {
   const tour = getTour();
-  if (!tour) { toast('Erst eine Tour planen.'); return; }
-  if (!navigator.geolocation) { toast('Dieses Gerät kann keinen Standort bestimmen.', { tone: 'bad' }); return; }
+  if (!tour) { toast(t('Erst eine Tour planen.')); return; }
+  if (!navigator.geolocation) { toast(t('Dieses Gerät kann keinen Standort bestimmen.'), { tone: 'bad' }); return; }
   if (!resume) {
     // Der Plan beginnt jetzt — sonst wäre man gleich "zu spät".
     tour.startTime = new Date();
@@ -61,7 +62,7 @@ function start(resume = null) {
   renderTour({ fit: false });
   renderCard();
   if (mobile()) setSheet('peek');
-  if (!resume) toast('Gute Fahrt! Die App merkt selbst, wann du an einem Stopp bist.', { tone: 'good', ms: 3500 });
+  if (!resume) toast(t('Gute Fahrt! Die App merkt selbst, wann du an einem Stopp bist.'), { tone: 'good', ms: 3500 });
 }
 
 function stopTracking() {
@@ -109,7 +110,7 @@ function onPosition(p) {
 
 function onGeoError(e) {
   if (e.code === 1) {
-    toast('Ohne Standortzugriff kann die Live-Tour nicht mitfahren. Du kannst „Bin da“ / „Weiter“ selbst tippen.', { tone: 'bad', ms: 6000 });
+    toast(t('Ohne Standortzugriff kann die Live-Tour nicht mitfahren. Du kannst „Bin da“ / „Weiter“ selbst tippen.'), { tone: 'bad', ms: 6000 });
   }
   renderCard();
 }
@@ -118,10 +119,10 @@ function handleEvent(ev, tour) {
   if (navigator.vibrate) navigator.vibrate(ev.type === 'arrive' ? [80, 60, 80] : 60);
   if (ev.type === 'arrive') {
     const s = tour.stops[ev.i];
-    toast(`Angekommen: ${escapeHtml(s.name)} — Prost! 🍺`, { tone: 'good', ms: 7000, action: { label: 'Einchecken', run: () => openDiary(s) } });
+    toast(t('Angekommen: {name} — Prost! 🍺', { name: escapeHtml(s.name) }), { tone: 'good', ms: 7000, action: { label: t('Einchecken'), run: () => openDiary(s) } });
   } else if (ev.type === 'leave') {
     const next = tour.stops[ev.i + 1];
-    toast(next ? `Weiter zu ${escapeHtml(next.name)}` : 'Auf zum Ziel!', { ms: 2500 });
+    toast(next ? t('Weiter zu {name}', { name: escapeHtml(next.name) }) : t('Auf zum Ziel!'), { ms: 2500 });
   } else if (ev.type === 'finish') {
     finish();
   }
@@ -175,16 +176,16 @@ function renderCard() {
   const target = here || (atEnd ? null : tour.stops[nextI]);
   const row = ls.rows.find(r => r.status === 'here' || r.status === 'next');
   const delay = ls.delayMin;
-  const delayTxt = Math.abs(delay) < 3 ? '<span class="tone-good">im Plan</span>'
-    : delay > 0 ? `<span class="tone-warn">${delay} Min hinter Plan</span>` : `<span class="tone-good">${-delay} Min vor Plan</span>`;
+  const delayTxt = Math.abs(delay) < 3 ? `<span class="tone-good">${t('im Plan')}</span>`
+    : delay > 0 ? `<span class="tone-warn">${t('{n} Min hinter Plan', { n: delay })}</span>` : `<span class="tone-good">${t('{n} Min vor Plan', { n: -delay })}</span>`;
 
   // Spätere Stopps, die bei der neuen Ankunftszeit zu haben
   const warns = ls.rows.filter(r => r.status === 'next' || r.status === 'later').map(r => {
     const s = tour.stops[r.i];
     const st = placeStatus(s, r.arrive);
     if (!st) return null;
-    if (!st.open) return { i: r.i, text: `${escapeHtml(s.name)} hat bei Ankunft (${fmtClock(r.arrive)}) zu.` };
-    if (st.until && st.until < r.leave) return { i: r.i, text: `${escapeHtml(s.name)} schließt schon ${fmtClock(st.until)}.` };
+    if (!st.open) return { i: r.i, text: t('{name} hat bei Ankunft ({time}) zu.', { name: escapeHtml(s.name), time: fmtClock(r.arrive) }) };
+    if (st.until && st.until < r.leave) return { i: r.i, text: t('{name} schließt schon {time}.', { name: escapeHtml(s.name), time: fmtClock(st.until) }) };
     return null;
   }).filter(Boolean);
 
@@ -195,41 +196,41 @@ function renderCard() {
     <div class="live-top">
       <span class="live-dot"></span><b>Live</b>
       <span class="live-km">${fmtKm(live.progress)} / ${fmtKm(total)} km</span>
-      ${!mapview.isFollowing() ? `<button class="link-btn" data-live="follow">${icon('locate', { size: 14 })}Mitführen</button>` : ''}
-      <button class="icon-btn small" data-live="end" aria-label="Tour beenden" title="Tour beenden">${icon('x', { size: 16 })}</button>
+      ${!mapview.isFollowing() ? `<button class="link-btn" data-live="follow">${icon('locate', { size: 14 })}${t('Mitführen')}</button>` : ''}
+      <button class="icon-btn small" data-live="end" aria-label="${t('Tour beenden')}" title="${t('Tour beenden')}">${icon('x', { size: 16 })}</button>
     </div>
     <div class="live-bar"><span style="width:${(pct * 100).toFixed(1)}%"></span>${ticks}</div>
     ${here ? `
       <div class="live-next" style="--c:${m.color}">
         <span class="live-num">${live.here + 1}</span>
-        <div><small>Du bist bei</small><b>${escapeHtml(here.name)}</b><span>seit ${fmtClock(new Date(live.arrivals[live.here]))} · weiter ca. ${fmtClock(row.leave)} · ${delayTxt}</span></div>
+        <div><small>${t('Du bist bei')}</small><b>${escapeHtml(here.name)}</b><span>${t('seit {since} · weiter ca. {leave} · {delay}', { since: fmtClock(new Date(live.arrivals[live.here])), leave: fmtClock(row.leave), delay: delayTxt })}</span></div>
       </div>
       <div class="live-actions">
-        <button class="btn btn-primary" data-live="checkin">${icon('beerMug', { size: 17 })}Einchecken</button>
-        <button class="btn btn-soft" data-live="leave">${icon('bike', { size: 17 })}Weiter</button>
+        <button class="btn btn-primary" data-live="checkin">${icon('beerMug', { size: 17 })}${t('Einchecken')}</button>
+        <button class="btn btn-soft" data-live="leave">${icon('bike', { size: 17 })}${t('Weiter')}</button>
       </div>`
     : target ? `
       <div class="live-next" style="--c:${m.color}">
         <span class="live-num">${nextI + 1}</span>
-        <div><small>Nächster Stopp</small><b>${escapeHtml(target.name)}</b><span>${ls.toNext != null ? fmtDist(ls.toNext) : '–'} · an ${fmtClock(row.arrive)} · ${delayTxt}</span></div>
+        <div><small>${t('Nächster Stopp')}</small><b>${escapeHtml(target.name)}</b><span>${t('{dist} · an {time} · {delay}', { dist: ls.toNext != null ? fmtDist(ls.toNext) : '–', time: fmtClock(row.arrive), delay: delayTxt })}</span></div>
       </div>
       <div class="live-actions">
-        <button class="btn btn-soft" data-live="arrive">${icon('flag', { size: 17 })}Bin da</button>
-        <button class="btn btn-soft" data-live="skip">${icon('chevronRight', { size: 17 })}Überspringen</button>
+        <button class="btn btn-soft" data-live="arrive">${icon('flag', { size: 17 })}${t('Bin da')}</button>
+        <button class="btn btn-soft" data-live="skip">${icon('chevronRight', { size: 17 })}${t('Überspringen')}</button>
       </div>`
     : `
       <div class="live-next">
         <span class="live-num">${icon(tour.roundtrip ? 'flag' : 'checkCircle', { size: 16, strokeWidth: 2.2 })}</span>
-        <div><small>Letzte Etappe</small><b>${tour.roundtrip ? 'Zurück zum Start' : 'Zum Ziel'}</b><span>${ls.toNext != null ? fmtDist(ls.toNext) : '–'} · an ca. ${fmtClock(ls.endTime)}</span></div>
+        <div><small>${t('Letzte Etappe')}</small><b>${tour.roundtrip ? t('Zurück zum Start') : t('Zum Ziel')}</b><span>${t('{dist} · an ca. {time}', { dist: ls.toNext != null ? fmtDist(ls.toNext) : '–', time: fmtClock(ls.endTime) })}</span></div>
       </div>
-      <div class="live-actions"><button class="btn btn-primary" data-live="end">${icon('checkCircle', { size: 17 })}Tour beenden</button></div>`}
-    ${warns.map(w => `<div class="live-warn">${icon('alertTriangle', { size: 15 })}<span>${w.text}</span><button class="link-btn" data-live="replace" data-i="${w.i}">Ersatz suchen</button></div>`).join('')}
-    ${live.offRoute ? `<p class="fine">${icon('compass', { size: 13 })} Du bist gerade abseits der Route.</p>` : ''}
-    ${watchId == null ? '' : !lastPos ? `<p class="fine">${icon('locate', { size: 13 })} Warte auf GPS…</p>` : ''}
+      <div class="live-actions"><button class="btn btn-primary" data-live="end">${icon('checkCircle', { size: 17 })}${t('Tour beenden')}</button></div>`}
+    ${warns.map(w => `<div class="live-warn">${icon('alertTriangle', { size: 15 })}<span>${w.text}</span><button class="link-btn" data-live="replace" data-i="${w.i}">${t('Ersatz suchen')}</button></div>`).join('')}
+    ${live.offRoute ? `<p class="fine">${icon('compass', { size: 13 })} ${t('Du bist gerade abseits der Route.')}</p>` : ''}
+    ${watchId == null ? '' : !lastPos ? `<p class="fine">${icon('locate', { size: 13 })} ${t('Warte auf GPS…')}</p>` : ''}
     <div class="live-tools">
-      <button class="chip-btn" data-live="home">${icon('home', { size: 15 })}Heimweg</button>
+      <button class="chip-btn" data-live="home">${icon('home', { size: 15 })}${t('Heimweg')}</button>
       <button class="chip-btn" data-live="bingo">${icon('grid', { size: 15 })}Bingo</button>
-      <button class="chip-btn" data-live="group">${icon('users', { size: 15 })}Runde</button>
+      <button class="chip-btn" data-live="group">${icon('users', { size: 15 })}${t('Runde')}</button>
     </div>`;
 }
 
@@ -249,7 +250,7 @@ async function onCardClick(e) {
     handleEvent({ type: 'leave', i }, tour);
   } else if (a === 'skip' && live.next < tour.stops.length) {
     skip(live, live.next);
-    toast('Stopp übersprungen');
+    toast(t('Stopp übersprungen'));
   } else if (a === 'checkin') {
     openDiary(tour.stops[live.here]);
     return;
@@ -283,12 +284,12 @@ function summary() {
 function confirmEnd() {
   const s = summary();
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('flag', { size: 22 })}Tour beenden?</h2>
+    <h2 class="dlg-title">${icon('flag', { size: 22 })}${t('Tour beenden?')}</h2>
     ${endStats(s)}
-    <label class="switch-row"><input type="checkbox" class="switch" id="liveSave" ${s.ridden > 500 || s.visited ? 'checked' : ''}><span>In „Meine Touren“ speichern</span></label>
+    <label class="switch-row"><input type="checkbox" class="switch" id="liveSave" ${s.ridden > 500 || s.visited ? 'checked' : ''}><span>${t('In „Meine Touren“ speichern')}</span></label>
     <div class="row-btns">
-      <button class="btn btn-soft" id="liveGoOn">${icon('bike', { size: 16 })}Weiterfahren</button>
-      <button class="btn btn-primary" id="liveEnd">${icon('checkCircle', { size: 16 })}Beenden</button>
+      <button class="btn btn-soft" id="liveGoOn">${icon('bike', { size: 16 })}${t('Weiterfahren')}</button>
+      <button class="btn btn-primary" id="liveEnd">${icon('checkCircle', { size: 16 })}${t('Beenden')}</button>
     </div>`);
   body.querySelector('#liveGoOn').onclick = closeMisc;
   body.querySelector('#liveEnd').onclick = () => { const save = body.querySelector('#liveSave').checked; closeMisc(); end({ save }); };
@@ -296,10 +297,10 @@ function confirmEnd() {
 
 function endStats(s) {
   return `<div class="stat-grid">
-    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(s.ridden > 300 ? s.ridden : s.planned)} km</b><small>${s.ridden > 300 ? 'gefahren' : 'geplant'}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${fmtDuration(s.secs)}</b><small>unterwegs</small></div>
-    <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${s.visited}</b><small>Stopps besucht</small></div>
-    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b>${s.beers}</b><small>Biere eingecheckt</small></div>
+    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(s.ridden > 300 ? s.ridden : s.planned)} km</b><small>${s.ridden > 300 ? t('gefahren') : t('geplant')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${fmtDuration(s.secs)}</b><small>${t('unterwegs')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${s.visited}</b><small>${t('Stopps besucht')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b>${s.beers}</b><small>${t('Biere eingecheckt')}</small></div>
   </div>`;
 }
 
@@ -307,10 +308,10 @@ function finish() {
   const s = summary();
   end({ save: true });
   openMisc(`
-    <h2 class="dlg-title">${icon('checkCircle', { size: 22 })}Geschafft — Prost!</h2>
+    <h2 class="dlg-title">${icon('checkCircle', { size: 22 })}${t('Geschafft — Prost!')}</h2>
     ${endStats(s)}
-    <p class="fine">Die Tour ist unter „Bier-Tagebuch → Touren“ gespeichert.</p>
-    <button class="btn btn-primary btn-big" data-close>${icon('check', { size: 18 })}Super</button>`);
+    <p class="fine">${t('Die Tour ist unter „Bier-Tagebuch → Touren“ gespeichert.')}</p>
+    <button class="btn btn-primary btn-big" data-close>${icon('check', { size: 18 })}${t('Super')}</button>`);
 }
 
 function end({ save }) {
@@ -342,11 +343,11 @@ function saveFinished({ planned = false }) {
     track: simplify(live && live.track.length > 5 ? live.track : tour.route.latlngs, 120),
   };
   if (loadTours().some(t => !t.deleted && t.link === entry.link && Math.abs(t.at - entry.at) < 6 * 3600000)) {
-    if (planned) { toast('Diese Tour ist schon gespeichert.'); return; }
+    if (planned) { toast(t('Diese Tour ist schon gespeichert.')); return; }
   }
   addTour(entry);
   emit('tour-saved', entry);
-  toast('Tour gespeichert — siehe Bier-Tagebuch → Touren', { tone: 'good' });
+  toast(t('Tour gespeichert — siehe Bier-Tagebuch → Touren'), { tone: 'good' });
 }
 
 // Spur auf höchstens n Punkte ausdünnen (gleichmäßig).

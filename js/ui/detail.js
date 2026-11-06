@@ -18,6 +18,7 @@ import { openScanner } from './scanUi.js';
 import { photoMenu } from './ocrUi.js';
 import { bumpStat } from '../store.js';
 import { emit } from '../state.js';
+import { t, num, money, LOCALE, pkg } from '../i18n.js';
 
 let dlg, current = null, onChange = () => {};
 
@@ -30,11 +31,11 @@ export async function openPlace(id) {
   let place = state.placeIndex.get(id);
   dlg = dlg || $('#placeDialog');
   if (!place) {
-    $('#placeBody').innerHTML = beerLoader('Ort wird geladen…');
+    $('#placeBody').innerHTML = beerLoader(t('Ort wird geladen…'));
     openDialog(dlg);
     try {
       const [p] = await fetchPlacesByIds([id]);
-      if (!p) throw new Error('Ort nicht gefunden');
+      if (!p) throw new Error(t('Ort nicht gefunden'));
       const ref = state.location || p;
       p.distance = haversine(ref.lat, ref.lon, p.lat, p.lon);
       rememberPlaces([p]);
@@ -72,25 +73,25 @@ function render() {
   const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`;
 
   const facts = [];
-  if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 14 })}Sitzplätze draußen`);
-  if (p.tags.wheelchair === 'yes') facts.push(`${icon('wheelchair', { size: 14 })}Barrierefrei`);
+  if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 14 })}${t('Sitzplätze draußen')}`);
+  if (p.tags.wheelchair === 'yes') facts.push(`${icon('wheelchair', { size: 14 })}${t('Barrierefrei')}`);
   if (p.tags.brewery) facts.push(`${icon('beerMug', { size: 14 })}${escapeHtml(p.tags.brewery.split(';').slice(0, 4).join(', '))}`);
-  if (p.tags['drink:craft_beer'] === 'yes') facts.push(`${icon('barrel', { size: 14 })}Craft-Bier`);
+  if (p.tags['drink:craft_beer'] === 'yes') facts.push(`${icon('barrel', { size: 14 })}${t('Craft-Bier')}`);
 
   const my = s.rating.mine;
   const ratingText = s.rating.count
-    ? `Ø ${s.rating.avg.toFixed(1).replace('.', ',')} aus ${s.rating.count} ${s.rating.count === 1 ? 'Bewertung' : 'Bewertungen'}`
-    : 'Noch keine Bewertung';
+    ? (s.rating.count === 1 ? t('Ø {avg} aus 1 Bewertung', { avg: num(s.rating.avg, 1) }) : t('Ø {avg} aus {n} Bewertungen', { avg: num(s.rating.avg, 1), n: s.rating.count }))
+    : t('Noch keine Bewertung');
 
   const priceRows = s.prices.length ? s.prices.map(pr => `
     <li class="price-row${pr.stale ? ' stale' : ''}${s.cheapest && s.cheapest.id === pr.id ? ' best' : ''}">
       <div class="pr-main">
         <span class="pr-beer">${escapeHtml(pr.beer)}</span>
-        <span class="pr-unit">${UNITS[pr.unit] ? UNITS[pr.unit].label : escapeHtml(pr.unit)}${pr.unit !== '0.5l' ? ` · ${fmtEuro(pr.per05)}/0,5 l` : ''}</span>
+        <span class="pr-unit">${UNITS[pr.unit] ? UNITS[pr.unit].label : escapeHtml(pr.unit)}${pr.unit !== '0.5l' ? ` · ${fmtEuro(pr.per05)}/${t('0,5 l')}` : ''}</span>
       </div>
       <span class="pr-price">${fmtEuro(pr.price)}</span>
-      <span class="pr-age" title="${new Date(pr.created_at).toLocaleString('de-DE')}">${timeAgo(pr.created_at)}${pr.stale ? ' · veraltet' : ''}</span>
-      ${pr.mine ? `<button class="icon-btn small" data-del="${pr.id}" aria-label="Eigene Meldung löschen" title="Meine Meldung löschen">${icon('trash', { size: 15 })}</button>` : '<span></span>'}
+      <span class="pr-age" title="${new Date(pr.created_at).toLocaleString(LOCALE)}">${timeAgo(pr.created_at)}${pr.stale ? ' · ' + t('veraltet') : ''}</span>
+      ${pr.mine ? `<button class="icon-btn small" data-del="${pr.id}" aria-label="${t('Eigene Meldung löschen')}" title="${t('Meine Meldung löschen')}">${icon('trash', { size: 15 })}</button>` : '<span></span>'}
     </li>`).join('') : '';
 
   $('#placeBody').innerHTML = `
@@ -104,54 +105,54 @@ function render() {
     </header>
 
     <div class="pd-actions">
-      <a class="pd-action" href="${navUrl}" target="_blank" rel="noopener">${icon('compass', { size: 20 })}<span>Route</span></a>
-      <button class="pd-action${fav ? ' on' : ''}" id="pdFav" aria-pressed="${fav}">${icon('heart', { size: 20, filled: fav })}<span>${fav ? 'Favorit' : 'Merken'}</span></button>
-      <button class="pd-action" id="pdCheckin">${icon('book', { size: 20 })}<span>Einchecken</span></button>
-      <button class="pd-action" id="pdShare">${icon('share', { size: 20 })}<span>Teilen</span></button>
-      ${phone ? `<a class="pd-action" href="tel:${escapeHtml(phone.split(';')[0].replace(/\s/g, ''))}">${icon('phone', { size: 20 })}<span>Anrufen</span></a>` : ''}
-      ${web ? `<a class="pd-action" href="${escapeHtml(web)}" target="_blank" rel="noopener">${icon('globe', { size: 20 })}<span>Website</span></a>` : ''}
+      <a class="pd-action" href="${navUrl}" target="_blank" rel="noopener">${icon('compass', { size: 20 })}<span>${t('Route')}</span></a>
+      <button class="pd-action${fav ? ' on' : ''}" id="pdFav" aria-pressed="${fav}">${icon('heart', { size: 20, filled: fav })}<span>${fav ? t('Favorit') : t('Merken')}</span></button>
+      <button class="pd-action" id="pdCheckin">${icon('book', { size: 20 })}<span>${t('Einchecken')}</span></button>
+      <button class="pd-action" id="pdShare">${icon('share', { size: 20 })}<span>${t('Teilen')}</span></button>
+      ${phone ? `<a class="pd-action" href="tel:${escapeHtml(phone.split(';')[0].replace(/\s/g, ''))}">${icon('phone', { size: 20 })}<span>${t('Anrufen')}</span></a>` : ''}
+      ${web ? `<a class="pd-action" href="${escapeHtml(web)}" target="_blank" rel="noopener">${icon('globe', { size: 20 })}<span>${t('Website')}</span></a>` : ''}
     </div>
 
     <section class="pd-section">
       <div class="pd-status-row">
         <span class="status status-${b.tone} big"><span class="status-dot"></span>${b.text}</span>
       </div>
-      ${week ? `<details class="week"><summary>Öffnungszeiten ${icon('chevronDown', { size: 15 })}</summary><table>${week.map(d => `<tr class="${d.today ? 'today' : ''}"><th>${d.label}${d.holiday ? ' <small>Feiertag</small>' : ''}</th><td>${d.text}</td></tr>`).join('')}</table></details>`
+      ${week ? `<details class="week"><summary>${t('Öffnungszeiten')} ${icon('chevronDown', { size: 15 })}</summary><table>${week.map(d => `<tr class="${d.today ? 'today' : ''}"><th>${d.label}${d.holiday ? ` <small>${t('Feiertag')}</small>` : ''}</th><td>${d.text}</td></tr>`).join('')}</table></details>`
         : p.tags.opening_hours ? `<p class="fine">${icon('clock', { size: 13 })} ${escapeHtml(p.tags.opening_hours)}</p>` : ''}
       ${facts.length ? `<div class="facts">${facts.map(f => `<span class="fact">${f}</span>`).join('')}</div>` : ''}
     </section>
 
     <section class="pd-section">
-      <h3 class="pd-h">${icon('star', { size: 16 })}Bewertung <span class="pd-h-meta">${ratingText}</span></h3>
-      <div class="star-input" id="pdStars" role="radiogroup" aria-label="Deine Bewertung">
-        ${[1, 2, 3, 4, 5].map(n => `<button role="radio" aria-checked="${my === n}" data-n="${n}" class="${my && n <= my ? 'on' : ''}" aria-label="${n} Stern${n > 1 ? 'e' : ''}">${icon('star', { size: 30, filled: true })}</button>`).join('')}
+      <h3 class="pd-h">${icon('star', { size: 16 })}${t('Bewertung')} <span class="pd-h-meta">${ratingText}</span></h3>
+      <div class="star-input" id="pdStars" role="radiogroup" aria-label="${t('Deine Bewertung')}">
+        ${[1, 2, 3, 4, 5].map(n => `<button role="radio" aria-checked="${my === n}" data-n="${n}" class="${my && n <= my ? 'on' : ''}" aria-label="${n > 1 ? t('{n} Sterne', { n }) : t('1 Stern')}">${icon('star', { size: 30, filled: true })}</button>`).join('')}
       </div>
-      <p class="fine">${my ? `Deine Bewertung: ${my} ★ · <button class="link-btn" id="pdUnrate">zurücknehmen</button>` : 'Tippe auf einen Stern. Pro Gerät zählt eine Bewertung — du kannst sie jederzeit ändern.'}</p>
+      <p class="fine">${my ? `${t('Deine Bewertung: {n} ★', { n: my })} · <button class="link-btn" id="pdUnrate">${t('zurücknehmen')}</button>` : t('Tippe auf einen Stern. Pro Gerät zählt eine Bewertung — du kannst sie jederzeit ändern.')}</p>
     </section>
 
     ${chainSection(p)}
 
     <section class="pd-section">
-      <h3 class="pd-h">${icon('tag', { size: 16 })}Bierpreise <span class="pd-h-meta">${isShared() ? 'von der Community' : 'nur auf diesem Gerät'}</span></h3>
-      ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">Noch kein Preis gemeldet — sei die erste Person!</p>`}
+      <h3 class="pd-h">${icon('tag', { size: 16 })}${t('Bierpreise')} <span class="pd-h-meta">${isShared() ? t('von der Community') : t('nur auf diesem Gerät')}</span></h3>
+      ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">${t('Noch kein Preis gemeldet — sei die erste Person!')}</p>`}
       <form class="price-form" id="pdPriceForm" novalidate>
-        <input name="beer" type="text" list="beerList" placeholder="Sorte, z.B. Zwickl" maxlength="40" required autocomplete="off" aria-label="Biersorte">
-        <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="0,00" required aria-label="Preis in Euro"><span>€</span></div>
-        <select name="unit" aria-label="Gebinde">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
-        <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}Melden</button>
-        <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 17 })}Barcode</button>
-        <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 17 })}Karte fotografieren</button>
+        <input name="beer" type="text" list="beerList" placeholder="${t('Sorte, z.B. Zwickl')}" maxlength="40" required autocomplete="off" aria-label="${t('Biersorte')}">
+        <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
+        <select name="unit" aria-label="${t('Gebinde')}">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
+        <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}${t('Melden')}</button>
+        <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 17 })}${t('Barcode')}</button>
+        <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 17 })}${t('Karte fotografieren')}</button>
         <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
       </form>
-      <p class="fine">Preise älter als ${STALE_DAYS} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.</p>
+      <p class="fine">${t('Preise älter als {n} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.', { n: STALE_DAYS })}</p>
     </section>
 
     <section class="pd-section pd-muted">
-      <h3 class="pd-h">${icon('alertTriangle', { size: 16 })}Stimmt was nicht?</h3>
-      <p class="fine">Die Orte stammen aus OpenStreetMap. Falsche oder geschlossene Einträge kannst du dort für alle korrigieren.</p>
+      <h3 class="pd-h">${icon('alertTriangle', { size: 16 })}${t('Stimmt was nicht?')}</h3>
+      <p class="fine">${t('Die Orte stammen aus OpenStreetMap. Falsche oder geschlossene Einträge kannst du dort für alle korrigieren.')}</p>
       <div class="row-btns">
-        <a class="btn btn-soft" href="https://www.openstreetmap.org/edit?${p.id.replace('/', '=')}" target="_blank" rel="noopener">${icon('edit', { size: 16 })}In OSM korrigieren</a>
-        <button class="btn btn-soft" id="pdHide">${icon(isHidden(p.id) ? 'undo' : 'flag', { size: 16 })}${isHidden(p.id) ? 'Wieder einblenden' : 'Für mich ausblenden'}</button>
+        <a class="btn btn-soft" href="https://www.openstreetmap.org/edit?${p.id.replace('/', '=')}" target="_blank" rel="noopener">${icon('edit', { size: 16 })}${t('In OSM korrigieren')}</a>
+        <button class="btn btn-soft" id="pdHide">${icon(isHidden(p.id) ? 'undo' : 'flag', { size: 16 })}${isHidden(p.id) ? t('Wieder einblenden') : t('Für mich ausblenden')}</button>
       </div>
     </section>`;
 
@@ -159,31 +160,30 @@ function render() {
 }
 
 const CHAIN_PREVIEW = 8;
-const money = (v, cur) => (cur === 'CHF' ? `CHF ${v.toFixed(2)}` : fmtEuro(v));
 
 function chainSection(p) {
   const list = chainPricesFor(p);
   if (!list.length) return '';
-  const label = CHAIN_LABELS[chainOf(p).key] || 'Kette';
+  const label = CHAIN_LABELS[chainOf(p).key] || t('Kette');
   const seen = list.map(x => x.seen).sort().pop();
   return `<section class="pd-section">
-    <h3 class="pd-h">${icon('globe', { size: 16 })}Online-Preise ${escapeHtml(label)} <span class="pd-h-meta">${list.length} Biere · Stand ${new Date(seen).toLocaleDateString('de-DE')}</span></h3>
-    ${list.length > CHAIN_PREVIEW ? `<div class="chain-search">${icon('search', { size: 16 })}<input id="pdChainSearch" type="search" placeholder="Sorte oder Marke suchen…" autocomplete="off" aria-label="Online-Preise durchsuchen"></div>` : ''}
+    <h3 class="pd-h">${icon('globe', { size: 16 })}${t('Online-Preise {chain}', { chain: escapeHtml(label) })} <span class="pd-h-meta">${t('{n} Biere · Stand {date}', { n: list.length, date: new Date(seen).toLocaleDateString(LOCALE) })}</span></h3>
+    ${list.length > CHAIN_PREVIEW ? `<div class="chain-search">${icon('search', { size: 16 })}<input id="pdChainSearch" type="search" placeholder="${t('Sorte oder Marke suchen…')}" autocomplete="off" aria-label="${t('Online-Preise durchsuchen')}"></div>` : ''}
     <ul class="price-list" id="pdChainList"></ul>
     <button class="link-btn" id="pdChainMore" hidden></button>
-    <p class="fine">Laut Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro 0,5 l. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.</p>
+    <p class="fine">${t('Laut Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro 0,5 l. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.')}</p>
   </section>`;
 }
 
 function chainRow(x, i) {
-  const until = x.valid_until ? ' bis ' + new Date(x.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : '';
-  return `<li class="price-row online" data-i="${i}" tabindex="0" role="button" aria-expanded="false" title="Preisverlauf anzeigen">
+  const promo = x.valid_until ? t('Aktion bis {date}', { date: new Date(x.valid_until).toLocaleDateString(LOCALE, { day: '2-digit', month: '2-digit' }) }) : t('Aktion');
+  return `<li class="price-row online" data-i="${i}" tabindex="0" role="button" aria-expanded="false" title="${t('Preisverlauf anzeigen')}">
     <div class="pr-main">
-      <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">Aktion${until}</span>` : ''}</span>
-      <span class="pr-unit">${escapeHtml(x.package || (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/0,5 l` : ''}</span>
+      <span class="pr-beer">${escapeHtml(x.beer)}${x.promo ? ` <span class="promo">${promo}</span>` : ''}</span>
+      <span class="pr-unit">${escapeHtml(x.package ? pkg(x.package) : (UNITS[x.unit] ? UNITS[x.unit].label : ''))}${x.per05 != null && x.unit !== '0.5l' ? ` · ${money(x.per05, x.currency)}/${t('0,5 l')}` : ''}</span>
     </div>
     <span class="pr-price">${money(x.price, x.currency)}</span>
-    <a class="pr-age" href="${escapeHtml(x.source)}" target="_blank" rel="noopener">Quelle</a>
+    <a class="pr-age" href="${escapeHtml(x.source)}" target="_blank" rel="noopener">${t('Quelle')}</a>
     <span></span>
   </li>`;
 }
@@ -201,11 +201,11 @@ function wireChainList(p) {
     const words = q.split(/\s+/).filter(Boolean);
     const hits = words.length ? all.filter(x => words.every(w => `${x.beer} ${x.package}`.toLowerCase().includes(w))) : all;
     const shown = showAll || words.length ? hits.slice(0, 300) : hits.slice(0, CHAIN_PREVIEW);
-    ul.innerHTML = shown.map((x, i) => chainRow(x, i)).join('') || '<li class="fine">Nichts gefunden.</li>';
+    ul.innerHTML = shown.map((x, i) => chainRow(x, i)).join('') || `<li class="fine">${t('Nichts gefunden.')}</li>`;
     ul._shown = shown;
     const rest = hits.length - shown.length;
     more.hidden = rest <= 0;
-    more.textContent = `Alle ${hits.length} anzeigen`;
+    more.textContent = t('Alle {n} anzeigen', { n: hits.length });
   };
   if (input) input.addEventListener('input', draw);
   // Tipp auf eine Zeile: Preisverlauf aufklappen
@@ -247,13 +247,13 @@ function wire(p) {
   });
   $('#pdFav').onclick = () => {
     const on = toggleFavorite(p.id);
-    toast(on ? 'Als Favorit gemerkt' : 'Aus Favoriten entfernt', { tone: on ? 'good' : 'info', ms: 1600 });
+    toast(on ? t('Als Favorit gemerkt') : t('Aus Favoriten entfernt'), { tone: on ? 'good' : 'info', ms: 1600 });
     render(); onChange();
   };
   $('#pdShare').onclick = async () => {
-    const r = await shareLink({ title: p.name, text: `${p.name} — gefunden mit dem Bier-Locator`, url: placeLink(p.id) });
-    if (r === 'copied') toast('Link kopiert!', { tone: 'good' });
-    else if (r === 'failed') toast('Teilen nicht möglich', { tone: 'bad' });
+    const r = await shareLink({ title: p.name, text: t('{name} — gefunden mit dem Bier-Locator', { name: p.name }), url: placeLink(p.id) });
+    if (r === 'copied') toast(t('Link kopiert!'), { tone: 'good' });
+    else if (r === 'failed') toast(t('Teilen nicht möglich'), { tone: 'bad' });
   };
   $('#pdHide').onclick = () => {
     const hide = !isHidden(p.id);
@@ -261,7 +261,7 @@ function wire(p) {
     onChange();
     if (hide) {
       closeDialog(dlg);
-      toast('Ort ausgeblendet', { action: { label: 'Rückgängig', run: () => { setHidden(p.id, false); onChange(); } } });
+      toast(t('Ort ausgeblendet'), { action: { label: t('Rückgängig'), run: () => { setHidden(p.id, false); onChange(); } } });
     } else render();
   };
 
@@ -275,7 +275,7 @@ function wire(p) {
       const n = +b.dataset.n;
       btns.forEach((x, i) => x.classList.toggle('on', i < n));
       b.classList.add('pop');
-      try { await setRating(p.id, n); toast(`Danke! ${n} ★`, { tone: 'good', ms: 1500 }); render(); onChange(); }
+      try { await setRating(p.id, n); toast(t('Danke! {n} ★', { n }), { tone: 'good', ms: 1500 }); render(); onChange(); }
       catch (e) { toast(e.message, { tone: 'bad' }); render(); }
     };
   });
@@ -288,7 +288,7 @@ function wire(p) {
   // Eigene Preise löschen
   $('#placeBody').querySelectorAll('[data-del]').forEach(btn => {
     btn.onclick = async () => {
-      try { await deletePrice(p.id, isShared() ? Number(btn.dataset.del) : btn.dataset.del); toast('Meldung gelöscht'); render(); onChange(); }
+      try { await deletePrice(p.id, isShared() ? Number(btn.dataset.del) : btn.dataset.del); toast(t('Meldung gelöscht')); render(); onChange(); }
       catch (e) { toast(e.message, { tone: 'bad' }); }
     };
   });
@@ -303,8 +303,8 @@ function wire(p) {
     const v = validatePrice(price, unit, beer || 'x');
     submit.disabled = !v.ok || !beer.trim();
     if (!v.ok) { msg.textContent = v.message; msg.className = 'form-msg bad'; }
-    else if (!beer.trim()) { msg.textContent = 'Noch die Sorte eintragen.'; msg.className = 'form-msg'; }
-    else { msg.textContent = unit === '0.5l' ? 'Passt!' : `Entspricht ${fmtEuro(v.per05)} pro 0,5 l.`; msg.className = 'form-msg good'; }
+    else if (!beer.trim()) { msg.textContent = t('Noch die Sorte eintragen.'); msg.className = 'form-msg'; }
+    else { msg.textContent = unit === '0.5l' ? t('Passt!') : t('Entspricht {price} pro 0,5 l.', { price: fmtEuro(v.per05) }); msg.className = 'form-msg good'; }
     return v;
   };
   form.addEventListener('input', check);
@@ -318,7 +318,7 @@ function wire(p) {
       await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value });
       bumpStat('prices');
       emit('price-reported');
-      toast('Preis gemeldet — danke! 🍻', { tone: 'good' });
+      toast(t('Preis gemeldet — danke! 🍻'), { tone: 'good' });
       render(); onChange();
     } catch (err) {
       msg.textContent = err.message; msg.className = 'form-msg bad';

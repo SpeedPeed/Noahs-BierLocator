@@ -4,6 +4,7 @@ import { loadDiary, loadTours, loadStats } from '../store.js';
 import { on, emit } from '../state.js';
 import { icon } from '../icons.js';
 import { escapeHtml } from '../util.js';
+import { t } from '../i18n.js';
 import { toast, confetti } from './dom.js';
 
 const SEEN = 'bl_badges_seen_v1';
@@ -22,8 +23,8 @@ export function checkBadges() {
   const fresh = list.filter(b => b.unlocked && !seen.includes(b.id));
   if (!fresh.length) return;
   confetti();
-  toast(`Abzeichen freigeschaltet: <b>${escapeHtml(fresh[0].title)}</b>${fresh.length > 1 ? ` (+${fresh.length - 1})` : ''}`, {
-    tone: 'good', ms: 6000, action: { label: 'Ansehen', run: () => emit('open-diary', 'badges') },
+  toast(`${t('Abzeichen freigeschaltet: <b>{name}</b>', { name: escapeHtml(fresh[0].title) })}${fresh.length > 1 ? ` (+${fresh.length - 1})` : ''}`, {
+    tone: 'good', ms: 6000, action: { label: t('Ansehen'), run: () => emit('open-diary', 'badges') },
   });
 }
 
@@ -37,7 +38,7 @@ export function badgesHtml() {
   const list = badgeList().sort((a, b) => (b.unlocked - a.unlocked) || (b.pct - a.pct));
   const n = list.filter(b => b.unlocked).length;
   return `
-    <div class="badge-head"><b>${n}</b> von ${list.length} Abzeichen</div>
+    <div class="badge-head">${t('<b>{n}</b> von {total} Abzeichen', { n, total: list.length })}</div>
     <div class="badge-grid">${list.map(b => `
       <div class="badge${b.unlocked ? ' on' : ''}" title="${escapeHtml(b.desc)}">
         <span class="badge-ico">${icon(b.unlocked ? b.icon : 'trophy', { size: 22 })}</span>
@@ -45,5 +46,5 @@ export function badgesHtml() {
         <small>${escapeHtml(b.desc)}</small>
         ${b.unlocked ? '' : `<span class="badge-prog"><i style="width:${Math.round(b.pct * 100)}%"></i></span><small class="badge-num">${Math.min(b.value, b.goal)} / ${b.goal}</small>`}
       </div>`).join('')}</div>
-    <p class="fine">Abzeichen kommen aus deinem Tagebuch, gefahrenen Touren, gemeldeten Preisen und Bingo. In deiner Runde sieht man, wie viele du hast.</p>`;
+    <p class="fine">${t('Abzeichen kommen aus deinem Tagebuch, gefahrenen Touren, gemeldeten Preisen und Bingo. In deiner Runde sieht man, wie viele du hast.')}</p>`;
 }

@@ -11,6 +11,7 @@ import { $, toast, skeletonCards, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
 import { BEER_SUGGESTIONS } from '../prices.js';
 import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf } from '../chainPrices.js';
+import { t, num, money, LOCALE, pkg } from '../i18n.js';
 
 let openPlace = () => {};
 let loading = false;
@@ -28,16 +29,16 @@ export function initFinder(opts) {
   $('#typeChips').addEventListener('click', e => {
     const b = e.target.closest('.type-chip');
     if (!b) return;
-    const t = b.dataset.type;
+    const ty = b.dataset.type;
     const on = b.getAttribute('aria-pressed') !== 'true';
     // Langes Drücken wäre schöner; hier: Doppeltipp = "nur dieser Typ"
     if (b._lastTap && Date.now() - b._lastTap < 350) {
-      prefs.types = [t];
-      document.querySelectorAll('.type-chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.type === t)));
-      toast(`Nur ${TYPE_META[t].label}`, { ms: 1600 });
+      prefs.types = [ty];
+      document.querySelectorAll('.type-chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.type === ty)));
+      toast(t('Nur {type}', { type: TYPE_META[ty].label }), { ms: 1600 });
     } else {
       b.setAttribute('aria-pressed', String(on));
-      prefs.types = on ? [...new Set([...prefs.types, t])] : prefs.types.filter(x => x !== t);
+      prefs.types = on ? [...new Set([...prefs.types, ty])] : prefs.types.filter(x => x !== ty);
     }
     b._lastTap = Date.now();
     savePrefs();
@@ -86,7 +87,7 @@ export function initFinder(opts) {
   $('#prefBiergarten').addEventListener('change', savePrefsFromForm);
   $('#filterBeer').addEventListener('input', debounce(render, 200));
 
-  $('#btnUnhide').addEventListener('click', () => { unhideAll(); render(); toast('Alle ausgeblendeten Orte sind wieder sichtbar.', { tone: 'good' }); });
+  $('#btnUnhide').addEventListener('click', () => { unhideAll(); render(); toast(t('Alle ausgeblendeten Orte sind wieder sichtbar.'), { tone: 'good' }); });
 
   $('#results').addEventListener('click', e => {
     const card = e.target.closest('[data-place]');
@@ -111,9 +112,9 @@ export function initFinder(opts) {
 function renderEmpty() {
   $('#results').innerHTML = `<div class="empty">
     <div class="empty-art">${icon('beerMug', { size: 54, strokeWidth: 1.3 })}</div>
-    <h3>Wo gibt's hier Bier?</h3>
-    <p>Teile deinen Standort oder such oben nach einem Ort — dann zeigt die Karte Kneipen, Biergärten, Brauereien und Läden in der Nähe.</p>
-    <button class="btn btn-primary" id="btnEmptyLocate">${icon('locate', { size: 18 })}Standort verwenden</button>
+    <h3>${t('Wo gibt\'s hier Bier?')}</h3>
+    <p>${t('Teile deinen Standort oder such oben nach einem Ort — dann zeigt die Karte Kneipen, Biergärten, Brauereien und Läden in der Nähe.')}</p>
+    <button class="btn btn-primary" id="btnEmptyLocate">${icon('locate', { size: 18 })}${t('Standort verwenden')}</button>
   </div>`;
   $('#btnEmptyLocate').onclick = () => emit('request-locate');
 }
@@ -125,7 +126,7 @@ export async function searchAt(center, radius = prefs.radius, { fit = true, quie
   state.searchCenter = center;
   $('#btnSearchArea').hidden = true;
   if (!quiet) {
-    $('#results').innerHTML = beerLoader('Suche Bier in der Nähe…') + skeletonCards(4);
+    $('#results').innerHTML = beerLoader(t('Suche Bier in der Nähe…')) + skeletonCards(4);
     $('#resultCount').textContent = '…';
   }
   try {
@@ -137,15 +138,15 @@ export async function searchAt(center, radius = prefs.radius, { fit = true, quie
     loading = false;
     render();
     if (fit) mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), center);
-    if (total > places.length) toast(`${places.length} von ${total} Orten (die nächsten) — kleinerer Radius zeigt alle.`, { ms: 4000 });
+    if (total > places.length) toast(t('{n} von {total} Orten (die nächsten) — kleinerer Radius zeigt alle.', { n: places.length, total }), { ms: 4000 });
     // Preise/Bewertungen nachladen, dann neu zeichnen
     loadSummaries(places.map(p => p.id)).then(() => { if (seq === searchSeq) render(); })
-      .catch(() => toast('Preise konnten nicht geladen werden.', { tone: 'bad' }));
-    if (!fromCache && !places.length) toast('Hier wurde nichts gefunden — größerer Radius?', { ms: 3500 });
+      .catch(() => toast(t('Preise konnten nicht geladen werden.'), { tone: 'bad' }));
+    if (!fromCache && !places.length) toast(t('Hier wurde nichts gefunden — größerer Radius?'), { ms: 3500 });
   } catch (e) {
     if (seq !== searchSeq) return;
     loading = false;
-    $('#results').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div><b>Das hat nicht geklappt.</b><br>${escapeHtml(e.message)}</div><button class="btn btn-soft" id="btnRetry">${icon('refresh', { size: 16 })}Nochmal</button></div>`;
+    $('#results').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div><b>${t('Das hat nicht geklappt.')}</b><br>${escapeHtml(e.message)}</div><button class="btn btn-soft" id="btnRetry">${icon('refresh', { size: 16 })}${t('Nochmal')}</button></div>`;
     $('#btnRetry').onclick = () => searchAt(center, radius, { fit });
     $('#resultCount').textContent = '0';
   }
@@ -160,7 +161,7 @@ function effectivePrice(p, s) {
   if (c) return { per05: c.per05, beer: c.beer, created_at: Date.parse(c.seen), online: true, promo: c.promo, currency: c.currency, chain: CHAIN_LABELS[chainOf(p).key] };
   return s.cheapest;
 }
-const money = pr => (pr.currency === 'CHF' ? `CHF ${pr.per05.toFixed(2)}` : fmtEuro(pr.per05));
+const perHalf = pr => money(pr.per05, pr.currency);
 function recommendationScore(p, s, st, price) {
   let score = (1 - Math.min(p.distance / (prefs.radius || 1000), 1)) * 40;
   if (price) {
@@ -227,10 +228,10 @@ export function render() {
   }
 
   $('#resultCount').textContent = list.length;
-  $('#resultNoun').textContent = list.length === 1 ? 'Ort' : 'Orte';
+  $('#resultNoun').textContent = list.length === 1 ? t('Ort') : t('Orte');
   const hc = hiddenCount();
   $('#btnUnhide').hidden = !hc;
-  $('#btnUnhide').textContent = `${hc} ausgeblendet · zeigen`;
+  $('#btnUnhide').textContent = t('{n} ausgeblendet · zeigen', { n: hc });
 
   const pr = [];
   if (prefs.radius) pr.push(fmtDist(prefs.radius));
@@ -246,11 +247,11 @@ export function render() {
     cc.innerHTML = `<button class="cheapest-inner" data-place="${cheapest.p.id}">
       <div class="cheapest-glass" aria-hidden="true">${icon('coin', { size: 26 })}</div>
       <div class="cheapest-text">
-        <span class="cheapest-kicker">Günstigstes Bier hier${c.online ? ' · Online-Preis' : ''}</span>
-        <span class="cheapest-price">${money(c)}<small> / 0,5 l</small></span>
+        <span class="cheapest-kicker">${t('Günstigstes Bier hier')}${c.online ? ' · ' + t('Online-Preis') : ''}</span>
+        <span class="cheapest-price">${perHalf(c)}<small> / ${t('0,5 l')}</small></span>
         <span class="cheapest-where">${escapeHtml(c.beer)} · ${escapeHtml(cheapest.p.name)} · ${fmtDist(cheapest.p.distance)}</span>
       </div>
-      <span class="cheapest-age">${c.online ? 'Stand ' + new Date(c.created_at).toLocaleDateString('de-DE') : timeAgo(c.created_at)}</span>
+      <span class="cheapest-age">${c.online ? t('Stand {date}', { date: new Date(c.created_at).toLocaleDateString(LOCALE) }) : timeAgo(c.created_at)}</span>
     </button>`;
   } else {
     cc.hidden = true;
@@ -263,11 +264,11 @@ export function render() {
   if (loading) return;
   if (!list.length) {
     box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('search', { size: 40, strokeWidth: 1.4 })}</div>
-      <h3>Keine Treffer</h3><p>${state.places.length ? 'Die Filter sind gerade sehr streng — ein paar Ortstypen oder Schalter lockern?' : 'Hier gibt\'s laut OpenStreetMap nichts. Größerer Radius?'}</p></div>`;
+      <h3>${t('Keine Treffer')}</h3><p>${state.places.length ? t('Die Filter sind gerade sehr streng — ein paar Ortstypen oder Schalter lockern?') : t('Hier gibt\'s laut OpenStreetMap nichts. Größerer Radius?')}</p></div>`;
     return;
   }
   box.innerHTML = list.slice(0, 120).map((x, i) => cardHtml(x, i)).join('')
-    + (list.length > 120 ? `<p class="fine center">+ ${list.length - 120} weitere auf der Karte</p>` : '');
+    + (list.length > 120 ? `<p class="fine center">${t('+ {n} weitere auf der Karte', { n: list.length - 120 })}</p>` : '');
 }
 
 /* ---------- Lieblingsbier im Angebot ---------- */
@@ -301,16 +302,16 @@ function renderDeal(list) {
   const d = favDeal(list);
   if (!d) { box.hidden = true; return; }
   const { p, pr } = d;
-  const until = pr.valid_until ? ` · bis ${new Date(pr.valid_until).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}` : '';
+  const until = pr.valid_until ? ' · ' + t('bis {date}', { date: new Date(pr.valid_until).toLocaleDateString(LOCALE, { day: '2-digit', month: '2-digit' }) }) : '';
   box.hidden = false;
   box.innerHTML = `<button class="deal-inner" data-place="${p.id}">
     <span class="deal-ico">${icon('tag', { size: 20 })}</span>
     <span class="deal-text">
-      <span class="deal-kicker">Dein ${escapeHtml(prefs.beerType)} im Angebot</span>
-      <b>${escapeHtml(pr.beer)} <small>${escapeHtml(pr.package || '')}</small></b>
+      <span class="deal-kicker">${t('Dein {beer} im Angebot', { beer: escapeHtml(prefs.beerType) })}</span>
+      <b>${escapeHtml(pr.beer)} <small>${escapeHtml(pkg(pr.package))}</small></b>
       <span>${escapeHtml(CHAIN_LABELS[chainOf(p).key] || p.name)} · ${fmtDist(p.distance)}${until}</span>
     </span>
-    <span class="deal-price">${pr.currency === 'CHF' ? 'CHF ' + pr.price.toFixed(2) : fmtEuro(pr.price)}</span>
+    <span class="deal-price">${money(pr.price, pr.currency)}</span>
   </button>`;
 }
 
@@ -326,17 +327,17 @@ export function pricedPoints(list) {
 }
 
 function stars(avg) {
-  return `<span class="mini-stars" style="--v:${(avg / 5) * 100}%" aria-label="${avg.toFixed(1)} von 5 Sternen">★★★★★</span>`;
+  return `<span class="mini-stars" style="--v:${(avg / 5) * 100}%" aria-label="${t('{avg} von 5 Sternen', { avg: num(avg, 1) })}">★★★★★</span>`;
 }
 
 function cardHtml({ p, s, st, price: pr }, i) {
   const m = TYPE_META[p.type];
   const b = statusBadge(st);
   const price = pr
-    ? `<span class="card-price${pr.stale ? ' stale' : ''}${pr.online ? ' online' : ''}" title="${escapeHtml(pr.beer)} · ${pr.online ? 'Online-Preis ' + escapeHtml(pr.chain) : timeAgo(pr.created_at)}">${money(pr)}</span>`
+    ? `<span class="card-price${pr.stale ? ' stale' : ''}${pr.online ? ' online' : ''}" title="${escapeHtml(pr.beer)} · ${pr.online ? t('Online-Preis {chain}', { chain: escapeHtml(pr.chain) }) : timeAgo(pr.created_at)}">${perHalf(pr)}</span>`
     : '';
   const extras = [];
-  if (p.tags.outdoor_seating === 'yes' && p.type !== 'biergarten') extras.push(`<span class="tag">${icon('sun', { size: 12 })}Draußen</span>`);
+  if (p.tags.outdoor_seating === 'yes' && p.type !== 'biergarten') extras.push(`<span class="tag">${icon('sun', { size: 12 })}${t('Draußen')}</span>`);
   if (p.tags.brewery) extras.push(`<span class="tag">${escapeHtml(p.tags.brewery.split(';')[0])}</span>`);
   return `<article class="card" data-place="${p.id}" style="--c:${m.color};--i:${Math.min(i, 14)}" tabindex="0" role="button" aria-label="${escapeHtml(p.name)}, ${m.label}, ${fmtDist(p.distance)}">
     <div class="card-ico">${icon(m.icon, { size: 20 })}</div>
@@ -354,7 +355,7 @@ function cardHtml({ p, s, st, price: pr }, i) {
         ${extras.join('')}
       </div>
     </div>
-    <button class="icon-btn card-locate" data-action="locate" aria-label="Auf der Karte zeigen">${icon('pin', { size: 17 })}</button>
+    <button class="icon-btn card-locate" data-action="locate" aria-label="${t('Auf der Karte zeigen')}">${icon('pin', { size: 17 })}</button>
   </article>`;
 }
 

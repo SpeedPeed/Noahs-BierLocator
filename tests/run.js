@@ -17,6 +17,7 @@ import { makeCard, completeLines, FREE } from '../js/bingo.js';
 import { evaluateBadges } from '../js/badges.js';
 import { parseMenuText } from '../js/prices.js';
 import { sampleAt, priceColor } from '../js/heatmap.js';
+import { tr, dictionary, money, pkg } from '../js/i18n.js';
 
 const results = [];
 function test(name, fn) {
@@ -416,6 +417,25 @@ test('Heatmap: Mittelwert in der Nähe, leer weit weg', () => {
   ok(mid && Math.abs(mid.v - 4) < 0.05, 'Mitte ≈ 4');
   eq(sampleAt(48.3, 16.37, pts), null, '11 km weg → nichts');
   eq(priceColor(0).join(), '46,160,80');
+});
+
+/* ---------- Übersetzungen ---------- */
+test('Englisch: Platzhalter & HTML-Tags passen zum deutschen Text', () => {
+  const placeholders = s => (s.match(/\{\w+\}/g) || []).sort().join();
+  const tags = s => (s.match(/<\/?[a-z]+/gi) || []).map(x => x.toLowerCase()).sort().join();
+  const bad = Object.entries(dictionary()).filter(([de, en]) => typeof en !== 'string' || !en.trim()
+    || placeholders(de) !== placeholders(en) || tags(de) !== tags(en)).map(([de]) => de);
+  ok(!bad.length, 'Abweichend: ' + bad.slice(0, 5).join(' | '));
+});
+test('Englisch: Übersetzen mit Platzhaltern, unbekannt bleibt Deutsch', () => {
+  eq(tr('en', 'vor {n} Min', { n: 5 }), '5 min ago');
+  eq(tr('de', 'vor {n} Min', { n: 5 }), 'vor 5 Min');
+  eq(tr('en', 'Gibt es nicht im Wörterbuch'), 'Gibt es nicht im Wörterbuch');
+});
+test('Geldbeträge: Euro deutsch mit Komma, Franken immer mit Punkt', () => {
+  eq(money(4.5), '4,50 €');
+  eq(money(4.5, 'CHF'), 'CHF 4.50');
+  eq(pkg('6×0,5 l Dosen'), '6×0,5 l Dosen', 'Deutsch bleibt unverändert');
 });
 
 /* ---------- Ausgabe ---------- */

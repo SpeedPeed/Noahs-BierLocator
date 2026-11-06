@@ -5,26 +5,27 @@
 // aufgenommen, während gleichzeitig konstant abgebaut wird. Der Verteilungsfaktor
 // kommt aus dem Körperwasser nach Watson (Alter, Größe, Gewicht, Geschlecht),
 // wie in der forensischen Praxis üblich, abzüglich eines Resorptionsdefizits.
+import { t } from './i18n.js';
 
 export const DRINK_PRESETS = {
-  bier05:      { label: 'Bier 0,5 l',          volume: 500,  abv: 5.0,  kcal100: 43 },
-  bier033:     { label: 'Bier 0,33 l',         volume: 330,  abv: 5.0,  kcal100: 43 },
-  mass:        { label: 'Maß 1 l',             volume: 1000, abv: 5.8,  kcal100: 48 },
-  weizen:      { label: 'Weizen 0,5 l',        volume: 500,  abv: 5.4,  kcal100: 44 },
-  craft:       { label: 'IPA / Craft 0,33 l',  volume: 330,  abv: 6.5,  kcal100: 55 },
-  radler:      { label: 'Radler 0,5 l',        volume: 500,  abv: 2.5,  kcal100: 21 },
-  alkoholfrei: { label: 'Alkoholfrei 0,5 l',   volume: 500,  abv: 0.4,  kcal100: 25 },
-  spritzer:    { label: 'Spritzer 0,25 l',     volume: 250,  abv: 6.0,  kcal100: 40 },
-  wein:        { label: 'Wein 0,125 l',        volume: 125,  abv: 12,   kcal100: 70 },
-  sekt:        { label: 'Sekt 0,1 l',          volume: 100,  abv: 11,   kcal100: 80 },
-  schnaps:     { label: 'Schnaps 2 cl',        volume: 20,   abv: 40,   kcal100: 230 },
-  longdrink:   { label: 'Longdrink (4 cl)',    volume: 40,   abv: 40,   kcal100: 230 },
+  bier05:      { label: t('Bier 0,5 l'),          volume: 500,  abv: 5.0,  kcal100: 43 },
+  bier033:     { label: t('Bier 0,33 l'),         volume: 330,  abv: 5.0,  kcal100: 43 },
+  mass:        { label: t('Maß 1 l'),             volume: 1000, abv: 5.8,  kcal100: 48 },
+  weizen:      { label: t('Weizen 0,5 l'),        volume: 500,  abv: 5.4,  kcal100: 44 },
+  craft:       { label: t('IPA / Craft 0,33 l'),  volume: 330,  abv: 6.5,  kcal100: 55 },
+  radler:      { label: t('Radler 0,5 l'),        volume: 500,  abv: 2.5,  kcal100: 21 },
+  alkoholfrei: { label: t('Alkoholfrei 0,5 l'),   volume: 500,  abv: 0.4,  kcal100: 25 },
+  spritzer:    { label: t('Spritzer 0,25 l'),     volume: 250,  abv: 6.0,  kcal100: 40 },
+  wein:        { label: t('Wein 0,125 l'),        volume: 125,  abv: 12,   kcal100: 70 },
+  sekt:        { label: t('Sekt 0,1 l'),          volume: 100,  abv: 11,   kcal100: 80 },
+  schnaps:     { label: t('Schnaps 2 cl'),        volume: 20,   abv: 40,   kcal100: 230 },
+  longdrink:   { label: t('Longdrink (4 cl)'),    volume: 40,   abv: 40,   kcal100: 230 },
 };
 
 export const FOOD_STATES = {
-  empty: { label: 'Nüchterner Magen', absorbMin: 30, deficit: 0.10 },
-  snack: { label: 'Kleinigkeit gegessen', absorbMin: 60, deficit: 0.15 },
-  meal:  { label: 'Ordentlich gegessen', absorbMin: 90, deficit: 0.20 },
+  empty: { label: t('Nüchterner Magen'), absorbMin: 30, deficit: 0.10 },
+  snack: { label: t('Kleinigkeit gegessen'), absorbMin: 60, deficit: 0.15 },
+  meal:  { label: t('Ordentlich gegessen'), absorbMin: 90, deficit: 0.20 },
 };
 
 export const ELIMINATION_PER_HOUR = 0.15; // ‰/h, typischer Mittelwert (0,10–0,20)
@@ -99,12 +100,12 @@ export function simulateBac(profile, drinks, now = Date.now(), opts = {}) {
 }
 
 export const BAC_STAGES = [
-  { max: 0.2, name: 'Nüchtern', tone: 'good', desc: 'Kaum messbare Wirkung.' },
-  { max: 0.5, name: 'Angeheitert', tone: 'good', desc: 'Leicht enthemmt, Reaktionszeit beginnt sich zu verlängern.' },
-  { max: 1.0, name: 'Beschwipst', tone: 'warn', desc: 'Konzentrations- und Sehstörungen, Selbstüberschätzung. Nicht mehr fahren!' },
-  { max: 1.5, name: 'Betrunken', tone: 'warn', desc: 'Gleichgewicht und Sprache leiden deutlich, Reaktionszeit stark verlängert.' },
-  { max: 2.0, name: 'Schwer betrunken', tone: 'bad', desc: 'Verwirrtheit, Orientierungslosigkeit, Übelkeit möglich.' },
-  { max: 3.0, name: 'Betäubung', tone: 'bad', desc: 'Bewusstseinstrübung, Filmriss, Gleichgewichtsverlust. Ärztliche Hilfe erwägen.' },
-  { max: Infinity, name: 'Lebensgefahr', tone: 'bad', desc: 'Gefahr von Bewusstlosigkeit und Atemlähmung — sofort Notruf wählen und die Person nicht allein lassen!' },
+  { max: 0.2, name: t('Nüchtern'), tone: 'good', desc: t('Kaum messbare Wirkung.') },
+  { max: 0.5, name: t('Angeheitert'), tone: 'good', desc: t('Leicht enthemmt, Reaktionszeit beginnt sich zu verlängern.') },
+  { max: 1.0, name: t('Beschwipst'), tone: 'warn', desc: t('Konzentrations- und Sehstörungen, Selbstüberschätzung. Nicht mehr fahren!') },
+  { max: 1.5, name: t('Betrunken'), tone: 'warn', desc: t('Gleichgewicht und Sprache leiden deutlich, Reaktionszeit stark verlängert.') },
+  { max: 2.0, name: t('Schwer betrunken'), tone: 'bad', desc: t('Verwirrtheit, Orientierungslosigkeit, Übelkeit möglich.') },
+  { max: 3.0, name: t('Betäubung'), tone: 'bad', desc: t('Bewusstseinstrübung, Filmriss, Gleichgewichtsverlust. Ärztliche Hilfe erwägen.') },
+  { max: Infinity, name: t('Lebensgefahr'), tone: 'bad', desc: t('Gefahr von Bewusstlosigkeit und Atemlähmung — sofort Notruf wählen und die Person nicht allein lassen!') },
 ];
 export function bacStage(bac) { return BAC_STAGES.find(s => bac <= s.max); }

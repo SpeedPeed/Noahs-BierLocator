@@ -1,5 +1,7 @@
 // Bier-Bingo für unterwegs (DOM-frei, getestet in tests/): 3 × 3 Felder, die Mitte
 // ist frei. Gleicher Seed (z.B. Gruppencode) = gleiche Karte für alle in der Runde.
+// Die Karte enthält immer die deutschen Texte (Auswahl nach Reihenfolge, unabhängig von
+// der Sprache); übersetzt wird erst bei der Anzeige mit t() (Wörterbuch: lang/en-live.js).
 import { seededRandom } from './util.js';
 
 export const BINGO_TASKS = [

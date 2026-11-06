@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Modul-Check</title>
+<!-- Entwickler-Hilfe: lädt die Module aus ?f=js/a.js,js/b.js und meldet Syntax-/Importfehler. -->
+<pre id="out">läuft…</pre>
+<script>window.__BL_LANG = new URLSearchParams(location.search).get('lang') || 'en';</script>
+<script type="module">
+const files = (new URLSearchParams(location.search).get('f') || '').split(',').filter(Boolean);
+const lines = [];
+for (const f of files) {
+  try { await import('../' + f); lines.push('OK   ' + f); }
+  catch (e) { lines.push('ERR  ' + f + ' — ' + e.name + ': ' + e.message); }
+}
+document.getElementById('out').textContent = lines.join(String.fromCharCode(10)) || 'keine Dateien (?f=js/x.js)';
+</script>

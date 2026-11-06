@@ -26,6 +26,7 @@ import { openBingo, openSurprise } from './ui/funUi.js';
 import { initBadges } from './ui/badgesUi.js';
 import { showHeatmap, hideHeatmap } from './heatmap.js';
 import { yearStats } from './ui/wrappedUi.js';
+import { t, num, LANG, LANGS, setLang, translateDom, privacyPage } from './i18n.js';
 
 // Erster Start? (vor init prüfen, bevor die App selbst etwas speichert)
 const WELCOME_KEY = 'bl_welcome_v1';
@@ -49,7 +50,7 @@ function applyTheme(theme, persist = false) {
   const ti = $('#themeIcon');
   ti.dataset.icon = theme === 'dark' ? 'sun' : 'moon';
   hydrateIcons(ti.parentElement);
-  $('#themeLabel').textContent = theme === 'dark' ? 'Helles Design' : 'Dunkles Design';
+  $('#themeLabel').textContent = theme === 'dark' ? t('Helles Design') : t('Dunkles Design');
 }
 
 /* ---------- Standort ---------- */
@@ -57,7 +58,7 @@ async function setLocation(loc, { label = null, country = null, search = true, f
   state.location = { lat: loc.lat, lon: loc.lon, accuracy: loc.accuracy };
   mapview.setUserLocation(state.location);
   saveLastLocation({ lat: loc.lat, lon: loc.lon, label });
-  setLocLabel(label || 'Standort wird bestimmt…');
+  setLocLabel(label || t('Standort wird bestimmt…'));
   if (search) {
     mapview.setView(loc.lat, loc.lon, 15);
     searchAt(state.location, prefs.radius, { fit });
@@ -69,7 +70,7 @@ async function setLocation(loc, { label = null, country = null, search = true, f
     if (r) {
       if (!label) { setLocLabel(r.short); saveLastLocation({ lat: loc.lat, lon: loc.lon, label: r.short }); }
       if (r.country && !prefs.country && ['AT', 'DE', 'CH'].includes(r.country)) state.country = r.country;
-    } else if (!label) setLocLabel('Mein Standort');
+    } else if (!label) setLocLabel(t('Mein Standort'));
   }
 }
 function setLocLabel(text) {
@@ -84,7 +85,7 @@ async function locate() {
     const pos = await getPosition();
     await setLocation(pos);
   } catch (e) {
-    toast(e.message + ' Such stattdessen oben nach einem Ort.', { tone: 'bad', ms: 4500 });
+    toast(t('{msg} Such stattdessen oben nach einem Ort.', { msg: e.message }), { tone: 'bad', ms: 4500 });
     $('#searchInput').focus();
   } finally {
     btn.classList.remove('busy');
@@ -97,7 +98,7 @@ async function loadWeather(loc) {
     const w = state.weather.current;
     const chip = $('#weatherChip');
     chip.hidden = false;
-    const tag = isBiergartenWeather(w) ? 'Biergartenwetter!' : isRainy(w) ? 'lieber drinnen' : '';
+    const tag = isBiergartenWeather(w) ? t('Biergartenwetter!') : isRainy(w) ? t('lieber drinnen') : '';
     chip.innerHTML = `${icon(weatherIcon(w.code), { size: 16 })}<b>${Math.round(w.temperature)}°</b>${tag ? `<span>${tag}</span>` : ''}`;
     chip.classList.toggle('sunny', isBiergartenWeather(w));
     renderFinder();
@@ -132,9 +133,9 @@ function applyHeat(list) {
   const pts = gastro.length >= 3 ? gastro : all;
   const r = showHeatmap(pts);
   if (!r) { legend.hidden = true; return; }
-  const f = v => v.toFixed(2).replace('.', ',');
+  const f = v => num(v, 2);
   legend.hidden = false;
-  legend.innerHTML = `<b>Halbe</b><span>${f(r.hi)}</span><span class="hl-bar"></span><span>${f(r.lo)}</span><small>${r.n} Preise${pts === all && gastro.length < 3 ? ', inkl. Läden' : ''}</small>`;
+  legend.innerHTML = `<b>${t('Halbe')}</b><span>${f(r.hi)}</span><span class="hl-bar"></span><span>${f(r.lo)}</span><small>${pts === all && gastro.length < 3 ? t('{n} Preise, inkl. Läden', { n: r.n }) : t('{n} Preise', { n: r.n })}</small>`;
 }
 function toggleHeat() {
   prefs.heatmap = !prefs.heatmap;
@@ -143,7 +144,7 @@ function toggleHeat() {
   applyHeat(lastList);
   if (prefs.heatmap) {
     const n = lastList ? pricedPoints(lastList).length : 0;
-    toast(n >= 2 ? 'Preis-Heatmap an: grün = günstig, rot = teuer' : 'Preis-Heatmap an — hier gibt es aber noch kaum Preise. Melde welche!', { ms: 3500 });
+    toast(n >= 2 ? t('Preis-Heatmap an: grün = günstig, rot = teuer') : t('Preis-Heatmap an — hier gibt es aber noch kaum Preise. Melde welche!'), { ms: 3500 });
   }
 }
 
@@ -186,7 +187,7 @@ function initMenu() {
   on('backup-export', () => {
     const data = exportBundle({ community: exportLocalCommunity() });
     downloadFile(`bierlocator-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(data, null, 2), 'application/json');
-    toast('Daten exportiert', { tone: 'good' });
+    toast(t('Daten exportiert'), { tone: 'good' });
   });
   on('backup-import', () => $('#importFile').click());
   $('#importFile').addEventListener('change', e => {
@@ -199,10 +200,10 @@ function initMenu() {
         importBundle(payload);
         if (payload.community) importLocalCommunity(payload.community);
         if (payload.localData) importLocalCommunity(convertLegacy(payload.localData));
-        toast('Daten importiert — lädt neu…', { tone: 'good' });
+        toast(t('Daten importiert — lädt neu…'), { tone: 'good' });
         setTimeout(() => location.reload(), 900);
       } catch (err) {
-        toast('Import fehlgeschlagen: ' + err.message, { tone: 'bad' });
+        toast(t('Import fehlgeschlagen: {msg}', { msg: err.message }), { tone: 'bad' });
       }
     };
     reader.readAsText(f);
@@ -221,33 +222,37 @@ function convertLegacy(localData) {
 function openAbout() {
   $('#aboutBody').innerHTML = `
     <h2 id="aboutTitle" class="dlg-title">${icon('beerMug', { size: 22 })}Bier-Locator</h2>
-    <p>Findet Kneipen, Biergärten, Brauereien und Läden in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.</p>
+    <p>${t('Findet Kneipen, Biergärten, Brauereien und Läden in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.')}</p>
     <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 18 })}<div>${isShared()
-      ? '<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.'
-      : '<b>Lokaler Modus:</b> Preise & Bewertungen bleiben auf diesem Gerät. Für geteilte Preise muss ein Supabase-Projekt eingetragen werden (siehe README).'}</div></div>
+      ? t('<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.')
+      : t('<b>Lokaler Modus:</b> Preise & Bewertungen bleiben auf diesem Gerät. Für geteilte Preise muss ein Supabase-Projekt eingetragen werden (siehe README).')}</div></div>
     ${/android/i.test(navigator.userAgent) && !document.referrer.startsWith('android-app://') && !matchMedia('(display-mode: standalone)').matches
-      ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 18 })}Android-App herunterladen</a><p class="fine center">Läuft wie eine normale App, aktualisiert sich von selbst.</p>` : ''}
-    <h3 class="pd-h">${icon('map', { size: 16 })}Datenquellen</h3>
+      ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 18 })}${t('Android-App herunterladen')}</a><p class="fine center">${t('Läuft wie eine normale App, aktualisiert sich von selbst.')}</p>` : ''}
+    <h3 class="pd-h">${icon('map', { size: 16 })}${t('Datenquellen')}</h3>
     <ul class="about-list">
-      <li><b>Orte:</b> OpenStreetMap via Overpass API</li>
-      <li><b>Karte:</b> Stadia Maps · © OpenMapTiles · © OpenStreetMap-Mitwirkende</li>
-      <li><b>Suche:</b> Photon (Komoot)</li>
-      <li><b>Radrouten:</b> BRouter (Fallback: OSRM/FOSSGIS)</li>
-      <li><b>Wetter:</b> Open-Meteo</li>
+      <li>${t('<b>Orte:</b> OpenStreetMap via Overpass API')}</li>
+      <li>${t('<b>Karte:</b> Stadia Maps · © OpenMapTiles · © OpenStreetMap-Mitwirkende')}</li>
+      <li>${t('<b>Suche:</b> Photon (Komoot)')}</li>
+      <li>${t('<b>Radrouten:</b> BRouter (Fallback: OSRM/FOSSGIS)')}</li>
+      <li>${t('<b>Wetter:</b> Open-Meteo')}</li>
     </ul>
-    <h3 class="pd-h">${icon('info', { size: 16 })}Tipps</h3>
+    <h3 class="pd-h">${icon('info', { size: 16 })}${t('Tipps')}</h3>
     <ul class="about-list">
-      <li>Doppeltipp auf einen Ortstyp zeigt nur diesen Typ.</li>
-      <li>Karte verschieben → „In diesem Bereich suchen“.</li>
-      <li>In der Tour lassen sich einzelne Stopps tauschen oder entfernen — „Los geht's“ startet die Live-Tour, deren Zeitplan sich mitbewegt.</li>
-      <li>Lieblingssorte unter „Umkreis &amp; Vorlieben“ eintragen → Aktionen in der Nähe erscheinen von selbst.</li>
-      <li>„Meine Runde“ im Menü: Biere zählen, Runden abrechnen, über Stopps abstimmen.</li>
-      <li>Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.</li>
-      <li>Taste <kbd>/</kbd> springt in die Suche.</li>
+      <li>${t('Doppeltipp auf einen Ortstyp zeigt nur diesen Typ.')}</li>
+      <li>${t('Karte verschieben → „In diesem Bereich suchen“.')}</li>
+      <li>${t('In der Tour lassen sich einzelne Stopps tauschen oder entfernen — „Los geht\'s“ startet die Live-Tour, deren Zeitplan sich mitbewegt.')}</li>
+      <li>${t('Lieblingssorte unter „Umkreis &amp; Vorlieben“ eintragen → Aktionen in der Nähe erscheinen von selbst.')}</li>
+      <li>${t('„Meine Runde“ im Menü: Biere zählen, Runden abrechnen, über Stopps abstimmen.')}</li>
+      <li>${t('Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.')}</li>
+      <li>${t('Taste <kbd>/</kbd> springt in die Suche.')}</li>
     </ul>
-    <p class="fine">Online-Preise ohne Gewähr — der Bier-Locator steht in keiner Verbindung zu den Händlern.</p>
-    <p class="fine">Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.</p>
-    <p class="fine center"><a href="datenschutz.html">Datenschutz &amp; Impressum</a></p>`;
+    <p class="fine">${t('Online-Preise ohne Gewähr — der Bier-Locator steht in keiner Verbindung zu den Händlern.')}</p>
+    <p class="fine">${t('Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.')}</p>
+    <p class="fine center"><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>
+    <label class="lang-pick">${icon('globe', { size: 15 })}${t('Sprache')} / Language
+      <select id="langSelect">${Object.entries(LANGS).map(([k, v]) => `<option value="${k}"${k === LANG ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </label>`;
+  $('#langSelect').onchange = e => setLang(e.target.value);
   openDialog($('#aboutDialog'));
 }
 
@@ -255,16 +260,16 @@ function openAbout() {
 function showWelcome() {
   const dlg = $('#welcomeDialog');
   $('#welcomeBody').innerHTML = `
-    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 24 })}Willkommen beim Bier-Locator</h2>
+    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 24 })}${t('Willkommen beim Bier-Locator')}</h2>
     <ul class="welcome-list">
-      <li>${icon('map', { size: 20 })}<span><b>Bier in der Nähe:</b> Kneipen, Biergärten, Brauereien &amp; Läden mit Öffnungszeiten und Preisen.</span></li>
-      <li>${icon('bike', { size: 20 })}<span><b>Radtouren:</b> gleichmäßige Bier-Runden planen und live mitfahren.</span></li>
-      <li>${icon('users', { size: 20 })}<span><b>Mit Freunden:</b> Biere zählen, Runden abrechnen, über den nächsten Stopp abstimmen.</span></li>
+      <li>${icon('map', { size: 20 })}<span>${t('<b>Bier in der Nähe:</b> Kneipen, Biergärten, Brauereien &amp; Läden mit Öffnungszeiten und Preisen.')}</span></li>
+      <li>${icon('bike', { size: 20 })}<span>${t('<b>Radtouren:</b> gleichmäßige Bier-Runden planen und live mitfahren.')}</span></li>
+      <li>${icon('users', { size: 20 })}<span>${t('<b>Mit Freunden:</b> Biere zählen, Runden abrechnen, über den nächsten Stopp abstimmen.')}</span></li>
     </ul>
-    <div class="notice">${icon('locate', { size: 18 })}<div>Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.</div></div>
-    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 18 })}Standort verwenden</button>
-    <button class="btn btn-soft welcome-skip" data-close>Erst mal umschauen</button>
-    <p class="fine center">Für Erwachsene. Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht, auch nicht mit dem Rad.<br><a href="datenschutz.html">Datenschutz &amp; Impressum</a></p>`;
+    <div class="notice">${icon('locate', { size: 18 })}<div>${t('Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.')}</div></div>
+    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 18 })}${t('Standort verwenden')}</button>
+    <button class="btn btn-soft welcome-skip" data-close>${t('Erst mal umschauen')}</button>
+    <p class="fine center">${t('Für Erwachsene. Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht, auch nicht mit dem Rad.')}<br><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
   dlg.addEventListener('close', () => { try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ } }, { once: true });
   $('#welcomeLocate').onclick = () => { closeDialog(dlg); locate(); };
   openDialog(dlg);
@@ -301,7 +306,7 @@ function registerSW() {
       if (!nw) return;
       nw.addEventListener('statechange', () => {
         if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-          toast('Neue Version verfügbar', { action: { label: 'Neu laden', run: () => location.reload() }, ms: 8000 });
+          toast(t('Neue Version verfügbar'), { action: { label: t('Neu laden'), run: () => location.reload() }, ms: 8000 });
         }
       });
     });
@@ -316,11 +321,12 @@ function wrappedTeaser() {
   const flag = `bl_wrapped_seen_${year}`;
   if (localStorage.getItem(flag)) return;
   if (yearStats(year).beers < 5) return;
-  setTimeout(() => toast(`Dein Bier-Jahr ${year} ist fertig 🍺`, { tone: 'good', ms: 9000, action: { label: 'Ansehen', run: () => { localStorage.setItem(flag, '1'); openDiary(null, 'year'); } } }), 4000);
+  setTimeout(() => toast(t('Dein Bier-Jahr {year} ist fertig 🍺', { year }), { tone: 'good', ms: 9000, action: { label: t('Ansehen'), run: () => { localStorage.setItem(flag, '1'); openDiary(null, 'year'); } } }), 4000);
 }
 
 /* ---------- Start ---------- */
 async function init() {
+  translateDom();
   hydrateIcons();
   mapview.initMap({ onMoveEnd: onMapMoved });
   applyTheme(currentTheme());
@@ -387,14 +393,14 @@ async function init() {
   registerSW();
   initSync();
   initAlerts();
-  on('sync-changed', () => { renderFinder(); toast('Daten von deinem anderen Gerät übernommen', { tone: 'good', ms: 2200 }); });
+  on('sync-changed', () => { renderFinder(); toast(t('Daten von deinem anderen Gerät übernommen'), { tone: 'good', ms: 2200 }); });
   $('#btnGroup').addEventListener('click', openGroupMenu);
   const g = activeGroup();
-  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}Runde ${g.code}`;
+  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}${t('Runde {code}', { code: g.code })}`;
   wrappedTeaser();
   $('#beerList').innerHTML = diaryBeerSuggestions().map(b => `<option value="${b.replace(/"/g, '&quot;')}">`).join('');
   setTimeout(() => checkAlerts().catch(() => {}), 2500);
-  if (isShared()) migrateLocalToShared().then(n => { if (n) toast(`${n} lokale Preise mit der Community geteilt`, { tone: 'good' }); }).catch(() => {});
+  if (isShared()) migrateLocalToShared().then(n => { if (n) toast(t('{n} lokale Preise mit der Community geteilt', { n }), { tone: 'good' }); }).catch(() => {});
 
   // Startpunkt: Link > letzter Standort > (falls erlaubt) GPS
   if (await handleHash()) return;

@@ -7,13 +7,14 @@ import { BEER_SUGGESTIONS } from '../prices.js';
 import { TYPE_META } from '../places.js';
 import { decodeTour } from '../share.js';
 import { icon } from '../icons.js';
-import { escapeHtml, fmtKm } from '../util.js';
+import { escapeHtml, fmtKm, fmtClock } from '../util.js';
+import { t, num, LOCALE } from '../i18n.js';
 import { $, openDialog, closeDialog, toast, animateNumber } from './dom.js';
 import { badgesHtml } from './badgesUi.js';
 import { wrappedHtml, renderWrapped, shareWrapped, yearsWithData } from './wrappedUi.js';
 
-const SIZES = { 330: '0,33 l', 500: '0,5 l', 1000: '1 l (Maß)', 250: '0,25 l (Seidl)', 300: '0,3 l (Pfiff)' };
-const TABS = { beers: 'Biere', tours: 'Touren', badges: 'Erfolge', year: 'Rückblick' };
+const SIZES = { 330: t('0,33 l'), 500: t('0,5 l'), 1000: t('1 l (Maß)'), 250: t('0,25 l (Seidl)'), 300: t('0,3 l (Pfiff)') };
+const TABS = { beers: t('Biere'), tours: t('Touren'), badges: t('Erfolge'), year: t('Rückblick') };
 let prefill = null;
 let tab = 'beers';
 let wrapYear = new Date().getFullYear();
@@ -31,7 +32,7 @@ export function openDiary(place = null, startTab = null) {
 }
 
 const live = () => loadDiary().filter(e => !e.deleted);
-const dayKey = ts => new Date(ts).toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const dayKey = ts => new Date(ts).toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 function stats(list) {
   const beers = new Map(), places = new Map();
@@ -56,7 +57,7 @@ function stats(list) {
 
 function render(animate = false) {
   $('#diaryBody').innerHTML = `
-    <h2 class="dlg-title" id="diaryTitle">${icon('book', { size: 22 })}Bier-Tagebuch</h2>
+    <h2 class="dlg-title" id="diaryTitle">${icon('book', { size: 22 })}${t('Bier-Tagebuch')}</h2>
     <div class="segmented diary-tabs" role="tablist">${Object.entries(TABS).map(([k, l]) => `<button role="tab" data-dtab="${k}" aria-checked="${tab === k}">${l}</button>`).join('')}</div>
     <div id="diaryPane">${tab === 'tours' ? toursHtml() : tab === 'badges' ? badgesHtml() : tab === 'year' ? wrappedHtml(yearsWithData(), wrapYear) : beersHtml()}</div>`;
   $('#diaryBody').querySelectorAll('[data-dtab]').forEach(b => b.onclick = () => { tab = b.dataset.dtab; render(true); });
@@ -78,43 +79,43 @@ function beersHtml() {
   }
   return `
     <form class="diary-form" id="diaryForm">
-      ${p ? `<div class="diary-place" style="--c:${TYPE_META[p.type]?.color || 'var(--accent)'}">${icon(TYPE_META[p.type]?.icon || 'pin', { size: 16 })}<span>${escapeHtml(p.name)}</span><button type="button" class="icon-btn small" id="diaryNoPlace" aria-label="Ort entfernen">${icon('x', { size: 14 })}</button></div>` : ''}
+      ${p ? `<div class="diary-place" style="--c:${TYPE_META[p.type]?.color || 'var(--accent)'}">${icon(TYPE_META[p.type]?.icon || 'pin', { size: 16 })}<span>${escapeHtml(p.name)}</span><button type="button" class="icon-btn small" id="diaryNoPlace" aria-label="${t('Ort entfernen')}">${icon('x', { size: 14 })}</button></div>` : ''}
       <div class="diary-row">
-        <input id="diaryBeer" name="beer" list="beerList" placeholder="Was trinkst du?" maxlength="60" required autocomplete="off">
-        <select name="ml" aria-label="Menge">${Object.entries(SIZES).map(([ml, l]) => `<option value="${ml}" ${ml === '500' ? 'selected' : ''}>${l}</option>`).join('')}</select>
+        <input id="diaryBeer" name="beer" list="beerList" placeholder="${t('Was trinkst du?')}" maxlength="60" required autocomplete="off">
+        <select name="ml" aria-label="${t('Menge')}">${Object.entries(SIZES).map(([ml, l]) => `<option value="${ml}" ${ml === '500' ? 'selected' : ''}>${l}</option>`).join('')}</select>
       </div>
       <div class="diary-row">
-        <div class="star-input small" id="diaryStars" role="radiogroup" aria-label="Bewertung">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-n="${n}" aria-label="${n} Sterne">${icon('star', { size: 24, filled: true })}</button>`).join('')}</div>
-        <label class="switch-row small"><input type="checkbox" class="switch" name="bac" checked><span>Promille-Rechner</span></label>
+        <div class="star-input small" id="diaryStars" role="radiogroup" aria-label="${t('Bewertung')}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-n="${n}" aria-label="${t('{n} Sterne', { n })}">${icon('star', { size: 24, filled: true })}</button>`).join('')}</div>
+        <label class="switch-row small"><input type="checkbox" class="switch" name="bac" checked><span>${t('Promille-Rechner')}</span></label>
       </div>
-      <input name="note" placeholder="Notiz (optional)" maxlength="140" autocomplete="off">
-      <button class="btn btn-primary" type="submit">${icon('plus', { size: 17 })}Eintragen</button>
+      <input name="note" placeholder="${t('Notiz (optional)')}" maxlength="140" autocomplete="off">
+      <button class="btn btn-primary" type="submit">${icon('plus', { size: 17 })}${t('Eintragen')}</button>
     </form>
 
     ${st.total ? `
     <div class="stat-grid diary-stats">
-      <div class="stat stat-hero"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b data-num="${st.total}">0</b><small>Biere</small></div>
-      <div class="stat"><span class="stat-ico">${icon('droplet', { size: 18 })}</span><b>${st.liters.toFixed(1).replace('.', ',')} l</b><small>insgesamt</small></div>
-      <div class="stat"><span class="stat-ico">${icon('tag', { size: 18 })}</span><b>${st.uniqueBeers}</b><small>Sorten</small></div>
-      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${st.uniquePlaces}</b><small>Orte</small></div>
-      <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${st.days}</b><small>Biertage</small></div>
-      <div class="stat"><span class="stat-ico">${icon('flame', { size: 18 })}</span><b>${st.streak}</b><small>Tage in Folge (Rekord)</small></div>
+      <div class="stat stat-hero"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b data-num="${st.total}">0</b><small>${t('Biere')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('droplet', { size: 18 })}</span><b>${num(st.liters, 1)} l</b><small>${t('insgesamt')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('tag', { size: 18 })}</span><b>${st.uniqueBeers}</b><small>${t('Sorten')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${st.uniquePlaces}</b><small>${t('Orte')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${st.days}</b><small>${t('Biertage')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('flame', { size: 18 })}</span><b>${st.streak}</b><small>${t('Tage in Folge (Rekord)')}</small></div>
     </div>
     <div class="diary-tops">
-      ${st.topBeers.length ? `<div><h3 class="pd-h">${icon('star', { size: 15 })}Lieblingsbiere</h3><ol>${st.topBeers.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
-      ${st.topPlaces.length ? `<div><h3 class="pd-h">${icon('pin', { size: 15 })}Stammlokale</h3><ol>${st.topPlaces.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
+      ${st.topBeers.length ? `<div><h3 class="pd-h">${icon('star', { size: 15 })}${t('Lieblingsbiere')}</h3><ol>${st.topBeers.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
+      ${st.topPlaces.length ? `<div><h3 class="pd-h">${icon('pin', { size: 15 })}${t('Stammlokale')}</h3><ol>${st.topPlaces.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
     </div>
     <div class="diary-list">${groups.map(g => `
       <h4>${g.k}</h4>
       <ul>${g.items.map(e => `<li>
-        <span class="dl-time">${new Date(e.at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</span>
+        <span class="dl-time">${fmtClock(new Date(e.at))}</span>
         <div class="dl-main"><b>${escapeHtml(e.beer)}</b> <small>${SIZES[e.ml] || ''}</small>
           ${e.placeName ? `<small class="dl-place">${icon('pin', { size: 12 })}${escapeHtml(e.placeName)}</small>` : ''}
           ${e.note ? `<small class="dl-note">${escapeHtml(e.note)}</small>` : ''}</div>
         ${e.stars ? `<span class="mini-stars" style="--v:${e.stars * 20}%">★★★★★</span>` : ''}
-        <button class="icon-btn small" data-del="${e.id}" aria-label="Eintrag löschen">${icon('trash', { size: 14 })}</button>
+        <button class="icon-btn small" data-del="${e.id}" aria-label="${t('Eintrag löschen')}">${icon('trash', { size: 14 })}</button>
       </li>`).join('')}</ul>`).join('')}</div>`
-    : `<div class="empty small"><div class="empty-art">${icon('book', { size: 40, strokeWidth: 1.4 })}</div><h3>Noch leer</h3><p>Trag dein erstes Bier ein — oder tippe bei einem Lokal auf „Einchecken“.</p></div>`}`;
+    : `<div class="empty small"><div class="empty-art">${icon('book', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch leer')}</h3><p>${t('Trag dein erstes Bier ein — oder tippe bei einem Lokal auf „Einchecken“.')}</p></div>`}`;
 }
 
 function wireBeers(animate) {
@@ -148,7 +149,7 @@ function wireBeers(animate) {
       bac.log.push({ label: `${beer} ${SIZES[ml] || ''}`.trim(), volume: ml, abv, kcal100: 43, qty: 1, timestamp: now });
       saveBac(bac);
     }
-    toast(`Prost! ${escapeHtml(beer)} eingetragen 🍺`, { tone: 'good', ms: 2000 });
+    toast(t('Prost! {beer} eingetragen 🍺', { beer: escapeHtml(beer) }), { tone: 'good', ms: 2000 });
     emit('diary-added', entry);
     render(true);
   };
@@ -174,41 +175,41 @@ function trackSvg(track) {
 
 function toursHtml() {
   const list = loadTours().filter(t => !t.deleted).sort((a, b) => b.at - a.at);
-  if (!list.length) return `<div class="empty small"><div class="empty-art">${icon('bike', { size: 40, strokeWidth: 1.4 })}</div><h3>Noch keine Tour</h3><p>Plane eine Bier-Radtour und tipp auf „Los geht's“ — am Ende landet sie hier, mit Strecke, Stopps und Mitfahrenden.</p></div>`;
+  if (!list.length) return `<div class="empty small"><div class="empty-art">${icon('bike', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch keine Tour')}</h3><p>${t("Plane eine Bier-Radtour und tipp auf „Los geht's“ — am Ende landet sie hier, mit Strecke, Stopps und Mitfahrenden.")}</p></div>`;
   const km = list.reduce((s, t) => s + (t.km || 0), 0);
   return `
     <div class="stat-grid diary-stats">
-      <div class="stat stat-hero"><span class="stat-ico">${icon('bike', { size: 18 })}</span><b>${list.length}</b><small>Touren</small></div>
-      <div class="stat"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(km * 1000, 0)} km</b><small>geradelt</small></div>
-      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${list.reduce((s, t) => s + t.stops.filter(x => x.visited !== false).length, 0)}</b><small>Stopps</small></div>
+      <div class="stat stat-hero"><span class="stat-ico">${icon('bike', { size: 18 })}</span><b>${list.length}</b><small>${t('Touren')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(km * 1000, 0)} km</b><small>${t('geradelt')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${list.reduce((s, t) => s + t.stops.filter(x => x.visited !== false).length, 0)}</b><small>${t('Stopps')}</small></div>
     </div>
-    <ul class="tour-list">${list.map(t => `<li>
-      ${trackSvg(t.track)}
+    <ul class="tour-list">${list.map(tour => `<li>
+      ${trackSvg(tour.track)}
       <div class="tl-main">
-        <b>${new Date(t.at).toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · ${String(t.km).replace('.', ',')} km</b>
-        <small>${t.stops.map(s => escapeHtml(s.name)).join(' · ')}</small>
-        ${t.mates && t.mates.length ? `<small>${icon('users', { size: 12 })} mit ${t.mates.map(escapeHtml).join(', ')}</small>` : ''}
-        ${t.beers ? `<small>${icon('beerMug', { size: 12 })} ${t.beers} Bier${t.beers === 1 ? '' : 'e'} eingecheckt</small>` : ''}
+        <b>${new Date(tour.at).toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · ${Number(tour.km).toLocaleString(LOCALE)} km</b>
+        <small>${tour.stops.map(s => escapeHtml(s.name)).join(' · ')}</small>
+        ${tour.mates && tour.mates.length ? `<small>${icon('users', { size: 12 })} ${t('mit {names}', { names: tour.mates.map(escapeHtml).join(', ') })}</small>` : ''}
+        ${tour.beers ? `<small>${icon('beerMug', { size: 12 })} ${tour.beers === 1 ? t('1 Bier eingecheckt') : t('{n} Biere eingecheckt', { n: tour.beers })}</small>` : ''}
       </div>
       <div class="tl-btns">
-        ${t.link ? `<button class="icon-btn small" data-again="${t.id}" aria-label="Nochmal fahren" title="Nochmal fahren">${icon('refresh', { size: 16 })}</button>` : ''}
-        <button class="icon-btn small" data-deltour="${t.id}" aria-label="Tour löschen">${icon('trash', { size: 14 })}</button>
+        ${tour.link ? `<button class="icon-btn small" data-again="${tour.id}" aria-label="${t('Nochmal fahren')}" title="${t('Nochmal fahren')}">${icon('refresh', { size: 16 })}</button>` : ''}
+        <button class="icon-btn small" data-deltour="${tour.id}" aria-label="${t('Tour löschen')}">${icon('trash', { size: 14 })}</button>
       </div>
     </li>`).join('')}</ul>`;
 }
 
 function wireTours() {
   document.querySelectorAll('#diaryBody [data-again]').forEach(b => b.onclick = () => {
-    const t = loadTours().find(x => x.id === b.dataset.again);
-    const hash = t && t.link && t.link.split('#tour=')[1];
+    const tour = loadTours().find(x => x.id === b.dataset.again);
+    const hash = tour && tour.link && tour.link.split('#tour=')[1];
     const decoded = hash && decodeTour(decodeURIComponent(hash));
-    if (!decoded) { toast('Diese Tour lässt sich nicht mehr laden.', { tone: 'bad' }); return; }
+    if (!decoded) { toast(t('Diese Tour lässt sich nicht mehr laden.'), { tone: 'bad' }); return; }
     closeDialog($('#diaryDialog'));
     loadTourFn(decoded);
   });
   document.querySelectorAll('#diaryBody [data-deltour]').forEach(b => b.onclick = () => {
     deleteTour(b.dataset.deltour);
-    toast('Tour gelöscht');
+    toast(t('Tour gelöscht'));
     render();
   });
 }

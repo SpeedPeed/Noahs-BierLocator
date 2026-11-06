@@ -8,6 +8,7 @@ import { icon } from '../icons.js';
 import { escapeHtml, fmtDist } from '../util.js';
 import { toast, openMisc, closeMisc, confetti, reducedMotion } from './dom.js';
 import { activeGroup } from './groupUi.js';
+import { t } from '../i18n.js';
 
 /* ---------- Bier-Bingo ---------- */
 const BINGO = 'bl_bingo_v1'; // { [seed]: { marks: [9], best: n } }
@@ -43,12 +44,12 @@ function renderBingo(seed) {
   const lines = completeLines(rec.marks);
   const inLine = new Set(lines.flat());
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('grid', { size: 22 })}Bier-Bingo</h2>
-    <p class="fine">${activeGroup() ? 'Alle in deiner Runde haben dieselbe Karte — wer hat zuerst eine Reihe?' : 'Tipp an, was auf der Tour passiert. Drei in einer Reihe = Bingo!'}</p>
-    <div class="bingo" role="grid">${cells.map((c, i) => `<button class="bingo-cell${rec.marks[i] || i === 4 ? ' on' : ''}${inLine.has(i) ? ' line' : ''}${i === 4 ? ' free' : ''}" data-cell="${i}" ${i === 4 ? 'disabled' : ''}>${escapeHtml(c)}</button>`).join('')}</div>
+    <h2 class="dlg-title">${icon('grid', { size: 22 })}${t('Bier-Bingo')}</h2>
+    <p class="fine">${activeGroup() ? t('Alle in deiner Runde haben dieselbe Karte — wer hat zuerst eine Reihe?') : t('Tipp an, was auf der Tour passiert. Drei in einer Reihe = Bingo!')}</p>
+    <div class="bingo" role="grid">${cells.map((c, i) => `<button class="bingo-cell${rec.marks[i] || i === 4 ? ' on' : ''}${inLine.has(i) ? ' line' : ''}${i === 4 ? ' free' : ''}" data-cell="${i}" ${i === 4 ? 'disabled' : ''}>${escapeHtml(t(c))}</button>`).join('')}</div>
     <div class="row-btns">
-      <span class="bingo-count">${lines.length ? `${icon('star', { size: 16 })}${lines.length} Reihe${lines.length === 1 ? '' : 'n'}` : ''}</span>
-      <button class="btn btn-soft" id="bingoNew">${icon('shuffle', { size: 16 })}Neue Karte</button>
+      <span class="bingo-count">${lines.length ? `${icon('star', { size: 16 })}${lines.length === 1 ? t('1 Reihe') : t('{n} Reihen', { n: lines.length })}` : ''}</span>
+      <button class="btn btn-soft" id="bingoNew">${icon('shuffle', { size: 16 })}${t('Neue Karte')}</button>
     </div>`);
   body.querySelectorAll('[data-cell]').forEach(b => b.onclick = () => {
     const i = Number(b.dataset.cell);
@@ -58,7 +59,7 @@ function renderBingo(seed) {
       rec.best = n;
       bumpStat('bingos');
       confetti(60);
-      toast(n === LINES.length ? 'VOLLE KARTE! 🍻🍻🍻' : 'BINGO! 🍻', { tone: 'good' });
+      toast(n === LINES.length ? t('VOLLE KARTE! 🍻🍻🍻') : 'BINGO! 🍻', { tone: 'good' });
       emit('bingo');
     }
     const store = loadBingo();
@@ -86,7 +87,7 @@ function candidates() {
 
 export function openSurprise(openPlace) {
   const list = candidates();
-  if (list.length < 2) { toast('Erst oben einen Ort suchen oder den Standort teilen — dann dreht sich das Rad.'); return; }
+  if (list.length < 2) { toast(t('Erst oben einen Ort suchen oder den Standort teilen — dann dreht sich das Rad.')); return; }
   const n = list.length;
   const seg = 360 / n;
   const R = 140;
@@ -100,13 +101,13 @@ export function openSurprise(openPlace) {
       <text transform="rotate(${mid - 90} 150 150) translate(${150 + 62} ${150 + 4})" class="wheel-t">${escapeHtml(name)}</text>`;
   }).join('');
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('dice', { size: 22 })}Überrasch mich</h2>
+    <h2 class="dlg-title">${icon('dice', { size: 22 })}${t('Überrasch mich')}</h2>
     <div class="wheel-wrap">
       <span class="wheel-pin" aria-hidden="true"></span>
-      <svg class="wheel" id="wheel" viewBox="0 0 300 300" role="img" aria-label="Glücksrad mit ${n} Lokalen">${slices}<circle cx="150" cy="150" r="22" class="wheel-hub"/></svg>
+      <svg class="wheel" id="wheel" viewBox="0 0 300 300" role="img" aria-label="${t('Glücksrad mit {n} Lokalen', { n })}">${slices}<circle cx="150" cy="150" r="22" class="wheel-hub"/></svg>
     </div>
-    <div id="wheelResult" class="wheel-result"><p class="fine center">Das Rad wählt ein offenes Lokal in deiner Nähe.</p></div>
-    <button class="btn btn-primary btn-big" id="wheelSpin">${icon('shuffle', { size: 18 })}Drehen!</button>`);
+    <div id="wheelResult" class="wheel-result"><p class="fine center">${t('Das Rad wählt ein offenes Lokal in deiner Nähe.')}</p></div>
+    <button class="btn btn-primary btn-big" id="wheelSpin">${icon('shuffle', { size: 18 })}${t('Drehen!')}</button>`);
   let angle = 0;
   const spin = () => {
     const btn = body.querySelector('#wheelSpin');
@@ -120,7 +121,7 @@ export function openSurprise(openPlace) {
     wheel.style.transform = `rotate(${angle}deg)`;
     const done = () => {
       btn.disabled = false;
-      btn.innerHTML = `${icon('shuffle', { size: 18 })}Nochmal drehen`;
+      btn.innerHTML = `${icon('shuffle', { size: 18 })}${t('Nochmal drehen')}`;
       const x = list[pick];
       const b = statusBadge(x.st);
       const m = TYPE_META[x.p.type];
@@ -131,7 +132,7 @@ export function openSurprise(openPlace) {
           <div><b>${escapeHtml(x.p.name)}</b><small>${m.short} · ${fmtDist(x.p.distance)} · <span class="status-${b.tone}">${b.text}</span></small></div>
         </div>
         <div class="row-btns">
-          <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=${x.p.lat},${x.p.lon}" target="_blank" rel="noopener">${icon('compass', { size: 16 })}Hin da!</a>
+          <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=${x.p.lat},${x.p.lon}" target="_blank" rel="noopener">${icon('compass', { size: 16 })}${t('Hin da!')}</a>
           <button class="btn btn-soft" id="wheelDetails">${icon('info', { size: 16 })}Details</button>
         </div>`;
       body.querySelector('#wheelDetails').onclick = () => { closeMisc(); openPlace(x.p.id); };

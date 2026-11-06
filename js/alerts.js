@@ -1,11 +1,12 @@
 // Preisalarme: "Sag mir, wenn ein Kasten Zipfer unter 16 € kostet."
 // Die gleiche Logik steckt in scripts/send_alerts.py (Push-Versand per GitHub-Job).
+import { t } from './i18n.js';
 
 export const KINDS = {
-  any: 'egal',
-  single: 'Flasche/Dose',
-  pack: 'Sixpack/Tray',
-  crate: 'Kiste',
+  any: t('egal'),
+  single: t('Flasche/Dose'),
+  pack: t('Sixpack/Tray'),
+  crate: t('Kiste'),
 };
 
 function kindOf(p) {

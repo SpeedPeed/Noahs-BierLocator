@@ -10,6 +10,9 @@ Android-App (TWA, zeigt die Live-Seite). **Alles, was auf `main` landet, ist sof
   keine neuen dauerhaft sichtbaren Knöpfe.
 - Reines HTML/CSS/JS mit ES-Modulen, **kein Build-Schritt**. Keine Frameworks einführen.
 - Neue/umbenannte JS-Dateien in `sw.js` (`SHELL_FILES`) eintragen und `VERSION` erhöhen.
+- Zweisprachig (Deutsch/Englisch, `js/i18n.js`): Neue sichtbare Texte deutsch in `t('…')` schreiben und die
+  englische Übersetzung im passenden `js/lang/en-*.js` ergänzen. Zahlen mit `num()`/`money()`, Daten mit `LOCALE`.
+  Statische Texte in `index.html` brauchen nur den Wörterbuch-Eintrag. Der deutsche Text ist der Schlüssel.
 - Lokal starten: `python scripts/serve.py` → http://localhost:8000, Tests: http://localhost:8000/tests/
   (DOM-freie Logik bekommt Tests in `tests/run.js`).
 

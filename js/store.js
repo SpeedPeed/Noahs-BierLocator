@@ -1,6 +1,7 @@
 // Persönliche Daten im Browser (localStorage): Vorlieben, Favoriten, ausgeblendete
 // Orte, Theme, Promille-Log, letzter Standort. Geteilte Preise/Bewertungen liegen
 // in community.js.
+import { t } from './i18n.js';
 
 const KEYS = {
   prefs: 'bl_prefs_v2',
@@ -189,7 +190,7 @@ export function exportBundle(extra = {}) {
   return { app: 'bier-locator', version: 2, exportedAt: new Date().toISOString(), prefs, personal, bac: loadBac(), ...extra };
 }
 export function importBundle(payload) {
-  if (!payload || typeof payload !== 'object') throw new Error('Keine gültige Datei');
+  if (!payload || typeof payload !== 'object') throw new Error(t('Keine gültige Datei'));
   if (payload.version === 2) {
     if (payload.prefs) Object.assign(prefs, payload.prefs);
     if (payload.personal) Object.assign(personal, payload.personal);
@@ -202,7 +203,7 @@ export function importBundle(payload) {
     const p = payload.prefs;
     if (p) Object.assign(prefs, { beerType: p.beerType || '', maxPrice: p.maxPrice ?? null, radius: p.radius || 1000, biergartenPref: !!p.biergartenPref });
   } else {
-    throw new Error('Unbekanntes Format');
+    throw new Error(t('Unbekanntes Format'));
   }
   savePrefs();
   write(KEYS.personal, personal);

@@ -3,10 +3,11 @@
 // Monatsbereiche, offenes Ende "18:00+", mehrere Regeln mit ";" und ",").
 // Alles, was nicht sicher verstanden wird (sunrise, week, Mo[1] …), liefert
 // "unbekannt" (null) statt einer falschen Aussage.
+import { t } from './i18n.js';
 
 const DAY_TOKENS = { Mo: 0, Tu: 1, We: 2, Th: 3, Fr: 4, Sa: 5, Su: 6 };
 const MONTH_TOKENS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-export const DAY_LABELS = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+export const DAY_LABELS = [t('Mo'), t('Di'), t('Mi'), t('Do'), t('Fr'), t('Sa'), t('So')]; // nur Anzeige
 const OPEN_END_MINUTES = 6 * 60; // "18:00+" → wir nehmen grob 6 Stunden an
 
 /* ---------- Feiertage (bundesweit/landesweit, ohne Regionalfeiertage) ---------- */
@@ -262,8 +263,8 @@ export function weekSchedule(ohString, ref = new Date(), country = 'DE') {
   return DAY_LABELS.map((label, i) => {
     const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
     const ivs = dayIntervals(oh, d, country).slice().sort((a, b) => a.s - b.s);
-    const text = !ivs.length ? 'geschlossen'
-      : ivs.some(v => v.s === 0 && v.e >= 1440) ? 'durchgehend'
+    const text = !ivs.length ? t('geschlossen')
+      : ivs.some(v => v.s === 0 && v.e >= 1440) ? t('durchgehend')
       : ivs.map(v => `${fmtM(v.s)}–${v.e === 1440 ? '24:00' : fmtM(v.e)}`).join(', ');
     return { label, text, today: i === iso, holiday: isHoliday(d, country) };
   });

@@ -176,6 +176,7 @@ Jeder Eintrag wird auf Plausibilität geprüft (z.B. keine Einzeldose über 5 �
 ## Technik
 
 Reines HTML/CSS/JavaScript mit ES-Modulen — **kein Build-Schritt**.
+**Sprachen:** Deutsch und Englisch (folgt der Handysprache, umschaltbar unter „Über die App“). Deutsche Texte sind zugleich die Schlüssel: `t('Jetzt offen')` → Wörterbücher in `js/lang/en-*.js`.
 Leaflet, Markercluster, QR-Code und Schriften liegen selbst gehostet in `vendor/` (keine Google-Fonts-/CDN-Anfragen).
 Datenschutzerklärung & Impressum: [`datenschutz.html`](datenschutz.html).
 

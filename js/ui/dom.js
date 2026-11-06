@@ -1,5 +1,6 @@
 // DOM-Helfer: Toast, Dialoge, animierte Zahlen, Lade-Animation.
 import { icon } from '../icons.js';
+import { t, num } from '../i18n.js';
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -82,7 +83,7 @@ export function confetti(n = 40) {
 export function animateNumber(el, to, { decimals = 0, suffix = '', duration = 700 } = {}) {
   const from = parseFloat((el.dataset.value || '0')) || 0;
   el.dataset.value = String(to);
-  const fmt = v => v.toFixed(decimals).replace('.', ',') + suffix;
+  const fmt = v => num(v, decimals) + suffix;
   if (reducedMotion() || from === to) { el.textContent = fmt(to); return; }
   const t0 = performance.now();
   const step = now => {
@@ -95,7 +96,7 @@ export function animateNumber(el, to, { decimals = 0, suffix = '', duration = 70
 }
 
 // Bierglas, das sich füllt — als Lade-Animation.
-export function beerLoader(text = 'Lädt…') {
+export function beerLoader(text = t('Lädt…')) {
   return `<div class="beer-loader" role="status">
     <svg viewBox="0 0 40 48" width="44" height="52" aria-hidden="true">
       <defs><clipPath id="blClip"><path d="M8 8h22l-2.4 33a3 3 0 0 1-3 2.8H13.4a3 3 0 0 1-3-2.8z"/></clipPath></defs>

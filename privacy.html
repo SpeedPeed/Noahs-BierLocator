@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Privacy &amp; Legal Notice · Bier-Locator</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+  :root { --bg: #fbf4e6; --panel: #fffdf8; --text: #2a1f14; --muted: #6f6152; --line: #eadfca; --accent: #b4650f; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #16110c; --panel: #211a13; --text: #f3e9da; --muted: #b5a690; --line: #3a2f23; --accent: #f0a640; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 'Figtree', system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1, h2 { font-family: 'Bricolage Grotesque', 'Figtree', system-ui, sans-serif; line-height: 1.2; }
+  h1 { font-size: 26px; margin: 8px 0 4px; }
+  h2 { font-size: 19px; margin: 28px 0 8px; }
+  h3 { font-size: 15.5px; margin: 18px 0 4px; }
+  p, li { color: var(--text); }
+  ul { padding-left: 20px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .muted { color: var(--muted); font-size: 13.5px; }
+  .back { display: inline-block; margin-bottom: 6px; font-weight: 700; text-decoration: none; }
+  .box { background: var(--panel); border: 1.5px solid var(--line); border-radius: 14px; padding: 4px 16px; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 700; }
+  @media (max-width: 560px) { table, tbody, tr, td { display: block; } thead { display: none; } td { border: none; padding: 2px 0; } tr { padding: 10px 0; border-bottom: 1px solid var(--line); } td:first-child { font-weight: 700; } }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← Back to the app</a>
+  <h1>Privacy &amp; Legal Notice</h1>
+  <p class="muted">As of November 2026 · <a href="datenschutz.html" hreflang="de">Deutsche Version</a> (the German version is legally binding)</p>
+
+  <h2 id="imprint">Legal notice</h2>
+  <div class="box">
+    <p><b>Operator:</b> Peter Zettl<br>
+       <b>Location:</b> Vorarlberg, Austria<br>
+       <b>Contact:</b> <a href="mailto:pzettl08@gmail.com">pzettl08@gmail.com</a></p>
+    <p class="muted">Private, non-commercial hobby project with no ads and no income.</p>
+  </div>
+
+  <h2>In short</h2>
+  <ul>
+    <li>No account, no login, no ads, no tracking, no analytics.</li>
+    <li>Almost everything (favourites, diary, tours, BAC calculator) stays <b>on your device only</b>.</li>
+    <li>The server only gets what you share yourself: prices, ratings, price alerts, “My group” and – if you turn it on – device sync.</li>
+    <li>Your location is not stored, unless you explicitly share it with your group.</li>
+    <li>Delete everything: menu → <b>Devices &amp; backup</b> → <b>Delete my data</b>.</li>
+  </ul>
+
+  <h2>Controller</h2>
+  <p>The controller under the EU General Data Protection Regulation (GDPR) and the Swiss Data Protection Act is the operator named in the legal notice above.</p>
+
+  <h2>What data, and why</h2>
+
+  <h3>On your device</h3>
+  <p>Settings, favourites, diary, completed tours, badges, price alerts and the details you enter in the BAC calculator (sex, weight, height, age, drinks) are stored in your browser’s or the app’s storage. They don’t leave your device unless you turn on device sync (see below). To delete them, use “Delete my data” or clear the app’s data.</p>
+
+  <h3>Anonymous device ID</h3>
+  <p>On first start the app creates a random secret ID. The server only stores a one-way hash (SHA-256) of it. This lets each device give one rating per place, delete its own prices, and keeps a daily limit against spam. It can’t be linked to you without your device.</p>
+
+  <h3>Spam protection</h3>
+  <p>To stop anyone from posting masses of fake prices or ratings, there is also a daily limit per internet connection. When you report a price, rate a place or create a group, we store a hash of your IP address (with a secret random value, so it can’t be reversed) and delete it automatically after 48 hours. Legal basis: Art. 6(1)(f) GDPR (preventing abuse).</p>
+
+  <h3>Prices &amp; ratings (visible to everyone)</h3>
+  <p>When you report a price or rate a place, we store: the place (OpenStreetMap ID), beer, price, size, stars, time and the hash of your device ID. Prices and ratings are visible to all users – without names. Legal basis: Art. 6(1)(b) GDPR (you actively use the feature). Kept until you delete them; old prices are greyed out in the app.</p>
+
+  <h3>Price alerts (push notifications)</h3>
+  <p>If you turn on price alerts, we store your push subscription (a technical address of your browser) and your target prices so we can notify you after the weekly price update. Delivery goes through your browser’s push service (for Chrome: Google Firebase Cloud Messaging). Turning alerts off or “Delete my data” removes the subscription.</p>
+
+  <h3>“My group”</h3>
+  <p>When you create or join a group, we store the group name, the nickname you choose, counted drinks, votes and logged rounds (amount, participants, place). Only members of the group can see this (you join with the group code). <b>Live location:</b> only if you turn it on yourself; it is visible to the group for 15 minutes and removed when you turn it off. Groups can no longer be opened after 7 days and are then deleted automatically. Legal basis: Art. 6(1)(a) and (b) GDPR.</p>
+
+  <h3>Device sync (optional)</h3>
+  <p>If you turn on sync, your favourites, preferences, diary, tours (without GPS track), price alerts and BAC calculator details are stored on the server under the hash of your sync code, so your other devices can fetch them. Anyone who knows the code can see this data – only share it with your own devices. Because the BAC calculator contains information about alcohol consumption and body data, it is only uploaded with your consent by turning sync on (Art. 9(2)(a) GDPR). To withdraw: disconnect sync and use “Delete my data”.</p>
+
+  <h3>Photographing a drinks menu &amp; barcode scanner</h3>
+  <p>Text recognition runs entirely on your device; the photo is not uploaded. When scanning a barcode, only the barcode number is sent to Open Food Facts to identify the product. Only what you tick yourself gets reported.</p>
+
+  <h3>Location</h3>
+  <p>The app only uses your GPS location if you allow it – to find places nearby, plan tours and show the live tour. For this, coordinates or map areas are sent to the map services listed below. We don’t store your location (exception: live location in “My group”, see above).</p>
+
+  <h2>Services used</h2>
+  <p>For maps, search, routes and weather the app contacts these services directly. They see your IP address and the request (e.g. map area, search term, start/end of a route). Legal basis: Art. 6(1)(f) GDPR (the app’s functionality).</p>
+  <table>
+    <thead><tr><th>Service</th><th>Used for</th><th>Data sent</th></tr></thead>
+    <tbody>
+      <tr><td>GitHub Pages (GitHub Inc., USA)</td><td>Hosting the app</td><td>IP address, requested file (server logs)</td></tr>
+      <tr><td>Supabase (Supabase Inc.; database in eu-west-1, Ireland)</td><td>Prices, ratings, groups, sync, price alerts</td><td>the data described above, IP address</td></tr>
+      <tr><td>Stadia Maps (Stadia Maps Inc., USA)</td><td>Map tiles</td><td>IP address, map area</td></tr>
+      <tr><td>Overpass API (OpenStreetMap community, several servers in the EU/Russia)</td><td>Finding pubs &amp; shops</td><td>IP address, map area</td></tr>
+      <tr><td>Photon (komoot GmbH, Germany)</td><td>Place and address search</td><td>IP address, search term, approximate map area</td></tr>
+      <tr><td>BRouter (brouter.de) / FOSSGIS e.V. (OSRM)</td><td>Bike routes</td><td>IP address, coordinates of the stops</td></tr>
+      <tr><td>Open-Meteo (Switzerland)</td><td>Weather</td><td>IP address, approximate coordinates</td></tr>
+      <tr><td>Open Food Facts (France)</td><td>Barcode scanner</td><td>IP address, barcode number</td></tr>
+      <tr><td>jsDelivr (CDN)</td><td>Text &amp; barcode recognition (only loaded when used)</td><td>IP address</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Links to Google Maps, venue websites or shops only open third-party pages when you tap them; their privacy policies apply there.</p>
+
+  <h2>Your rights</h2>
+  <p>You have the right of access, rectification, erasure, restriction of processing, data portability (menu → Devices &amp; backup → Export) and objection, and you can withdraw consent at any time. Since we don’t know who you are, we can only match data via your device ID – the easiest way is <b>“Delete my data”</b> in the app. For anything else, write to the contact address above.</p>
+  <p>You can lodge a complaint with a data protection authority, e.g. the Austrian <a href="https://www.dsb.gv.at/" rel="noopener">Datenschutzbehörde</a> or the authority in your country.</p>
+
+  <h2>Notes</h2>
+  <ul>
+    <li>Online prices of supermarket chains come from their public online shops, community prices from users. No guarantee for any information. Bier-Locator is not affiliated with any of the retailers mentioned.</li>
+    <li>The BAC calculator only gives a rough estimate and says nothing about whether you are fit to ride or drive. If you drink, don’t ride – not even a bike.</li>
+    <li>The app is meant for adults or people of legal drinking age.</li>
+    <li>Map data © OpenStreetMap contributors (ODbL), map style © Stadia Maps, © OpenMapTiles.</li>
+  </ul>
+</main>
+</body>
+</html>

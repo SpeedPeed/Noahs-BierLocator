@@ -7,11 +7,11 @@ import { state } from '../state.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fetchWithTimeout, debounce, fmtDist } from '../util.js';
 import { $, openDialog, toast } from './dom.js';
+import { t, money, pkg } from '../i18n.js';
 
 const SEEN = 'bl_alerts_seen_v1';
 const PUSH = 'bl_push_on_v1';
 const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && !!SUPABASE_URL;
-const money = (v, cur) => (cur === 'CHF' ? `CHF ${v.toFixed(2)}` : `${v.toFixed(2).replace('.', ',')} €`);
 
 async function results() {
   const data = await loadChainPrices();
@@ -31,8 +31,8 @@ export async function checkAlerts({ notify = true } = {}) {
   badge.textContent = fresh.length;
   if (notify && fresh.length) {
     const best = fresh.sort((a, b) => a.price - b.price)[0];
-    toast(`Preisalarm: ${escapeHtml(best.beer)} ${money(best.price, best.currency)} bei ${CHAIN_LABELS[best.chain] || best.chain}${fresh.length > 1 ? ` (+${fresh.length - 1})` : ''}`,
-      { tone: 'good', ms: 6000, action: { label: 'Ansehen', run: () => openAlerts() } });
+    toast(`${t('Preisalarm: {beer} {price} bei {shop}', { beer: escapeHtml(best.beer), price: money(best.price, best.currency), shop: CHAIN_LABELS[best.chain] || best.chain })}${fresh.length > 1 ? ` (+${fresh.length - 1})` : ''}`,
+      { tone: 'good', ms: 6000, action: { label: t('Ansehen'), run: () => openAlerts() } });
   }
 }
 
@@ -49,37 +49,37 @@ async function render() {
   const res = await results();
   const pushOn = pushSupported() && localStorage.getItem(PUSH) === '1' && Notification.permission === 'granted';
   $('#alertsBody').innerHTML = `
-    <h2 class="dlg-title" id="alertsTitle">${icon('bell', { size: 22 })}Preisalarme</h2>
-    <p class="fine">Die App prüft die Online-Preise aller Ketten (wöchentlich aktualisiert) gegen deine Wunschpreise.</p>
+    <h2 class="dlg-title" id="alertsTitle">${icon('bell', { size: 22 })}${t('Preisalarme')}</h2>
+    <p class="fine">${t('Die App prüft die Online-Preise aller Ketten (wöchentlich aktualisiert) gegen deine Wunschpreise.')}</p>
     <form class="alert-form" id="alertForm">
-      <input name="q" placeholder="z.B. Zipfer Märzen" required maxlength="40" autocomplete="off" list="beerList">
+      <input name="q" placeholder="${t('z.B. Zipfer Märzen')}" required maxlength="40" autocomplete="off" list="beerList">
       <select name="kind">${Object.entries(KINDS).map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select>
-      <div class="price-input"><input name="max" inputmode="decimal" placeholder="max. Preis" required><span>${state.country === 'CH' ? 'CHF' : '€'}</span></div>
-      <button class="btn btn-primary" type="submit">${icon('plus', { size: 16 })}Alarm</button>
+      <div class="price-input"><input name="max" inputmode="decimal" placeholder="${t('max. Preis')}" required><span>${state.country === 'CH' ? 'CHF' : '€'}</span></div>
+      <button class="btn btn-primary" type="submit">${icon('plus', { size: 16 })}${t('Alarm')}</button>
     </form>
     <div class="alert-list">${res.length ? res.map(({ watch: w, hits }) => `
       <div class="alert-item">
         <div class="alert-head">
-          <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · bis ${money(w.max, w.country === 'CH' ? 'CHF' : 'EUR')} · ${w.country || ''}</small>
-          <button class="icon-btn small" data-del="${w.id}" aria-label="Alarm löschen">${icon('trash', { size: 14 })}</button>
+          <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · ${t('bis {price}', { price: money(w.max, w.country === 'CH' ? 'CHF' : 'EUR') })} · ${w.country || ''}</small>
+          <button class="icon-btn small" data-del="${w.id}" aria-label="${t('Alarm löschen')}">${icon('trash', { size: 14 })}</button>
         </div>
         ${hits.length ? `<ul>${hits.slice(0, 6).map(h => { const near = nearestStore(h.chain, h.country, state.places); return `<li>
           <span>${escapeHtml(CHAIN_LABELS[h.chain] || h.chain)}${near ? `<small class="ah-near">${fmtDist(near.distance)}</small>` : ''}</span>
-          <span class="ah-beer">${escapeHtml(h.beer)} <small>${escapeHtml(h.package || '')}</small>${h.promo ? ' <span class="promo">Aktion</span>' : ''}</span>
+          <span class="ah-beer">${escapeHtml(h.beer)} <small>${escapeHtml(pkg(h.package))}</small>${h.promo ? ` <span class="promo">${t('Aktion')}</span>` : ''}</span>
           <a href="${escapeHtml(h.source)}" target="_blank" rel="noopener"><b>${money(h.price, h.currency)}</b></a></li>`; }).join('')}</ul>
-          ${hits.length > 6 ? `<p class="fine">+ ${hits.length - 6} weitere</p>` : ''}`
-        : '<p class="fine">Gerade kein Treffer — die App meldet sich, sobald es soweit ist.</p>'}
-      </div>`).join('') : '<p class="fine center">Noch keine Alarme.</p>'}</div>
+          ${hits.length > 6 ? `<p class="fine">${t('+ {n} weitere', { n: hits.length - 6 })}</p>` : ''}`
+        : `<p class="fine">${t('Gerade kein Treffer — die App meldet sich, sobald es soweit ist.')}</p>`}
+      </div>`).join('') : `<p class="fine center">${t('Noch keine Alarme.')}</p>`}</div>
     ${pushSupported() ? `<label class="switch-row push-row">
       <input type="checkbox" class="switch" id="pushToggle" ${pushOn ? 'checked' : ''}>
-      <span>Benachrichtigung aufs Handy <small>(auch wenn die App zu ist — kommt montags nach dem Preis-Update)</small></span>
+      <span>${t('Benachrichtigung aufs Handy')} <small>${t('(auch wenn die App zu ist — kommt montags nach dem Preis-Update)')}</small></span>
     </label>` : ''}`;
 
   $('#alertForm').onsubmit = async e => {
     e.preventDefault();
     const f = e.target;
     const max = parseFloat(String(f.max.value).replace(',', '.'));
-    if (!isFinite(max) || max <= 0) { toast('Bitte einen Preis eingeben', { tone: 'bad' }); return; }
+    if (!isFinite(max) || max <= 0) { toast(t('Bitte einen Preis eingeben'), { tone: 'bad' }); return; }
     saveWatches([...loadWatches(), { id: Date.now().toString(36), q: f.q.value.trim(), kind: f.kind.value, max, country: state.country }]);
     await render();
   };
@@ -90,8 +90,8 @@ async function render() {
   const pt = $('#pushToggle');
   if (pt) pt.onchange = async () => {
     try {
-      if (pt.checked) { await enablePush(); toast('Benachrichtigungen an', { tone: 'good' }); }
-      else { await disablePush(); toast('Benachrichtigungen aus'); }
+      if (pt.checked) { await enablePush(); toast(t('Benachrichtigungen an'), { tone: 'good' }); }
+      else { await disablePush(); toast(t('Benachrichtigungen aus')); }
     } catch (err) {
       pt.checked = false;
       toast(err.message, { tone: 'bad' });
@@ -109,11 +109,11 @@ async function rpc(fn, body) {
   const headers = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY };
   if (SUPABASE_ANON_KEY.startsWith('eyJ')) headers.Authorization = `Bearer ${SUPABASE_ANON_KEY}`;
   const res = await fetchWithTimeout(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, { method: 'POST', headers, body: JSON.stringify(body) }, 15000);
-  if (!res.ok) throw new Error(`Server-Fehler ${res.status}`);
+  if (!res.ok) throw new Error(t('Server-Fehler {status}', { status: res.status }));
 }
 async function enablePush() {
   const perm = await Notification.requestPermission();
-  if (perm !== 'granted') throw new Error('Benachrichtigungen wurden nicht erlaubt.');
+  if (perm !== 'granted') throw new Error(t('Benachrichtigungen wurden nicht erlaubt.'));
   const reg = await navigator.serviceWorker.ready;
   const sub = (await reg.pushManager.getSubscription())
     || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(VAPID_PUBLIC_KEY) });

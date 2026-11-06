@@ -1,5 +1,6 @@
 import { BROUTER_URL, OSRM_BASE } from '../config.js';
 import { haversine, sleep, fetchWithTimeout } from '../util.js';
+import { t } from '../i18n.js';
 import { matchTrackIndices, overlapRatio } from './planner.js';
 
 export const LEISURE_SPEED_MPS = 4.2;
@@ -7,9 +8,9 @@ export const LEISURE_SPEED_MPS = 4.2;
 // Fahrstile → BRouter-Profile. Umwegfaktor = Startwert für die Längenschätzung
 // (Straßenkilometer pro Luftlinienkilometer), wird pro Planung nachkalibriert.
 export const RIDE_STYLES = {
-  trekking: { label: 'Ausgewogen', desc: 'Radwege & Nebenstraßen, gut fahrbar', profile: 'trekking', detour: 1.32 },
-  safety:   { label: 'Ruhig & sicher', desc: 'Meidet Verkehr konsequent, dafür mehr Umwege', profile: 'safety', detour: 1.42 },
-  fastbike: { label: 'Zügig', desc: 'Asphalt, direkter, auch mal Landstraße', profile: 'fastbike', detour: 1.25 },
+  trekking: { label: t('Ausgewogen'), desc: t('Radwege & Nebenstraßen, gut fahrbar'), profile: 'trekking', detour: 1.32 },
+  safety:   { label: t('Ruhig & sicher'), desc: t('Meidet Verkehr konsequent, dafür mehr Umwege'), profile: 'safety', detour: 1.42 },
+  fastbike: { label: t('Zügig'), desc: t('Asphalt, direkter, auch mal Landstraße'), profile: 'fastbike', detour: 1.25 },
 };
 
 function cumulative(latlngs) {
@@ -73,9 +74,9 @@ async function osrm(points) {
   const coordStr = points.map(p => `${p.lon},${p.lat}`).join(';');
   const url = `${OSRM_BASE}/route/v1/driving/${coordStr}?overview=full&geometries=geojson&steps=false`;
   const res = await fetchWithTimeout(url, {}, 25000);
-  if (!res.ok) throw new Error('Routing-Server antwortet nicht (' + res.status + ')');
+  if (!res.ok) throw new Error(t('Routing-Server antwortet nicht ({status})', { status: res.status }));
   const data = await res.json();
-  if (data.code !== 'Ok') throw new Error('Routing fehlgeschlagen: ' + data.code);
+  if (data.code !== 'Ok') throw new Error(t('Routing fehlgeschlagen: {code}', { code: data.code }));
   const r = data.routes[0];
   const latlngs = r.geometry.coordinates.map(c => [c[1], c[0]]);
   return {

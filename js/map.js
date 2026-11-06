@@ -6,6 +6,7 @@ import { TYPE_META } from './places.js';
 import { icon } from './icons.js';
 import { escapeHtml } from './util.js';
 import { reducedMotion } from './ui/dom.js';
+import { t, num } from './i18n.js';
 
 let map, tiles, cluster, routeLayer, userMarker, accuracyCircle;
 let markers = new Map();
@@ -101,7 +102,7 @@ export function setUserLocation(loc) {
 /* ---------- Ortsmarker ---------- */
 function markerHtml(place, info) {
   const meta = TYPE_META[place.type];
-  const price = info.price != null ? `<span class="pm-price">${info.price.toFixed(2).replace('.', ',')}</span>` : '';
+  const price = info.price != null ? `<span class="pm-price">${num(info.price, 2)}</span>` : '';
   const fav = info.favorite ? `<span class="pm-fav">${icon('heart', { size: 10, filled: true })}</span>` : '';
   return `<div class="pm${info.closed ? ' pm-closed' : ''}${info.best ? ' pm-best' : ''}" style="--c:${meta.color};--d:${info.delay || 0}ms">
     <span class="pm-dot">${icon(meta.icon, { size: 16, strokeWidth: 2 })}</span>${price}${fav}</div>`;
@@ -167,7 +168,7 @@ export function drawRoute(tour, onStopClick, { fit = true, done = null } = {}) {
 
   const startHtml = `<div class="tm tm-start">${icon('flag', { size: 14, strokeWidth: 2.2 })}</div>`;
   L.marker([tour.start.lat, tour.start.lon], { icon: L.divIcon({ className: '', html: startHtml, iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 900 })
-    .addTo(routeLayer).bindTooltip(tour.roundtrip ? 'Start & Ziel' : 'Start', { direction: 'top', offset: [0, -14] });
+    .addTo(routeLayer).bindTooltip(tour.roundtrip ? t('Start & Ziel') : t('Start'), { direction: 'top', offset: [0, -14] });
   tour.stops.forEach((s, i) => {
     const meta = TYPE_META[s.type];
     const html = `<div class="tm${done && done.has(i) ? ' tm-done' : ''}" style="--c:${meta.color};--d:${fit ? 300 + i * 140 : 0}ms">${done && done.has(i) ? icon('check', { size: 15, strokeWidth: 3 }) : i + 1}</div>`;
@@ -179,7 +180,7 @@ export function drawRoute(tour, onStopClick, { fit = true, done = null } = {}) {
   if (!tour.roundtrip) {
     const endHtml = `<div class="tm tm-end">${icon('checkCircle', { size: 15, strokeWidth: 2.2 })}</div>`;
     L.marker([tour.end.lat, tour.end.lon], { icon: L.divIcon({ className: '', html: endHtml, iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 900 })
-      .addTo(routeLayer).bindTooltip('Ziel', { direction: 'top', offset: [0, -14] });
+      .addTo(routeLayer).bindTooltip(t('Ziel'), { direction: 'top', offset: [0, -14] });
   }
 
   if (!fit) return;
@@ -266,7 +267,7 @@ export function drawExtraRoute(latlngs, dest) {
   L.polyline(latlngs, { className: 'route-casing', weight: 8, interactive: false }).addTo(extraLayer);
   L.polyline(latlngs, { className: 'route-home', weight: 5, interactive: false }).addTo(extraLayer);
   L.marker([dest.lat, dest.lon], { icon: L.divIcon({ className: '', html: `<div class="tm tm-home">${icon(dest.icon || 'flag', { size: 15, strokeWidth: 2.2 })}</div>`, iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 950 })
-    .addTo(extraLayer).bindTooltip(escapeHtml(dest.label || 'Ziel'), { direction: 'top', offset: [0, -14] });
+    .addTo(extraLayer).bindTooltip(escapeHtml(dest.label || t('Ziel')), { direction: 'top', offset: [0, -14] });
   auto();
   map.fitBounds(L.latLngBounds(latlngs), { ...fitOptions(16), animate: !reducedMotion() });
 }

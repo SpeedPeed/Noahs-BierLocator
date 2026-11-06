@@ -5,6 +5,7 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import { exportSync, importSync, onDataChange } from './store.js';
 import { fetchWithTimeout, debounce } from './util.js';
 import { emit } from './state.js';
+import { t } from './i18n.js';
 
 const KEY = 'bl_sync_code_v1';
 const LAST = 'bl_sync_last_v1';
@@ -28,7 +29,7 @@ async function rpc(fn, body) {
   const headers = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY };
   if (SUPABASE_ANON_KEY.startsWith('eyJ')) headers.Authorization = `Bearer ${SUPABASE_ANON_KEY}`;
   const res = await fetchWithTimeout(`${SUPABASE_URL.replace(/\/$/, '')}/rest/v1/rpc/${fn}`, { method: 'POST', headers, body: JSON.stringify(body) }, 15000);
-  if (!res.ok) throw new Error(`Sync-Fehler ${res.status}`);
+  if (!res.ok) throw new Error(t('Sync-Fehler {status}', { status: res.status }));
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
@@ -77,7 +78,7 @@ export function loadQr() {
       const s = document.createElement('script');
       s.src = './vendor/qrcode.min.js';
       s.onload = () => resolve(window.qrcode);
-      s.onerror = () => reject(new Error('QR-Code konnte nicht geladen werden'));
+      s.onerror = () => reject(new Error(t('QR-Code konnte nicht geladen werden')));
       document.head.appendChild(s);
     });
   }

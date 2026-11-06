@@ -2,6 +2,7 @@
 import { openStatus } from './openingHours.js';
 import { state } from './state.js';
 import { fmtClock } from './util.js';
+import { t, LOCALE } from './i18n.js';
 import { TYPE_META } from './places.js';
 import { getSummary } from './community.js';
 import { isFavorite } from './store.js';
@@ -15,19 +16,19 @@ const sameDay = (a, b) => a.toDateString() === b.toDateString();
 function whenLabel(d, now = new Date()) {
   if (sameDay(d, now)) return fmtClock(d);
   const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1);
-  if (sameDay(d, tomorrow)) return `morgen ${fmtClock(d)}`;
-  return d.toLocaleDateString('de-DE', { weekday: 'short' }) + ' ' + fmtClock(d);
+  if (sameDay(d, tomorrow)) return t('morgen {time}', { time: fmtClock(d) });
+  return d.toLocaleDateString(LOCALE, { weekday: 'short' }) + ' ' + fmtClock(d);
 }
 
 // → { tone: 'open'|'soon'|'closed'|'unknown', text }
 export function statusBadge(st) {
-  if (!st) return { tone: 'unknown', text: 'Öffnungszeiten unbekannt' };
+  if (!st) return { tone: 'unknown', text: t('Öffnungszeiten unbekannt') };
   if (st.open) {
-    if (st.always) return { tone: 'open', text: 'Durchgehend offen' };
-    if (st.closingSoon) return { tone: 'soon', text: `Schließt bald · ${fmtClock(st.until)}` };
-    return { tone: 'open', text: st.until ? `Offen bis ${whenLabel(st.until)}` : 'Geöffnet' };
+    if (st.always) return { tone: 'open', text: t('Durchgehend offen') };
+    if (st.closingSoon) return { tone: 'soon', text: t('Schließt bald · {time}', { time: fmtClock(st.until) }) };
+    return { tone: 'open', text: st.until ? t('Offen bis {when}', { when: whenLabel(st.until) }) : t('Geöffnet') };
   }
-  return { tone: 'closed', text: st.opensAt ? `Geschlossen · öffnet ${whenLabel(st.opensAt)}` : 'Geschlossen' };
+  return { tone: 'closed', text: st.opensAt ? t('Geschlossen · öffnet {when}', { when: whenLabel(st.opensAt) }) : t('Geschlossen') };
 }
 
 // Qualität 0..1 für die Tourplanung: Typ + Bonus für Bewertung, Preis, Favorit, Wetter.

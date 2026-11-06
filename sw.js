@@ -3,7 +3,7 @@
 // App-Dateien: zuerst Netzwerk (Updates kommen sofort an), offline aus dem Cache.
 // Kartenkacheln: Cache zuerst, im Hintergrund aktualisieren.
 // Live-Daten (Overpass, Routing, Wetter, Supabase) werden nicht gecacht.
-const VERSION = 'v4.2.0';
+const VERSION = 'v4.3.0';
 const SHELL_CACHE = `bierlocator-shell-${VERSION}`;
 const RUNTIME_CACHE = 'bierlocator-runtime-v2';
 
@@ -21,7 +21,9 @@ const SHELL_FILES = [
   './js/ui/liveUi.js', './js/ui/homeUi.js', './js/ui/funUi.js', './js/ui/badgesUi.js', './js/ui/wrappedUi.js', './js/ui/ocrUi.js',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-192-maskable.png', './icons/icon-512-maskable.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',
-  './datenschutz.html',
+  './datenschutz.html', './privacy.html',
+  './js/i18n.js', './js/lang/en.js', './js/lang/en-core.js', './js/lang/en-tour.js', './js/lang/en-live.js',
+  './js/lang/en-social.js', './js/lang/en-app.js', './js/lang/en-data.js',
   './vendor/leaflet/leaflet.js', './vendor/leaflet/leaflet.css', './vendor/leaflet/leaflet.markercluster.js',
   './vendor/leaflet/MarkerCluster.css', './vendor/qrcode.min.js', './vendor/fonts/fonts.css',
   './vendor/fonts/figtree-latin.woff2', './vendor/fonts/bricolage-latin.woff2',

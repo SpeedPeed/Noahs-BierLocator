@@ -1,6 +1,7 @@
 // Wetter von open-meteo (ohne API-Key): aktuell + stündliche Vorhersage.
 import { OPEN_METEO_URL } from './config.js';
 import { fetchWithTimeout } from './util.js';
+import { t } from './i18n.js';
 
 export function weatherIcon(code) {
   if (code === 0) return 'sun';
@@ -13,13 +14,13 @@ export function weatherIcon(code) {
   return 'thermometer';
 }
 export function weatherText(code) {
-  if (code === 0) return 'sonnig';
-  if (code <= 2) return 'leicht bewölkt';
-  if (code === 3) return 'bewölkt';
-  if (code <= 48) return 'neblig';
-  if (code <= 67 || (code >= 80 && code <= 82)) return 'Regen';
-  if (code <= 86) return 'Schnee';
-  return 'Gewitter';
+  if (code === 0) return t('sonnig');
+  if (code <= 2) return t('leicht bewölkt');
+  if (code === 3) return t('bewölkt');
+  if (code <= 48) return t('neblig');
+  if (code <= 67 || (code >= 80 && code <= 82)) return t('Regen');
+  if (code <= 86) return t('Schnee');
+  return t('Gewitter');
 }
 export const isBiergartenWeather = w => !!w && w.temperature >= 17 && w.code <= 3 && (w.precipProb ?? 0) < 40;
 export const isRainy = w => !!w && (w.code >= 51 || (w.precipProb ?? 0) >= 60);
@@ -32,7 +33,7 @@ export async function fetchWeather(lat, lon) {
     forecast_days: '3', timezone: 'auto',
   });
   const res = await fetchWithTimeout(`${OPEN_METEO_URL}?${params}`, {}, 10000);
-  if (!res.ok) throw new Error('Wetter nicht verfügbar');
+  if (!res.ok) throw new Error(t('Wetter nicht verfügbar'));
   const d = await res.json();
   const hourly = (d.hourly.time || []).map((t, i) => ({
     time: new Date(t), temperature: d.hourly.temperature_2m[i], code: d.hourly.weather_code[i], precipProb: d.hourly.precipitation_probability[i],
@@ -77,4 +78,4 @@ export function windForWindow(hrs) {
 }
 
 const DIRS = ['Nord', 'Nordost', 'Ost', 'Südost', 'Süd', 'Südwest', 'West', 'Nordwest'];
-export const windDirName = deg => DIRS[Math.round(deg / 45) % 8];
+export const windDirName = deg => t(DIRS[Math.round(deg / 45) % 8]);

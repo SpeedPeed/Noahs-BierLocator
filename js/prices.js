@@ -1,12 +1,13 @@
 // Gebinde, Umrechnung auf 0,5 l und Plausibilitätsprüfung.
 // Die Grenzen sind identisch mit denen in supabase/schema.sql.
+import { t, money, LANG } from './i18n.js';
 
 export const UNITS = {
-  '0.5l':           { label: '0,5 l',             halves: 1 },
-  '0.33l':          { label: '0,33 l',            halves: 0.66 },
-  '1l':             { label: '1 l (Maß)',         halves: 2 },
-  'kasten20x0.5l':  { label: 'Kasten 20 × 0,5 l', halves: 20, crate: true },
-  'kasten24x0.33l': { label: 'Kasten 24 × 0,33 l', halves: 15.84, crate: true },
+  '0.5l':           { label: t('0,5 l'),             halves: 1 },
+  '0.33l':          { label: t('0,33 l'),            halves: 0.66 },
+  '1l':             { label: t('1 l (Maß)'),         halves: 2 },
+  'kasten20x0.5l':  { label: t('Kasten 20 × 0,5 l'), halves: 20, crate: true },
+  'kasten24x0.33l': { label: t('Kasten 24 × 0,33 l'), halves: 15.84, crate: true },
 };
 
 // Erlaubter Bereich, umgerechnet auf €/0,5 l.
@@ -26,16 +27,15 @@ export function per05(price, unit) {
 export function validatePrice(rawPrice, unit, beer = 'x') {
   const price = typeof rawPrice === 'number' ? rawPrice : parseFloat(String(rawPrice).replace(',', '.'));
   const u = UNITS[unit];
-  if (!u) return { ok: false, message: 'Unbekanntes Gebinde.' };
-  if (!beer || !String(beer).trim()) return { ok: false, message: 'Welche Biersorte?' };
-  if (String(beer).trim().length > 40) return { ok: false, message: 'Biersorte bitte kürzer (max. 40 Zeichen).' };
-  if (!isFinite(price) || price <= 0) return { ok: false, message: 'Bitte einen Preis eingeben.' };
+  if (!u) return { ok: false, message: t('Unbekanntes Gebinde.') };
+  if (!beer || !String(beer).trim()) return { ok: false, message: t('Welche Biersorte?') };
+  if (String(beer).trim().length > 40) return { ok: false, message: t('Biersorte bitte kürzer (max. 40 Zeichen).') };
+  if (!isFinite(price) || price <= 0) return { ok: false, message: t('Bitte einen Preis eingeben.') };
   const p05 = price / u.halves;
   const range = u.crate ? PLAUSIBLE.crate : PLAUSIBLE.single;
   const lo = range.min * u.halves, hi = range.max * u.halves;
-  const fmt = v => v.toFixed(2).replace('.', ',') + ' €';
-  if (p05 < range.min) return { ok: false, per05: p05, message: `Das ist unrealistisch billig — für ${u.label} sind mindestens ${fmt(lo)} plausibel.` };
-  if (p05 > range.max) return { ok: false, per05: p05, message: `Das ist unrealistisch teuer — für ${u.label} sind höchstens ${fmt(hi)} plausibel.` };
+  if (p05 < range.min) return { ok: false, per05: p05, message: t('Das ist unrealistisch billig — für {unit} sind mindestens {min} plausibel.', { unit: u.label, min: money(lo) }) };
+  if (p05 > range.max) return { ok: false, per05: p05, message: t('Das ist unrealistisch teuer — für {unit} sind höchstens {max} plausibel.', { unit: u.label, max: money(hi) }) };
   return { ok: true, per05: p05, price: Math.round(price * 100) / 100 };
 }
 
@@ -99,10 +99,10 @@ export function parseMenuText(text) {
       const guessed = volL == null;
       const unit = guessed ? '0.5l' : volUnit(volL);
       const beer = name.slice(0, 40);
-      const check = unit ? validatePrice(p.v, unit, beer) : { ok: false, message: `${String(volL).replace('.', ',')} l gibt es als Gebinde nicht — bitte anpassen.` };
+      const check = unit ? validatePrice(p.v, unit, beer) : { ok: false, message: t('{vol} l gibt es als Gebinde nicht — bitte anpassen.', { vol: LANG === 'de' ? String(volL).replace('.', ',') : String(volL) }) };
       const beerish = BEERISH.test(name);
       if (out.some(o => o.beer === beer && o.unit === unit && o.price === p.v)) return;
-      out.push({ beer, price: p.v, unit, volL, guessed, beerish, ok: check.ok, message: check.ok ? (guessed ? 'Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.' : '') : check.message });
+      out.push({ beer, price: p.v, unit, volL, guessed, beerish, ok: check.ok, message: check.ok ? (guessed ? t('Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.') : '') : check.message });
     });
   }
   return out.slice(0, 40);

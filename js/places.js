@@ -3,19 +3,20 @@
 
 import { OVERPASS_ENDPOINTS, MAX_PLACES } from './config.js';
 import { haversine, fetchWithTimeout } from './util.js';
+import { t } from './i18n.js';
 
 export const TYPE_META = {
-  pub:         { label: 'Kneipe & Bar',  short: 'Kneipe',     icon: 'beerMug',  color: '#e8921b', tour: 0.95 },
-  biergarten:  { label: 'Biergarten',    short: 'Biergarten', icon: 'tree',     color: '#3e9a52', tour: 1.0 },
-  brewery:     { label: 'Brauerei',      short: 'Brauerei',   icon: 'barrel',   color: '#b4532a', tour: 1.0 },
-  gasthaus:    { label: 'Gasthaus & Wirtshaus', short: 'Gasthaus', icon: 'beerMug', color: '#8a4b22', tour: 0.9 },
-  restaurant:  { label: 'Restaurant',    short: 'Restaurant', icon: 'utensils', color: '#a0569f', tour: 0.6 },
-  fastfood:    { label: 'Imbiss',        short: 'Imbiss',     icon: 'sandwich', color: '#d9662b', tour: 0.3 },
-  nightclub:   { label: 'Club',          short: 'Club',       icon: 'disc',     color: '#6a4fd0', tour: 0.3 },
-  fuel:        { label: 'Tankstelle',    short: 'Tanke',      icon: 'fuel',     color: '#5c6c7c', tour: 0.35 },
-  supermarket: { label: 'Supermarkt',    short: 'Supermarkt', icon: 'cart',     color: '#2f7fc1', tour: 0.4 },
-  beverages:   { label: 'Getränkemarkt', short: 'Getränke',   icon: 'box',      color: '#1b9696', tour: 0.5 },
-  convenience: { label: 'Kiosk & Späti', short: 'Kiosk',      icon: 'store',    color: '#8a6d4f', tour: 0.45 },
+  pub:         { label: t('Kneipe & Bar'),  short: t('Kneipe'),     icon: 'beerMug',  color: '#e8921b', tour: 0.95 },
+  biergarten:  { label: t('Biergarten'),    short: t('Biergarten'), icon: 'tree',     color: '#3e9a52', tour: 1.0 },
+  brewery:     { label: t('Brauerei'),      short: t('Brauerei'),   icon: 'barrel',   color: '#b4532a', tour: 1.0 },
+  gasthaus:    { label: t('Gasthaus & Wirtshaus'), short: t('Gasthaus'), icon: 'beerMug', color: '#8a4b22', tour: 0.9 },
+  restaurant:  { label: t('Restaurant'),    short: t('Restaurant'), icon: 'utensils', color: '#a0569f', tour: 0.6 },
+  fastfood:    { label: t('Imbiss'),        short: t('Imbiss'),     icon: 'sandwich', color: '#d9662b', tour: 0.3 },
+  nightclub:   { label: t('Club'),          short: t('Club'),       icon: 'disc',     color: '#6a4fd0', tour: 0.3 },
+  fuel:        { label: t('Tankstelle'),    short: t('Tanke'),      icon: 'fuel',     color: '#5c6c7c', tour: 0.35 },
+  supermarket: { label: t('Supermarkt'),    short: t('Supermarkt'), icon: 'cart',     color: '#2f7fc1', tour: 0.4 },
+  beverages:   { label: t('Getränkemarkt'), short: t('Getränke'),   icon: 'box',      color: '#1b9696', tour: 0.5 },
+  convenience: { label: t('Kiosk & Späti'), short: t('Kiosk'),      icon: 'store',    color: '#8a6d4f', tour: 0.45 },
 };
 export const TYPE_ORDER = Object.keys(TYPE_META);
 
@@ -109,7 +110,7 @@ function overpassRound(query) {
         .then(async res => {
           if (!res.ok) throw new Error(`${new URL(url).host}: ${res.status}`);
           const data = await res.json();
-          if (data.remark && /runtime error|timed out|out of memory/i.test(data.remark) && !(data.elements || []).length) throw new Error('Zeitüberschreitung');
+          if (data.remark && /runtime error|timed out|out of memory/i.test(data.remark) && !(data.elements || []).length) throw new Error(t('Zeitüberschreitung'));
           return data;
         })
         .then(data => {
@@ -123,7 +124,7 @@ function overpassRound(query) {
           if (done) return;
           errors.push(err.message || String(err));
           if (next < OVERPASS_ENDPOINTS.length) launch();
-          else if (pending === 0) reject(new Error('Die Kartenserver sind gerade überlastet. Bitte gleich nochmal versuchen.'));
+          else if (pending === 0) reject(new Error(t('Die Kartenserver sind gerade überlastet. Bitte gleich nochmal versuchen.')));
         });
     };
     launch();

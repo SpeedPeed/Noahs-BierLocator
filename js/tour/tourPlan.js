@@ -6,6 +6,7 @@
 import { generateVariants, routedScore } from './planner.js';
 import { routeThrough, RIDE_STYLES, lateEffort } from './routing.js';
 import { mean, clamp, haversine } from '../util.js';
+import { t } from '../i18n.js';
 
 export const TOUR_TOLERANCE = 0.08;
 const MAX_ROUTE_CALLS = 5;
@@ -43,7 +44,7 @@ export async function planTour(opts) {
     variants = generateVariants(pool, start, end, { targetM, k: effectiveK, detour, roundtrip, quality, isOpenAt, startTime, dwellSec, ...extra });
     if (variants.length) break;
   }
-  if (!variants.length) throw new Error('In dieser Gegend lassen sich keine passenden Bierorte zu einer Tour verbinden. Mehr Ortstypen erlauben oder eine andere Länge probieren.');
+  if (!variants.length) throw new Error(t('In dieser Gegend lassen sich keine passenden Bierorte zu einer Tour verbinden. Mehr Ortstypen erlauben oder eine andere Länge probieren.'));
 
   // Gibt die Gegend so viele gleichmäßig verteilte Stopps nicht her, die größte
   // Anzahl suchen, mit der es sauber klappt — als Vorschlag für die Oberfläche.
@@ -170,8 +171,8 @@ export async function planTour(opts) {
 function etasFor(route, k, startTime, dwellSec, reversed = false) {
   const legs = reversed ? route.legs.slice().reverse() : route.legs;
   const out = [];
-  let t = startTime.getTime();
-  for (let i = 0; i < k; i++) { t += legs[i].duration * 1000; out.push(new Date(t)); t += dwellSec * 1000; }
+  let ms = startTime.getTime();
+  for (let i = 0; i < k; i++) { ms += legs[i].duration * 1000; out.push(new Date(ms)); ms += dwellSec * 1000; }
   return out;
 }
 

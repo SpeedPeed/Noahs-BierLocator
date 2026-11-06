@@ -3,9 +3,10 @@ import { loadDiary, loadTours } from '../store.js';
 import { badgeList } from './badgesUi.js';
 import { icon } from '../icons.js';
 import { toast, downloadFile } from './dom.js';
+import { t, num } from '../i18n.js';
 
-const MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-const DAYS = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+const MONTHS = [t('Jänner'), t('Februar'), t('März'), t('April'), t('Mai'), t('Juni'), t('Juli'), t('August'), t('September'), t('Oktober'), t('November'), t('Dezember')];
+const DAYS = [t('Sonntag'), t('Montag'), t('Dienstag'), t('Mittwoch'), t('Donnerstag'), t('Freitag'), t('Samstag')];
 
 const top = map => [...map.entries()].sort((a, b) => b[1].n - a[1].n)[0];
 function count(map, key, label) { const c = map.get(key) || { n: 0, label }; c.n++; map.set(key, c); }
@@ -80,17 +81,17 @@ export async function drawWrapped(s) {
 
   ctx.fillStyle = '#2b1a05';
   ctx.font = `800 54px ${disp}`;
-  ctx.fillText('Mein Bier-Jahr', 80, 105);
+  ctx.fillText(t('Mein Bier-Jahr'), 80, 105);
   ctx.font = `800 210px ${disp}`;
   ctx.fillText(String(s.year), 70, 420);
 
   const tiles = [
-    [String(s.beers), s.beers === 1 ? 'Bier' : 'Biere'],
-    [s.liters.toFixed(1).replace('.', ','), 'Liter'],
-    [String(s.sorts), 'Sorten'],
-    [String(s.places), 'Lokale'],
-    [String(s.km), 'Tour-km'],
-    [String(s.badges), 'Abzeichen'],
+    [String(s.beers), s.beers === 1 ? t('Bier') : t('Biere')],
+    [num(s.liters, 1), t('Liter')],
+    [String(s.sorts), t('Sorten')],
+    [String(s.places), t('Lokale')],
+    [String(s.km), t('Tour-km')],
+    [String(s.badges), t('Abzeichen')],
   ];
   tiles.forEach(([v, l], i) => {
     const x = 80 + (i % 3) * 315, y = 480 + Math.floor(i / 3) * 210;
@@ -105,11 +106,14 @@ export async function drawWrapped(s) {
   });
 
   const lines = [];
-  if (s.topBeer) lines.push(['Lieblingsbier', `${s.topBeer.label} (${s.topBeer.n}×)`]);
-  if (s.topPlace) lines.push(['Stammlokal', `${s.topPlace.label} (${s.topPlace.n}×)`]);
-  if (s.topMonth) lines.push(['Bester Monat', s.topMonth.label]);
-  if (s.tours) lines.push(['Biertouren', `${s.tours} × geradelt${s.mates ? `, mit ${s.mates} ${s.mates === 1 ? 'Freund*in' : 'Leuten'}` : ''}`]);
-  else if (s.topDay) lines.push(['Lieblingstag', s.topDay.label]);
+  if (s.topBeer) lines.push([t('Lieblingsbier'), `${s.topBeer.label} (${s.topBeer.n}×)`]);
+  if (s.topPlace) lines.push([t('Stammlokal'), `${s.topPlace.label} (${s.topPlace.n}×)`]);
+  if (s.topMonth) lines.push([t('Bester Monat'), s.topMonth.label]);
+  if (s.tours) {
+    lines.push([t('Biertouren'), !s.mates ? t('{n} × geradelt', { n: s.tours })
+      : s.mates === 1 ? t('{n} × geradelt, mit 1 Freund*in', { n: s.tours })
+        : t('{n} × geradelt, mit {m} Leuten', { n: s.tours, m: s.mates })]);
+  } else if (s.topDay) lines.push([t('Lieblingstag'), s.topDay.label]);
   let y = 935;
   for (const [k, v] of lines.slice(0, 4)) {
     ctx.fillStyle = 'rgba(43,26,5,.7)';
@@ -122,15 +126,15 @@ export async function drawWrapped(s) {
   }
   ctx.fillStyle = 'rgba(255,250,240,.85)';
   ctx.font = `600 28px ${body}`;
-  ctx.fillText('Bier-Locator · Prost & fahr vorsichtig!', 80, H - 50);
+  ctx.fillText(t('Bier-Locator · Prost & fahr vorsichtig!'), 80, H - 50);
   return c;
 }
 
 export function wrappedHtml(years, year) {
   return `
     <div class="wrapped-head">
-      <label class="sort-select"><span class="sr-only">Jahr</span><select id="wrapYear">${years.map(y => `<option ${y === year ? 'selected' : ''}>${y}</option>`).join('')}</select></label>
-      <div class="row-btns"><button class="btn btn-primary" id="wrapShare">${icon('share', { size: 16 })}Teilen</button><button class="btn btn-soft" id="wrapSave">${icon('download', { size: 16 })}Bild</button></div>
+      <label class="sort-select"><span class="sr-only">${t('Jahr')}</span><select id="wrapYear">${years.map(y => `<option ${y === year ? 'selected' : ''}>${y}</option>`).join('')}</select></label>
+      <div class="row-btns"><button class="btn btn-primary" id="wrapShare">${icon('share', { size: 16 })}${t('Teilen')}</button><button class="btn btn-soft" id="wrapSave">${icon('download', { size: 16 })}${t('Bild')}</button></div>
     </div>
     <div class="wrapped-img" id="wrapImg"></div>`;
 }
@@ -139,12 +143,12 @@ export async function renderWrapped(year) {
   const s = yearStats(year);
   const box = document.getElementById('wrapImg');
   if (!s.beers && !s.tours) {
-    box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('star', { size: 40, strokeWidth: 1.4 })}</div><h3>${year} ist noch leer</h3><p>Trag Biere ins Tagebuch ein oder fahr eine Tour — dann gibt's hier deinen Rückblick.</p></div>`;
+    box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('star', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('{year} ist noch leer', { year })}</h3><p>${t("Trag Biere ins Tagebuch ein oder fahr eine Tour — dann gibt's hier deinen Rückblick.")}</p></div>`;
     return null;
   }
   const canvas = await drawWrapped(s);
   const url = canvas.toDataURL('image/png');
-  box.innerHTML = `<img src="${url}" alt="Mein Bier-Jahr ${year}: ${s.beers} Biere, ${s.sorts} Sorten, ${s.km} Tour-Kilometer">`;
+  box.innerHTML = `<img src="${url}" alt="${t('Mein Bier-Jahr {year}: {beers} Biere, {sorts} Sorten, {km} Tour-Kilometer', { year, beers: s.beers, sorts: s.sorts, km: s.km })}">`;
   return canvas;
 }
 
@@ -152,10 +156,10 @@ export async function shareWrapped(canvas, year, download = false) {
   const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
   const file = new File([blob], `bier-jahr-${year}.png`, { type: 'image/png' });
   if (!download && navigator.canShare && navigator.canShare({ files: [file] })) {
-    try { await navigator.share({ files: [file], title: `Mein Bier-Jahr ${year}` }); return; }
+    try { await navigator.share({ files: [file], title: t('Mein Bier-Jahr {year}', { year }) }); return; }
     catch (e) { if (e && e.name === 'AbortError') return; }
   }
   downloadFile(file.name, blob, 'image/png');
-  toast('Bild gespeichert', { tone: 'good' });
+  toast(t('Bild gespeichert'), { tone: 'good' });
 }
 
