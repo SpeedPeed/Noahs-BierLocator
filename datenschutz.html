@@ -65,6 +65,9 @@
   <h3>Anonyme Geräte-ID</h3>
   <p>Beim ersten Start erzeugt die App eine zufällige geheime ID. Am Server wird nur ein nicht umkehrbarer Hash (SHA-256) davon gespeichert. Damit zählt pro Gerät eine Bewertung, du kannst deine eigenen Preise löschen und es gibt ein Tageslimit gegen Spam. Ein Rückschluss auf deine Person ist ohne dein Gerät nicht möglich.</p>
 
+  <h3>Schutz vor Spam</h3>
+  <p>Damit niemand massenhaft falsche Preise oder Bewertungen eintragen kann, gibt es zusätzlich ein Tageslimit pro Internet-Anschluss. Dafür speichern wir beim Melden eines Preises, einer Bewertung oder beim Erstellen einer Runde einen verschlüsselten Hash deiner IP-Adresse (mit geheimem Zufallswert, nicht zurückrechenbar) – und löschen ihn nach 48 Stunden automatisch. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (Schutz vor Missbrauch).</p>
+
   <h3>Preise &amp; Bewertungen (für alle sichtbar)</h3>
   <p>Wenn du einen Preis meldest oder ein Lokal bewertest, speichern wir: Lokal (OpenStreetMap-ID), Sorte, Preis, Gebinde, Sterne, Zeitpunkt und den Hash deiner Geräte-ID. Preise und Bewertungen sind für alle Nutzer sichtbar – ohne Namen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (du nutzt die Funktion aktiv). Speicherdauer: bis du sie löschst; alte Preise werden in der App ausgegraut.</p>
 
@@ -72,7 +75,7 @@
   <p>Schaltest du Preisalarme ein, speichern wir dein Push-Abo (eine technische Adresse deines Browsers) und deine Wunschpreise, um dich nach dem wöchentlichen Preis-Update zu benachrichtigen. Zugestellt wird über den Push-Dienst deines Browsers (bei Chrome: Google Firebase Cloud Messaging). Ausschalten oder „Meine Daten löschen“ entfernt das Abo.</p>
 
   <h3>„Meine Runde“ (Gruppe)</h3>
-  <p>Wenn du eine Runde erstellst oder beitrittst, speichern wir den Namen der Runde, deinen selbst gewählten Spitznamen, gezählte Biere, Abstimmungen und eingetragene Runden (Betrag, Teilnehmende, Lokal). Sichtbar ist das nur für Leute mit dem Gruppencode. <b>Live-Standort:</b> nur wenn du ihn selbst einschaltest; er ist für die Gruppe 15 Minuten lang sichtbar und wird beim Ausschalten entfernt. Gruppen sind nach 7 Tagen nicht mehr abrufbar und werden danach automatisch gelöscht. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und b DSGVO.</p>
+  <p>Wenn du eine Runde erstellst oder beitrittst, speichern wir den Namen der Runde, deinen selbst gewählten Spitznamen, gezählte Biere, Abstimmungen und eingetragene Runden (Betrag, Teilnehmende, Lokal). Sichtbar ist das nur für Mitglieder der Runde (Beitritt mit dem Gruppencode). <b>Live-Standort:</b> nur wenn du ihn selbst einschaltest; er ist für die Gruppe 15 Minuten lang sichtbar und wird beim Ausschalten entfernt. Gruppen sind nach 7 Tagen nicht mehr abrufbar und werden danach automatisch gelöscht. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und b DSGVO.</p>
 
   <h3>Geräte-Sync (freiwillig)</h3>
   <p>Schaltest du den Sync ein, werden Favoriten, Vorlieben, Tagebuch, Touren (ohne GPS-Spur), Preisalarme und die Angaben des Promille-Rechners am Server unter dem Hash deines Sync-Codes gespeichert, damit deine anderen Geräte sie abrufen können. Wer den Code kennt, kann diese Daten sehen – teile ihn nur mit eigenen Geräten. Da der Promille-Rechner Angaben zu Alkoholkonsum und Körperdaten enthält, erfolgt der Upload nur mit deiner Einwilligung durch das Einschalten (Art. 9 Abs. 2 lit. a DSGVO). Widerruf: Sync trennen und „Meine Daten löschen“.</p>

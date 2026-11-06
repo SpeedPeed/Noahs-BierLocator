@@ -8,7 +8,7 @@ import { isShared, migrateLocalToShared, exportLocalCommunity, importLocalCommun
 import { readHash, clearHash } from './share.js';
 import { haversine } from './util.js';
 import * as mapview from './map.js';
-import { $, $$, toast, wireDialog, openDialog, downloadFile } from './ui/dom.js';
+import { $, $$, toast, wireDialog, openDialog, closeDialog, downloadFile } from './ui/dom.js';
 import { initSheet, sheetOcclusion, setSheet, getSheet, mobile, onSheetChange } from './ui/sheet.js';
 import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints } from './ui/finder.js';
 import { initDetail, openPlace } from './ui/detail.js';
@@ -26,6 +26,15 @@ import { openBingo, openSurprise } from './ui/funUi.js';
 import { initBadges } from './ui/badgesUi.js';
 import { showHeatmap, hideHeatmap } from './heatmap.js';
 import { yearStats } from './ui/wrappedUi.js';
+
+// Erster Start? (vor init prüfen, bevor die App selbst etwas speichert)
+const WELCOME_KEY = 'bl_welcome_v1';
+const FIRST_RUN = (() => {
+  try {
+    return !['bl_welcome_v1', 'bl_last_location_v1', 'bl_device_secret_v1', 'bl_diary_v1', 'bl_personal_v2', 'bierlocator_data_v1']
+      .some(k => localStorage.getItem(k) !== null);
+  } catch (e) { return false; }
+})();
 
 /* ---------- Theme ---------- */
 function currentTheme() {
@@ -242,6 +251,25 @@ function openAbout() {
   openDialog($('#aboutDialog'));
 }
 
+/* ---------- Einführung beim ersten Start ---------- */
+function showWelcome() {
+  const dlg = $('#welcomeDialog');
+  $('#welcomeBody').innerHTML = `
+    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 24 })}Willkommen beim Bier-Locator</h2>
+    <ul class="welcome-list">
+      <li>${icon('map', { size: 20 })}<span><b>Bier in der Nähe:</b> Kneipen, Biergärten, Brauereien &amp; Läden mit Öffnungszeiten und Preisen.</span></li>
+      <li>${icon('bike', { size: 20 })}<span><b>Radtouren:</b> gleichmäßige Bier-Runden planen und live mitfahren.</span></li>
+      <li>${icon('users', { size: 20 })}<span><b>Mit Freunden:</b> Biere zählen, Runden abrechnen, über den nächsten Stopp abstimmen.</span></li>
+    </ul>
+    <div class="notice">${icon('locate', { size: 18 })}<div>Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.</div></div>
+    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 18 })}Standort verwenden</button>
+    <button class="btn btn-soft welcome-skip" data-close>Erst mal umschauen</button>
+    <p class="fine center">Für Erwachsene. Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht, auch nicht mit dem Rad.<br><a href="datenschutz.html">Datenschutz &amp; Impressum</a></p>`;
+  dlg.addEventListener('close', () => { try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ } }, { once: true });
+  $('#welcomeLocate').onclick = () => { closeDialog(dlg); locate(); };
+  openDialog(dlg);
+}
+
 /* ---------- Links (#ort=…, #tour=…) ---------- */
 async function handleHash() {
   const h = readHash();
@@ -370,6 +398,7 @@ async function init() {
 
   // Startpunkt: Link > letzter Standort > (falls erlaubt) GPS
   if (await handleHash()) return;
+  if (FIRST_RUN) { showWelcome(); return; }
   const last = loadLastLocation();
   const granted = await geolocationGranted();
   if (last) {

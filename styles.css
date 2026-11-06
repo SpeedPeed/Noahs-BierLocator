@@ -679,6 +679,11 @@ kbd { font-family: inherit; font-size: 12px; padding: 1px 6px; border: 1px solid
 
 .about-list { padding-left: 18px; margin: 0 0 14px; font-size: 14px; color: var(--text-soft); }
 .about-list li { margin-bottom: 4px; }
+.welcome-list { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; }
+.welcome-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; }
+.welcome-list li > .icon { flex: none; color: var(--accent-strong); margin-top: 1px; }
+#welcomeBody .notice { margin-bottom: 14px; }
+.welcome-skip { width: 100%; margin-top: 8px; }
 
 /* ---------- Toast ---------- */
 .toast {

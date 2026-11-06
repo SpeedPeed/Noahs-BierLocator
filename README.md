@@ -99,7 +99,8 @@ Diese Funktionen brauchen zusätzlich [`supabase/002_features.sql`](supabase/002
 (einmal im Supabase SQL-Editor ausführen). „Meine Runde“ mit Live-Standort, Abrechnung und Abstimmung
 braucht zusätzlich [`supabase/003_runde.sql`](supabase/003_runde.sql) — ohne läuft die Gruppe wie bisher
 (Biere zählen, Stopps bewerten). „Meine Daten löschen“ (Menü → Geräte & Backup) braucht
-[`supabase/004_datenschutz.sql`](supabase/004_datenschutz.sql). Preisalarme per Push verschickt der GitHub-Job
+[`supabase/004_datenschutz.sql`](supabase/004_datenschutz.sql). [`supabase/005_schutz.sql`](supabase/005_schutz.sql) ergänzt
+ein Tageslimit pro IP-Adresse (gegen Spam), 8-stellige Gruppencodes und zeigt Runden nur Mitgliedern. Preisalarme per Push verschickt der GitHub-Job
 „Preisalarme verschicken“ nach jedem Preis-Update; er braucht die Secrets `ALERTS_TOKEN`
 und `VAPID_PRIVATE_KEY`.
 
@@ -114,7 +115,7 @@ python scripts/serve.py
 Dann <http://localhost:8000> öffnen. (`python -m http.server` geht auch, cached aber
 Dateien hartnäckig im Browser.)
 
-**Tests:** <http://localhost:8000/tests/> öffnen — testet Öffnungszeiten-Parser,
+**Tests:** laufen bei jedem Push automatisch als GitHub Action (Headless-Chrome). Lokal: <http://localhost:8000/tests/> öffnen — testet Öffnungszeiten-Parser,
 Promille-Modell, Preisprüfung, Tourplaner und Tour-Links direkt im Browser.
 
 ## Veröffentlichen mit GitHub Pages

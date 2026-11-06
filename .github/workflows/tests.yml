@@ -1,0 +1,35 @@
+# Führt die Browser-Tests (tests/index.html) in Headless-Chrome aus — bei jedem Push
+# mit Code-Änderungen. Schlägt ein Test fehl, wird der Lauf rot und GitHub schickt eine Mail.
+name: Tests
+
+on:
+  push:
+    paths: ['js/**', 'tests/**', 'index.html', '.github/workflows/tests.yml']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Server starten
+        run: |
+          python3 scripts/serve.py 8000 > /dev/null 2>&1 &
+          for i in $(seq 1 20); do curl -sf http://localhost:8000/tests/ > /dev/null && break; sleep 0.5; done
+
+      - name: Tests in Chrome ausführen
+        run: |
+          google-chrome --headless=new --no-sandbox --disable-gpu --no-first-run \
+            --virtual-time-budget=15000 --dump-dom http://localhost:8000/tests/ > result.html 2>/dev/null || true
+          summary=$(grep -oE 'id="summary"><span class="[a-z]+">[^<]+' result.html | sed 's/.*">//')
+          echo "Ergebnis: ${summary:-keine Ausgabe}"
+          # fehlgeschlagene Tests mit Fehlermeldung anzeigen
+          grep -oE '<div class="fail">[^<]+(<pre>[^<]*</pre>)?' result.html | sed -E 's/<[^>]+>/ /g' || true
+          if [ -z "$summary" ] || grep -q 'class="fail"' result.html; then
+            echo "::error::Tests fehlgeschlagen: ${summary:-Testseite lief nicht durch}"
+            exit 1
+          fi
+          echo "### ✓ $summary" >> "$GITHUB_STEP_SUMMARY"

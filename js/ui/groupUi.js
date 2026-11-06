@@ -45,6 +45,7 @@ async function rpc(fn, body) {
     if (/not found/.test(msg)) msg = 'Diese Gruppe gibt es nicht (mehr) — Gruppen gelten 7 Tage.';
     if (/full/.test(msg)) msg = 'Die Gruppe ist voll (max. 30).';
     if (/implausible/.test(msg)) msg = 'Der Betrag ist unrealistisch (0,30–15 € pro Bier).';
+    if (/rate limit/.test(msg)) msg = 'Heute wurden schon sehr viele Runden erstellt — morgen wieder!';
     throw new Error(msg);
   }
   const text = await res.text();
@@ -93,7 +94,7 @@ export async function openGroupMenu() {
     </form>
     <div class="sync-or"><span>oder mit Code beitreten</span></div>
     <form class="sync-join" id="groupCode">
-      <input name="code" placeholder="z.B. K7PX3M" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Gruppencode">
+      <input name="code" placeholder="z.B. K7PX3MQ2" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Gruppencode">
       <button class="btn btn-soft" type="submit">Beitreten</button>
     </form>
     <p class="fine">Gruppen gelten 7 Tage. Dein Standort wird nur geteilt, wenn du das in der Gruppe selbst einschaltest.</p>`;
@@ -113,7 +114,7 @@ export async function openGroupMenu() {
   $('#groupCode').onsubmit = e => {
     e.preventDefault();
     const c = e.target.code.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-    if (c.length !== 6) { toast('Der Code hat 6 Zeichen.', { tone: 'bad' }); return; }
+    if (c.length < 6 || c.length > 8) { toast('Der Code hat 8 Zeichen (ältere Runden: 6).', { tone: 'bad' }); return; }
     joinGroupFromLink(c);
   };
 }

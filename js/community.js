@@ -77,7 +77,7 @@ async function rpc(fn, body) {
     let msg = `Server-Fehler ${res.status}`;
     try { const j = await res.json(); msg = j.message || msg; } catch (e) { /* egal */ }
     if (/implausible/i.test(msg)) msg = 'Der Preis ist unrealistisch und wurde nicht gespeichert.';
-    if (/rate limit/i.test(msg)) msg = 'Heute schon sehr viele Preise gemeldet — morgen wieder!';
+    if (/rate limit/i.test(msg)) msg = 'Heute schon sehr viele Meldungen — morgen wieder!';
     throw new Error(msg);
   }
   const text = await res.text();
