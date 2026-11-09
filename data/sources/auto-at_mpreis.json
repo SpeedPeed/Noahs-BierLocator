@@ -8,7 +8,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-maerzen-107017",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -19,7 +19,7 @@
 "price": 0.69,
 "promo": true,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-maerzen-107017",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "note": "Aktion, statt 1,39 € (1+1 gratis, bei 24 Stk. je)"
 },
 {
@@ -31,7 +31,19 @@
 "price": 28,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-20x-05-liter-800210",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 14,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-20x-05-liter-800210",
+"seen": "2026-11-09",
+"note": "Aktion, statt 28,00 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -42,7 +54,7 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-6x-05-liter-107021",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -54,8 +66,21 @@
 "price": 8.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-tray-6x-05-liter-800295",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.49,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-tray-6x-05-liter-800295",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,40 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -66,7 +91,7 @@
 "price": 16.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-12x-033-liter-103607",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -78,7 +103,7 @@
 "price": 6.9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/egger-maerzen-bier-6x-05-liter-107071",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -90,20 +115,20 @@
 "price": 3.45,
 "promo": true,
 "source": "https://www.mpreis.at/shop/p/egger-maerzen-bier-6x-05-liter-107071",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0,
 "note": "Aktion, statt 6,90 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zipfer Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.4,
+"beer": "Kaiser Märzen Fasstyp",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 13.13,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-800211",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-kiste-05-liter-800290",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -114,30 +139,29 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-107022",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
 "beer": "Zipfer Märzen",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.39,
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.4,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-107020",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-800211",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
 "beer": "Stiegl Goldbräu",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.88,
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.6,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-6x-05-liter-810019",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-20x-05-liter-810000",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -148,7 +172,43 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/feldner-feldner-maerzen-107072",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-107020",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Goldbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.88,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-6x-05-liter-810019",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Goldbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-6x-05-liter-810019",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,88 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -159,7 +219,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-05-liter-107028",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -170,19 +230,8 @@
 "price": 7.44,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-6x-05-liter-800522",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Kaiser Märzen Fasstyp",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 26,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-kiste-05-liter-800290",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -193,7 +242,7 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-6-x05-liter-810141",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -205,21 +254,8 @@
 "price": 13.32,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/corona-extra-tray-0355-liter-602000",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.13
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Corona Extra",
-"unit": "other",
-"package": "6×0,355 l",
-"price": 6.66,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/corona-extra-tray-0355-liter-602000",
-"seen": "2026-11-02",
-"volume_l": 2.13,
-"note": "Aktion, statt 13,32 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -230,8 +266,20 @@
 "price": 16.56,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-maerzen-24x-05-liter-107018",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-bier-tray-6x-05-liter-802925",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -242,7 +290,7 @@
 "price": 7.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-tray-05-liter-800372",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -254,7 +302,7 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/feldner-schankbier-107074",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -265,19 +313,7 @@
 "price": 1.44,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/ottakringer-helles-dose-05-liter-800422",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Märzen Bier",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-bier-tray-6x-05-liter-802925",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -288,8 +324,19 @@
 "price": 6.9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-6x-033-liter-800320",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.8,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-kiste-20x-05-liter-802901",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -300,19 +347,8 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-6x-05-liter-dose-107041",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Märzen",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 15.8,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-kiste-20x-05-liter-802901",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -323,7 +359,7 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-05-liter-810140",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -334,18 +370,7 @@
 "price": 0.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-lager-dose-800188",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Goldbräu",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.48,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-05-liter-810001",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -356,20 +381,19 @@
 "price": 8.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/augustiner-hell-tray-05-liter-801440",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Gösser Naturradler",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 17.16,
+"beer": "Stiegl Goldbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.48,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-tray-12x-033-liter-103603",
-"seen": "2026-11-02",
-"volume_l": 3.96
+"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-05-liter-810001",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -377,10 +401,10 @@
 "beer": "Gösser Märzen",
 "unit": "kasten20x0.5l",
 "package": "20×0,5 l",
-"price": 15.8,
+"price": 29.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-maerzen-kiste-20x-05-liter-802900",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -391,7 +415,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-alkoholfrei-107015",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -402,30 +426,8 @@
 "price": 0.69,
 "promo": true,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-alkoholfrei-107015",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "note": "Aktion, statt 1,39 € (1+1 gratis, bei 24 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Egger Märzen Bier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.19,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/egger-maerzen-bier-05-liter-107070",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Löwenbräu Weißbier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.16,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/loewenbraeu-weissbier-05-liter-107080",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -436,30 +438,7 @@
 "price": 0.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-hefeweissbier-dose-800190",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Tegernseer Spezial",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 9.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/tegernseer-spezial-tray-05-liter-801508",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.24,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-800512",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -470,20 +449,67 @@
 "price": 5.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/kozel-premium-tray-05-liter-810139",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Pilsner Urquell",
+"beer": "Gösser Naturradler",
 "unit": "other",
-"package": "4×0,5 l",
-"price": 6.36,
+"package": "12×0,33 l",
+"price": 17.16,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/pilsner-urquell-urquell-4x-05-liter-810137",
-"seen": "2026-11-02",
-"volume_l": 2.0
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-tray-12x-033-liter-103603",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 8.58,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-tray-12x-033-liter-103603",
+"seen": "2026-11-09",
+"volume_l": 3.96,
+"note": "Aktion, statt 17,16 € (1+1 gratis, bei 2 Stk. je)"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Löwenbräu Weißbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.16,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/loewenbraeu-weissbier-05-liter-107080",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Egger Märzen Bier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/egger-maerzen-bier-05-liter-107070",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Tegernseer Spezial",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/tegernseer-spezial-tray-05-liter-801508",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -494,20 +520,21 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-alkoholfrei-tray-6x-05-liter-800912",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Pils",
+"beer": "Edelweiss Alkoholfrei",
 "unit": "other",
-"package": "6×0,33 l",
-"price": 7.74,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-6x-033-liter-800866",
-"seen": "2026-11-02",
-"volume_l": 1.98
+"package": "6×0,5 l",
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/edelweiss-alkoholfrei-tray-6x-05-liter-800912",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,70 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -518,18 +545,42 @@
 "price": 16.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-maerzen-kiste-05-liter-817114",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Schwarzes",
+"beer": "Pilsner Urquell",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 6.36,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/pilsner-urquell-urquell-4x-05-liter-810137",
+"seen": "2026-11-09",
+"volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Desperados Tequilabeer",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 13.14,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/desperados-tequilabeer-6x-033-liter-602906",
+"seen": "2026-11-09",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Pils",
 "unit": "other",
 "package": "6×0,33 l",
 "price": 7.74,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-schwarzes-6x-033-liter-800865",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-6x-033-liter-800866",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -541,31 +592,44 @@
 "price": 8.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-tray-6x-05-liter-104082",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Gösser Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.59,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-05-liter-107026",
-"seen": "2026-11-02"
+"beer": "Zipfer Bier 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.49,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-tray-6x-05-liter-104082",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,40 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Desperados Tequilabeer",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 13.14,
+"beer": "Zillertal Bier Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.24,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/desperados-tequilabeer-6x-033-liter-602906",
-"seen": "2026-11-02",
-"volume_l": 1.98
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-800512",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Goldbräu",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 15.48,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-12x-033-liter-810018",
+"seen": "2026-11-09",
+"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -576,19 +640,8 @@
 "price": 9.54,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-maerzen-tray-6x-05-liter-dose-107036",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Kaiser Märzen Fasstyp",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.3,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-05-liter-800291",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -599,7 +652,41 @@
 "price": 24.9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/chiemseer-hell-kiste-20x-05-liter-103867",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Schwarzes",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-schwarzes-6x-033-liter-800865",
+"seen": "2026-11-09",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-05-liter-107026",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Kaiser Märzen Fasstyp",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.3,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-05-liter-800291",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -610,7 +697,7 @@
 "price": 8.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-tray-6x-033-liter-104085",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -622,19 +709,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-radler-naturtrueb-6x-05-liter-801067",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturradler",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-tray-6x-05-liter-800673",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -646,43 +721,19 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-alkoholfrei-dose-800192",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Stiegl Goldbräu",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 15.8,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-20x-05-liter-810000",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Goldbräu",
+"beer": "Chiemseer Hell",
 "unit": "other",
-"package": "12×0,33 l",
-"price": 15.48,
+"package": "6×0,5 l",
+"price": 9.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-12x-033-liter-810018",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Goldbräu",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 8.99,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-tray-12x-033-liter-810018",
-"seen": "2026-11-02",
-"volume_l": 3.96,
-"note": "Aktion, statt 15,48 € (ab 2 Stk. je)"
+"source": "https://www.mpreis.at/shop/p/chiemseer-hell-tray-05-liter-103897",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -693,32 +744,19 @@
 "price": 13.32,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/corona-cero-00-tray-0355-liter-602006",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.13
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Corona Cero 0,0%",
-"unit": "other",
-"package": "6×0,355 l",
-"price": 6.66,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/corona-cero-00-tray-0355-liter-602006",
-"seen": "2026-11-02",
-"volume_l": 2.13,
-"note": "Aktion, statt 13,32 € (1+1 gratis, bei 2 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Hell",
+"beer": "Gösser Naturradler",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 8.88,
+"price": 8.94,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-hell-tray-6x-05-liter-810060",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-tray-6x-05-liter-800673",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -730,20 +768,21 @@
 "price": 8.88,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-00-tray-6x-05-liter-820059",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Chiemseer Hell",
+"beer": "Stiegl 0,0%",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 9.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/chiemseer-hell-tray-05-liter-103897",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/stiegl-00-tray-6x-05-liter-820059",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,88 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -754,20 +793,8 @@
 "price": 9.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/augustiner-edelstoff-tray-05-liter-801520",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Corona Extra Mexikan Bier",
-"unit": "other",
-"package": "0,355 l",
-"price": 2.22,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/corona-extra-mexikan-bier-602001",
-"seen": "2026-11-02",
-"volume_l": 0.355
 },
 {
 "country": "AT",
@@ -778,7 +805,7 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bitburger-premium-pils-05-liter-dose-105552",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -789,7 +816,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/augustiner-hell-05-liter-801441",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -800,29 +827,44 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-maerzen-05-liter-802902",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Franziskaner Hefehell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.27,
+"beer": "Corona Extra Mexikan Bier",
+"unit": "other",
+"package": "0,355 l",
+"price": 2.22,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/franziskaner-hefehell-05-liter-105800",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/corona-extra-mexikan-bier-602001",
+"seen": "2026-11-09",
+"volume_l": 0.355
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Kaiser Märzen Fasstyp",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.29,
+"beer": "Stiegl Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.88,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-05-liter-dose-107030",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/stiegl-hell-tray-6x-05-liter-810060",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/stiegl-hell-tray-6x-05-liter-810060",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,88 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -833,20 +875,30 @@
 "price": 7.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/erdinger-weissbier-alkoholfrei-tray-05-liter-105629",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Weißbier Hell",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
+"beer": "Franziskaner Hefehell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.27,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-6x-05-liter-800388",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/franziskaner-hefehell-05-liter-105800",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Kaiser Märzen Fasstyp",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/kaiser-maerzen-fasstyp-05-liter-dose-107030",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -857,19 +909,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bierol-bio-golden-ale-sunn-seiterl-ew-109258",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Hell",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 9.3,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-hell-6x-05-liter-810136",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -880,43 +920,19 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/koenig-pilsener-koenig-pilsner-05-liter-500515",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Gösser Falkenweizen",
+"beer": "Zillertal Bier Weißbier Hell",
 "unit": "other",
 "package": "6×0,5 l",
 "price": 8.94,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-falkenweizen-6x-05-liter-803212",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-6x-05-liter-800388",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Falkenweizen",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 5.49,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/goesser-falkenweizen-6x-05-liter-803212",
-"seen": "2026-11-02",
-"volume_l": 3.0,
-"note": "Aktion, statt 8,94 € (ab 2 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zipfer Limetten Radler",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.55,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-limetten-radler-05-liter-dose-107037",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -927,8 +943,21 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-hefetrueb-tray-05-liter-800441",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Edelweiss Weißbier Hefetrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-hefetrueb-tray-05-liter-800441",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,70 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -939,7 +968,19 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/clausthaler-alkoholfrei-tray-05-liter-800368",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Falkenweizen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-falkenweizen-6x-05-liter-803212",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -951,7 +992,7 @@
 "price": 15.48,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-hell-tray-12x-033-liter-810080",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -959,25 +1000,12 @@
 "chain": "mpreis",
 "beer": "Stiegl Hell",
 "unit": "other",
-"package": "12×0,33 l",
-"price": 8.99,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/stiegl-hell-tray-12x-033-liter-810080",
-"seen": "2026-11-02",
-"volume_l": 3.96,
-"note": "Aktion, statt 15,48 € (ab 2 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Märzen",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 17.16,
+"package": "6×0,5 l",
+"price": 9.3,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-tray-12x-033-liter-802915",
-"seen": "2026-11-02",
-"volume_l": 3.96
+"source": "https://www.mpreis.at/shop/p/stiegl-hell-6x-05-liter-810136",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -988,7 +1016,7 @@
 "price": 24.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-20x-05-liter-800511",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -999,19 +1027,19 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-tray-05-liter-103898",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Bierol BIO Zirbenradler Zapfn",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.99,
+"beer": "Zipfer Limetten Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.55,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/bierol-bio-zirbenradler-zapfn-dose-ew-109254",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/zipfer-limetten-radler-05-liter-dose-107037",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1022,29 +1050,7 @@
 "price": 1.27,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/franziskaner-hefeweizen-hell-alkoholfrei-05-liter-105805",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Franziskaner Weizenbier alkoholfrei",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 25.4,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/franziskaner-weizenbier-alkoholfrei-kiste-20x-05-liter-105806",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Corona Extra",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 2.29,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/corona-extra-dose-602834",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1055,20 +1061,8 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-alkoholfrei-tray-6x-05-liter-800886",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Märzen",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 5.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-6x-033-liter-801803",
-"seen": "2026-11-02",
-"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1079,7 +1073,18 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-103608",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Villacher Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 14.8,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/villacher-maerzen-kiste-05-liter-mehrweg-flasche-850000",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1090,7 +1095,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-05-liter-800667",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1101,20 +1106,8 @@
 "price": 7.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-tyroler-imperial-zwickl-6x-033-liter-900516",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturradler Zitrone",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 9.54,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-tray-6x-05-liter-dose-800995",
-"seen": "2026-11-02",
-"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1125,18 +1118,18 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bierol-oha-pale-af-dose-109277",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Villacher Märzen",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 30,
+"beer": "Bierol BIO Zirbenradler Zapfn",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/villacher-maerzen-kiste-05-liter-mehrweg-flasche-850000",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/bierol-bio-zirbenradler-zapfn-dose-ew-109254",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1147,7 +1140,42 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-05-liter-104080",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Corona Extra",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 2.29,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/corona-extra-dose-602834",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Schwechater Bier Vollbier",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 13.56,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-12x-033-liter-103627",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Märzen",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 5.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-6x-033-liter-801803",
+"seen": "2026-11-09",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1158,43 +1186,19 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-tray-6x-05-liter-103051",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Heineken Bier",
-"unit": "other",
-"package": "4×0,5 l",
-"price": 7.4,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/heineken-bier-4x-05-liter-107039",
-"seen": "2026-11-02",
-"volume_l": 2.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Hell",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 7.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-hell-6x-05-liter-802552",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Franziskaner Hefehell",
+"beer": "Stiegl Hell",
 "unit": "kasten20x0.5l",
 "package": "20×0,5 l",
-"price": 25.4,
+"price": 29.6,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/franziskaner-hefehell-kiste-20x-05-liter-105582",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/stiegl-hell-kiste-20x-05-liter-810065",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1205,7 +1209,7 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/desperados-tequilabeer-602829",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1216,19 +1220,33 @@
 "price": 8.58,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-urtyp-tray-6x-05-liter-800256",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Radler naturtrüb",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.59,
+"beer": "Zipfer Urtyp",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.49,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-urtyp-tray-6x-05-liter-800256",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,58 € (ab 2 Stk. je)"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-radler-naturtrueb-801069",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-tray-6x-05-liter-dose-800995",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1239,8 +1257,20 @@
 "price": 8.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/maxlrainer-maxl-helles-tray-05-liter-103970",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Radler Zitrone naturtrüb",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 15.48,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-naturtrueb-12x-033-liter-103843",
+"seen": "2026-11-09",
+"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -1251,7 +1281,7 @@
 "price": 7.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/erdinger-weissbier-feine-hefe-tray-05-liter-105572",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1263,8 +1293,167 @@
 "price": 15.48,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/ottakringer-helles-bier-tray-033-liter-800600",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Edelweiss Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/edelweiss-alkoholfrei-05-liter-800911",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Heineken Bier",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 7.4,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/heineken-bier-4x-05-liter-107039",
+"seen": "2026-11-09",
+"volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Starkenberger Tiroler Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-maerzen-05-liter-817115",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Augustiner Edelstoff",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/augustiner-edelstoff-05-liter-801447",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Franziskaner Hefeweizen Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.27,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/franziskaner-hefeweizen-dunkel-05-liter-105804",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl 0.0%",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.48,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-00-05-liter-820057",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-hell-6x-05-liter-802552",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Franziskaner Hefehell",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 25.4,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/franziskaner-hefehell-kiste-20x-05-liter-105582",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Franziskaner Weizenbier alkoholfrei",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 25.4,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/franziskaner-weizenbier-alkoholfrei-kiste-20x-05-liter-105806",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Radler naturtrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-radler-naturtrueb-801069",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 17.16,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-tray-12x-033-liter-802915",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 8.58,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-tray-12x-033-liter-802915",
+"seen": "2026-11-09",
+"volume_l": 3.96,
+"note": "Aktion, statt 17,16 € (1+1 gratis, bei 2 Stk. je)"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Schwarzes",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-schwarzes-800868",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hacker-Pschorr Münchner Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-05-liter-103868",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1275,7 +1464,7 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-gold-lager-tray-05-liter-817133",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1287,18 +1476,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-alkoholfrei-033-liter-810093",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Edelweiss Alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.45,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/edelweiss-alkoholfrei-05-liter-800911",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1309,87 +1487,7 @@
 "price": 1.43,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-033-liter-800843",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zipfer Märzen",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 33.36,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-24x-033-liter-107019",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Starkenberger Tiroler Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-maerzen-05-liter-817115",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Augustiner Edelstoff",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.59,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/augustiner-edelstoff-05-liter-801447",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Schwechater Bier Vollbier",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 13.56,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-12x-033-liter-103627",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Schwechater Bier Vollbier",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 6.78,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-12x-033-liter-103627",
-"seen": "2026-11-02",
-"volume_l": 3.96,
-"note": "Aktion, statt 13,56 € (1+1 gratis, bei 2 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Franziskaner Hefeweizen Dunkel",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.27,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/franziskaner-hefeweizen-dunkel-05-liter-105804",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl 0.0%",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.48,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-00-05-liter-820057",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1400,8 +1498,31 @@
 "price": 8.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-gold-spezial-dunkel-tray-05-liter-817149",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl 0.0% Radler Zitrone",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 15.48,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-00-radler-zitrone-tray-12x-033-liter-810075",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Märzen",
+"unit": "kasten24x0.33l",
+"package": "24×0,33 l",
+"price": 33.36,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-24x-033-liter-107019",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1412,135 +1533,8 @@
 "price": 8.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-alkoholfrei-6x-05-liter-818088",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Radler Zitrone naturtrüb",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 15.48,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-naturtrueb-12x-033-liter-103843",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Radler Zitrone naturtrüb",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 8.99,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-naturtrueb-12x-033-liter-103843",
-"seen": "2026-11-02",
-"volume_l": 3.96,
-"note": "Aktion, statt 15,48 € (ab 2 Stk. je)"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Schwarzes",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.29,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-schwarzes-800868",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hacker-Pschorr Münchner Hell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.39,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-05-liter-103868",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Erdinger Alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.25,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/erdinger-alkoholfrei-05-liter-105548",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Natur Saurer Radler Soda Zitron",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.49,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-natur-saurer-radler-soda-zitron-05-l-104095",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Weißbier Hell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.49,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-800389",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Hell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.48,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-hell-05-liter-810011",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Löwenbräu Oktoberfest",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.16,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/loewenbraeu-oktoberfest-dose-05-liter-106038",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl 0.0% Radler Zitrone",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 15.48,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-00-radler-zitrone-tray-12x-033-liter-810075",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl 0.0% Radler Zitrone",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 8.99,
-"promo": true,
-"source": "https://www.mpreis.at/shop/p/stiegl-00-radler-zitrone-tray-12x-033-liter-810075",
-"seen": "2026-11-02",
-"volume_l": 3.96,
-"note": "Aktion, statt 15,48 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -1551,7 +1545,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/tegernseer-spezial-05-liter-820046",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1562,7 +1556,7 @@
 "price": 7.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-maerzen-tray-05-liter-817116",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1574,7 +1568,7 @@
 "price": 9.54,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-tray-6x-05-liter-dose-800996",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1586,19 +1580,7 @@
 "price": 8.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-heimatbier-tray-05-liter-817131",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Radler Zitrone naturtrüb",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-naturtrueb-6x-05-liter-103842",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1610,32 +1592,41 @@
 "price": 7.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-bio-zwickl-6x-05-liter-815466",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Erdinger Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.25,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/erdinger-alkoholfrei-05-liter-105548",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Weißbier Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-800389",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
 "beer": "Gösser Natur Saurer Radler Soda Zitron",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-natur-saurer-radler-soda-zitron-6x-05-l-104096",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Bio Paracelsus Zwickl",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.19,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-bio-paracelsus-zwickl-6x-05-liter-810022",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/goesser-natur-saurer-radler-soda-zitron-05-l-104095",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1646,7 +1637,7 @@
 "price": 6.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bio-vom-berg-bio-tiroler-kraft-bier-tray-033-liter-814990",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -1658,8 +1649,19 @@
 "price": 7.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-tyroler-imperial-hell-6x-033-liter-900524",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.48,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-hell-05-liter-810011",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1670,7 +1672,18 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/erdinger-weissbier-feine-hefe-05-liter-105542",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Löwenbräu Oktoberfest",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.16,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/loewenbraeu-oktoberfest-dose-05-liter-106038",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1681,7 +1694,7 @@
 "price": 6.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bio-vom-berg-bio-tiroler-helles-tray-6x-033-liter-814995",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -1693,8 +1706,21 @@
 "price": 8.58,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-drei-tray-6x-05-liter-800672",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Drei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.49,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-drei-tray-6x-05-liter-800672",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,58 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -1705,7 +1731,7 @@
 "price": 8.5,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/maxlrainer-maxl-helles-tray-033-liter-103989",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -1717,8 +1743,20 @@
 "price": 14.16,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/feldner-feldner-maerzen-107073",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Natur Saurer Radler Soda Zitron",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-natur-saurer-radler-soda-zitron-6x-05-l-104096",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1729,7 +1767,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-urtyp-05-liter-800241",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1740,7 +1778,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-800642",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1751,7 +1789,7 @@
 "price": 8.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-kellerbier-tray-6x-05-liter-800257",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1763,7 +1801,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-dunkel-6x-05-liter-105623",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1775,31 +1813,41 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-gold-lager-05-liter-817111",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Edelweiss Hofbräu",
+"beer": "Stiegl Bio Paracelsus Zwickl",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 8.7,
+"price": 8.19,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/edelweiss-hofbraeu-tray-05-liter-800722",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/stiegl-bio-paracelsus-zwickl-6x-05-liter-810022",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Corona Extra Mexikan Bier 0,0%",
-"unit": "other",
-"package": "0,355 l",
-"price": 2.22,
+"beer": "Mohrenbrauerei Spezial",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26.4,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/corona-extra-mexikan-bier-00-602007",
-"seen": "2026-11-02",
-"volume_l": 0.355
+"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-spezial-kiste-20x-05-liter-811150",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Urtyp",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 28.6,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-urtyp-kiste-20x-05-liter-800240",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1810,7 +1858,7 @@
 "price": 6.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-6x-033-liter-810131",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -1822,7 +1870,7 @@
 "price": 6.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/budweiser-bier-original-tray-033-liter-105943",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.32
 },
 {
@@ -1834,7 +1882,7 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-pils-6x-05-liter-810015",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1846,7 +1894,7 @@
 "price": 13.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/feldner-feldner-schankbier-107075",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
 },
 {
@@ -1858,8 +1906,21 @@
 "price": 8.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-pils-tray-6x-05-liter-103510",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.49,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/zipfer-pils-tray-6x-05-liter-103510",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,10 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -1870,7 +1931,7 @@
 "price": 8.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/wieselburger-stammbraeu-tray-05-liter-800486",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.0
 },
 {
@@ -1882,18 +1943,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-05-liter-103050",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Mohrenbrauerei Spezial",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 19.49,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-spezial-kiste-20x-05-liter-811150",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1904,7 +1954,7 @@
 "price": 1.72,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/heineken-pils-105556",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1915,19 +1965,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-hefetrueb-05-liter-800431",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl Radler Grapefruit naturtrüb",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.94,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-radler-grapefruit-naturtrueb-6x-05-liter-800933",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1938,7 +1976,7 @@
 "price": 1.38,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-033-liter-103815",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1949,7 +1987,7 @@
 "price": 8.64,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/ottakringer-frucade-6x-05-liter-800116",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1961,7 +1999,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-05-liter-810171",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1972,7 +2010,7 @@
 "price": 8.52,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-helles-tray-6x-05-liter-800025",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -1984,7 +2022,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-05-liter-dose-800998",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -1995,7 +2033,7 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-800321",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2006,7 +2044,7 @@
 "price": 8.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/chiemseer-hell-tray-033-liter-104060",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -2018,8 +2056,20 @@
 "price": 18.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-pfiff-kiste-20x-033-liter-820480",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Radler Zitrone naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-radler-zitrone-naturtrueb-6x-05-liter-103842",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2030,7 +2080,7 @@
 "price": 10.14,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-biostoff-tray-6x-05-liter-800994",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2042,19 +2092,32 @@
 "price": 19.9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-gold-lager-kiste-05-liter-817110",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Bio Radler naturtrüb",
+"beer": "Edelweiss Hofbräu",
 "unit": "other",
-"package": "6×0,33 l",
-"price": 7.19,
+"package": "6×0,5 l",
+"price": 8.7,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-bio-radler-naturtrueb-6x-033-liter-105637",
-"seen": "2026-11-02",
-"volume_l": 1.98
+"source": "https://www.mpreis.at/shop/p/edelweiss-hofbraeu-tray-05-liter-800722",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Edelweiss Hofbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.99,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/edelweiss-hofbraeu-tray-05-liter-800722",
+"seen": "2026-11-09",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,70 € (ab 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -2065,19 +2128,19 @@
 "price": 1.33,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-alkoholfrei-818158",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Edelweiss Weißbier Dunkel",
+"beer": "Corona Extra Mexikan Bier 0,0%",
 "unit": "other",
-"package": "6×0,5 l",
-"price": 8.7,
+"package": "0,355 l",
+"price": 2.22,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-dunkel-tray-05-liter-800457",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/corona-extra-mexikan-bier-00-602007",
+"seen": "2026-11-09",
+"volume_l": 0.355
 },
 {
 "country": "AT",
@@ -2088,41 +2151,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-falkenweizen-803211",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Starkenberger Tiroler Naturradler",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-naturradler-tray-05-liter-817122",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Maxlrainer Helles",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.45,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/maxlrainer-helles-05-liter-103971",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Fohrenburger Jubiläum Spezial",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 25.8,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-spezial-kiste-05-liter-800500",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2133,7 +2162,18 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-dunkel-800845",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Schwechater Bier Vollbier",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 23.6,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-20x-05-liter-103516",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2144,63 +2184,7 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hacker-pschorr-hefe-weisse-05-liter-103870",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Tyroler Imperial Zwickl",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.29,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-tyroler-imperial-zwickl-900515",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Starkenberger Heimatbier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.1,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/starkenberger-heimatbier-05-liter-817134",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Märzen",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.39,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-802938",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Schwechater Bier Vollbier",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 12.6,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-20x-05-liter-103516",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Spaten Hell",
-"unit": "other",
-"package": "4×0,5 l",
-"price": 5.96,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/spaten-hell-4er-packung-801008",
-"seen": "2026-11-02",
-"volume_l": 2.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2211,8 +2195,65 @@
 "price": 13.14,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/tequilabeer-00-602936",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Fohrenburger Jubiläum Spezial",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 14.8,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-spezial-kiste-05-liter-800500",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Tyroler Imperial Zwickl",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-tyroler-imperial-zwickl-900515",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-802938",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Radler Grapefruit naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-radler-grapefruit-naturtrueb-6x-05-liter-800933",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Spaten Hell",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 5.96,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/spaten-hell-4er-packung-801008",
+"seen": "2026-11-09",
+"volume_l": 2.0
 },
 {
 "country": "AT",
@@ -2223,7 +2264,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/kozel-premium-810144",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2234,7 +2275,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-bio-paracelsus-zwickl-05-liter-810023",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2245,7 +2286,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hacker-pschorr-hefe-weisse-tray-05-liter-103899",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2257,7 +2298,7 @@
 "price": 7.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/soelsch-soelsch-4er-mw-106999",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.32
 },
 {
@@ -2269,7 +2310,7 @@
 "price": 8.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-weisse-naturtrueb-6x-05-liter-810056",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2281,7 +2322,7 @@
 "price": 13.14,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/1664-blanc-6x-033-liter-603000",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -2293,7 +2334,7 @@
 "price": 26.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-kiste-20x-05-liter-103869",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2304,7 +2345,19 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/pilsner-urquell-urquell-810143",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Bio Radler naturtrüb",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.19,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-bio-radler-naturtrueb-6x-033-liter-105637",
+"seen": "2026-11-09",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -2315,7 +2368,30 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-dunkel-05-liter-800456",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Maxlrainer Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/maxlrainer-helles-05-liter-103971",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Starkenberger Tiroler Naturradler",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/starkenberger-tiroler-naturradler-tray-05-liter-817122",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2326,7 +2402,19 @@
 "price": 8.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-6x-05-liter-801524",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Edelweiss Weißbier Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-dunkel-tray-05-liter-800457",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2338,7 +2426,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-bier-05-liter-802911",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2349,7 +2437,7 @@
 "price": 1.37,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-urtyp-033-liter-801071",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2360,7 +2448,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-weisse-naturtrueb-05-liter-810057",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2371,19 +2459,8 @@
 "price": 8.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-stefani-bock-tray-6x-05-liter-800281",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zipfer Kellerbier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.35,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-kellerbier-05-liter-800258",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -2394,30 +2471,18 @@
 "price": 11.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-vollbier-hell-kiste-20x-05-liter-800973",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Stiegl Pils",
+"beer": "Starkenberger Heimatbier",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 1.49,
+"price": 1.1,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-pils-05-liter-810006",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturradler 0,0% alkoholfrei",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.79,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-00-alkoholfrei-tray-6x-05-liter-dose-107023",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/starkenberger-heimatbier-05-liter-817134",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2428,7 +2493,7 @@
 "price": 25.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/franziskaner-hefeweizen-dunkel-kiste-20x-05-liter-105607",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2439,7 +2504,7 @@
 "price": 1.43,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-drei-05-liter-800670",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2450,18 +2515,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-urtyp-05-liter-dose-107035",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Huber Bräu Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/huber-braeu-maerzen-05-liter-800361",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2472,7 +2526,7 @@
 "price": 1.23,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-033-liter-107014",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2483,7 +2537,7 @@
 "price": 1.44,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/ottakringer-frucade-radler-800115",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2494,7 +2548,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-hofbraeu-05-liter-800721",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2505,7 +2559,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-radler-himbeere-05-liter-810170",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2516,19 +2570,8 @@
 "price": 7.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bitburger-premium-pils-tray-033-liter-105583",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zötler Gold",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.29,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zoetler-gold-05-liter-890003",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -2539,7 +2582,7 @@
 "price": 1.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/heineken-alkoholfrei-103791",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2550,7 +2593,7 @@
 "price": 13.14,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/1664-blanc-alkoholfrei-6x-033-l-603025",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -2562,7 +2605,7 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/1664-blanc-602999",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2573,7 +2616,7 @@
 "price": 1.09,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-zeller-hell-802551",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2584,19 +2627,8 @@
 "price": 26.64,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/corona-corona-extra-mexikan-12er-pack-104655",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 4.26
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Virgin alkoholfrei",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 2.19,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/virgin-alkoholfrei-033-liter-602935",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -2607,7 +2639,7 @@
 "price": 19.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-maerzen-kiste-20x-05-liter-800360",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2618,7 +2650,7 @@
 "price": 29.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-kiste-20x-05-liter-800797",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2629,7 +2661,18 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-radler-grapefruit-05-liter-810169",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Kellerbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-kellerbier-05-liter-800258",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2640,7 +2683,7 @@
 "price": 1.85,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/heineken-bier-107040",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2651,18 +2694,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-033-liter-810105",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Starkenberger Hoamatl",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.35,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/starkenberger-hoamatl-033-liter-815521",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2673,8 +2705,19 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/birra-moretti-original-6x-033-liter-411621",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-pils-05-liter-810006",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2685,18 +2728,18 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-103515",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Huber Bräu Märzen",
+"beer": "Gösser Naturradler 0,0% alkoholfrei",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 5.94,
+"price": 8.79,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/huber-braeu-maerzen-tray-05-liter-801295",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-00-alkoholfrei-tray-6x-05-liter-dose-107023",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2708,7 +2751,7 @@
 "price": 9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-maerzen-tray-05-liter-850002",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2720,19 +2763,8 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberg-radler-sauer-6er-815148",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "1664 Blanc alkoholfrei",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 2.19,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/1664-blanc-alkoholfrei-603024",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -2743,7 +2775,7 @@
 "price": 1.35,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-maerzen-900248",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2754,7 +2786,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/ottakringer-helles-bier-033-liter-800601",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2765,7 +2797,7 @@
 "price": 1.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-goesser-biostoff-05l-dose-ew-800993",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2776,7 +2808,7 @@
 "price": 27.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-maerzen-20x-05-liter-900262",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2787,7 +2819,7 @@
 "price": 16.56,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-alkoholfrei-24x-05-liter-104092",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
 },
 {
@@ -2799,18 +2831,29 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-800514",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Oettinger Export",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 11.8,
+"beer": "Huber Bräu Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/oettinger-export-kiste-20x-05-liter-800947",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/huber-braeu-maerzen-05-liter-800361",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zötler Gold",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zoetler-gold-05-liter-890003",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2821,7 +2864,7 @@
 "price": 7.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-maerzen-6x-05-liter-900252",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -2833,7 +2876,7 @@
 "price": 4.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bueble-edelbraeu-tray-05-liter-105693",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.0
 },
 {
@@ -2845,20 +2888,8 @@
 "price": 7.92,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-spezial-tray-05-liter-820485",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser NaturRadler Zitrone",
-"unit": "other",
-"package": "24×0,5 l",
-"price": 38.16,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-tray-24-x-05-liter-107029",
-"seen": "2026-11-02",
-"volume_l": 12.0
 },
 {
 "country": "AT",
@@ -2869,7 +2900,7 @@
 "price": 1.35,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/egger-hopfn-roll-800196",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2880,19 +2911,32 @@
 "price": 0.74,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-vollbier-hell-05-liter-800971",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Gösser Biostoff",
+"beer": "Gösser Märzen",
 "unit": "other",
-"package": "6×0,5 l",
-"price": 9.54,
+"package": "12×0,33 l",
+"price": 14.76,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-biostoff-801061",
-"seen": "2026-11-02",
-"volume_l": 3.0
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-12x-033-liter-800969",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 7.38,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/goesser-maerzen-12x-033-liter-800969",
+"seen": "2026-11-09",
+"volume_l": 3.96,
+"note": "Aktion, statt 14,76 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -2903,7 +2947,7 @@
 "price": 1.23,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-maerzen-033-liter-800967",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2914,8 +2958,44 @@
 "price": 6.24,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-spezial-tray-05-liter-102900",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Virgin alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.19,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/virgin-alkoholfrei-033-liter-602935",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 14.76,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-12x-033-liter-107016",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 7.38,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-12x-033-liter-107016",
+"seen": "2026-11-09",
+"volume_l": 3.96,
+"note": "Aktion, statt 14,76 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -2926,7 +3006,7 @@
 "price": 1.32,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-spezial-05-liter-811155",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2937,19 +3017,7 @@
 "price": 1.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bueble-edelbraeu-05-liter-105865",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Büble Bayrisch Hell",
-"unit": "other",
-"package": "4×0,5 l",
-"price": 4.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-bayrisch-hell-tray-05-liter-105699",
-"seen": "2026-11-02",
-"volume_l": 2.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2960,7 +3028,7 @@
 "price": 18.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/loeschzwerg-loeschzwerg-cola-weizen-20x033l-160860",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
 },
 {
@@ -2972,7 +3040,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-radler-naturtrueb-105647",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2983,7 +3051,7 @@
 "price": 1.13,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schwechater-bier-vollbier-103625",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -2994,30 +3062,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/puntigamer-bier-05-liter-800724",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Märzen",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 14.76,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-12x-033-liter-800969",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Büble Radler",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.1,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-radler-05-liter-105895",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3028,19 +3073,8 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-sport-weisse-alkoholfrei-6x-05-liter-810079",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Biostoff Lager",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.59,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/biostoff-lager-801060",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -3051,7 +3085,7 @@
 "price": 1.5,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-maerzen-05-liter-850001",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3062,7 +3096,7 @@
 "price": 11.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-bock-6x-05-liter-900518",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -3074,7 +3108,18 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-radler-033-liter-810134",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Oettinger Export",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 11.8,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/oettinger-export-kiste-20x-05-liter-800947",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3085,18 +3130,19 @@
 "price": 23.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-zeller-hell-20x-05-liter-802555",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Stiegl Hell",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 15.8,
+"beer": "Huber Bräu Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.94,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-hell-kiste-20x-05-liter-810065",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/huber-braeu-maerzen-tray-05-liter-801295",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -3107,7 +3153,7 @@
 "price": 8.22,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-urtyp-tray-6x-033-liter-801079",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -3119,7 +3165,18 @@
 "price": 1.16,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bio-vom-berg-tiroler-helles-033-liter-814994",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "1664 Blanc alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.19,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/1664-blanc-alkoholfrei-603024",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3130,7 +3187,18 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/birra-moretti-original-411620",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Starkenberger Hoamatl",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/starkenberger-hoamatl-033-liter-815521",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3141,7 +3209,7 @@
 "price": 1.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bueble-urbayrisch-dunkel-05-liter-105489",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3152,30 +3220,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-sport-weisse-alkoholfrei-05-liter-810081",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "ABK Original",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.15,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/abk-original-05-liter-105687",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Büble Edelweißbier",
-"unit": "other",
-"package": "4×0,5 l",
-"price": 4.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-edelweissbier-tray-05-liter-105679",
-"seen": "2026-11-02",
-"volume_l": 2.0
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3186,7 +3231,7 @@
 "price": 1.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bueble-bayrisch-hell-05-liter-105689",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3197,7 +3242,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/soelsch-einzelflasche-033l-mw-105999",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3208,7 +3253,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-privat-pils-05-liter-890004",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3219,19 +3264,7 @@
 "price": 21.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-gold-kiste-20x-05-liter-890001",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturradler Zitrone",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 14.76,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-12x-033-liter-107016",
-"seen": "2026-11-02",
-"volume_l": 3.96
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3242,7 +3275,19 @@
 "price": 17.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/engelburg-bier-kiste-05-liter-105851",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser NaturRadler Zitrone",
+"unit": "other",
+"package": "24×0,5 l",
+"price": 38.16,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-tray-24-x-05-liter-107029",
+"seen": "2026-11-09",
+"volume_l": 12.0
 },
 {
 "country": "AT",
@@ -3253,19 +3298,8 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-radler-tray-05-liter-801296",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Bierol Sommerbier",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.3,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bierol-sommerbier-109285",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -3276,7 +3310,19 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/radler-sauer-815147",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Biostoff",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-biostoff-801061",
+"seen": "2026-11-09",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -3287,7 +3333,7 @@
 "price": 16.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/egger-hopfn-roll-12x-033-liter-800197",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -3299,7 +3345,7 @@
 "price": 20.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/egger-maerzen-kiste-20x-05-liter-605510",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3310,7 +3356,7 @@
 "price": 30.7,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-20x-05-liter-820036",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3321,7 +3367,7 @@
 "price": 29.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-kiste-20x-05-liter-103054",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3332,18 +3378,19 @@
 "price": 22.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-maerzen-24x-033-liter-802921",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Büble Edelweissbier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.1,
+"beer": "Büble Bayrisch Hell",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 4.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-edelweissbier-05-liter-105987",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/bueble-bayrisch-hell-tray-05-liter-105699",
+"seen": "2026-11-09",
+"volume_l": 2.0
 },
 {
 "country": "AT",
@@ -3354,7 +3401,7 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-pfiff-033-liter-811149",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3365,7 +3412,7 @@
 "price": 6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/maxlrainer-maxl-zwickl-tray-033-liter-103997",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -3377,7 +3424,7 @@
 "price": 8.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-pfiff-tray-033-liter-820486",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 2.64
 },
 {
@@ -3389,7 +3436,7 @@
 "price": 23.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-radler-naturtrueb-20x-05-liter-801080",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3400,7 +3447,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-freilich-alkoholfrei-00-tray-6x-05-liter-850186",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -3412,8 +3459,19 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-00-850191",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Büble Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.1,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bueble-radler-05-liter-105895",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3424,7 +3482,18 @@
 "price": 25.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schlossgold-alkoholfrei-kiste-05-liter-105562",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Biostoff Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/biostoff-lager-801060",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3435,7 +3504,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-hefeweizen-hell-05-liter-830012",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3446,7 +3515,7 @@
 "price": 6.84,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-braeu-hefeweizen-alkoholfrei-6er-801298",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -3458,7 +3527,7 @@
 "price": 29.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/puntigamer-bier-kiste-05-liter-800734",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3469,18 +3538,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-bock-800518",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zipfer Urtyp",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 14.8,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-urtyp-kiste-20x-05-liter-800240",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3491,7 +3549,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schladminger-schladminger-maerzen-flasche-800220",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3502,8 +3560,20 @@
 "price": 18.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-spezial-kiste-033-liter-811161",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Büble Edelweißbier",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 4.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bueble-edelweissbier-tray-05-liter-105679",
+"seen": "2026-11-09",
+"volume_l": 2.0
 },
 {
 "country": "AT",
@@ -3514,7 +3584,18 @@
 "price": 22.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-20x-05-liter-800403",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "ABK Original",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.15,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/abk-original-05-liter-105687",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3525,7 +3606,7 @@
 "price": 25,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/erdinger-alkoholfrei-kiste-20x-05-liter-105590",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3536,7 +3617,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-spezial-05-liter-800502",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3547,7 +3628,18 @@
 "price": 22,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-heimatbier-kiste-20x-05-liter-817121",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Bierol Sommerbier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.3,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bierol-sommerbier-109285",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3558,7 +3650,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/allgaeuer-brauhaus-urtyp-export-05-liter-105899",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3569,18 +3661,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-radler-05-liter-800301",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Bierol Haumtaucher",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bierol-haumtaucher-109287",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3591,7 +3672,7 @@
 "price": 1.33,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-800113",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3602,7 +3683,7 @@
 "price": 6.84,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-hefeweizen-hell-tray-05-liter-801297",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -3614,7 +3695,18 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-hefeweizen-alkoholfrei-05-liter-830013",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Mohrenbräu Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.79,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-mohrenbraeu-spezial-dose-05l-810154",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3625,318 +3717,18 @@
 "price": 28.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-goldbraeu-20x-033-liter-810106",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Büble Edelbräu",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 17.7,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-edelbraeu-kiste-20x-05-liter-105697",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Gauder Steinbock",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.79,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-steinbock-900519",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Huber Bräu Tiroler Hefeweizen Dunkel",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 6.84,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/huber-braeu-tiroler-hefeweizen-dunkel-tray-05-liter-804577",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturgold alkoholfrei",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 17.16,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-tray-12x-033-liter-103726",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter Pils",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.49,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-pils-800633",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Freistädter Bier Ratsherrn",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/freistaedter-bier-ratsherrn-05-liter-103978",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Oettinger Hefeweißbier",
-"unit": "other",
-"package": "24×0,5 l",
-"price": 16.56,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/oettinger-hefeweissbier-24x-05-l-800189",
-"seen": "2026-11-02",
-"volume_l": 12.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Benediktiner Hell",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 6.54,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/benediktiner-hell-6x033l-800314",
-"seen": "2026-11-02",
-"volume_l": 1.98
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Kaiser Fasstyp",
-"unit": "other",
-"package": "24×0,5 l",
-"price": 33.36,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/kaiser-fasstyp-24-x-05-liter-107031",
-"seen": "2026-11-02",
-"volume_l": 12.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Löwenbräu Oktoberfest",
-"unit": "other",
-"package": "24×0,5 l",
-"price": 27.84,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/loewenbraeu-oktoberfest-24x-05-liter-106039",
-"seen": "2026-11-02",
-"volume_l": 12.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Villacher Märzen",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 6.66,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/villacher-villacher-maerzen-107034",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hacker-Pschorr Münchner Hell",
-"unit": "other",
-"package": "20×0,33 l",
-"price": 30.9,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-kiste-20x-033-liter-mehrweg-flasche-103892",
-"seen": "2026-11-02",
-"volume_l": 6.6
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Stiegl 0.0%",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 29.6,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/stiegl-00-820058",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Frastanzer s'klenne",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 0.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/frastanzer-sklenne-033-liter-820402",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Villacher Märzen",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.89,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/villacher-maerzen-05-liter-107032",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Benediktiner Hell",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.09,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/benediktiner-hell-800315",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Puntigamer 'Das bierige Bier'",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.54,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/puntigamer-das-bierige-bier-05-liter-107012",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Jubiläum",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 11.88,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/jubilaeum12x033l-flasche-800859",
-"seen": "2026-11-02",
-"volume_l": 3.96
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zillertal Bier Gauder Steinbock",
-"unit": "other",
-"package": "6×0,33 l",
-"price": 11.6,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-steinbock-6x-033-liter-900520",
-"seen": "2026-11-02",
-"volume_l": 1.98
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter Malzmandl",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-hirter-malzmandl-einzelfl-119713",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Oettinger Lager",
-"unit": "other",
-"package": "24×0,5 l",
-"price": 16.56,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/oettinger-lager-24x-05-l-800187",
-"seen": "2026-11-02",
-"volume_l": 12.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter Freigeist",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 8.49,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-freigeist-800634",
-"seen": "2026-11-02",
-"volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Starkenberg Gold Lager",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 23.59,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/starkenberger-starkenberg-gold-lager-kiste-24x033l-815184",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Zipfer Bier 0,0% alkoholfrei",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 28,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-kiste-05-liter-mehrweg-104081",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Löschzwerg Cola-Weizen",
-"unit": "other",
-"package": "0,3 l",
-"price": 0.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/loeschzwerg-cola-weizen-einzelflasche-160859",
-"seen": "2026-11-02",
-"volume_l": 0.3
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Mohrenbräu Spezial",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.05,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-mohrenbraeu-spezial-flasche-330ml-811160",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter",
+"beer": "Hirter Märzen",
 "unit": "other",
 "package": "12×0,33 l",
 "price": 16.2,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-1270er-kiste-033-liter-119676",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/hirter-maerzen-tray-033-liter-105743",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -3948,31 +3740,342 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-bock-tray-6x-05-liter-801138",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Hirter Märzen",
+"beer": "Zillertal Bier Gauder Steinbock",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.79,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-steinbock-900519",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Huber Bräu Tiroler Hefeweizen Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.84,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/huber-braeu-tiroler-hefeweizen-dunkel-tray-05-liter-804577",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Büble Edelweissbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.1,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bueble-edelweissbier-05-liter-105987",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturgold alkoholfrei",
 "unit": "other",
 "package": "12×0,33 l",
-"price": 16.2,
+"price": 17.16,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-maerzen-tray-033-liter-105743",
-"seen": "2026-11-02",
+"source": "https://www.mpreis.at/shop/p/goesser-naturgold-alkoholfrei-tray-12x-033-liter-103726",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Mohrenbräu Spezial",
+"beer": "Freistädter Bier Ratsherrn",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 1.79,
+"price": 0.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-mohrenbraeu-spezial-dose-05l-810154",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/freistaedter-bier-ratsherrn-05-liter-103978",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Oettinger Hefeweißbier",
+"unit": "other",
+"package": "24×0,5 l",
+"price": 16.56,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/oettinger-hefeweissbier-24x-05-l-800189",
+"seen": "2026-11-09",
+"volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Benediktiner Hell",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.54,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/benediktiner-hell-6x033l-800314",
+"seen": "2026-11-09",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Kaiser Fasstyp",
+"unit": "other",
+"package": "24×0,5 l",
+"price": 33.36,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/kaiser-fasstyp-24-x-05-liter-107031",
+"seen": "2026-11-09",
+"volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Löwenbräu Oktoberfest",
+"unit": "other",
+"package": "24×0,5 l",
+"price": 27.84,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/loewenbraeu-oktoberfest-24x-05-liter-106039",
+"seen": "2026-11-09",
+"volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Villacher Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.66,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/villacher-villacher-maerzen-107034",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Märzen",
+"unit": "kasten24x0.33l",
+"package": "24×0,33 l",
+"price": 22.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-24x-033-liter-800324",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hacker-Pschorr Münchner Hell",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 30.9,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hacker-pschorr-muenchner-hell-kiste-20x-033-liter-mehrweg-flasche-103892",
+"seen": "2026-11-09",
+"volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Stiegl 0.0%",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.6,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/stiegl-00-820058",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Bayreuther Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bayreuther-hell-flasche-800310",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Villacher Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.89,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/villacher-maerzen-05-liter-107032",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Puntigamer 'Das bierige Bier'",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.54,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/puntigamer-das-bierige-bier-05-liter-107012",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Jubiläum",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 11.88,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/jubilaeum12x033l-flasche-800859",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Gauder Steinbock",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 11.6,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-steinbock-6x-033-liter-900520",
+"seen": "2026-11-09",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter Malzmandl",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-hirter-malzmandl-einzelfl-119713",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Oettinger Lager",
+"unit": "other",
+"package": "24×0,5 l",
+"price": 16.56,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/oettinger-lager-24x-05-l-800187",
+"seen": "2026-11-09",
+"volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter Freigeist",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.49,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-freigeist-800634",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Starkenberg Gold Lager",
+"unit": "kasten24x0.33l",
+"package": "24×0,33 l",
+"price": 23.59,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/starkenberger-starkenberg-gold-lager-kiste-24x033l-815184",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zipfer Bier 0,0% alkoholfrei",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 28,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zipfer-bier-00-alkoholfrei-kiste-05-liter-mehrweg-104081",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Löschzwerg Cola-Weizen",
+"unit": "other",
+"package": "0,3 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/loeschzwerg-cola-weizen-einzelflasche-160859",
+"seen": "2026-11-09",
+"volume_l": 0.3
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Mohrenbräu Spezial",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.05,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/mohrenbrauerei-mohrenbraeu-spezial-flasche-330ml-811160",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 16.2,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-1270er-kiste-033-liter-119676",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Büble Edelbräu",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 17.7,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bueble-edelbraeu-kiste-20x-05-liter-105697",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.49,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-pils-800633",
+"seen": "2026-11-09",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Antoniter Bayrisch Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.89,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/antoniter-antoniter-bayrisch-hell-einzelfl-104050",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3983,7 +4086,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bitburger-pils-dose-680987",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -3994,7 +4097,7 @@
 "price": 1.35,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-maerzen-033-liter-850080",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4005,7 +4108,7 @@
 "price": 14.16,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-alkoholfrei-24x-05-l-800191",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
 },
 {
@@ -4017,7 +4120,7 @@
 "price": 7.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-sbio-tray-033-liter-820410",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -4029,7 +4132,7 @@
 "price": 19.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/freistaedter-bier-ratsherrn-kiste-20x-05-liter-103969",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4040,7 +4143,7 @@
 "price": 17.7,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/bueble-bayrisch-hell-kiste-20x-05-liter-105692",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4051,7 +4154,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-preisel-bier-119757",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4062,18 +4165,18 @@
 "price": 22.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-dunkel-20x-05-liter-800844",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zillertal Bier Pils",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 26.8,
+"beer": "Zötler Hefeweizen Hell",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 21.49,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zillertal-bier-pils-24x-033-liter-800867",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/zoetler-zoetler-hefeweizen-hell-20x05l-830010",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4084,7 +4187,18 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hirter-maerzen-05-liter-105617",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter Privat Pils",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 21.99,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-privat-pils-kiste-05-liter-105527",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4095,7 +4209,19 @@
 "price": 17.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-sklenne-kiste-20x-033-liter-820404",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
+"volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Starkenberg Naturradler",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 18.3,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/starkenberger-starkenberg-naturradler-kiste-20x033l-815021",
+"seen": "2026-11-09",
 "volume_l": 6.6
 },
 {
@@ -4107,7 +4233,32 @@
 "price": 28.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-drei-kiste-05-liter-800908",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler alkoholfrei",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 17.16,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-alkoholfrei-tray-033-liter-104024",
+"seen": "2026-11-09",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Gösser Naturradler alkoholfrei",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 8.58,
+"promo": true,
+"source": "https://www.mpreis.at/shop/p/goesser-naturradler-alkoholfrei-tray-033-liter-104024",
+"seen": "2026-11-09",
+"volume_l": 3.96,
+"note": "Aktion, statt 17,16 € (1+1 gratis, bei 2 Stk. je)"
 },
 {
 "country": "AT",
@@ -4118,7 +4269,7 @@
 "price": 22.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-jubilaeumsbier-kiste-20x-05-liter-800265",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4129,7 +4280,7 @@
 "price": 0.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-landl-tirol-bier-033-liter-815203",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4140,7 +4291,7 @@
 "price": 1.14,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/huber-braeu-huber-braeu-tiroler-hefeweizen-804576",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4151,7 +4302,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-00-850190",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4162,7 +4313,7 @@
 "price": 1.27,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schlossgold-alkoholfrei-05-liter-105560",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4173,7 +4324,7 @@
 "price": 7.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-weizen-tray-05-liter-820475",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4185,7 +4336,7 @@
 "price": 27.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schladminger-schladminger-maerzen-kiste-20x05l-mw-800221",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4196,7 +4347,7 @@
 "price": 18.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-privat-pils-kiste-24x-033-liter-890002",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4207,18 +4358,7 @@
 "price": 11.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/oettinger-hefeweizen-hell-kiste-20x-05-liter-800949",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Bayreuther Hell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.45,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bayreuther-hell-flasche-800310",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4229,8 +4369,19 @@
 "price": 20.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-kellerbier-kiste-20x-033-liter-820484",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Benediktiner Hell",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/benediktiner-hell-800315",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4241,7 +4392,7 @@
 "price": 22.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/stiegl-weiss-naturtrueb-20x-05-liter-810054",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4252,7 +4403,7 @@
 "price": 4.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-gauder-steinbock-reserve-900521",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4263,19 +4414,19 @@
 "price": 7.38,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goesser-naturradler-zitrone-6x-033-liter-107011",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
 "country": "AT",
 "chain": "mpreis",
-"beer": "Zipfer Märzen",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 22.99,
+"beer": "Frastanzer s'klenne",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.99,
 "promo": false,
-"source": "https://www.mpreis.at/shop/p/zipfer-maerzen-24x-033-liter-800324",
-"seen": "2026-11-02"
+"source": "https://www.mpreis.at/shop/p/frastanzer-sklenne-033-liter-820402",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4286,7 +4437,7 @@
 "price": 14.9,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/abk-original-kiste-20x-05-liter-105688",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4297,7 +4448,7 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-kellerbier-033-liter-820483",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4308,7 +4459,7 @@
 "price": 7.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-tray-05-liter-801496",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4320,18 +4471,7 @@
 "price": 23.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/clausthaler-alkoholfrei-kiste-20x-05-liter-800202",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Oettinger Export",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.74,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/oettinger-export-05-liter-800948",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4342,19 +4482,8 @@
 "price": 10.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-bio-kellerbier-tray-05-liter-820405",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Oettinger alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.74,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/oettinger-oettinger-alkoholfrei-einzelflasche-800946",
-"seen": "2026-11-02"
 },
 {
 "country": "AT",
@@ -4365,8 +4494,19 @@
 "price": 11.88,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-stiftle-12x-033-l-800876",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Bayreuther Hell",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 28.8,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/bayreuther-bayreuther-hell-20x05l-kiste-800309",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4377,7 +4517,7 @@
 "price": 7.89,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-6x-033-liter-105706",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -4389,18 +4529,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-jubilaeum-033-liter-800858",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Büble Edelweissbier",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 17.7,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/bueble-bueble-edelweissbier-20er-kiste-105682",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4411,7 +4540,7 @@
 "price": 29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/edelweiss-weissbier-hefetrueb-kiste-05-liter-800691",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4422,18 +4551,7 @@
 "price": 1.44,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hirter-privat-pils-05-liter-105541",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Antoniter Bayrisch Hell",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.89,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/antoniter-antoniter-bayrisch-hell-einzelfl-104050",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4444,7 +4562,7 @@
 "price": 20.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-exportbier-kiste-20x-05-liter-811388",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4455,29 +4573,7 @@
 "price": 27.8,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hacker-pschorr-hacker-pschorr-oktoberfestmaerz-20x05l-103873",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Märzen",
-"unit": "kasten24x0.33l",
-"package": "24×0,33 l",
-"price": 29.52,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-maerzen-24x-033-liter-800978",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter Freigeist alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 1.39,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-freigeist-alkoholfrei-05-liter-800104",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4488,7 +4584,7 @@
 "price": 25.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-zillertal-radler-naturtrueb-24er-mw-820060",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4499,18 +4595,7 @@
 "price": 15.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/allgaeuer-brauhaus-urtyp-export-kiste-20x-05-liter-105888",
-"seen": "2026-11-02"
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Hirter Privat Pils",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 21.99,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/hirter-privat-pils-kiste-05-liter-105527",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4521,7 +4606,7 @@
 "price": 1.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-weissbier-hell-105705",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4532,7 +4617,7 @@
 "price": 1.1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/mohrenbrauerei-mohrenbraeu-exportbier-flasche-811389",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4543,8 +4628,30 @@
 "price": 18.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/loeschzwerg-loeschzwerg-kellerbier-20x033l-mw-119705",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Freistädter Bier März'n",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 16.9,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/freistaedter-bier-maerzn-kiste-20x-05-liter-mehrweg-flasche-103965",
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Zillertal Bier Zeller Hell",
+"unit": "kasten24x0.33l",
+"package": "24×0,33 l",
+"price": 22.4,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/zillertal-bier-zeller-hell-24x-033-liter-802904",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4555,7 +4662,7 @@
 "price": 6.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/freistaedter-bier-ratsherrn-tray-05-liter-103977",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4567,7 +4674,7 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-frastanzer-jubilaeumsbier-fl-800266",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4578,7 +4685,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/paulaner-hefeweizen-hell-05-liter-801425",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4589,7 +4696,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/hirter-hirter-1270-05l-105551",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4600,7 +4707,7 @@
 "price": 1,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/engelburg-bier-05-liter-mehrweg-flasche-105850",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4611,8 +4718,19 @@
 "price": 8.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-525-jubilaeumsbier-05-liter-900529",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Murauer Bier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/murauer-bier-850188",
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4623,7 +4741,19 @@
 "price": 18.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zoetler-zoetler-hefeweizen-alkfrei-20x05l-830011",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Frastanzer Radler Sauer",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.89,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/frastanzer-radler-sauer-tray-033-liter-820406",
+"seen": "2026-11-09",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -4634,7 +4764,7 @@
 "price": 5.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-sklenne-tray-6x-033-liter-820403",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -4646,7 +4776,7 @@
 "price": 14.99,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-maerzen-12x-033-liter-103839",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -4658,7 +4788,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-preisel-bier-033-liter-119664",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4669,7 +4799,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-weissbier-850018",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4680,7 +4810,7 @@
 "price": 23.76,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/koenig-pilsener-koenig-pilsner-24x-05-liter-500516",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
 },
 {
@@ -4692,7 +4822,7 @@
 "price": 1.65,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/weihenstephan-alkoholfrei-815005",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4703,7 +4833,7 @@
 "price": 8.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-weissbier-6x-05-liter-850020",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4715,7 +4845,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/goldquell-800303",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4726,20 +4856,8 @@
 "price": 15.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zillertal-bier-zillert-517-dinkel-weiz-spez-075l-ew-820522",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 0.75
-},
-{
-"country": "AT",
-"chain": "mpreis",
-"beer": "Gösser Naturradler alkoholfrei",
-"unit": "other",
-"package": "12×0,33 l",
-"price": 17.16,
-"promo": false,
-"source": "https://www.mpreis.at/shop/p/goesser-naturradler-alkoholfrei-tray-033-liter-104024",
-"seen": "2026-11-02",
-"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -4750,7 +4868,7 @@
 "price": 16.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-maerzen-tray-12x-033-liter-850092",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -4762,7 +4880,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/murauer-preisel-bier-6x-033-liter-850040",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -4774,7 +4892,7 @@
 "price": 15.48,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/villacher-radler-naturtrueb-12er-tray-850011",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.96
 },
 {
@@ -4786,7 +4904,7 @@
 "price": 7.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/frastanzer-bio-naturradler-tray-033-liter-820407",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 1.98
 },
 {
@@ -4798,7 +4916,7 @@
 "price": 7.29,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schloss-eggenberg-maerzen-tray-05-liter-817529",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4810,7 +4928,7 @@
 "price": 18.4,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schloss-eggenberg-maerzen-kiste-05-liter-817528",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4821,7 +4939,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/schloss-eggenberg-maerzen-05-liter-817527",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4832,7 +4950,7 @@
 "price": 19.6,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/fohrenburger-stiftle-kiste-033-liter-800506",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 6.6
 },
 {
@@ -4844,7 +4962,7 @@
 "price": 35.76,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-dose-sonderpack-24x-05-liter-107038",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
 },
 {
@@ -4856,7 +4974,7 @@
 "price": 17.88,
 "promo": true,
 "source": "https://www.mpreis.at/shop/p/zipfer-maerzen-dose-sonderpack-24x-05-liter-107038",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0,
 "note": "Aktion, statt 35,76 €"
 },
@@ -4869,7 +4987,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/raschhofer-zwickl-05-liter-105876",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4880,7 +4998,7 @@
 "price": 7.69,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/raschhofer-zwickl-tray-05-liter-105873",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 3.0
 },
 {
@@ -4892,7 +5010,7 @@
 "price": 16.2,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/raschhofer-maerzen-kiste-05-liter-105872",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4903,7 +5021,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/heineken-lager-105653",
-"seen": "2026-11-02"
+"seen": "2026-11-09"
 },
 {
 "country": "AT",
@@ -4914,7 +5032,18 @@
 "price": 23.76,
 "promo": false,
 "source": "https://www.mpreis.at/shop/p/starkenberger-gold-lager-dose-24er-817154",
-"seen": "2026-11-02",
+"seen": "2026-11-09",
 "volume_l": 12.0
+},
+{
+"country": "AT",
+"chain": "mpreis",
+"beer": "Hirter Freigeist alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.mpreis.at/shop/p/hirter-freigeist-alkoholfrei-05-liter-800104",
+"seen": "2026-11-09"
 }
 ]
