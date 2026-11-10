@@ -8,7 +8,7 @@
 "price": 13.32,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/corona-cero-6-x-0-355l-p2020004643667",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.13
 },
 {
@@ -20,7 +20,7 @@
 "price": 2.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/corona-corona-cero-0-0-p2020004644107",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.355
 },
 {
@@ -32,7 +32,29 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-jakobsgold-alkoholfrei-p2020004838537",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Spezial",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-spezial-spezial-0-5lt-p7934575",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Gold",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-gold-spezial-0-5l-p6987961",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -43,7 +65,7 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-freispiel-p2020004960887",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -55,7 +77,41 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-p1128543",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Lagerbier",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 20.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-classic-maerzen-lagerbier-0-5lt-p7941719",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Wiener Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-spezial-wiener-0-5-p2020006124560",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Wiener Spezial",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-spezial-wiener-6x0-5l-p2020006124553",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -66,7 +122,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-p1000542",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -77,7 +133,31 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-p2020005429758",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-p2020005429758",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schladminger Bio Zwickl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schladminger-bio-zwickl-bio-zwickl-6x0-5lt-p7018916",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -88,7 +168,42 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/puntigamer-p2020005320987",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter 1270",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 15.84,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-1270-12-x-0-33l-p8028471",
+"seen": "2026-11-10",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p7944925",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 14.9,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p7944925",
+"seen": "2026-11-10",
+"note": "Aktion, statt 29,80 €"
 },
 {
 "country": "AT",
@@ -99,7 +214,7 @@
 "price": 13.32,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/corona-extra-bier-6-x-0-355l-p2020004501806",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.13
 },
 {
@@ -111,8 +226,19 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schloss-eggenberg-freibier-6x0-33l-p2020004960511",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Mo´s",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohrenbrauerei-mo-s-0-33l-p2020005814806",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -123,7 +249,7 @@
 "price": 11.97,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-biobier-alkoholfrei-9x0-33l-p2020005697553",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
 },
 {
@@ -135,8 +261,19 @@
 "price": 15.12,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-maerzen-spezialbier-12x0-33lt-p2020002479596",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-maerzen-p8033130",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -147,7 +284,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/loncium-freepa-alkoholfreies-ipa-p2020003843556",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -158,7 +295,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pinzgau-braeu-pinzga-zwickl-p2020003625107",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -169,8 +306,55 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/starkenberger-heimatbier-lager-6x0-5lt-p2020003353024",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-maerzen-lagerbier-maerzen-0-5lt-p319973",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Loncium Bio Gailtaler Weisse",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.25,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/loncium-bio-gailtaler-weisse-0-33l-p2020005783904",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-6x0-5l-p2020005812987",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-6x0-5l-p2020005812987",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
 },
 {
 "country": "AT",
@@ -181,8 +365,19 @@
 "price": 13.41,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-p2020001398898",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Leffe Blonde",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/leffe-blonde-p3497470",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -193,7 +388,7 @@
 "price": 1.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/karlovacko-bier-lager-0-5l-p2020005521056",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -204,7 +399,19 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbraeu-radler-sauer-p2020005437791",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater Wiener Lager",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-wiener-lager-6x0-5l-p2020005801363",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -215,8 +422,44 @@
 "price": 10.96,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-kellerbier-p2020004989918",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schladminger Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schladminger-maerzen-6x0-5l-p2020006386951",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egger Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.24,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/egger-maerzen-6-x-0-5l-p7943485",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-dunkles-p5805303",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -227,7 +470,7 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gratzer-johann-p1172737",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -238,7 +481,7 @@
 "price": 17.9,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pinzgau-braeu-p2020004203854",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -250,7 +493,18 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kozel-premium-lager-0-5l-p2020005443143",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 20.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-maerzen-0-5l-p798983",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -261,7 +515,7 @@
 "price": 5.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hainfelder-lager-6x0-33l-p1538274",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -273,7 +527,7 @@
 "price": 5.1,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hainfelder-lagerbier-6x0-5l-p1538175",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -285,7 +539,18 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-p2020005669925",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Pils de Luxe",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.98,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-pils-de-luxe-p5076116",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -296,8 +561,42 @@
 "price": 6.78,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020001867981",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Radler Sauer",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.22,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-radler-sauer-p4297819",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stiftsbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stiftsbraeu-p7941092",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stiftsbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stiftsbraeu-p7941092",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,59 €"
 },
 {
 "country": "AT",
@@ -308,8 +607,20 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-weisse-alkoholfrei-6x0-5l-p2020000456421",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Desperados Virgin 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 13.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/desperados-virgin-0-0-alkoholfrei-6x0-33l-p2020006125673",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -320,7 +631,7 @@
 "price": 2.16,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/desperados-p2020005440593",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -331,8 +642,101 @@
 "price": 9.54,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-0-0-alkoholfrei-6x0-5lt-p2020005436381",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.77,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-0-0-alkoholfrei-6x0-5lt-p2020005436381",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 9,54 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wimitz alkoholfrei Session IPA",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wimitz-alkoholfrei-session-ipa-p2020006155496",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Pfiff Märzen",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 20.2,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-pfiff-maerzen-0-33lt-p7936975",
+"seen": "2026-11-10",
+"volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Freigeist",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-freigeist-6x0-5l-p2020005841369",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Bio Naturparkbier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-naturpark-bio-p6484859",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Urtyp",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.43,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-urtyp-p750738",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-maerzen-p795388",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Radler Grapefruit",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.97,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-grapefruit-radler-p8028518",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -343,7 +747,65 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egg-egger-hit-radler-p2020003465543",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Alkoholfrei Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-alkoholfrei-hell-6x0-5l-p2020005995789",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Roggen Bio Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-p4986201",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wieselburger Stammbräu",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 8.2,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wieselburger-stammbraeu-4-x-0-5l-p7939884",
+"seen": "2026-11-10",
+"volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Privat Pils",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-privat-pils-p6983734",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Stiftle",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.03,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-stiftle-12x0-33l-p2020005887084",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -354,7 +816,7 @@
 "price": 9.66,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-fastenbier-naturtruebes-leichtbier-6x0-33lt-p2020004038333",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -366,7 +828,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/fohrenburger-p2020002010591",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -378,7 +840,55 @@
 "price": 3.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-funkenflug-p2020005277076",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Puntigamer Winterbier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/puntigamer-winterbier-p3006030",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-maerzen-p4617082",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.32,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-6x0-33l-p2020006115889",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 3.66,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-6x0-33l-p2020006115889",
+"seen": "2026-11-10",
+"volume_l": 1.98,
+"note": "Aktion, statt 7,32 €"
 },
 {
 "country": "AT",
@@ -389,7 +899,30 @@
 "price": 1.33,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-maerzen-p2020005429017",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.66,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p2020005429017",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,33 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Franziskaner Weissbier Naturtrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/franziskaner-weissbier-naturtrueb-p3640777",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -400,8 +933,20 @@
 "price": 20.72,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-pale-ale-p2020005682894",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-0-0-alkoholfrei-6x0-33l-p2020006169967",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -412,7 +957,19 @@
 "price": 1.65,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-lemisch-p2020005587960",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater Zwickl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-zwickl-6x0-5l-p2020005801080",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -423,19 +980,40 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-lager-0-5l-p2020005446380",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
 "chain": "spar",
-"beer": "Ottakringer Lager",
+"beer": "Puntigamer Das \"bierige\" Bier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.42,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/puntigamer-das-bierige-bier-p5011636",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Luftikus alkoholfrei",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 0.69,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/ottakringer-lager-0-5l-p2020005446380",
-"seen": "2026-11-03",
-"note": "Aktion, statt 1,39 €"
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-luftikus-alkoholfrei-p8184320",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Pittinger Schankbier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/pittinger-schankbier-0-33l-p2020005814608",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -446,7 +1024,52 @@
 "price": 2.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-pale-ale-p2020005588608",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ozujsko Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ozujsko-ozujsko-lager-0-5l-p2020005782754",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Bier Spritz",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-bier-spritz-0-33l-p2020006143790",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.18,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-p8033178",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wurmhöringer Leichtes Landbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wurmhoeringer-landbraeu-p788649",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -457,7 +1080,7 @@
 "price": 7.62,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schloss-eggenberg-hopfenkoenig-pils-6x0-33l-p2020005308787",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -469,7 +1092,7 @@
 "price": 9.48,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-rubin-bock-p1673937",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -481,8 +1104,19 @@
 "price": 6.66,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/villacher-maerzen-6x0-5l-p2020005436534",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egger Spezial",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 25.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/egg-p6193478",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -493,7 +1127,19 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hubertus-hirschen-helles-0-5l-p2020005619418",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Kräuterradler alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-p7946509",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -504,7 +1150,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/tiroler-p1095951",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -515,7 +1161,7 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-hopfenspiel-6-x-0-33l-p2020004960870",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -527,7 +1173,7 @@
 "price": 8.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-alkoholfrei-6x0-5lt-p2020003728266",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -539,7 +1185,7 @@
 "price": 1.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hacker-pschorr-muenschner-hell-0-5l-p2020005696372",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -550,7 +1196,7 @@
 "price": 7.38,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-6x0-33l-p2020005046290",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -562,8 +1208,19 @@
 "price": 8.64,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/desperados-original-bier-4-x-0-5l-p2020005435599",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 21.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-maerzen-0-5l-fl-p2621036",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -574,7 +1231,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-pils-p167611",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -585,7 +1242,31 @@
 "price": 25.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/augustiner-hell-p2020002542429",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Original",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.88,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-original-p5076093",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Weisse",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-weisse-weisse-naturtrueb-6-x-0-5l-p8030603",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -596,8 +1277,19 @@
 "price": 8.1,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-alkoholfrei-6x0-5lt-p2020003828881",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.75,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-pils-p547185",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -608,8 +1300,54 @@
 "price": 5.6,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schwechater-wiener-lager-p2020005436275",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer 0,0 alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.5,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-0-0-alkoholfrei-6x0-33l-p2020005965782",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-0-5l-p2020006126427",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-0-5l-p2020006126427",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,59 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Radler Naturtrüb Zitrone",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.82,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-radler-naturtrueb-p8027276",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -620,7 +1358,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-kraeuterradler-0-33l-p2020002307288",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -631,7 +1369,7 @@
 "price": 10.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trauner-dunkel-6x0-5l-mw-bgfl-dunkel-p2020004558091",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -643,7 +1381,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-radler-himbeere-0-5l-p2020005433670",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -654,7 +1392,7 @@
 "price": 0.99,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/stiegl-radler-himbeere-0-5l-p2020005433670",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,59 €"
 },
 {
@@ -666,7 +1404,30 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kapsreiter-kapsreiter-landbier-hell-p2020003413582",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Weihenstephaner Hefeweissbier dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.71,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/weihenstephaner-dunkles-hefeweissbier-dunkel-p2844749",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-0-0-alkoholfrei-6x0-5l-p2020006170680",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -677,7 +1438,7 @@
 "price": 2.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gratzer-adelheid-p2020002619879",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -688,7 +1449,7 @@
 "price": 4.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-steinbier-p2020001663842",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
 },
 {
@@ -700,8 +1461,54 @@
 "price": 17.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-craftbierbox-p2020005588301",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.65
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "König Ludwig Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/koenig-ludwig-bier-dunkel-6-x-0-5l-p6318567",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Weihenstephaner Hefeweissbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.71,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/weihenstephaner-hefe-hell-hefeweissbier-hefetrueb-p2844787",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.56,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-pils-0-5l-p431736",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Guinness Draught Stout",
+"unit": "other",
+"package": "0,44 l",
+"price": 2.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/guinness-guinness-draught-p2020005761643",
+"seen": "2026-11-10",
+"volume_l": 0.44
 },
 {
 "country": "AT",
@@ -712,7 +1519,43 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-indian-pale-ale-p2020005588349",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ritterbräu Anno 1609",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ritterbraeu-p5322145",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Natur Saurer Radler Soda Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-natur-saurer-radler-soda-zitrone-6x0-5l-p2020006177092",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Natur Saurer Radler Soda Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-natur-saurer-radler-soda-zitrone-6x0-5l-p2020006177092",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
 },
 {
 "country": "AT",
@@ -723,7 +1566,42 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-obertrumer-original-p2020002988746",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p5406524",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.64,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p5406524",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,29 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Ratsherrn Premium",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-p6920104",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -734,7 +1612,18 @@
 "price": 1.72,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/heineken-p2020001707959",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-pils-p741330",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -745,7 +1634,19 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-glutenfrei-bier-p2020000594956",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Lager Classic",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 17.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-p6498047",
+"seen": "2026-11-10",
+"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -756,7 +1657,7 @@
 "price": 1.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-p2020005606104",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -767,7 +1668,7 @@
 "price": 19.9,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-indian-pale-ale-p2020001008179",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
 },
 {
@@ -779,7 +1680,7 @@
 "price": 1.65,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-maerzen-p2020005588165",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -790,7 +1691,7 @@
 "price": 2.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-p2020000895671",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -801,8 +1702,31 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/floetzinger-helles-p2020004694225",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.38,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-alkoholfrei-p2020006260428",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.69,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/schwechater-alkoholfrei-p2020006260428",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,38 €"
 },
 {
 "country": "AT",
@@ -813,7 +1737,7 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/jever-pilsener-0-33l-p2020000598237",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -824,7 +1748,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-0-0-alkoholfrei-p2020005723535",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -835,8 +1759,42 @@
 "price": 0.99,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/stiegl-0-0-alkoholfrei-p2020005723535",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,59 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-p8082138",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Loncium Bio Hell",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.25,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/loncium-bio-hell-0-33l-p2020005783812",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Trumer Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/trumer-pils-pils-p7939976",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -847,7 +1805,7 @@
 "price": 7.32,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillert-zellerhell-6x0-5l-mw-p2020004206879",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -859,7 +1817,19 @@
 "price": 8.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-6-x-0-5l-p1644890",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlossgold Alkoholfreies Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.62,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlossgold-alkoholfreies-bier-6-x-0-5l-p7945472",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -871,7 +1841,7 @@
 "price": 1.18,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/frastanzer-freibier-p2020005053557",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -882,7 +1852,30 @@
 "price": 0.89,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-p2020002171278",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Bock",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-bock-p250948",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Bock",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.77,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-bock-p250948",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,55 €"
 },
 {
 "country": "AT",
@@ -893,8 +1886,21 @@
 "price": 10.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-biostoff-6-x-0-5l-6-x-0-5l-p2020005433014",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.07,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-6-x-0-5l-6-x-0-5l-p2020005433014",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 10,14 €"
 },
 {
 "country": "AT",
@@ -902,11 +1908,23 @@
 "beer": "Ottakringer Nullkomma Josef Alkoholfreies Bier",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 4.14,
+"price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-nullkomma-josef-alkoholfreies-bier-6x0-5l-p2020005432208",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Alkoholfrei",
+"unit": "other",
+"package": "8×0,33 l",
+"price": 10.32,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohrenbraeu-alkoholfrei-8x0-33l-p2020006109963",
+"seen": "2026-11-10",
+"volume_l": 2.64
 },
 {
 "country": "AT",
@@ -917,7 +1935,7 @@
 "price": 8.28,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-zwickl-naturtrueb-6x0-33l-p2020004038135",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -929,8 +1947,19 @@
 "price": 6.54,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-6x0-33l-p2020005320529",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Bayern Weisse Hefetrüb Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/bayern-weisse-dunkles-p5076390",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -941,8 +1970,20 @@
 "price": 4.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hausbier-gipfelstuermer-p2020000969297",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Classic Märzen",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 15.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-classic-maerzen-p8028181",
+"seen": "2026-11-10",
+"volume_l": 6.6
 },
 {
 "country": "AT",
@@ -953,7 +1994,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hofbraeuhaus-traunstein-helles-p2020003709340",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -964,7 +2005,7 @@
 "price": 6.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/starkenberger-gold-lager-lager-6x0-5lt-p2020000818496",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -976,7 +2017,42 @@
 "price": 3.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-weissglut-weissbier-p2020003630811",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s'klenne",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 21.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-vollbier-0-33lt-p8026767",
+"seen": "2026-11-10",
+"volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wieselburger Gold",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wieselburger-gold-p795548",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Luftikus alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-luftikus-alkoholfrei-6-x-0-5l-p8184351",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -987,7 +2063,19 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/fohrenburger-p2020002010546",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Radler Grapefruit naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-radler-grapefruit-naturtrueb-6-x-0-5l-p8033161",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -998,7 +2086,19 @@
 "price": 1.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-helles-p2020004797544",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.71,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-helles-p2020004797544",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,42 €"
 },
 {
 "country": "AT",
@@ -1009,7 +2109,29 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-privat-pils-privatpils-p2020002323356",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Weisse alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.42,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-weisse-weisse-alkoholfrei-p2020005826304",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu St. Johanner Original",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.79,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/st-johanner-original-p7223020",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1020,7 +2142,30 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gratzer-hermann-p1172751",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Saurer Radler",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.03,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-sauerer-radler-0-33l-p2020005888661",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Malzmeister",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-malzmeister-6x0-33l-p2020006356923",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1031,7 +2176,7 @@
 "price": 5.88,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schnaitl-radler-naturtrueb-p1405804",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1043,7 +2188,31 @@
 "price": 2.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/corona-extra-bier-p2020005668775",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Villacher Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/villacher-maerzen-maerzen-6x0-5l-p3495070",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Baunti 1609 Lager",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.36,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-baunti-1609-p8025418",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1054,7 +2223,19 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brew-age-ipa-alkoholfrei-rampensau-p2020003543326",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Chorherren Pils",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 5.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-pils-4x0-33l-p6918415",
+"seen": "2026-11-10",
+"volume_l": 1.32
 },
 {
 "country": "AT",
@@ -1065,7 +2246,19 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020002471378",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020002471378",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
 },
 {
 "country": "AT",
@@ -1076,8 +2269,64 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/erdinger-weissbier-alkoholfrei-6-x-0-5l-p2020000834564",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egg Dunkel",
+"unit": "other",
+"package": "9×0,33 l",
+"price": 9.81,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/egg-p6674755",
+"seen": "2026-11-10",
+"volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Weizen Hefetrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.41,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburg-weizen-p7921162",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Goldbräu",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-p806947",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weizenbier Hefetrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-hefe-hell-p936842",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-maerzen-p279734",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1088,7 +2337,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/clausthaler-extra-herb-alkoholfrei-0-5l-p2020005445703",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1099,7 +2348,7 @@
 "price": 11.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/die-weisse-hell-naturtrueb-6x0-33lt-p2020003247903",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1111,7 +2360,7 @@
 "price": 1.2,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/golser-nullerl-p2020005596740",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1122,7 +2371,7 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-austrian-amber-ale-p2020001022403",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1133,7 +2382,7 @@
 "price": 8.52,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillertal-tyroler-imperial-hell-6x0-33l-p2020002781040",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1145,7 +2394,7 @@
 "price": 1.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/spaten-muench-ner-hell-0-5lmw-muenchner-hell-p2020005413689",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1156,8 +2405,31 @@
 "price": 6.72,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-pils-p2020001016914",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Hopfenkönig Pils",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.22,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-hopfenkoenig-pils-p6594916",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Urtyp Urtyp",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.58,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-urtyp-urtyp-6-x-0-5l-p7940668",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1168,7 +2440,30 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-edelguss-p2020003476372",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Obertrumer Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.15,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/trumer-maerzen-maerzen-p781268",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Zwickl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-zwickl-p7922428",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1179,7 +2474,44 @@
 "price": 0.98,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schnaitl-radler-naturtrueb-p1405798",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s´klenne",
+"unit": "other",
+"package": "9×0,33 l",
+"price": 12.06,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-p4092100",
+"seen": "2026-11-10",
+"volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-6-x-0-5l-p7944857",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-6-x-0-5l-p7944857",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
 },
 {
 "country": "AT",
@@ -1190,8 +2522,67 @@
 "price": 5.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/arcobraeu-mooser-liesl-helles-6x0-33lt-p2020003710315",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Mo´s Cherry Baby",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohrenbraeu-mo-s-cherry-baby-0-33l-p2020006109697",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Pils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-pils-p8027344",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Märzen",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-maerzen-p8208682",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Desperados Original",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 13.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/desperados-tequilabier-6-x-0-33l-p8016690",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Weizen Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.68,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-p5677122",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1202,7 +2593,7 @@
 "price": 5.82,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020001867844",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1214,7 +2605,42 @@
 "price": 1.23,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/lasko-zlatorog-hell-0-33l-p2020002396664",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gratzer Ludwig",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.69,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/gratzer-ludwig-p2885810",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Schlägler Biergenuss",
+"unit": "other",
+"package": "9×0,33 l",
+"price": 15.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-gemischter-9er-p8032409",
+"seen": "2026-11-10",
+"volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s'bio",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.26,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-p8183620",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1225,7 +2651,7 @@
 "price": 17.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/frastanzer-p2020005434493",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
 },
 {
@@ -1237,7 +2663,7 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/frastanzer-freibier-alkoholfrei-6x0-5l-p2020005054844",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1249,7 +2675,53 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-lemisch-p2020005588066",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.08,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-edelmaerzen-6-x-0-5l-p5701971",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Bräu am Berg Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.84,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/braeu-am-berg-maerzen-0-5l11g-p7428579",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Märzen",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 16.2,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-p6485030",
+"seen": "2026-11-10",
+"volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Pittinger Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/pittinger-alkoholfrei-p2020005761896",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1260,8 +2732,42 @@
 "price": 6.12,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-rieder-alkoholfrei-p2020003127977",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weizenbier Hofbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-weizenbier-hofbraeu-6-x-0-5l-p8033475",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Birra Moretti Lagerbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/birra-moretti-lagerbier-0-5l-p2020006264075",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Frei Alkohlfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-frei-alkohlfrei-0-5l-p2020006189897",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1272,7 +2778,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pinzgau-braeu-pinzga-pale-ale-p2020003625060",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1283,7 +2789,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/edelweiss-dunkel-0-5l-p2020004853646",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1294,7 +2800,19 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ichnusa-non-filtrata-p2020005044395",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Bier Spritz",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-bier-spritz-6x0-33l-p2020006143752",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1305,7 +2823,7 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/linzer-bier-lager-0-5lt-p2020003453069",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1316,7 +2834,18 @@
 "price": 2.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brew-age-pale-ale-hopfenauflauf-p2020001309528",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Innviertler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.75,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-innviertler-p8077011",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1327,8 +2856,20 @@
 "price": 6.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-heimat-bio-bier-4x0-33l-p2020002950224",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.32
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Goldener Bock",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-goldener-bock-6x0-33l-p2020006452199",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1339,7 +2880,42 @@
 "price": 0.75,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pittinger-weissbier-0-5l-p2020005321090",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Frucade Radler",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-frucade-radler-6x0-5l-p2020006123037",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Wiener Spezial",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-spezial-wiener-6x0-5l-p2020006124430",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hainfelder Edel Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hainfelder-edel-pils-0-5l-p709392",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1350,7 +2926,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-p2020001827886",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1362,8 +2938,66 @@
 "price": 9.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-jokl-9x0-33l-p2020005361683",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Goldbräu",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-p2054681",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Export Lager",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 5.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-exportlager-6x0-33lmw-p2020005921382",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Zwickl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-zwickl-zwickl-6-x-0-5l-p8024534",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Radler",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.18,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-radler-p5076376",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Helle Weisse",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-helle-weisse-p2020006073196",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1374,7 +3008,7 @@
 "price": 1.15,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillertaler-zeller-hell-0-33l-p2020004205872",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1385,7 +3019,19 @@
 "price": 25.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/tegernseer-hell-p2020002027988",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-pils-6-x-0-5l-p7943058",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1396,7 +3042,7 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-weisse-dunkel-6x0-5l-p2020000456148",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1408,8 +3054,33 @@
 "price": 21.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-spezial-spezial-spezial-0-33lt-p2020004144553",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-hell-6x0-5l-p2020006134132",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-hell-6x0-5l-p2020006134132",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
 },
 {
 "country": "AT",
@@ -1420,7 +3091,7 @@
 "price": 1.64,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/geigenseer-zwickl-p2020004608574",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1431,7 +3102,7 @@
 "price": 9.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-gambrinus-p2020005682979",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
 },
 {
@@ -1443,7 +3114,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-gmischtes-p2020005435759",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1455,7 +3126,75 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pittinger-schankbier-p2020005518384",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Dunkel 0,5",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-dunkel-0-5-p2020006134156",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Dunkel 0,5",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-dunkel-0-5-p2020006134156",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weissbier dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-weizenbier-dunkel-6-x-0-5l-p7946813",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Roggen Bio Bier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-roggen-bio-bier-p6855208",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Radler Citrus",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-radler-citrus-p5668960",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ritterbräu Edel Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.01,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ritterbraeu-p398237",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1466,7 +3205,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/budweiser-budvar-original-czech-imported-lager-p2020005518186",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1477,7 +3216,30 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-rieder-radler-natrutrueb-p2020005360686",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Morchl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.12,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-morchl-6x0-5l-p2020005841338",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "König Ludwig Dunkel Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.69,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/koenig-ludwig-dunkel-p571968",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1488,7 +3250,19 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-vollbier-6x0-5lt-p2020003206580",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-maerzen-6x0-5l-p2020005841246",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1500,7 +3274,7 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/linzer-bier-maerzen-lager-6x0-5lt-p2020003181177",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1512,7 +3286,7 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/budweiser-budvar-original-lager-6x0-33l-p2020005720350",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1524,21 +3298,8 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-lager-6x0-5l-p2020005433700",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "spar",
-"beer": "Ottakringer Lager",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 4.14,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/ottakringer-lager-6x0-5l-p2020005433700",
-"seen": "2026-11-03",
-"volume_l": 3.0,
-"note": "Aktion, statt 8,34 €"
 },
 {
 "country": "AT",
@@ -1549,7 +3310,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-0-5l-p2020005433205",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1560,7 +3321,7 @@
 "price": 0.99,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-0-5l-p2020005433205",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,59 €"
 },
 {
@@ -1572,8 +3333,80 @@
 "price": 7.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kapsreiter-landbier-landbier-hell-6x0-5l-p2020002977450",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stiftsbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stiftsbraeu-p6148560",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stiftsbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.77,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stiftsbraeu-p6148560",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 9,54 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu St. Johanner Original",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.97,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/huber-braeu-st-johanner-original-p506281",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Ratsherrn Premium",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 22.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-ratsherrntrunk-p799089",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-6x0-5l-p2020005812970",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.77,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-6x0-5l-p2020005812970",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 9,54 €"
 },
 {
 "country": "AT",
@@ -1584,8 +3417,54 @@
 "price": 6.9,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-6x0-33l-p2020005320420",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s´jubi",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.24,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-jubilaeum-p7946202",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlossgold Alkoholfreies Bier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.27,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlossgold-alkoholfreies-bier-p205986",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Nullkomma Josef Alkoholfreies Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-nullkomma-josef-alkoholfreies-bier-6-x-0-5l-p3508367",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Privat Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.82,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-privat-pils-6-x-0-5l-p2020005834859",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1596,7 +3475,7 @@
 "price": 9.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egg-p2020003815751",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
 },
 {
@@ -1608,7 +3487,7 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/golser-pils-p2020005596757",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1619,7 +3498,7 @@
 "price": 13.41,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-p2020001398652",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
 },
 {
@@ -1631,7 +3510,7 @@
 "price": 13.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/die-weisse-hell-naturtrueb-6x0-5lt-p2020003247682",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1643,8 +3522,31 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-freistaedter-imperator-starkbier-6x0-33-p2020003256639",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Urbock 23°",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.16,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-urbock-urbock-23-p3664285",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-maerzen-6-x-0-5l-p3489055",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1655,8 +3557,19 @@
 "price": 10.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-honigbier-spezialitaetenbier-p2020005234949",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-helles-p795463",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1667,7 +3580,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-p2020005434974",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1678,8 +3591,19 @@
 "price": 0.72,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/wieselburger-gold-p2020005434974",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,45 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburg-p4392156",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1690,8 +3614,19 @@
 "price": 6.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-maerzen-lagerbier-6x0-33lt-p2020004047526",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Doppelmalz",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.24,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-p795562",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1702,8 +3637,21 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-radler-natur-zitrone-radler-alkoholfrei-6-x-0-5l-p2020003261428",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler 0,0% Alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-radler-natur-zitrone-radler-alkoholfrei-6-x-0-5l-p2020003261428",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
 },
 {
 "country": "AT",
@@ -1714,7 +3662,7 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-maerzen-p2020005588219",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1725,8 +3673,20 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/thalheim-pils-p2020004464200",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Saurer Radler SAURER RADLER",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.86,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburg-saurer-radler-p7943461",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1737,7 +3697,7 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-obertrumer-original-6x0-5lt-p2020001606542",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1749,8 +3709,66 @@
 "price": 7.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-maerzen-6x0-5l-p2020005429598",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wurmhöringer Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.64,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wurmhoeringer-maerzen-p7946875",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Radler Grapefruit naturtrüb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.38,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-radler-grapefruit-naturtrueb-p2054742",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Märzen Classic",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.18,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-maerzen-classic-6-x-0-5l-p8033420",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Dunkles",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-dunkles-6-x-0-5l-p8015402",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Bio Radler naturtrüb",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertaler-radler-naturtrueb-p7934773",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1761,7 +3779,7 @@
 "price": 11.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schremser-vienna-i-p-p2020000903338",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1773,7 +3791,64 @@
 "price": 1.18,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/loewenbraeu-muenchner-hell-0-5l-p2020005446175",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Pils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.38,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-pils-pils-feinherb-6-x-0-33l-p308014",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Radler Zitrone Naturtrüb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.01,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-zitronen-radler-biermischgetraenk-0-33lt-p8031211",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Kräuterradler alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-p2671529",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Kaiser Goldquell Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/kaiser-gold-goldquell-spezial-p795159",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter 1270",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.82,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-1270-das-urspruenglische-6x0-5l-p2020005841291",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1784,7 +3859,7 @@
 "price": 1.33,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/villacher-radler-zitrone-naturtrueb-p2020004663474",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1795,7 +3870,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-kellermeister-p2020002323400",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1806,7 +3881,19 @@
 "price": 1.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillert-zeller-hell-0-5lt-mw-p2020004205940",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Helles",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-helles-6-x-0-5l-p7946240",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1817,7 +3904,19 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pittinger-maerzen-premium-export-p1140774",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Zitro&Bier",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-zitro-bier-6x0-33l-p2020006262880",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1828,7 +3927,29 @@
 "price": 2.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brew-age-new-england-ipa-alphatier-p2020002654337",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Herrn Pils",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-p5613366",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Jubiläum",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-jubilaeum-spezialbier-0-5lt-p7939792",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1839,8 +3960,20 @@
 "price": 6.96,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-edelguss-4-x-0-33l-p1105483",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.32
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Pils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.32,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-p8030801",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -1851,7 +3984,18 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-weizen-0-5lt-p2020004182142",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Alkoholfrei Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-alkoholfrei-hell-0-5l-p2020005995871",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1862,8 +4006,19 @@
 "price": 5.64,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/raschhofer-maerzen-6x0-5lt-p2020003793707",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Desperados Original",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/desperados-tequilabier-tequilabier-p7872334",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1874,19 +4029,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-helles-helles-p2020005521001",
-"seen": "2026-11-03"
-},
-{
-"country": "AT",
-"chain": "spar",
-"beer": "Ottakringer Helles",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.69,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/ottakringer-helles-helles-p2020005521001",
-"seen": "2026-11-03",
-"note": "Aktion, statt 1,39 €"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1897,7 +4040,7 @@
 "price": 1.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/puntigamer-p2020003563621",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1908,7 +4051,7 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-p2020001399000",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1920,7 +4063,19 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/floetzinger-hell-alkoholfrei-p2020005699946",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hainfelder Edel Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.76,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hainfelder-edel-pils-edelpils-6x0-5l-p4617341",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1932,7 +4087,19 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierol-sunn-seiterl-p2020005432529",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Gold",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-gold-spezial-p8031068",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -1943,7 +4110,18 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stella-artois-premium-lager-beer-lager-p2020003071997",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Export",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-export-maerzen-0-5lt-p7936678",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -1954,7 +4132,7 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-6x0-5lt-p2020005437425",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -1966,7 +4144,7 @@
 "price": 7.62,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-malzkoenig-dunkles-vollbier-6x0-33lt-p2020004038029",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -1978,19 +4156,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/franziskaner-alkoholfrei-p2020001919703",
-"seen": "2026-11-03"
-},
-{
-"country": "AT",
-"chain": "spar",
-"beer": "Franziskaner alkoholfrei",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.77,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/franziskaner-alkoholfrei-p2020001919703",
-"seen": "2026-11-03",
-"note": "Aktion, statt 1,29 €"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2001,8 +4167,31 @@
 "price": 9.3,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-p2020001398966",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Saurer Radler",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.01,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-saurer-radler-biermischgetraenk-0-33lt-p8031549",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s'klenne",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.48,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-p8026989",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -2013,8 +4202,20 @@
 "price": 8.08,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-zitronen-radler-radler-zitrone-nt-8x0-33l-p2020002923938",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egger Wälder",
+"unit": "other",
+"package": "9×0,33 l",
+"price": 9.36,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/egg-p8027542",
+"seen": "2026-11-10",
+"volume_l": 2.97
 },
 {
 "country": "AT",
@@ -2025,7 +4226,7 @@
 "price": 12.72,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-gartenradler-12x0-33l-p2020002479343",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
 },
 {
@@ -2037,7 +4238,19 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-zwickl-bio-zwickl-p2020004425317",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer 0,0 alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-0-0-alkoholfrei-6x0-5l-p2020005965973",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2049,7 +4262,18 @@
 "price": 1.33,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/fohrenburger-jubilaeum-p2020005520967",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Wiener Spezial",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-spezial-wiener-0-33l-p2020006124607",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2060,7 +4284,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-lager-p2020005262324",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2071,8 +4295,43 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-lager-6x0-5l-p2020005270398",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Garten Radler",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.12,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-radler-p8025784",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.36,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-pils-p7945410",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Garten Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.02,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-radler-p3432518",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2083,7 +4342,7 @@
 "price": 1.38,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schwechater-bier-p2020005429116",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2091,10 +4350,10 @@
 "beer": "Schwechater Bier",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 0.59,
+"price": 0.69,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/schwechater-bier-p2020005429116",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,38 €"
 },
 {
@@ -2106,7 +4365,18 @@
 "price": 19.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/arcobraeu-mooser-liesl-helles-p2020002847715",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Weissbier Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertaler-weissbier-dunkel-0-5l-p7219313",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2117,7 +4387,7 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-hops-alkoholfrei-p2020002840518",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2128,7 +4398,19 @@
 "price": 11.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-p1652307",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-dunkles-p7943096",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2140,7 +4422,7 @@
 "price": 2.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/corona-extra-p2020004501813",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.355
 },
 {
@@ -2152,7 +4434,7 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/clausthaler-original-alkoholfrei-6x0-5lt-p2020005431744",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2164,7 +4446,7 @@
 "price": 9.54,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/budweiser-budvar-dark-lager-p2020005521148",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2176,7 +4458,19 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020005436237",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020005436237",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,59 €"
 },
 {
 "country": "AT",
@@ -2187,7 +4481,19 @@
 "price": 8.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-kellerbier-6x0-5lt-p2020003266386",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-maerzen-maerzen-6-x-0-5l-p7945991",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2199,19 +4505,7 @@
 "price": 29.6,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-p2020003298615",
-"seen": "2026-11-03"
-},
-{
-"country": "AT",
-"chain": "spar",
-"beer": "Stiegl Hell",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 13.8,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/stiegl-hell-p2020003298615",
-"seen": "2026-11-03",
-"note": "Aktion, statt 29,60 €"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2222,7 +4516,7 @@
 "price": 2.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brewdog-punk-ipa-p2020005444157",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2233,7 +4527,30 @@
 "price": 2.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/loncium-bier-dry-hopped-carinthi-p-a-p2020001296828",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar 0,0% alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-0-0-alkoholfrei-p2020006170048",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Natrurtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-p8026781",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2244,7 +4561,52 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schoenramer-hell-0-33l-p2020005349681",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Bayern Weisse Hefetrüb Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/bayern-weisse-hell-p5076468",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weizenbier Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-weissbier-alkoholfrei-p8140548",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Stelzhammer",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.5,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-p7942440",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar Original Czech Imported Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-original-czech-imported-lager-p404310",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2255,8 +4617,19 @@
 "price": 5.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kozel-premium-lager-4x0-5l-p2020005444249",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Saurer Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.31,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburg-saurer-radler-p7944826",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2267,7 +4640,32 @@
 "price": 1.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-radler-p2020005606234",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-6x0-5l-p2020006126335",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.77,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-6x0-5l-p2020006126335",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 9,54 €"
 },
 {
 "country": "AT",
@@ -2278,7 +4676,18 @@
 "price": 2.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-weisses-gold-p2020005277007",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Guinness Extra Stout",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.97,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/guinness-extra-stout-p4970460",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2289,7 +4698,7 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hubertus-hirschen-helles-p2020005619425",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2301,7 +4710,7 @@
 "price": 9.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-kellerbier-p2020005682818",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
 },
 {
@@ -2313,8 +4722,76 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-pils-6x0-33l-p2020004960856",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schladminger Schnee Weiße",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnee-weisse-weissbier-p6264703",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Wiener Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-spezial-wiener-0-5l-p2020006124454",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Weissbier Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertaler-weissbier-hell-0-5l-p7954795",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Jubiläum",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-jubilaeum-jubilaeum-6x0-5l-p8025173",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen Falkenstein",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/falkenstein-maerzen-p2745244",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Leichtsinn",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-hopfenkoenig-medium-6-x-0-5l-p7940439",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2325,7 +4802,7 @@
 "price": 6.9,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-original-maerzen-zwickl-6x0-33l-p2020004159359",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -2337,7 +4814,19 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/puntigamer-p2020002312015",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Weissbier Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertaler-weissbier-dunkel-6x0-5l-p8024367",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2348,8 +4837,20 @@
 "price": 7.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-meisterstueck-pils-p2020003782077",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Stifter Bier",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 6.16,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-0-p6918125",
+"seen": "2026-11-10",
+"volume_l": 1.32
 },
 {
 "country": "AT",
@@ -2360,7 +4861,7 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierol-zapfn-bio-zirbenradler-p2020005432536",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2371,8 +4872,41 @@
 "price": 5.58,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020001867875",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.18,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-edelmaerzen-p795555",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Stefani Bock",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-josefi-stefanibock-p795449",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gratzer Eule",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/gratzer-eule-p3098479",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2383,7 +4917,7 @@
 "price": 1.13,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schwechater-bier-p1128642",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2394,7 +4928,30 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-maerzen-lagerbier-6x0-33lt-p1785845",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Saurer Radler",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-radler-p7929809",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s'dunkle",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-p8026194",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -2406,8 +4963,31 @@
 "price": 10.32,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/heineken-alkoholfreies-bier-6-x-0-33l-p2020001707911",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-hell-0-5l-p2020006134163",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-hell-0-5l-p2020006134163",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
 },
 {
 "country": "AT",
@@ -2418,8 +4998,54 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pilsner-urquell-original-pilsner-bier-6x0-5lt-p2020003826702",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Paracelsus Zwickl",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-paracelsus-zwickl-6-x-0-5l-p8018557",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Golser Radler Zitrone naturtrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/golser-radler-naturtrueb-p8088604",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-maerzen-p6209926",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Zitro&Bier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-zitro-bier-0-33l-p2020006262903",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2430,7 +5056,7 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-hell-6x0-5l-p2020003972720",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2442,7 +5068,18 @@
 "price": 1.23,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-p2020005046191",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Märzen",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillert-maerzen-0-33lmwfl-12g-p7056345",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2453,7 +5090,18 @@
 "price": 2.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-pale-ale-p2020005683136",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egger Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.04,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/egger-maerzen-p250498",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2464,7 +5112,7 @@
 "price": 1.17,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-gambrinus-p2020005682641",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2475,8 +5123,20 @@
 "price": 6.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-lager-p2020005308336",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Pfiff Märzen",
+"unit": "other",
+"package": "8×0,33 l",
+"price": 8.08,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-pfiff-maerzen-0-33lt-p7945328",
+"seen": "2026-11-10",
+"volume_l": 2.64
 },
 {
 "country": "AT",
@@ -2487,7 +5147,7 @@
 "price": 6.78,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020002062446",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2499,7 +5159,7 @@
 "price": 0.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-maerzen-0-33l-p2020004561336",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2510,7 +5170,7 @@
 "price": 1.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/karlovacko-bier-lager-p2020002975401",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2521,8 +5181,56 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-hops-alkoholfrei-p2020002840501",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Ratsherrn Premium",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.72,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-ratsherrntrunk-spezialbier-6x0-5lt-p8032706",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Heineken Premium Lager",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 10.32,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/heineken-premium-lager-bier-6-x-0-33l-p7941931",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Bayern Weisse Hefetrüb Hell",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/bayern-weisse-hell-p5076499",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Goldbräu Goldbräu",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.88,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-6-x-0-5l-p7945175",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2533,7 +5241,53 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/birra-messina-0-5l-ew-fl-birra-messina-p2020005640948",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater Wiener Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.5,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-wiener-lager-0-5l-p2020005801400",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Kristall",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-kristall-lagerbier-0-5lt-p798921",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Junghopfenpils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-pils-pils-6x0-33lt-p7920967",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Jever Pilsener",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/jever-pilsner-6-x-0-33l-p6203306",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -2544,7 +5298,7 @@
 "price": 1.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egg-p2020003815713",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2555,7 +5309,30 @@
 "price": 1.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-weissbier-dunkel-p2020005267220",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hofstettner Kübelbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.75,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hofstettner-kuebelbier-p6103880",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Radler Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-radler-p7526381",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2566,7 +5343,7 @@
 "price": 1.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-maerzen-p2020000457077",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2574,10 +5351,10 @@
 "beer": "Ottakringer Radler Citrus",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 4.14,
+"price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-radler-citrus-p2020005436268",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2589,7 +5366,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-lager-hell-0-5lt-p2020003972737",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2600,7 +5377,7 @@
 "price": 1.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/augustiner-lager-p2020003589430",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2611,7 +5388,7 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trumer-obertrumer-original-p2020002289096",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2622,8 +5399,43 @@
 "price": 7.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-radler-zitrus-6x0-5lt-p2020005436480",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Bio Radler naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-radler-naturtrueb-p7940163",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Radler Classic",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.03,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-radler-p5076147",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Citrus Naturtrüb Radler",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.98,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-citrus-naturtrueb-radler-6x0-33l-p2020005921542",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -2634,7 +5446,7 @@
 "price": 8.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-urtyp-6-x-0-33l-p1278491",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -2646,7 +5458,7 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egg-egger-waelder-radler-sauer-p2020003349294",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2657,7 +5469,31 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-radler-alkoholfrei-p2020005442894",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone 0,0% alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-radler-alkoholfrei-p2020005442894",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,59 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Helle Weisse",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-helle-weisse-p7946349",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2668,7 +5504,7 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-lagerbier-6x0-5l-p2020005436336",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2680,7 +5516,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-bio-zwickl-p2020005432604",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2692,7 +5528,7 @@
 "price": 7.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/heineken-premium-lager-bier-4-x-0-5l-p2020005429659",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
 },
 {
@@ -2704,8 +5540,20 @@
 "price": 5.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kozel-premium-dark-4x0-5l-p2020005437203",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Weissbier Hell naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-weissbier-hell-p8032386",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2716,7 +5564,18 @@
 "price": 1.37,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-urtyp-p1278576",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Paracelsus Bio-Zwickl",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-paracelsus-zwickl-p6422813",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2727,7 +5586,7 @@
 "price": 7.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zwettler-zwickl-6x0-5l-p2020002320386",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2739,8 +5598,42 @@
 "price": 6.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-radler-naturtrueb-rieder-radler-naturtrueb-6x0-5lt-p2020003425424",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Radler Citrus naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.18,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-radler-citrus-naturtrueb-6-x-0-5l-p3078174",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.69,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-p547055",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.65,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-spezial-0-5l-p2020005881679",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2751,7 +5644,7 @@
 "price": 1.11,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-helles-0-5l-p2020004251237",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2762,7 +5655,7 @@
 "price": 13.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gratzer-p2020003884184",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -2774,7 +5667,7 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/frastanzer-bio-helles-p2020005053649",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2785,7 +5678,40 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brew-age-eierbaer-ipa-p2020003828157",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Nullkomma Josef",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-alkoholfreies-bier-p2020006108706",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Original",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-original-p54379",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Hopfenkönig Pils",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 21.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-hopfenkoenig-pils-0-5lt-p7943102",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2796,7 +5722,31 @@
 "price": 1.2,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kapsreiter-landbier-hell-p2020002988364",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Weitra Bräu Hadmar Das Bio Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hadmar-das-bio-bier-6-x-0-5l-p8026958",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weizenbier Hefetrüb Original",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-hefe-hell-weizenbier-hefetrueb-6-x-0-5l-p7946769",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2807,7 +5757,7 @@
 "price": 5.16,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hainfelder-radler-6x0-5l-p1538243",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -2819,7 +5769,30 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/augustiner-p2020003496431",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Die Weisse Glutenfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 17.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/die-weisse-glutenfrei-6x0-5l-p2020006282567",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Frucade Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-frucade-radler-0-5l-p2020006123105",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2830,7 +5803,30 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/peroni-nastro-azzurro-p2020005680036",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Bayern Weisse Hefetrüb Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/bayern-weisse-dunkles-p5076437",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu Tiroler Hefeweizen Hell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.13,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/huber-braeu-weissbier-p372152",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2841,7 +5837,18 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pinzgau-braeu-pinzga-weizen-hell-p2020003625084",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Freibier naturtrüb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.16,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-freibier-naturtrueb-0-33l-p2020006357203",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2852,7 +5859,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-radler-alkoholfrei-zitrone-p2020002840679",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2863,7 +5870,7 @@
 "price": 0.64,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/goesser-radler-alkoholfrei-zitrone-p2020002840679",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,29 €"
 },
 {
@@ -2875,8 +5882,20 @@
 "price": 10.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-india-pale-ale-p2020005147959",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Puntigamer Das \"bierige\" Bier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/puntigamer-das-bierige-bier-6x0-5l-p2020005842885",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2887,7 +5906,30 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-hops-alkoholfrei-p2020002907495",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Weisse alkoholfrei Weisse alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-weisse-alkoholfrei-weisse-alkoholfrei-6-x-0-5l-p8026897",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Golser Premium Bio",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.44,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/golser-premium-premium-0-5l-mw-p8088536",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2898,7 +5940,19 @@
 "price": 1.17,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-kellerbier-p2020005682634",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Frei Alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-frei-alkoholfrei-6x0-5l-p2020006189842",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2909,7 +5963,18 @@
 "price": 1.39,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-p2020005428942",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu Weissbier Alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.13,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/huber-braeu-weissbier-p7636370",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2920,7 +5985,29 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-p2020003720413",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Kaiser Fasstyp",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/kaiser-fasstyp-p750714",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Bio Hanfbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-bio-hanfbier-p6047016",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2931,7 +6018,41 @@
 "price": 1.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-helle-weisse-p2020003793547",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Golser Bio Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 2.03,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/golser-helles-helles-0-5l-mw-p8088574",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Radler Zitrone Naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-radler-zitrone-naturtrueb-6-x-0-5l-p8031662",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-dunkel-p402613",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2942,7 +6063,42 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-radler-natur-zitrone-goesser-nr-zitrone-0-0-p2020003261510",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Gösser NR Zitrone 0,0%",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-radler-natur-zitrone-goesser-nr-zitrone-0-0-p2020003261510",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Preisel&Bier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-preisel-bier-0-33l-p2020006262897",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schremser Bio Naturtrüb",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 9.24,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schremser-p2234953",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -2953,7 +6109,29 @@
 "price": 2.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-pils-p2020000895428",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Heineken Premium Lager",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.72,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/heineken-premium-lager-p7057410",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Kaiser Doppelmalz",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.53,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/kaiser-doppelmalz-p795197",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2964,7 +6142,7 @@
 "price": 1.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-hanfbier-0-33l-p2020002307271",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -2975,8 +6153,20 @@
 "price": 8.08,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohren-radler-radler-sauer-8x0-33l-p2020002576080",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Heineken Premium Lager",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/heineken-premium-lager-6-x-0-5l-p7922558",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -2987,8 +6177,32 @@
 "price": 5.82,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020001867912",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Radler Naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-radler-naturtrueb-radler-naturtrueb-6-x-0-5l-p8027368",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Grapefruit Radler",
+"unit": "other",
+"package": "8×0,33 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-grapefruit-radler-grapefruit-radler-8x0-33l-p8026361",
+"seen": "2026-11-10",
+"volume_l": 2.64
 },
 {
 "country": "AT",
@@ -2999,7 +6213,7 @@
 "price": 1.09,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-pilsner-p2020005682658",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3010,7 +6224,29 @@
 "price": 1.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-kellerbier-p2020003382512",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hainfelder Spezialbier Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.95,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hainfelder-spezialbier-dunkel-0-5l-p420167",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hirter Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 26.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hirter-maerzen-p6982997",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3021,7 +6257,7 @@
 "price": 3.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-edelguss-p2020003345951",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 0.75
 },
 {
@@ -3033,8 +6269,65 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-0-0-alkoholfrei-6x0-5l-p2020005723450",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-maerzen-maerzen-p805452",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schladminger Sepp",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.61,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schladminger-sepp-p5009640",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Weissbier hell",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-weissbier-hell-6x0-33l-p8028433",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Frei Alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.23,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-frei-alkoholfrei-0-33l-p2020005921283",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Saphir Premium Pils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-saphir-premium-pils-6x0-33l-p2020005921528",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -3045,7 +6338,7 @@
 "price": 1.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/tegernseer-hell-0-33l-p2020004672711",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3056,7 +6349,29 @@
 "price": 1.07,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/freistaedter-lager-p2020005308275",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Urquell",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.13,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-urquell-lagerbier-0-5lt-p798914",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schladminger Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schladminger-maerzen-p311717",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3067,7 +6382,7 @@
 "price": 8.04,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-kristall-lagerbier-helles-spezialbier-6x0-33lt-p2020004037718",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3079,7 +6394,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-helles-12x0-33l-p2020004777898",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3090,7 +6405,7 @@
 "price": 0.64,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/goesser-helles-12x0-33l-p2020004777898",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,29 €"
 },
 {
@@ -3102,7 +6417,7 @@
 "price": 5.88,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schnaitl-p2020002028190",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3114,7 +6429,7 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zwettler-export-lager-6x0-5lt-p2020005436060",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3126,7 +6441,7 @@
 "price": 2.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/die-weisse-p2020003425172",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3137,7 +6452,7 @@
 "price": 12.48,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-maerzen-12x0-33l-p2020002479503",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
 },
 {
@@ -3149,7 +6464,7 @@
 "price": 1.23,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-p2020005046450",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3160,7 +6475,41 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-maerzen-p2020005521117",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-p2020005521117",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Staropramen Premium",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/staropramen-premium-p2020006066402",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater Bier",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 19.4,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-bier-p795319",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3171,7 +6520,7 @@
 "price": 2.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-weisse-p2020005588424",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3182,7 +6531,7 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-pils-p2020004098221",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3193,8 +6542,32 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-pils-6x0-5lt-p2020004098160",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Kuenringer Festbock",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-p3237588",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Birra Moretti L'Autentica",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/birra-moretti-lager-0-33l-p2020005927025",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -3205,8 +6578,20 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/thalheim-maerzen-p2020004464194",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Villacher Freilich 0,0% AF",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/villacher-freilich-0-0-af-6x0-5l-p2020005761742",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -3217,7 +6602,7 @@
 "price": 1.28,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-lager-p2020005629028",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3228,7 +6613,7 @@
 "price": 17.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-radler-holunder-marille-p2020002402372",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
 },
 {
@@ -3240,8 +6625,20 @@
 "price": 6.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schnaitl-alkoholfrei-schnaitl-alkoholfrei-p2020003135606",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Schwarzes",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.74,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-schwarzes-p8027634",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -3252,7 +6649,7 @@
 "price": 7.08,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/loewenbraeu-muenchner-hell-6x0-5l-p2020005432994",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3264,8 +6661,53 @@
 "price": 8.64,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/golser-golser-premium-6x0-5lt-p2020003379291",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s´Bio",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.21,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-s-bio-0-33l-p4703488",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schwechater Zwickl",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.5,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schwechater-zwickl-0-5l-p2020005801370",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Radler Zitrone naturtrüb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.35,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-radler-naturtrueb-p7984341",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wurmi Radler Zitrone",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 8.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wurmi-lemon-p7937620",
+"seen": "2026-11-10",
+"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -3276,8 +6718,31 @@
 "price": 15.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-maerzen-maerzen-12x0-33l-p2020002648756",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.96
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-alkfrei-6x0-5l-p4126775",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Flötzinger Weissbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/floetzinger-weissbier-p7342363",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3288,7 +6753,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/budweiser-budvar-original-lager-0-33l-p2020005720435",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3299,7 +6764,18 @@
 "price": 1.28,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/weitra-braeu-das-helle-p2020003968884",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hausruck hell 0,33l MW",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hausruck-hell-0-33l-mw-hausruck-hell-0-33l-p2020005759954",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3310,7 +6786,7 @@
 "price": 8.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/linzer-bier-original-6x0-5l-p2020005688872",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3322,7 +6798,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillertal-p2020002167981",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3334,7 +6810,18 @@
 "price": 1.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schoenramer-hell-0-5l-p1596960",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Baunti 1609 Lager",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.06,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-baunti-1609-p4142140",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3345,8 +6832,42 @@
 "price": 8.1,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zillertal-bier-bio-zwickl-6x0-5l-p2020004519528",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Weizen alkfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.46,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-weizen-alkoholfrei-weizen-alkfrei-6x0-5l-p7942303",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.6,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-dunkel-p5929450",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Malzmeister",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-malzmeister-0-33l-p2020006357036",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3357,7 +6878,7 @@
 "price": 6.9,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-export-6x0-5lt-p2020003870279",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3369,7 +6890,29 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbraeu-radler-zitrone-naturtrueb-p2020005436831",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Reininghaus Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/reininghaus-maerzen-0-5l-p250726",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Villacher Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 30,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/villacher-maerzen-maerzen-0-5l-p808620",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3380,7 +6923,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-extra-frisch-p2020004097354",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3391,8 +6934,20 @@
 "price": 0.64,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-extra-frisch-p2020004097354",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,29 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Bio Roggen Gold",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 6.16,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-p6917999",
+"seen": "2026-11-10",
+"volume_l": 1.32
 },
 {
 "country": "AT",
@@ -3403,8 +6958,19 @@
 "price": 7.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/koestritzer-schwarzbier-6x0-33lt-p2020002580773",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 27.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-maerzen-p7947001",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3415,8 +6981,30 @@
 "price": 7.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-zisch-alkoholfrei-6x0-5lt-p2020005436466",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Export Lager",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 24.2,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-export-lager-p397377",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hofstettner Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.62,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hofstettner-maerzen-p6102999",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3427,7 +7015,7 @@
 "price": 8.72,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-pilsner-p2020005683075",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.64
 },
 {
@@ -3439,7 +7027,7 @@
 "price": 6.66,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/rieder-helles-6x0-5l-p2020004251299",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3451,7 +7039,7 @@
 "price": 6.54,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/uttendorf-export-p2020004287113",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3463,7 +7051,7 @@
 "price": 0.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pittinger-maerzen-premium-export-p2020005518407",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3474,7 +7062,31 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-red-ale-p2020002409081",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Obertrumer Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/trumer-maerzen-maerzen-6-x-0-5l-p4113690",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer preisel&bier",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-preisel-bier-6x0-33l-p2020006262866",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -3485,8 +7097,30 @@
 "price": 6.78,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/huber-braeu-p2020001867929",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Heineken Premium Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/heineken-premium-lager-p2752044",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar 0,0% alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.59,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-0-0-alkoholfrei-0-5l-p2020006170734",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3497,7 +7131,7 @@
 "price": 6.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-urtyp-4-x-0-5l-p2020005432932",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
 },
 {
@@ -3509,7 +7143,7 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-maerzen-p2020005440043",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3520,7 +7154,18 @@
 "price": 1.19,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbraeu-pfiff-maerzen-p2020005437913",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Loncium Bio Hausbier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.25,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/loncium-hausbier-0-33l-p2020005783867",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3531,7 +7176,7 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-hops-alkoholfrei-6x0-33l-p2020002907471",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3543,7 +7188,64 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/erdinger-weissbier-6-x-0-5l-p2020000834502",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-helles-0-5l-p7940903",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Natur Saurer Radler Soda Zitrone",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-natur-saurer-radler-soda-zitrone-0-5l-p2020006177832",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Natur Saurer Radler Soda Zitrone",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-natur-saurer-radler-soda-zitrone-0-5l-p2020006177832",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Märzen",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 24.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-maerzen-p7946639",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.5,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-pils-p3462089",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3555,7 +7257,18 @@
 "price": 1.42,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/birra-moretti-lager-p2020004990877",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hofstettner Honigbier Bio",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.39,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hofstettner-p6469313",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3566,7 +7279,18 @@
 "price": 2.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-funkerl-p2020005277052",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wieselburger Stammbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 2.05,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wieselburger-stammbraeu-stammbraeu-p432719",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3577,7 +7301,7 @@
 "price": 1.28,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/weitra-braeu-das-schwarze-p2020003968846",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3588,7 +7312,18 @@
 "price": 0.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/floetzinger-helles-p1447019",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Kräuterradler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.95,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-radler-p6072759",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3599,7 +7334,7 @@
 "price": 1.25,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-helles-helles-p2020005432697",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3610,8 +7345,19 @@
 "price": 10.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/trauner-spezial6x0-5l-mw-bgfl-spezial-p2020004558145",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Pils feinherb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.23,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-pils-pils-feinherb-p322935",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3622,7 +7368,19 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-p1985351",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.74,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-p1985351",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,49 €"
 },
 {
 "country": "AT",
@@ -3633,7 +7391,40 @@
 "price": 1.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/golser-radler-lemon-p2020005601789",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Stiftsbräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-stiftsbraeu-0-5l-p8018427",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Drei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-drei-p2871325",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Brewdog Punk AF alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/brewdog-punk-af-0-33l-p2020005765429",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3644,8 +7435,90 @@
 "price": 10.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/murauer-alkoholfrei-6x0-5l-p2020003661945",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Bock",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-bock-p7937156",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Bock",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.65,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-bock-p7937156",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 9,30 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Kaiser Fasstyp",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/kaiser-fasstyp-6-x-0-5l-p7930799",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ritterbräu Pils",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.15,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ritterbraeu-ritterl-p5322244",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Murauer Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/murauer-maerzen-maerzen-6-x-0-5l-p7946684",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ritterbräu Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ritterbraeu-p397513",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Samichlaus Classic",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.79,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-samichlaus-classic-samichlaus-classic-p4841623",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3656,7 +7529,31 @@
 "price": 7.38,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-6-x-0-33l-p2020005046511",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Freibier naturtrüb",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-freibier-naturtrueb-6x0-33l-p2020006357135",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Rotschopf",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-rotschopf-6x0-33l-p8025777",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3668,7 +7565,7 @@
 "price": 0.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wurmhoeringer-radler-p2020001188512",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3679,7 +7576,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pilsner-urquell-original-pilsner-bier-p2020005441972",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3690,8 +7587,31 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-6x0-5l-p2020005430358",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Bio Kellerbier",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-kellerbier-p7945243",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Guinness Extra Stout",
+"unit": "other",
+"package": "4×0,33 l",
+"price": 7.88,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/guinness-extra-stout-4-x-0-33l-p3711941",
+"seen": "2026-11-10",
+"volume_l": 1.32
 },
 {
 "country": "AT",
@@ -3702,7 +7622,76 @@
 "price": 2.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-landpils-p2020005588370",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Freibier alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 6.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schloss-eggenberg-freibier-freibier-alkoholfrei-6-x-0-5l-p8031914",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Pittinger Malt Lemonade Lemon",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/pittinger-malzgetraenk-zitrone-0-5l-p2020006183420",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer Kellerbier bio & naturtrüb",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 11.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-kellerbier-p8028556",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Radler naturtrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.42,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-radler-naturtrueb-p2953823",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-naturgold-alkoholfrei-p2535906",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.64,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-naturgold-alkoholfrei-p2535906",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,29 €"
 },
 {
 "country": "AT",
@@ -3713,7 +7702,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/mohrenbrauerei-weizen-p2020004182159",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3725,7 +7714,7 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020002471323",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3736,8 +7725,19 @@
 "price": 0.64,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-p2020002471323",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,29 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ritterbräu Urtrunk",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.01,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ritterbraeu-p2590516",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3748,7 +7748,31 @@
 "price": 1.29,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/golser-premium-p2020005596788",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Baumgartner Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-maerzen-p7940194",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Radler",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-radler-6-x-0-5l-p5729685",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -3759,7 +7783,7 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/puntigamer-alkoholfrei-6x0-5lt-p2020003728402",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3771,7 +7795,7 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hofstettner-bio-muehlviertler-0-5l-p1950892",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3782,8 +7806,19 @@
 "price": 20.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egger-heller-jokl-p2020004884626",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 6.6
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Loncium Bio Schwarze Gams",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.25,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/loncium-bio-schwarze-gams-0-33l-p2020005783928",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3794,8 +7829,55 @@
 "price": 6.36,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pilsner-urquell-original-pilsner-bier-4x0-5l-dose-p2020005441996",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Birra Moretti Lagerbier",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/birra-moretti-lagerbier-6x0-5l-p2020006264020",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schnaitl Original Märzen",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.98,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schnaitl-original-p5076024",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl 0,0% alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.36,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-0-0-alkoholfrei-6x0-5l-p2020005763067",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Weizen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.46,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-weizen-weizen-6x0-5l-p7946783",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -3806,7 +7888,29 @@
 "price": 1.99,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wimitz-summa-ale-p2020005588455",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Frastanzer s'dunkle",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.42,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/frastanzer-bio-s-dunkle-0-33l-p8025852",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hainfelder Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.85,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hainfelder-lagerbier-hell-0-5l-p420150",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3817,7 +7921,7 @@
 "price": 8.2,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/wieselburger-schwarzbier-p2020000716259",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.0
 },
 {
@@ -3829,7 +7933,18 @@
 "price": 1.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/gusswerk-bio-steinbier-p2020003720734",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Engelburg Bräu",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/engelburg-braeu-0-5l-p7920394",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3840,21 +7955,19 @@
 "price": 8.88,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-6x0-5lt-p2020003299049",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
 "country": "AT",
 "chain": "spar",
-"beer": "Stiegl Hell",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 4.14,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/stiegl-hell-6x0-5lt-p2020003299049",
-"seen": "2026-11-03",
-"volume_l": 3.0,
-"note": "Aktion, statt 8,88 €"
+"beer": "Desperados Virgin 0,0% alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/desperados-virgin-0-0-alkoholfrei-0-33l-p2020006125697",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3865,7 +7978,7 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/hirter-morchl-0-33l-p2020003476327",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3876,7 +7989,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-0-5-p2020005445291",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3887,8 +8000,30 @@
 "price": 0.99,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/stiegl-hell-0-5-p2020005445291",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,59 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Weitra Bräu Das Helle",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/weitra-braeu-das-helle-6x0-5lt-p4752837",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hofstettner Granitbier",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.55,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hofstettner-granitbier-granitbier-0-33l-p6103743",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3899,7 +8034,7 @@
 "price": 0.89,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/arcobraeu-mooser-liesl-helles-p2020002847791",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3910,7 +8045,7 @@
 "price": 7.38,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/uttendorf-premium-6x0-33l-p2020004682543",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
 },
 {
@@ -3922,7 +8057,7 @@
 "price": 0.55,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pittinger-radler-zitrone-p2020005321120",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3930,10 +8065,10 @@
 "beer": "Ottakringer Radler alkoholfrei Zitrone Minze",
 "unit": "other",
 "package": "6×0,5 l",
-"price": 4.14,
+"price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-radler-alkoholfrei-zitrone-minze-6x0-5lt-p2020005436701",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -3945,8 +8080,32 @@
 "price": 9.24,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schlaegl-unbeschwert-af-6x0-5l-p2020005452596",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Freistädter Bio Zwickl",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 8.46,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/freistaedter-bio-zwickl-6x0-33l-p8024626",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Frei Alkoholfrei",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.38,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-frei-alkoholfrei-6x0-33l-p2020005921252",
+"seen": "2026-11-10",
+"volume_l": 1.98
 },
 {
 "country": "AT",
@@ -3957,7 +8116,19 @@
 "price": 1.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-p2020004949615",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff Lager",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.61,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-lager-p2020004949615",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,22 €"
 },
 {
 "country": "AT",
@@ -3968,7 +8139,7 @@
 "price": 1.22,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/loewenbraeu-hefe-weissbier-p2020005429130",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3979,8 +8150,76 @@
 "price": 5.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-goldbraeu-p2020005436053",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Starkenberger Gold Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.05,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/starkenberg-starkenberg-p225939",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Jubiläum",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohrenburger-jubilaeum-12x0-33l-p2020005888432",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Export",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-export-p350839",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Stefani Bock",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.3,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-josefi-stefanibock-p7943508",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Raschhofer Weizen dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.68,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/raschhofer-p5677146",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer 0,0 alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.25,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-0-0-alkoholfrei-0-33l-p2020005965805",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -3991,7 +8230,31 @@
 "price": 1.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-biostoff-0-5l-p2020005446182",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Biostoff",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.84,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-biostoff-0-5l-p2020005446182",
+"seen": "2026-11-10",
+"note": "Aktion, statt 1,69 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wieselburger Zwickl",
+"unit": "other",
+"package": "4×0,5 l",
+"price": 5.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wieselburger-zwickl-4x0-5l-p2020005897557",
+"seen": "2026-11-10",
+"volume_l": 2.0
 },
 {
 "country": "AT",
@@ -4002,7 +8265,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-urtyp-p2020005429093",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4013,7 +8276,7 @@
 "price": 2.69,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brew-age-imperial-ipa-affenkoenig-p2020001309580",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4024,7 +8287,90 @@
 "price": 1.79,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/pinzgau-braeu-pinzga-hell-p2020005697546",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zipfer Drei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zipfer-drei-6-x-0-5l-p7941511",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hainfelder Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.95,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hainfelder-spezialbier-hell-0-5l-p422390",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Obertrumer Radler Zitrone",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/trumer-zitrone-radler-6x0-33l-p2020005796362",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Geigenseer Freisud alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/geigenseer-freisud-alkoholfrei-0-5l-p2020006356039",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 7.32,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-6x0-33l-p2020006115278",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Märzen",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 3.66,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-maerzen-6x0-33l-p2020006115278",
+"seen": "2026-11-10",
+"volume_l": 1.98,
+"note": "Aktion, statt 7,32 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Edelweiss Weizenbier Alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/edelweiss-weissbier-alkoholfrei-weizenbier-alkoholfrei-6-x-0-5l-p8028617",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4035,8 +8381,102 @@
 "price": 8.7,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-weisse-p2020000455738",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl 0,0% alkoholfrei",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.56,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-0-0-alkoholfrei-0-5l-p2020005763173",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-6-x-0-5l-p7941764",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturgold alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturgold-alkoholfrei-6-x-0-5l-p7941764",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Peroni Nastro Azzurro 0,0%",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/peroni-nastro-azzurro-0-0-0-33l-p2020006276191",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Budweiser Budvar Czech Dark Lager",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.62,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/budweiser-budvar-czech-dark-lager-p6105167",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.94,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-dunkel-6x0-5l-p2020006134149",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Stifts-Zwickl Dunkel",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-stifts-zwickl-dunkel-6x0-5l-p2020006134149",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Ottakringer Helles",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.28,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/ottakringer-helles-p5668427",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4047,7 +8487,19 @@
 "price": 1.14,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/kandi-malz-kandi-malz-alkoholfrei-p2020003410888",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Sport Weisse Alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-sport-weisse-alkoholfrei-6-x-0-5l-p6797850",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4058,8 +8510,32 @@
 "price": 8.94,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-6-x-0-5l-p2020002471262",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Naturradler Zitrone",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.47,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-naturradler-zitrone-6-x-0-5l-p2020002471262",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,94 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Puntigamer Das \"bierige\" Bier",
+"unit": "kasten20x0.5l",
+"package": "20×0,5 l",
+"price": 29.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/puntigamer-das-bierige-bier-p808569",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4070,7 +8546,42 @@
 "price": 2.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/bierschmiede-dunkles-p2020000895596",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Kaiser Fasstyp",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/kaiser-fasstyp-6x0-5l-p2020005935891",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Pittinger Malt Lemonade Grapefruit",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.79,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/pittinger-malzgetraenk-grapefruit-0-5l-p2020006183598",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Mo´s",
+"unit": "other",
+"package": "8×0,33 l",
+"price": 9.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohrenbrauerei-mo-s-8x0-33l-p2020005814684",
+"seen": "2026-11-10",
+"volume_l": 2.64
 },
 {
 "country": "AT",
@@ -4081,19 +8592,31 @@
 "price": 1.54,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/puntigamer-das-bierige-bier-p2020005429048",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
 "chain": "spar",
-"beer": "Puntigamer Das ~bierige~ Bier",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.77,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/puntigamer-das-bierige-bier-p2020005429048",
-"seen": "2026-11-03",
-"note": "Aktion, statt 1,54 €"
+"beer": "Baumgartner Pils",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.9,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/baumgartner-pils-p7933547",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Trumer Pils",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.1,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/trumer-pils-pils-6-x-0-5l-p4113676",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4104,7 +8627,7 @@
 "price": 1.85,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/heineken-premium-lager-lager-bier-0-5l-p2020005440340",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4115,7 +8638,7 @@
 "price": 1.59,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stiegl-radler-radler-grapefruit-naturtrueb-0-5l-p2020005435209",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4126,8 +8649,64 @@
 "price": 0.99,
 "promo": true,
 "source": "https://www.spar.at/produktwelt/stiegl-radler-radler-grapefruit-naturtrueb-0-5l-p2020005435209",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "note": "Aktion, statt 1,59 €"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Spezial",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.92,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohren-spezial-spezial-6x0-5lt-p7947049",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Brewdog Elvis Juice Grapefruit infused",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 2.89,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/brewdog-elvis-juiice-0-33l-p2020005765399",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Alkoholfrei Alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-alkoholfrei-p2020006327862",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Loncium Helles",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/loncium-gailtalerin-0-5l-p2020005793958",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Golser Pils",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.45,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/golser-lager-p8088482",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4138,8 +8717,21 @@
 "price": 8.52,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/goesser-helles-6x0-5l-p2020004797346",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Gösser Helles",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 4.26,
+"promo": true,
+"source": "https://www.spar.at/produktwelt/goesser-helles-6x0-5l-p2020004797346",
+"seen": "2026-11-10",
+"volume_l": 3.0,
+"note": "Aktion, statt 8,52 €"
 },
 {
 "country": "AT",
@@ -4150,7 +8742,53 @@
 "price": 1.55,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zipfer-maerzen-maerzen-p2020005438811",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zwettler Original",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.14,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zwettler-original-original-6-x-0-5l-p8031563",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.19,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-hubertus-dunkel-p279741",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Uttendorf Radler mit Kräuterlimonade",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 5.7,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/uttendorf-radler-p6266226",
+"seen": "2026-11-10",
+"volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu Radler Zitrone",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.93,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/huber-braeu-radler-p667593",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4161,8 +8799,31 @@
 "price": 7.5,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/stella-artois-premium-lager-beer-6x0-33lt-p2020003071935",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Huber Bräu Spezial",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.97,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/huber-braeu-spezial-p506298",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Wurmhöringer Märzen",
+"unit": "other",
+"package": "12×0,33 l",
+"price": 7.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/wurmhoeringer-maerzen-p6500801",
+"seen": "2026-11-10",
+"volume_l": 3.96
 },
 {
 "country": "AT",
@@ -4173,7 +8834,18 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/geigenseer-geigenseer-lagerbier-p2020004144331",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schlägl Das kleine Feine",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.34,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/schlaegl-0-33l-p6606312",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4184,7 +8856,41 @@
 "price": 2.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/brewdog-wingman-session-ipa-0-5l-dose-p2020005433007",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Schloss Eggenberg Naturbursch",
+"unit": "other",
+"package": "6×0,33 l",
+"price": 6.96,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/eggenberg-naturbursch-6x0-33l-p2020006143561",
+"seen": "2026-11-10",
+"volume_l": 1.98
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Hubertus Radler",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 0.99,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/hubertus-radler-p2691343",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Radler Zitrone Naturtrüb",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.38,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-radler-zitrone-naturtrueb-p3854488",
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4195,7 +8901,30 @@
 "price": 0.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schloss-eggenberg-freibier-alkoholfrei-0-33l-p2020003629686",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Franziskaner Weissbier Dunkel",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.29,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/franziskaner-weissbier-dunkel-p4544609",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Zillertal Bier Märzen",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 7.44,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/zillertal-bier-maerzen-p7928864",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4206,7 +8935,7 @@
 "price": 7.26,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/zwettler-export-export-lager-6-x-0-5l-p2020000928348",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
 },
 {
@@ -4218,7 +8947,19 @@
 "price": 1.45,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/edelweiss-hofbraeu-weizenbier-hofbraeu-p2020001086214",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Egger Wälder",
+"unit": "other",
+"package": "20×0,33 l",
+"price": 20.8,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/waelder-spezial-0-33lt-p8031075",
+"seen": "2026-11-10",
+"volume_l": 6.6
 },
 {
 "country": "AT",
@@ -4229,7 +8970,7 @@
 "price": 1.49,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/thalheim-maerzen-p2020004464217",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4240,7 +8981,7 @@
 "price": 17.4,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/schloss-eggenberg-hopfenkoenig-pils-0-33lt-p2020002923792",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 6.6
 },
 {
@@ -4252,7 +8993,7 @@
 "price": 0.68,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/baumgartner-helles-0-33l-p2020004561398",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
 },
 {
 "country": "AT",
@@ -4263,7 +9004,7 @@
 "price": 8.91,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/egg-egger-hit-radler-naturtrueb-9x0-33l-p2020003465512",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
 },
 {
@@ -4275,7 +9016,19 @@
 "price": 18.8,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/starkenberg-tiroler-maerzen-p2020005646339",
-"seen": "2026-11-03"
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Puntigamer Panther",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 9.54,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/puntigamer-panther-panther-6x0-5lt-p2945507",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4286,8 +9039,20 @@
 "price": 13.41,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/neufeldner-p2020001398683",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 2.97
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Rieder Dunkle Weisse Dunkle Weisse",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 8.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/rieder-p7946547",
+"seen": "2026-11-10",
+"volume_l": 3.0
 },
 {
 "country": "AT",
@@ -4298,21 +9063,8 @@
 "price": 8.34,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/ottakringer-helles-p2020005436213",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
-},
-{
-"country": "AT",
-"chain": "spar",
-"beer": "Ottakringer Helles",
-"unit": "other",
-"package": "6×0,5 l",
-"price": 4.14,
-"promo": true,
-"source": "https://www.spar.at/produktwelt/ottakringer-helles-p2020005436213",
-"seen": "2026-11-03",
-"volume_l": 3.0,
-"note": "Aktion, statt 8,34 €"
 },
 {
 "country": "AT",
@@ -4323,7 +9075,41 @@
 "price": 7.74,
 "promo": false,
 "source": "https://www.spar.at/produktwelt/weitra-braeu-das-helle-6-x-0-5l-p1014945",
-"seen": "2026-11-03",
+"seen": "2026-11-10",
 "volume_l": 3.0
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Mohrenbräu Mo´s Cherry Baby",
+"unit": "other",
+"package": "8×0,33 l",
+"price": 9.52,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/mohrenbraeu-mo-s-cherry-baby-8x0-33l-p2020006109666",
+"seen": "2026-11-10",
+"volume_l": 2.64
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Stiegl Radler Zitrone Naturtrüb",
+"unit": "0.5l",
+"package": "0,5 l",
+"price": 1.49,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/stiegl-radler-radler-zitrone-naturtrueb-p7854415",
+"seen": "2026-11-10"
+},
+{
+"country": "AT",
+"chain": "spar",
+"beer": "Fohrenburger Alkoholfrei",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.17,
+"promo": false,
+"source": "https://www.spar.at/produktwelt/fohren-alkohol-frei-0-33l-mw-p2020005888753",
+"seen": "2026-11-10"
 }
 ]
