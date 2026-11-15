@@ -1,7 +1,7 @@
 // "Bier finden": Filter, Sortierung, Ergebnisliste, Karte mit Markern.
 import { prefs, savePrefs, isFavorite, isHidden, hiddenCount, unhideAll } from '../store.js';
 import { state, rememberPlaces, emit } from '../state.js';
-import { TYPE_META, TYPE_ORDER, fetchPlacesAround } from '../places.js';
+import { TYPE_META, TYPE_ORDER, fetchPlacesAround, breweries } from '../places.js';
 import { getSummary, loadSummaries } from '../community.js';
 import { placeStatus, statusBadge } from '../placeInfo.js';
 import { isBiergartenWeather, isRainy } from '../weather.js';
@@ -338,7 +338,7 @@ function cardHtml({ p, s, st, price: pr }, i) {
     : '';
   const extras = [];
   if (p.tags.outdoor_seating === 'yes' && p.type !== 'biergarten') extras.push(`<span class="tag">${icon('sun', { size: 12 })}${t('Draußen')}</span>`);
-  if (p.tags.brewery) extras.push(`<span class="tag">${escapeHtml(p.tags.brewery.split(';')[0])}</span>`);
+  if (breweries(p.tags)) extras.push(`<span class="tag">${escapeHtml(breweries(p.tags)[0])}</span>`);
   return `<article class="card" data-place="${p.id}" style="--c:${m.color};--i:${Math.min(i, 14)}" tabindex="0" role="button" aria-label="${escapeHtml(p.name)}, ${m.label}, ${fmtDist(p.distance)}">
     <div class="card-ico">${icon(m.icon, { size: 20 })}</div>
     <div class="card-main">

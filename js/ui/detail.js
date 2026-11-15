@@ -1,6 +1,6 @@
 // Detailansicht eines Ortes (Dialog).
 import { state, rememberPlaces } from '../state.js';
-import { TYPE_META, placeAddress, fetchPlacesByIds } from '../places.js';
+import { TYPE_META, placeAddress, fetchPlacesByIds, breweries } from '../places.js';
 import { getSummary, loadSummaries, submitPrice, deletePrice, setRating, isShared } from '../community.js';
 import { isFavorite, toggleFavorite, isHidden, setHidden } from '../store.js';
 import { placeStatus, statusBadge } from '../placeInfo.js';
@@ -11,7 +11,7 @@ import { icon } from '../icons.js';
 import { escapeHtml, fmtDist, fmtEuro, timeAgo, haversine } from '../util.js';
 import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
-import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS } from '../chainPrices.js';
+import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS, byKindThenPrice } from '../chainPrices.js';
 import { loadHistory, describe } from '../priceHistory.js';
 import { openDiary } from './diaryUi.js';
 import { openScanner } from './scanUi.js';
@@ -75,7 +75,7 @@ function render() {
   const facts = [];
   if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 14 })}${t('Sitzplätze draußen')}`);
   if (p.tags.wheelchair === 'yes') facts.push(`${icon('wheelchair', { size: 14 })}${t('Barrierefrei')}`);
-  if (p.tags.brewery) facts.push(`${icon('beerMug', { size: 14 })}${escapeHtml(p.tags.brewery.split(';').slice(0, 4).join(', '))}`);
+  if (breweries(p.tags)) facts.push(`${icon('beerMug', { size: 14 })}${escapeHtml(breweries(p.tags).slice(0, 4).join(', '))}`);
   if (p.tags['drink:craft_beer'] === 'yes') facts.push(`${icon('barrel', { size: 14 })}${t('Craft-Bier')}`);
 
   const my = s.rating.mine;
@@ -192,7 +192,7 @@ function chainRow(x, i) {
 function wireChainList(p) {
   const ul = $('#pdChainList');
   if (!ul) return;
-  const all = chainPricesFor(p).slice().sort((a, b) => (a.per05 ?? 99) - (b.per05 ?? 99));
+  const all = chainPricesFor(p).slice().sort(byKindThenPrice);
   const input = $('#pdChainSearch');
   const more = $('#pdChainMore');
   let showAll = false;
