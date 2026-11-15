@@ -49,7 +49,8 @@ Zwei Signaturen, sonst nichts:
 
 1. **Der Bierdeckel.** Jeder Preis sitzt auf einem runden Deckel mit feinem Doppelrand: auf der Karte,
    in der Liste, im Detail. Gemeldete Preise voll in Bernstein, Online-Preise nur als Rand, alte blass.
-   Cluster sind ein Stapel Deckel. Wer einen Deckel sieht, weiß: Das ist ein Preis.
+   Wer Bernstein auf einem Deckel sieht, weiß: Das ist ein Preis. Cluster sind ein Stapel leerer
+   Deckel in Papierfarbe, damit Bernstein nichts anderes bedeutet.
 2. **Die Schaumkrone.** Eine einzige Wellenlinie als Oberkante des Sheets, als Füllstand beim Laden
    und als Fortschritt auf der Tour. Schaum bedeutet immer: Hier tut sich etwas.
 
@@ -65,7 +66,7 @@ kein Verlauf außer im Bier des Logos und des Laders.
 | Schatten | 1 (liegt auf), 2 (schwebt: Kopfzeile, Marker), 3 (darüber: Dialog, Toast) |
 | Icons | 16 im Text, 20 in Knöpfen. Strich 1,75 |
 | Tippfläche | mindestens 44 × 44 |
-| Schrift | 12, 14, 16, 20, 26. Keine halben Pixel |
+| Schrift | 12, 14, 16, 20, 26. Keine halben Pixel. Einzige Ausnahme: 44 für die Promille-Zahl |
 | Zahlen | Bricolage Grotesque, `tabular-nums`, eine Stufe größer als ihr Etikett |
 
 Typo-Rollen: Bricolage Grotesque für Namen, Überschriften und Zahlen. Figtree für alles andere.
