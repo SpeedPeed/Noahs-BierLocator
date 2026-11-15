@@ -4,8 +4,8 @@ import { simulateBac, distributionFactor } from '../js/bac.js';
 import { validatePrice, per05 } from '../js/prices.js';
 import { generateVariants, overlapRatio, legStats, makeProjection } from '../js/tour/planner.js';
 import { encodeTour, decodeTour } from '../js/share.js';
-import { classify } from '../js/places.js';
-import { chainOf } from '../js/chainPrices.js';
+import { classify, breweries } from '../js/places.js';
+import { chainOf, beerKind, cheapestOf, byKindThenPrice } from '../js/chainPrices.js';
 import { evaluate, matches } from '../js/alerts.js';
 import { parsePackLabel } from '../js/prices.js';
 import { seededRandom, haversine } from '../js/util.js';
@@ -229,6 +229,28 @@ test('Gasthäuser werden erkannt, normale Restaurants nicht', () => {
   eq(classify({ amenity: 'restaurant', 'drink:beer': 'no' }), null);
 });
 
+test('Günstigstes Bier ist nie Radler oder alkoholfrei', () => {
+  const b = (beer, per05, extra = {}) => ({ country: 'AT', chain: 'billa', beer, per05, ...extra });
+  eq(beerKind(b('Landgraf Märzen')), 'bier');
+  eq(beerKind(b('Freistädter Ratsherrn')), 'bier', '"Frei" im Namen ist nicht alkoholfrei');
+  eq(beerKind(b('Landgraf Zitronenradler')), 'radler');
+  eq(beerKind(b('St. Gotthard Panaché')), 'radler');
+  eq(beerKind(b('Baarer Panasch Zitrone')), 'radler');
+  eq(beerKind(b('Landgraf Alkoholfrei')), 'alkoholfrei');
+  eq(beerKind(b('Zwettler Frei')), 'alkoholfrei');
+  eq(beerKind(b('Gösser Naturgold 0,0%')), 'alkoholfrei');
+  eq(beerKind({ country: 'CH', chain: 'migros', beer: 'La Nébuleuse Diversion Blanche' }), 'alkoholfrei', 'Migros verkauft keinen Alkohol');
+  const list = [b('Landgraf Alkoholfrei', 0.49), b('Landgraf Zitronenradler', 0.49), b('Egger Märzen', 0.40, { promo: true }), b('Landgraf Schankbier', 0.55), b('Landgraf Märzen', 0.59)];
+  eq(cheapestOf(list).beer, 'Landgraf Schankbier', 'Normalpreis vor Aktion, Radler zählt nicht');
+  eq(cheapestOf([b('Landgraf Alkoholfrei', 0.49), b('Landgraf Zitronenradler', 0.49)]), null, 'lieber kein Preis als ein falscher');
+  eq(list.slice().sort(byKindThenPrice).map(x => beerKind(x)).join(), 'bier,bier,bier,radler,alkoholfrei');
+});
+test('Brauerei-Tag: nur echte Namen', () => {
+  eq(breweries({ brewery: 'no' }), null);
+  eq(breweries({ brewery: 'yes' }), null);
+  eq(breweries({}), null);
+  eq(breweries({ brewery: 'Augustiner Bräu München; Paulaner' }).join('|'), 'Augustiner Bräu München|Paulaner');
+});
 test('Filialen werden ihrer Kette zugeordnet', () => {
   const sm = (tags, type = 'supermarket') => chainOf({ type, tags });
   eq(sm({ brand: 'Billa', 'addr:country': 'AT' }).key, 'billa');

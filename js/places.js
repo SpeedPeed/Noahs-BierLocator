@@ -234,6 +234,13 @@ export async function fetchStations(center, radius = 6000) {
   return out.sort((a, b) => a.distance - b.distance);
 }
 
+// Ausgeschenkte Brauereien laut OSM-Tag "brewery" ("Augustiner;Paulaner"). Das Tag enthält
+// oft nur "yes"/"no"/"various" — das sind keine Namen. → Liste oder null
+export function breweries(tags) {
+  const list = String(tags.brewery || '').split(';').map(s => s.trim()).filter(s => s && !/^(yes|no|various|none|unknown)$/i.test(s));
+  return list.length ? list : null;
+}
+
 export function placeAddress(p) {
   const t = p.tags;
   const street = [t['addr:street'], t['addr:housenumber']].filter(Boolean).join(' ');

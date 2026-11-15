@@ -85,8 +85,21 @@ export function loadChainPrices() {
   return loading;
 }
 
-const ALCOHOL_FREE = /alkoholfrei|alkoholarm|\b0[.,]0\b|0[.,]0\s*%|\bnon\b|ohne alkohol/i;
-const ELIGIBLE_TYPES =new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
+const ALCOHOL_FREE = /alkoholfrei|alkoholarm|\b0[.,]0\b|0[.,]0\s*%|\bnon\b|ohne alkohol|ohne alcool|sans alcool|senza alcol|alcohol[- ]?free|\bfrei\b|\bfree\b|\bzero\b/i;
+const MIXED = /radler|shandy|panas?ch|alsterwasser|russ'?n\b|biermix|mischgetr|cola|lemon|zitron|limo|cider|seltzer|\bhugo\b/i;
+// Ketten, die gar keinen Alkohol verkaufen: alles dort ist alkoholfrei, egal wie es heißt.
+const NO_ALCOHOL_CHAINS = new Set(['CH|migros']);
+const ELIGIBLE_TYPES = new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
+
+// 'bier' | 'radler' (auch andere Mischgetränke) | 'alkoholfrei'.
+// Im Zweifel lieber kein Bier: ein fehlender Preis ist besser als ein falscher.
+export function beerKind(p) {
+  if (NO_ALCOHOL_CHAINS.has(`${p.country}|${p.chain}`) || ALCOHOL_FREE.test(p.beer)) return 'alkoholfrei';
+  return MIXED.test(p.beer) ? 'radler' : 'bier';
+}
+const KIND_ORDER = { bier: 0, radler: 1, alkoholfrei: 2 };
+// Für Listen: echtes Bier zuerst, darin nach Preis pro Halbe.
+export const byKindThenPrice = (a, b) => KIND_ORDER[beerKind(a)] - KIND_ORDER[beerKind(b)] || (a.per05 ?? 99) - (b.per05 ?? 99);
 
 function placeCountry(place) {
   const c = (place.tags['addr:country'] || '').toUpperCase();
@@ -115,17 +128,15 @@ export function chainPricesFor(place) {
   return list;
 }
 
-// Günstigster Online-Preis (Normalpreis bevorzugt, Aktionen nur wenn sonst nichts).
-export function cheapestChainPrice(place) {
-  const list = chainPricesFor(place).filter(p => p.per05 != null);
-  if (!list.length) return null;
-  // "Günstigstes Bier" soll ein richtiges Bier sein: Alkoholfreies nur, wenn es sonst nichts gibt.
-  const alcoholic = list.filter(p => !ALCOHOL_FREE.test(p.beer));
-  const base = alcoholic.length ? alcoholic : list;
-  const regular = base.filter(p => !p.promo);
-  const pool = regular.length ? regular : base;
-  return pool.reduce((a, b) => (b.per05 < a.per05 ? b : a));
+// Günstigstes echtes Bier einer Preisliste (Normalpreis bevorzugt, Aktionen nur wenn sonst
+// nichts). Radler und Alkoholfreies zählen nie: gibt es kein echtes Bier, gibt es keinen Preis.
+export function cheapestOf(list) {
+  const beers = list.filter(p => p.per05 != null && beerKind(p) === 'bier');
+  if (!beers.length) return null;
+  const regular = beers.filter(p => !p.promo);
+  return (regular.length ? regular : beers).reduce((a, b) => (b.per05 < a.per05 ? b : a));
 }
+export const cheapestChainPrice = place => cheapestOf(chainPricesFor(place));
 
 export function chainDataDate() { return data && data.updated; }
 
