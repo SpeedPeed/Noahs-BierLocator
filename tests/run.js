@@ -17,7 +17,7 @@ import { makeCard, completeLines, FREE } from '../js/bingo.js';
 import { evaluateBadges } from '../js/badges.js';
 import { parseMenuText } from '../js/prices.js';
 import { sampleAt, priceColor } from '../js/heatmap.js';
-import { tr, dictionary, money, pkg } from '../js/i18n.js';
+import { tr, dictionary, money, moneyParts, pkg } from '../js/i18n.js';
 
 const results = [];
 function test(name, fn) {
@@ -458,6 +458,12 @@ test('Geldbeträge: Euro deutsch mit Komma, Franken immer mit Punkt', () => {
   eq(money(4.5), '4,50 €');
   eq(money(4.5, 'CHF'), 'CHF 4.50');
   eq(pkg('6×0,5 l Dosen'), '6×0,5 l Dosen', 'Deutsch bleibt unverändert');
+});
+test('Preisschild: Betrag und Währung getrennt', () => {
+  eq(moneyParts(4.8).value, '4,80');
+  eq(moneyParts(4.8).unit, '€');
+  eq(moneyParts(4.8, 'CHF').value, '4.80', 'Franken immer mit Punkt');
+  eq(moneyParts(4.8, 'CHF').unit, 'CHF');
 });
 
 /* ---------- Ausgabe ---------- */

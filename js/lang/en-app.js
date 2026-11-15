@@ -225,7 +225,7 @@ export default {
   'Ort': 'Place',
   'Orte': 'Places',
   '{n} ausgeblendet · zeigen': '{n} hidden · show',
-  'Günstigstes Bier hier': 'Cheapest beer here',
+  'Günstigste Halbe': 'Cheapest half-litre',
   'Online-Preis': 'Online price',
   'Stand {date}': 'As of {date}',
   'Keine Treffer': 'No results',

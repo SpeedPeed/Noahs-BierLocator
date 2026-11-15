@@ -27,7 +27,7 @@ export function openBac() {
 function renderShell() {
   const p = bac.profile;
   $('#bacBody').innerHTML = `
-    <h2 id="bacTitle" class="dlg-title">${icon('calculator', { size: 22 })}${t('Promille-Rechner')}</h2>
+    <h2 id="bacTitle" class="dlg-title">${icon('calculator', { size: 20 })}${t('Promille-Rechner')}</h2>
     <div class="bac-top">
       <div class="bac-glass" id="bacGlass" aria-hidden="true">
         <svg viewBox="0 0 80 110">
@@ -61,7 +61,7 @@ function renderShell() {
         <div class="custom-row">
           <label>ml <input id="bacCVol" type="number" min="10" max="2000" value="500"></label>
           <label>% <input id="bacCAbv" type="number" min="0" max="80" step="0.1" value="5"></label>
-          <button class="btn btn-soft" id="bacCAdd">${icon('plus', { size: 15 })}${t('Dazu')}</button>
+          <button class="btn btn-soft" id="bacCAdd">${icon('plus', { size: 16 })}${t('Dazu')}</button>
         </div>
       </details>
     </div>
@@ -197,25 +197,25 @@ function renderAll(animate) {
   // Log
   const log = bac.log.slice().sort((a, b) => b.timestamp - a.timestamp);
   $('#bacLog').innerHTML = log.length ? log.map(e => `<li>
-      <span>${icon('beerMug', { size: 15 })}<b>${escapeHtml(e.label)}</b></span>
+      <span>${icon('beerMug', { size: 16 })}<b>${escapeHtml(e.label)}</b></span>
       <small>${gramsOfAlcohol(e).toFixed(0)} g · ${timeAgo(e.timestamp)}</small>
-      <button class="icon-btn small" data-rm="${e.timestamp}" aria-label="${t('Entfernen')}">${icon('x', { size: 14 })}</button>
-    </li>`).join('') + `<li class="bac-log-clear"><button class="link-btn" id="bacClear">${icon('trash', { size: 13 })}${t('Alles löschen')}</button></li>` : '';
+      <button class="icon-btn small" data-rm="${e.timestamp}" aria-label="${t('Entfernen')}">${icon('x', { size: 16 })}</button>
+    </li>`).join('') + `<li class="bac-log-clear"><button class="link-btn" id="bacClear">${icon('trash', { size: 16 })}${t('Alles löschen')}</button></li>` : '';
   const clr = $('#bacClear');
   if (clr) clr.onclick = () => { bac.log = []; saveBac(bac); renderAll(true); };
 
   const p = bac.profile;
   $('#bacProfileSummary').textContent = `${p.weight} kg · ${p.height} cm · ${FOOD_STATES[p.food] ? FOOD_STATES[p.food].label : ''}`;
   $('#bacLegalRows').innerHTML = [...c.car, { bac: c.bike.bac, label: c.bike.label, bike: true }].map(l => `
-    <div class="legal-row${v > l.bac && l.bac > 0 ? ' over' : ''}">${icon(l.bike ? 'bike' : 'fuel', { size: 14 })}<span>${escapeHtml(l.label)}</span><b>${fmtP(l.bac)} ‰</b></div>`).join('');
+    <div class="legal-row${v > l.bac && l.bac > 0 ? ' over' : ''}">${icon(l.bike ? 'bike' : 'fuel', { size: 16 })}<span>${escapeHtml(l.label)}</span><b>${fmtP(l.bac)} ‰</b></div>`).join('');
   $('#bacEmergency').textContent = c.emergencyLabel;
 
   const kcal = sim.totalKcal;
   const alcoholic = bac.log.filter(e => e.abv > 1).length;
   $('#bacFacts').innerHTML = bac.log.length ? `
-    <div class="fact-tile">${icon('flame', { size: 18 })}<b>${Math.round(kcal)}</b><small>kcal</small></div>
-    <div class="fact-tile">${icon('activity', { size: 18 })}<b>${num(kcal / 65, 1)} km</b><small>${t('joggen zum Verbrennen')}</small></div>
-    <div class="fact-tile">${icon('droplet', { size: 18 })}<b>${alcoholic}</b><small>${t('Gläser Wasser empfohlen')}</small></div>` : '';
+    <div class="fact-tile">${icon('flame', { size: 20 })}<b>${Math.round(kcal)}</b><small>kcal</small></div>
+    <div class="fact-tile">${icon('activity', { size: 20 })}<b>${num(kcal / 65, 1)} km</b><small>${t('joggen zum Verbrennen')}</small></div>
+    <div class="fact-tile">${icon('droplet', { size: 20 })}<b>${alcoholic}</b><small>${t('Gläser Wasser empfohlen')}</small></div>` : '';
 }
 
 function renderChart(sim, now, c) {

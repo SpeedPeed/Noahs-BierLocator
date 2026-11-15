@@ -57,7 +57,7 @@ function stats(list) {
 
 function render(animate = false) {
   $('#diaryBody').innerHTML = `
-    <h2 class="dlg-title" id="diaryTitle">${icon('book', { size: 22 })}${t('Bier-Tagebuch')}</h2>
+    <h2 class="dlg-title" id="diaryTitle">${icon('book', { size: 20 })}${t('Bier-Tagebuch')}</h2>
     <div class="segmented diary-tabs" role="tablist">${Object.entries(TABS).map(([k, l]) => `<button role="tab" data-dtab="${k}" aria-checked="${tab === k}">${l}</button>`).join('')}</div>
     <div id="diaryPane">${tab === 'tours' ? toursHtml() : tab === 'badges' ? badgesHtml() : tab === 'year' ? wrappedHtml(yearsWithData(), wrapYear) : beersHtml()}</div>`;
   $('#diaryBody').querySelectorAll('[data-dtab]').forEach(b => b.onclick = () => { tab = b.dataset.dtab; render(true); });
@@ -79,41 +79,41 @@ function beersHtml() {
   }
   return `
     <form class="diary-form" id="diaryForm">
-      ${p ? `<div class="diary-place" style="--c:${TYPE_META[p.type]?.color || 'var(--accent)'}">${icon(TYPE_META[p.type]?.icon || 'pin', { size: 16 })}<span>${escapeHtml(p.name)}</span><button type="button" class="icon-btn small" id="diaryNoPlace" aria-label="${t('Ort entfernen')}">${icon('x', { size: 14 })}</button></div>` : ''}
+      ${p ? `<div class="diary-place" style="--c:${TYPE_META[p.type]?.color || 'var(--accent)'}">${icon(TYPE_META[p.type]?.icon || 'pin', { size: 16 })}<span>${escapeHtml(p.name)}</span><button type="button" class="icon-btn small" id="diaryNoPlace" aria-label="${t('Ort entfernen')}">${icon('x', { size: 16 })}</button></div>` : ''}
       <div class="diary-row">
         <input id="diaryBeer" name="beer" list="beerList" placeholder="${t('Was trinkst du?')}" maxlength="60" required autocomplete="off">
         <select name="ml" aria-label="${t('Menge')}">${Object.entries(SIZES).map(([ml, l]) => `<option value="${ml}" ${ml === '500' ? 'selected' : ''}>${l}</option>`).join('')}</select>
       </div>
       <div class="diary-row">
-        <div class="star-input small" id="diaryStars" role="radiogroup" aria-label="${t('Bewertung')}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-n="${n}" aria-label="${t('{n} Sterne', { n })}">${icon('star', { size: 24, filled: true })}</button>`).join('')}</div>
+        <div class="star-input small" id="diaryStars" role="radiogroup" aria-label="${t('Bewertung')}">${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" data-n="${n}" aria-label="${t('{n} Sterne', { n })}">${icon('star', { size: 20, filled: true })}</button>`).join('')}</div>
         <label class="switch-row small"><input type="checkbox" class="switch" name="bac" checked><span>${t('Promille-Rechner')}</span></label>
       </div>
       <input name="note" placeholder="${t('Notiz (optional)')}" maxlength="140" autocomplete="off">
-      <button class="btn btn-primary" type="submit">${icon('plus', { size: 17 })}${t('Eintragen')}</button>
+      <button class="btn btn-primary" type="submit">${icon('plus', { size: 16 })}${t('Eintragen')}</button>
     </form>
 
     ${st.total ? `
     <div class="stat-grid diary-stats">
-      <div class="stat stat-hero"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b data-num="${st.total}">0</b><small>${t('Biere')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('droplet', { size: 18 })}</span><b>${num(st.liters, 1)} l</b><small>${t('insgesamt')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('tag', { size: 18 })}</span><b>${st.uniqueBeers}</b><small>${t('Sorten')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${st.uniquePlaces}</b><small>${t('Orte')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${st.days}</b><small>${t('Biertage')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('flame', { size: 18 })}</span><b>${st.streak}</b><small>${t('Tage in Folge (Rekord)')}</small></div>
+      <div class="stat stat-hero"><span class="stat-ico">${icon('beerMug', { size: 20 })}</span><b data-num="${st.total}">0</b><small>${t('Biere')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('droplet', { size: 20 })}</span><b>${num(st.liters, 1)} l</b><small>${t('insgesamt')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('tag', { size: 20 })}</span><b>${st.uniqueBeers}</b><small>${t('Sorten')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('pin', { size: 20 })}</span><b>${st.uniquePlaces}</b><small>${t('Orte')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('clock', { size: 20 })}</span><b>${st.days}</b><small>${t('Biertage')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('flame', { size: 20 })}</span><b>${st.streak}</b><small>${t('Tage in Folge (Rekord)')}</small></div>
     </div>
     <div class="diary-tops">
-      ${st.topBeers.length ? `<div><h3 class="pd-h">${icon('star', { size: 15 })}${t('Lieblingsbiere')}</h3><ol>${st.topBeers.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
-      ${st.topPlaces.length ? `<div><h3 class="pd-h">${icon('pin', { size: 15 })}${t('Stammlokale')}</h3><ol>${st.topPlaces.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
+      ${st.topBeers.length ? `<div><h3 class="pd-h">${icon('star', { size: 16 })}${t('Lieblingsbiere')}</h3><ol>${st.topBeers.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
+      ${st.topPlaces.length ? `<div><h3 class="pd-h">${icon('pin', { size: 16 })}${t('Stammlokale')}</h3><ol>${st.topPlaces.map(b => `<li><span>${escapeHtml(b.name)}</span><b>${b.n}×</b></li>`).join('')}</ol></div>` : ''}
     </div>
     <div class="diary-list">${groups.map(g => `
       <h4>${g.k}</h4>
       <ul>${g.items.map(e => `<li>
         <span class="dl-time">${fmtClock(new Date(e.at))}</span>
         <div class="dl-main"><b>${escapeHtml(e.beer)}</b> <small>${SIZES[e.ml] || ''}</small>
-          ${e.placeName ? `<small class="dl-place">${icon('pin', { size: 12 })}${escapeHtml(e.placeName)}</small>` : ''}
+          ${e.placeName ? `<small class="dl-place">${icon('pin', { size: 16 })}${escapeHtml(e.placeName)}</small>` : ''}
           ${e.note ? `<small class="dl-note">${escapeHtml(e.note)}</small>` : ''}</div>
         ${e.stars ? `<span class="mini-stars" style="--v:${e.stars * 20}%">★★★★★</span>` : ''}
-        <button class="icon-btn small" data-del="${e.id}" aria-label="${t('Eintrag löschen')}">${icon('trash', { size: 14 })}</button>
+        <button class="icon-btn small" data-del="${e.id}" aria-label="${t('Eintrag löschen')}">${icon('trash', { size: 16 })}</button>
       </li>`).join('')}</ul>`).join('')}</div>`
     : `<div class="empty small"><div class="empty-art">${icon('book', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch leer')}</h3><p>${t('Trag dein erstes Bier ein — oder tippe bei einem Lokal auf „Einchecken“.')}</p></div>`}`;
 }
@@ -162,7 +162,7 @@ function wireBeers(animate) {
 
 /* ---------- Touren ---------- */
 function trackSvg(track) {
-  if (!track || track.length < 2) return `<span class="tour-thumb">${icon('route', { size: 22 })}</span>`;
+  if (!track || track.length < 2) return `<span class="tour-thumb">${icon('route', { size: 20 })}</span>`;
   const lats = track.map(p => p[0]), lons = track.map(p => p[1]);
   const la0 = Math.min(...lats), la1 = Math.max(...lats), lo0 = Math.min(...lons), lo1 = Math.max(...lons);
   const k = Math.cos((la0 + la1) / 2 * Math.PI / 180);
@@ -179,21 +179,21 @@ function toursHtml() {
   const km = list.reduce((s, t) => s + (t.km || 0), 0);
   return `
     <div class="stat-grid diary-stats">
-      <div class="stat stat-hero"><span class="stat-ico">${icon('bike', { size: 18 })}</span><b>${list.length}</b><small>${t('Touren')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(km * 1000, 0)} km</b><small>${t('geradelt')}</small></div>
-      <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${list.reduce((s, t) => s + t.stops.filter(x => x.visited !== false).length, 0)}</b><small>${t('Stopps')}</small></div>
+      <div class="stat stat-hero"><span class="stat-ico">${icon('bike', { size: 20 })}</span><b>${list.length}</b><small>${t('Touren')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('route', { size: 20 })}</span><b>${fmtKm(km * 1000, 0)} km</b><small>${t('geradelt')}</small></div>
+      <div class="stat"><span class="stat-ico">${icon('pin', { size: 20 })}</span><b>${list.reduce((s, t) => s + t.stops.filter(x => x.visited !== false).length, 0)}</b><small>${t('Stopps')}</small></div>
     </div>
     <ul class="tour-list">${list.map(tour => `<li>
       ${trackSvg(tour.track)}
       <div class="tl-main">
         <b>${new Date(tour.at).toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · ${Number(tour.km).toLocaleString(LOCALE)} km</b>
         <small>${tour.stops.map(s => escapeHtml(s.name)).join(' · ')}</small>
-        ${tour.mates && tour.mates.length ? `<small>${icon('users', { size: 12 })} ${t('mit {names}', { names: tour.mates.map(escapeHtml).join(', ') })}</small>` : ''}
-        ${tour.beers ? `<small>${icon('beerMug', { size: 12 })} ${tour.beers === 1 ? t('1 Bier eingecheckt') : t('{n} Biere eingecheckt', { n: tour.beers })}</small>` : ''}
+        ${tour.mates && tour.mates.length ? `<small>${icon('users', { size: 16 })} ${t('mit {names}', { names: tour.mates.map(escapeHtml).join(', ') })}</small>` : ''}
+        ${tour.beers ? `<small>${icon('beerMug', { size: 16 })} ${tour.beers === 1 ? t('1 Bier eingecheckt') : t('{n} Biere eingecheckt', { n: tour.beers })}</small>` : ''}
       </div>
       <div class="tl-btns">
         ${tour.link ? `<button class="icon-btn small" data-again="${tour.id}" aria-label="${t('Nochmal fahren')}" title="${t('Nochmal fahren')}">${icon('refresh', { size: 16 })}</button>` : ''}
-        <button class="icon-btn small" data-deltour="${tour.id}" aria-label="${t('Tour löschen')}">${icon('trash', { size: 14 })}</button>
+        <button class="icon-btn small" data-deltour="${tour.id}" aria-label="${t('Tour löschen')}">${icon('trash', { size: 16 })}</button>
       </div>
     </li>`).join('')}</ul>`;
 }

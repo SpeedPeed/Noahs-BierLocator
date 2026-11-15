@@ -19,7 +19,7 @@ export function toast(msg, { tone = 'info', ms = 2800, action = null } = {}) {
   const el = $('#toast');
   const ic = tone === 'good' ? 'checkCircle' : tone === 'bad' ? 'alertTriangle' : 'info';
   el.className = `toast toast-${tone}`;
-  el.innerHTML = `${icon(ic, { size: 17 })}<span>${msg}</span>`;
+  el.innerHTML = `${icon(ic, { size: 16 })}<span>${msg}</span>`;
   if (action) {
     const b = document.createElement('button');
     b.className = 'toast-action';

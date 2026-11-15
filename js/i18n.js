@@ -45,6 +45,12 @@ export function money(v, currency = 'EUR') {
   return LANG === 'de' ? `${num(v, 2)} €` : `€${num(v, 2)}`;
 }
 
+// Betrag und Währung getrennt, fürs Preisschild (Bierdeckel): { value: '4,80', unit: '€' }.
+export function moneyParts(v, currency = 'EUR') {
+  if (currency === 'CHF') return { value: Number(v).toFixed(2), unit: 'CHF' };
+  return { value: num(v, 2), unit: '€' };
+}
+
 // Gebinde-Angaben aus den Händlerdaten ("6×0,5 l Dosen") nur zur Anzeige übersetzen.
 const PKG_WORDS = { Dosen: 'cans', Dose: 'Can', Flasche: 'Bottle', Flaschen: 'bottles', Einweg: 'single-use', Mehrweg: 'returnable' };
 export function pkg(s) {

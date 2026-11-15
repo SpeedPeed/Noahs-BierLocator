@@ -28,7 +28,7 @@ export async function openHome() {
   if (!prefs.home && !tour) target = 'station';
   else if (target === 'start' && !tour) target = 'home';
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('home', { size: 22 })}${t('Heimweg')}</h2>
+    <h2 class="dlg-title">${icon('home', { size: 20 })}${t('Heimweg')}</h2>
     <div id="homeBac"></div>
     <div class="segmented" id="homeTarget" role="radiogroup" aria-label="${t('Ziel')}">
       <button role="radio" data-t="home">${t('Nach Hause')}</button>
@@ -40,7 +40,7 @@ export async function openHome() {
       <summary>${icon('pin', { size: 16 })}${prefs.home ? t('Zuhause ändern') : t('Zuhause festlegen')}<span class="prefs-summary">${prefs.home ? escapeHtml(prefs.home.label) : ''}</span><span class="chev">${icon('chevronDown', { size: 16 })}</span></summary>
       <div class="prefs-body">
         <div class="searchbox inline">
-          <span class="searchbox-icon">${icon('search', { size: 17 })}</span>
+          <span class="searchbox-icon">${icon('search', { size: 16 })}</span>
           <input id="homeInput" type="search" placeholder="${t('Adresse suchen…')}" autocomplete="off" aria-label="${t('Zuhause')}">
           <ul id="homeSuggest" class="suggest" role="listbox" hidden></ul>
         </div>
@@ -80,7 +80,7 @@ function bacWarning() {
   const cur = simulateBac(profile, log, Date.now()).current;
   const lim = countryInfo(state.country).bike;
   if (cur >= lim.bac * 0.85) {
-    $('#homeBac').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div>${t('Laut Promille-Rechner hast du gerade etwa <b>{bac} ‰</b> — die Fahrrad-Grenze liegt bei {limit} ‰. Lieber schieben, Öffis oder ein Taxi nehmen.', { bac: num(cur, 2), limit: num(lim.bac, 1) })}</div></div>`;
+    $('#homeBac').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${t('Laut Promille-Rechner hast du gerade etwa <b>{bac} ‰</b> — die Fahrrad-Grenze liegt bei {limit} ‰. Lieber schieben, Öffis oder ein Taxi nehmen.', { bac: num(cur, 2), limit: num(lim.bac, 1) })}</div></div>`;
   }
 }
 
@@ -104,7 +104,7 @@ async function show() {
       : { lat: state.tour.start.lat, lon: state.tour.start.lon, label: t('Tourstart'), icon: 'flag' };
     await showRoute(pos, dest, box, my);
   } catch (e) {
-    if (my === seq) box.innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div>${escapeHtml(e.message)}</div></div>`;
+    if (my === seq) box.innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${escapeHtml(e.message)}</div></div>`;
   }
 }
 
@@ -118,7 +118,7 @@ async function showRoute(pos, dest, box, my, extraHtml = '') {
     <div class="home-route">
       <div><b>${fmtDist(route.distance)}</b><span>${t('{time} gemütlich · ruhige Strecke', { time: fmtDuration(route.duration) })}${route.ascent.up ? ` · ${t('{n} Hm', { n: route.ascent.up })}` : ''}</span><small>${t('nach {place}', { place: escapeHtml(dest.label) })}</small></div>
     </div>
-    ${route.distance > 25000 ? `<p class="fine">${icon('info', { size: 13 })} ${t('Ganz schön weit fürs Rad — vielleicht doch mit Öffis („Bahnhof“)?')}</p>` : ''}
+    ${route.distance > 25000 ? `<p class="fine">${icon('info', { size: 16 })} ${t('Ganz schön weit fürs Rad — vielleicht doch mit Öffis („Bahnhof“)?')}</p>` : ''}
     <div class="row-btns">
       <button class="btn btn-primary" id="homeShow">${icon('map', { size: 16 })}${t('Auf der Karte')}</button>
       <a class="btn btn-soft" href="${gm}" target="_blank" rel="noopener">${icon('compass', { size: 16 })}Navigation</a>
@@ -140,7 +140,7 @@ async function showStations(pos, box, my) {
     const transit = prefs.home
       ? `https://www.google.com/maps/dir/?api=1&origin=${st.lat},${st.lon}&destination=${prefs.home.lat},${prefs.home.lon}&travelmode=transit`
       : null;
-    const picker = `<div class="station-list">${list.slice(0, 4).map((s, i) => `<button class="chip-btn${i === idx ? ' on' : ''}" data-st="${i}">${icon('pin', { size: 14 })}${escapeHtml(s.name)} <small>${fmtDist(s.distance)}</small></button>`).join('')}</div>`;
+    const picker = `<div class="station-list">${list.slice(0, 4).map((s, i) => `<button class="chip-btn${i === idx ? ' on' : ''}" data-st="${i}">${icon('pin', { size: 16 })}${escapeHtml(s.name)} <small>${fmtDist(s.distance)}</small></button>`).join('')}</div>`;
     const extra = `${transit ? `<a class="btn btn-soft btn-wide" href="${transit}" target="_blank" rel="noopener">${icon('route', { size: 16 })}${t('Öffi-Verbindung nach Hause')}</a>` : `<p class="fine">${t('Mit festgelegtem Zuhause gibt\'s hier auch gleich die Zugverbindung.')}</p>`}${picker}`;
     await showRoute(pos, { lat: st.lat, lon: st.lon, label: st.name, icon: 'flag' }, box, my, extra);
     box.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { box.innerHTML = beerLoader(t('Weg wird gesucht…')); draw(Number(b.dataset.st)); });

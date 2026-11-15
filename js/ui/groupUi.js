@@ -90,13 +90,13 @@ export async function openGroupMenu() {
   if (g) { await openGroup(g.code); return; }
   const hasTour = !!state.tour;
   $('#groupBody').innerHTML = `
-    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 22 })}${t('Meine Runde')}</h2>
+    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 20 })}${t('Meine Runde')}</h2>
     <p>${hasTour ? t('Mach eine Gruppe für deine Leute: alle sehen dieselbe Tour, Biere zählen, Runden abrechnen, über Stopps abstimmen — und unterwegs sehen, wo die anderen sind.')
       : t('Mach eine Gruppe für deine Leute: Biere zählen, Runden abrechnen, über Stopps abstimmen — und unterwegs sehen, wo die anderen sind.')}</p>
     <form class="group-form" id="groupCreate">
       <label class="field"><span class="field-label">${t('Dein Name')}</span><input name="name" required maxlength="24" value="${escapeHtml(localStorage.getItem(NAME) || '')}" autocomplete="nickname"></label>
       <label class="field"><span class="field-label">${t('Name der Runde')}</span><input name="title" required maxlength="60" value="${escapeHtml(t('Biertour {date}', { date: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long' }) }))}"></label>
-      <button class="btn btn-primary btn-big" type="submit">${icon('users', { size: 18 })}${hasTour ? t('Gruppe erstellen (mit Tour)') : t('Gruppe erstellen')}</button>
+      <button class="btn btn-primary btn-big" type="submit">${icon('users', { size: 20 })}${hasTour ? t('Gruppe erstellen (mit Tour)') : t('Gruppe erstellen')}</button>
     </form>
     <div class="sync-or"><span>${t('oder mit Code beitreten')}</span></div>
     <form class="sync-join" id="groupCode">
@@ -142,10 +142,10 @@ export async function joinGroupFromLink(code) {
   const g = current();
   if (g && g.code === code) { await openGroup(code); await loadTour(code); return; }
   $('#groupBody').innerHTML = `
-    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 22 })}${t('Runde {code} beitreten', { code: escapeHtml(code) })}</h2>
+    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 20 })}${t('Runde {code} beitreten', { code: escapeHtml(code) })}</h2>
     <form class="group-form" id="groupJoin">
       <label class="field"><span class="field-label">${t('Dein Name')}</span><input name="name" required maxlength="24" value="${escapeHtml(localStorage.getItem(NAME) || '')}" autocomplete="nickname"></label>
-      <button class="btn btn-primary btn-big" type="submit">${icon('check', { size: 18 })}${t('Beitreten')}</button>
+      <button class="btn btn-primary btn-big" type="submit">${icon('check', { size: 20 })}${t('Beitreten')}</button>
     </form>`;
   openDialog($('#groupDialog'));
   $('#groupJoin').onsubmit = async e => {
@@ -179,7 +179,7 @@ async function renderGroup(code, { quiet = false } = {}) {
   catch (e) {
     if (quiet) return;
     if (e.code === 'gone') setCurrent(null);
-    $('#groupBody').innerHTML = `<h2 class="dlg-title">${icon('users', { size: 22 })}${t('Runde')}</h2><div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div>${escapeHtml(e.message)}</div></div>`;
+    $('#groupBody').innerHTML = `<h2 class="dlg-title">${icon('users', { size: 20 })}${t('Runde')}</h2><div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${escapeHtml(e.message)}</div></div>`;
     return;
   }
   last = st;
@@ -188,7 +188,7 @@ async function renderGroup(code, { quiet = false } = {}) {
   if (!me) { setCurrent(null); return; }
 
   $('#groupBody').innerHTML = `
-    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 22 })}${escapeHtml(st.title)}</h2>
+    <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 20 })}${escapeHtml(st.title)}</h2>
     <div class="group-code"><span>Code</span><b>${escapeHtml(st.code)}</b><button class="btn btn-soft" id="gShare">${icon('share', { size: 16 })}${t('Einladen')}</button></div>
     <div class="segmented group-tabs" role="tablist">
       <button role="tab" data-gtab="people" aria-checked="${tab === 'people'}">${t('Leute')}</button>
@@ -197,7 +197,7 @@ async function renderGroup(code, { quiet = false } = {}) {
     </div>
     <div id="gPane">${tab === 'money' ? moneyPane(st) : tab === 'tour' ? tourPane(st) : peoplePane(st)}</div>
     <p class="fine">${t('Aktualisiert sich alle 15 Sekunden. Gilt bis 7 Tage nach dem Erstellen.')}</p>
-    <button class="link-btn danger" id="gLeave">${icon('x', { size: 14 })}${t('Gruppe auf diesem Gerät verlassen')}</button>`;
+    <button class="link-btn danger" id="gLeave">${icon('x', { size: 16 })}${t('Gruppe auf diesem Gerät verlassen')}</button>`;
 
   $('#gShare').onclick = () => share(st.code);
   $('#groupBody').querySelectorAll('[data-gtab]').forEach(b => b.onclick = () => { tab = b.dataset.gtab; renderGroup(st.code); });
@@ -232,22 +232,22 @@ function peoplePane(st) {
     <ul class="group-members">${ranked.map(m => {
       const s = m.stats || {};
       const chips = [
-        s.badges ? `<span title="${t('Abzeichen')}">${icon('star', { size: 12 })}${s.badges}</span>` : '',
-        s.prices ? `<span title="${t('Gemeldete Preise')}">${icon('coin', { size: 12 })}${s.prices}</span>` : '',
-        s.km ? `<span title="${t('Tour-Kilometer')}">${icon('bike', { size: 12 })}${s.km} km</span>` : '',
-        maxPaid && paid.get(m.id) === maxPaid ? `<span title="${t('Hat die meisten Runden gezahlt')}">${icon('heart', { size: 12 })}${t('Spendabel')}</span>` : '',
-        m.lat != null ? `<span title="${t('Teilt den Standort')}">${icon('pin', { size: 12 })}live</span>` : '',
+        s.badges ? `<span title="${t('Abzeichen')}">${icon('star', { size: 16 })}${s.badges}</span>` : '',
+        s.prices ? `<span title="${t('Gemeldete Preise')}">${icon('coin', { size: 16 })}${s.prices}</span>` : '',
+        s.km ? `<span title="${t('Tour-Kilometer')}">${icon('bike', { size: 16 })}${s.km} km</span>` : '',
+        maxPaid && paid.get(m.id) === maxPaid ? `<span title="${t('Hat die meisten Runden gezahlt')}">${icon('heart', { size: 16 })}${t('Spendabel')}</span>` : '',
+        m.lat != null ? `<span title="${t('Teilt den Standort')}">${icon('pin', { size: 16 })}live</span>` : '',
       ].filter(Boolean).join('');
       return `<li class="${m.me ? 'me' : ''}">
         <span class="gm-avatar" style="--c:${colorOf(m.id || m.name)}">${escapeHtml(m.name.slice(0, 1).toUpperCase())}</span>
         <span class="gm-name"><span>${top && m.drinks === top ? '👑 ' : ''}${escapeHtml(m.name)}${m.me ? ` <small>${t('(du)')}</small>` : ''}</span>
           ${chips ? `<span class="gm-chips">${chips}</span>` : ''}${m.me ? '' : `<small class="gm-seen">${timeAgo(new Date(m.last_seen).getTime())}</small>`}</span>
-        ${m.me ? `<div class="stepper small"><button data-drink="-1" aria-label="${t('Ein Bier weniger')}">${icon('minus', { size: 14 })}</button><output>${m.drinks}</output><button data-drink="1" aria-label="${t('Ein Bier mehr')}">${icon('plus', { size: 14 })}</button></div>`
+        ${m.me ? `<div class="stepper small"><button data-drink="-1" aria-label="${t('Ein Bier weniger')}">${icon('minus', { size: 16 })}</button><output>${m.drinks}</output><button data-drink="1" aria-label="${t('Ein Bier mehr')}">${icon('plus', { size: 16 })}</button></div>`
           : `<b class="gm-drinks">${m.drinks} 🍺</b>`}
       </li>`;
     }).join('')}</ul>
     ${v3(st) ? `<label class="switch-row"><input type="checkbox" class="switch" id="gShareLoc" ${sharing() ? 'checked' : ''}><span>${t('Meinen Standort während der Live-Tour teilen')} <small>${t('(nur mit dieser Gruppe, verfällt nach 15 Min)')}</small></span></label>`
-      : `<p class="fine">${icon('info', { size: 13 })} ${t('Live-Standort, Runden & Abstimmung brauchen noch das Datenbank-Update <code>supabase/003_runde.sql</code>.')}</p>`}`;
+      : `<p class="fine">${icon('info', { size: 16 })} ${t('Live-Standort, Runden & Abstimmung brauchen noch das Datenbank-Update <code>supabase/003_runde.sql</code>.')}</p>`}`;
 }
 function wirePeople(st) {
   document.querySelectorAll('#groupBody [data-drink]').forEach(b => b.onclick = async () => {
@@ -288,7 +288,7 @@ function currentStopPrice() {
 }
 
 function moneyPane(st) {
-  if (!v3(st)) return `<div class="notice">${icon('info', { size: 18 })}<div>${t('Runden & Abrechnung brauchen noch das Datenbank-Update: <code>supabase/003_runde.sql</code> einmal im Supabase SQL-Editor ausführen.')}</div></div>`;
+  if (!v3(st)) return `<div class="notice">${icon('info', { size: 20 })}<div>${t('Runden & Abrechnung brauchen noch das Datenbank-Update: <code>supabase/003_runde.sql</code> einmal im Supabase SQL-Editor ausführen.')}</div></div>`;
   const ids = st.members.map(m => m.id);
   const rounds = (st.rounds || []).map(r => ({ ...r, amount: Number(r.amount) }));
   const transfers = settle(balances(rounds, ids));
@@ -305,17 +305,17 @@ function moneyPane(st) {
       <div class="field"><span class="field-label">${t('Wer trinkt mit?')} <b id="gRoundSum"></b></span>
         <div class="who-chips">${st.members.map(m => `<label class="who"><input type="checkbox" name="who" value="${m.id}" checked><span>${escapeHtml(m.name)}</span></label>`).join('')}</div></div>
       <input type="hidden" name="place" value="${place ? escapeHtml(place.name) : ''}">
-      <button class="btn btn-primary" type="submit">${icon('beerMug', { size: 17 })}${t('Runde eintragen')}${place ? ` · ${escapeHtml(place.name)}` : ''}</button>
+      <button class="btn btn-primary" type="submit">${icon('beerMug', { size: 16 })}${t('Runde eintragen')}${place ? ` · ${escapeHtml(place.name)}` : ''}</button>
     </form>
     ${rounds.length ? `
       <h3 class="pd-h">${icon('coin', { size: 16 })}${t('Abrechnung')} <span class="pd-h-meta">${t('{sum} gesamt', { sum: money(sum) })}</span></h3>
-      ${transfers.length ? `<ul class="settle-list">${transfers.map(t => `<li><b>${escapeHtml(nameOf(st, t.from))}</b>${icon('chevronRight', { size: 14 })}<b>${escapeHtml(nameOf(st, t.to))}</b><span>${money(t.amount)}</span></li>`).join('')}</ul>`
+      ${transfers.length ? `<ul class="settle-list">${transfers.map(t => `<li><b>${escapeHtml(nameOf(st, t.from))}</b>${icon('chevronRight', { size: 16 })}<b>${escapeHtml(nameOf(st, t.to))}</b><span>${money(t.amount)}</span></li>`).join('')}</ul>`
         : `<p class="fine">${t('Alles ausgeglichen. 🍻')}</p>`}
       <h3 class="pd-h">${icon('book', { size: 16 })}${t('Runden')}</h3>
       <ul class="round-list">${rounds.slice().reverse().map(r => `<li>
         <div>${t('<b>{name}</b> zahlt {n} × {price}', { name: escapeHtml(nameOf(st, r.payer)), n: r.beers, price: money(r.amount / r.beers) })}${r.place_name ? ` <small>· ${escapeHtml(r.place_name)}</small>` : ''}<small>${fmtClock(new Date(r.created_at))}</small></div>
         <span>${money(r.amount)}</span>
-        ${r.mine || st.is_owner ? `<button class="icon-btn small" data-delround="${r.id}" aria-label="${t('Runde löschen')}">${icon('trash', { size: 14 })}</button>` : '<span></span>'}
+        ${r.mine || st.is_owner ? `<button class="icon-btn small" data-delround="${r.id}" aria-label="${t('Runde löschen')}">${icon('trash', { size: 16 })}</button>` : '<span></span>'}
       </li>`).join('')}</ul>`
       : `<p class="fine">${t('Noch keine Runde eingetragen. Wer eine Runde ausgibt, trägt sie hier ein — am Ende rechnet die App aus, wer wem was schuldet.')}</p>`}`;
 }
@@ -362,7 +362,7 @@ function tourPane(st) {
   const maxVotes = pl ? Math.max(0, ...pl.options.map(o => counts[o.id] || 0)) : 0;
   const changed = st.tour && loadedTourKey && st.tour.stopIds.join(',') !== loadedTourKey;
   return `
-    ${changed ? `<div class="notice notice-good">${icon('refresh', { size: 18 })}<div>${t('Die Tour der Gruppe wurde geändert.')}</div><button class="btn btn-soft" id="gReload">${t('Laden')}</button></div>` : ''}
+    ${changed ? `<div class="notice notice-good">${icon('refresh', { size: 20 })}<div>${t('Die Tour der Gruppe wurde geändert.')}</div><button class="btn btn-soft" id="gReload">${t('Laden')}</button></div>` : ''}
     ${pl ? `<div class="poll-card">
       <h3 class="pd-h">${icon('thumbUp', { size: 16 })}${t('Abstimmung: Stopp {n}', { n: pl.stop + 1 })} <span class="pd-h-meta">${t('{n} von {total} Stimmen', { n: Object.values(counts).reduce((a, b) => a + b, 0), total: st.members.length })}</span></h3>
       <div class="poll-options">${pl.options.map((o, i) => {

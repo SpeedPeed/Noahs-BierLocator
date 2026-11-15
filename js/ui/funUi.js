@@ -44,7 +44,7 @@ function renderBingo(seed) {
   const lines = completeLines(rec.marks);
   const inLine = new Set(lines.flat());
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('grid', { size: 22 })}${t('Bier-Bingo')}</h2>
+    <h2 class="dlg-title">${icon('grid', { size: 20 })}${t('Bier-Bingo')}</h2>
     <p class="fine">${activeGroup() ? t('Alle in deiner Runde haben dieselbe Karte — wer hat zuerst eine Reihe?') : t('Tipp an, was auf der Tour passiert. Drei in einer Reihe = Bingo!')}</p>
     <div class="bingo" role="grid">${cells.map((c, i) => `<button class="bingo-cell${rec.marks[i] || i === 4 ? ' on' : ''}${inLine.has(i) ? ' line' : ''}${i === 4 ? ' free' : ''}" data-cell="${i}" ${i === 4 ? 'disabled' : ''}>${escapeHtml(t(c))}</button>`).join('')}</div>
     <div class="row-btns">
@@ -101,13 +101,13 @@ export function openSurprise(openPlace) {
       <text transform="rotate(${mid - 90} 150 150) translate(${150 + 62} ${150 + 4})" class="wheel-t">${escapeHtml(name)}</text>`;
   }).join('');
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('dice', { size: 22 })}${t('Überrasch mich')}</h2>
+    <h2 class="dlg-title">${icon('dice', { size: 20 })}${t('Überrasch mich')}</h2>
     <div class="wheel-wrap">
       <span class="wheel-pin" aria-hidden="true"></span>
       <svg class="wheel" id="wheel" viewBox="0 0 300 300" role="img" aria-label="${t('Glücksrad mit {n} Lokalen', { n })}">${slices}<circle cx="150" cy="150" r="22" class="wheel-hub"/></svg>
     </div>
     <div id="wheelResult" class="wheel-result"><p class="fine center">${t('Das Rad wählt ein offenes Lokal in deiner Nähe.')}</p></div>
-    <button class="btn btn-primary btn-big" id="wheelSpin">${icon('shuffle', { size: 18 })}${t('Drehen!')}</button>`);
+    <button class="btn btn-primary btn-big" id="wheelSpin">${icon('shuffle', { size: 20 })}${t('Drehen!')}</button>`);
   let angle = 0;
   const spin = () => {
     const btn = body.querySelector('#wheelSpin');
@@ -121,7 +121,7 @@ export function openSurprise(openPlace) {
     wheel.style.transform = `rotate(${angle}deg)`;
     const done = () => {
       btn.disabled = false;
-      btn.innerHTML = `${icon('shuffle', { size: 18 })}${t('Nochmal drehen')}`;
+      btn.innerHTML = `${icon('shuffle', { size: 20 })}${t('Nochmal drehen')}`;
       const x = list[pick];
       const b = statusBadge(x.st);
       const m = TYPE_META[x.p.type];

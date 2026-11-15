@@ -41,7 +41,7 @@ export function badgesHtml() {
     <div class="badge-head">${t('<b>{n}</b> von {total} Abzeichen', { n, total: list.length })}</div>
     <div class="badge-grid">${list.map(b => `
       <div class="badge${b.unlocked ? ' on' : ''}" title="${escapeHtml(b.desc)}">
-        <span class="badge-ico">${icon(b.unlocked ? b.icon : 'trophy', { size: 22 })}</span>
+        <span class="badge-ico">${icon(b.unlocked ? b.icon : 'trophy', { size: 20 })}</span>
         <b>${escapeHtml(b.title)}</b>
         <small>${escapeHtml(b.desc)}</small>
         ${b.unlocked ? '' : `<span class="badge-prog"><i style="width:${Math.round(b.pct * 100)}%"></i></span><small class="badge-num">${Math.min(b.value, b.goal)} / ${b.goal}</small>`}

@@ -40,7 +40,7 @@ async function recognize(place, file, onDone) {
   const dlg = $('#scanDialog');
   const url = URL.createObjectURL(file);
   $('#scanBody').innerHTML = `
-    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 22 })}${t('Getränkekarte lesen')}</h2>
+    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 20 })}${t('Getränkekarte lesen')}</h2>
     <img class="ocr-img" src="${url}" alt="${t('Foto der Getränkekarte')}">
     <div id="ocrOut">${beerLoader(t('Texterkennung wird geladen…'))}</div>`;
   openDialog(dlg);
@@ -52,7 +52,7 @@ async function recognize(place, file, onDone) {
     });
     showCandidates(place, parseMenuText(data.text), data.text, onDone);
   } catch (e) {
-    $('#ocrOut').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div>${escapeHtml(e.message || String(e))}</div></div>`;
+    $('#ocrOut').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${escapeHtml(e.message || String(e))}</div></div>`;
   } finally {
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
@@ -61,7 +61,7 @@ async function recognize(place, file, onDone) {
 function showCandidates(place, list, raw, onDone) {
   const box = $('#ocrOut');
   if (!list.length) {
-    box.innerHTML = `<div class="notice">${icon('info', { size: 18 })}<div>${t('Keine Preise erkannt. Am besten gerade von vorne, gut beleuchtet und nur den Bier-Teil der Karte fotografieren.')}</div></div>
+    box.innerHTML = `<div class="notice">${icon('info', { size: 20 })}<div>${t('Keine Preise erkannt. Am besten gerade von vorne, gut beleuchtet und nur den Bier-Teil der Karte fotografieren.')}</div></div>
       <details class="ocr-raw"><summary>${t('Erkannter Text')}</summary><pre>${escapeHtml(raw.slice(0, 2000))}</pre></details>`;
     return;
   }
@@ -75,7 +75,7 @@ function showCandidates(place, list, raw, onDone) {
       <div class="price-input"><input class="ocr-price" inputmode="decimal" value="${num(c.price, 2)}" aria-label="${t('Preis')}"><span>€</span></div>
       <small class="ocr-msg">${c.message ? escapeHtml(c.message) : !c.beerish ? t('Bier? Laut Name eher nicht.') : ''}</small>
     </li>`).join('')}</ul>
-    <button class="btn btn-primary btn-big" id="ocrSend">${icon('check', { size: 18 })}<span></span></button>
+    <button class="btn btn-primary btn-big" id="ocrSend">${icon('check', { size: 20 })}<span></span></button>
     <details class="ocr-raw"><summary>${t('Erkannter Text')}</summary><pre>${escapeHtml(raw.slice(0, 2000))}</pre></details>`;
   const rows = [...box.querySelectorAll('.ocr-list li')];
   const read = li => ({

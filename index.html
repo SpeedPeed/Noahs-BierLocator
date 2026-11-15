@@ -42,7 +42,7 @@
     <span class="brand-text">Bier&shy;Locator</span>
   </button>
   <div class="searchbox" id="searchBox">
-    <span class="searchbox-icon" data-icon="search" data-icon-size="18"></span>
+    <span class="searchbox-icon" data-icon="search" data-icon-size="20"></span>
     <input id="searchInput" type="search" placeholder="Ort, Adresse, Lokal…" autocomplete="off" aria-label="Ort suchen" aria-controls="searchSuggest" aria-autocomplete="list">
     <button id="searchClear" class="icon-btn small" aria-label="Suche leeren" hidden><span data-icon="x" data-icon-size="16"></span></button>
     <ul id="searchSuggest" class="suggest" role="listbox" hidden></ul>
@@ -51,22 +51,22 @@
   <div class="menu-wrap">
     <button id="btnMenu" class="fab" aria-label="Menü" aria-haspopup="true" aria-expanded="false"><span data-icon="menu" data-icon-size="20"></span></button>
     <div id="menu" class="menu" role="menu" hidden>
-      <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="17"></span>Tagebuch &amp; Erfolge</button>
-      <button role="menuitem" data-action="group"><span data-icon="users" data-icon-size="17"></span>Meine Runde</button>
-      <button role="menuitem" data-action="home"><span data-icon="home" data-icon-size="17"></span>Heimweg</button>
-      <button role="menuitem" data-action="heatmap" aria-pressed="false" id="menuHeat"><span data-icon="layers" data-icon-size="17"></span>Preis-Heatmap<span class="menu-check" data-icon="check" data-icon-size="16"></span></button>
-      <button role="menuitem" data-action="alerts"><span data-icon="bell" data-icon-size="17"></span>Preisalarme<span class="menu-badge" id="alertBadge" hidden></span></button>
-      <button role="menuitem" data-action="bac"><span data-icon="calculator" data-icon-size="17"></span>Promille-Rechner</button>
+      <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="16"></span>Tagebuch &amp; Erfolge</button>
+      <button role="menuitem" data-action="group"><span data-icon="users" data-icon-size="16"></span>Meine Runde</button>
+      <button role="menuitem" data-action="home"><span data-icon="home" data-icon-size="16"></span>Heimweg</button>
+      <button role="menuitem" data-action="heatmap" aria-pressed="false" id="menuHeat"><span data-icon="layers" data-icon-size="16"></span>Preis-Heatmap<span class="menu-check" data-icon="check" data-icon-size="16"></span></button>
+      <button role="menuitem" data-action="alerts"><span data-icon="bell" data-icon-size="16"></span>Preisalarme<span class="menu-badge" id="alertBadge" hidden></span></button>
+      <button role="menuitem" data-action="bac"><span data-icon="calculator" data-icon-size="16"></span>Promille-Rechner</button>
       <div class="menu-sep"></div>
-      <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="17"></span>Geräte &amp; Backup</button>
-      <button role="menuitem" data-action="theme"><span id="themeIcon" data-icon="moon" data-icon-size="17"></span><span id="themeLabel">Dunkles Design</span></button>
-      <button role="menuitem" data-action="about"><span data-icon="info" data-icon-size="17"></span>Über die App</button>
+      <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="16"></span>Geräte &amp; Backup</button>
+      <button role="menuitem" data-action="theme"><span id="themeIcon" data-icon="moon" data-icon-size="16"></span><span id="themeLabel">Dunkles Design</span></button>
+      <button role="menuitem" data-action="about"><span data-icon="info" data-icon-size="16"></span>Über die App</button>
     </div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
   </div>
 </header>
 
-<button id="btnSearchArea" class="area-pill" hidden><span data-icon="refresh" data-icon-size="15"></span>In diesem Bereich suchen</button>
+<button id="btnSearchArea" class="area-pill" hidden><span data-icon="refresh" data-icon-size="16"></span>In diesem Bereich suchen</button>
 <div id="heatLegend" class="heat-legend" hidden aria-label="Preis-Heatmap Legende"></div>
 
 <aside id="sheet" class="sheet" aria-label="Orte und Touren">
@@ -79,8 +79,8 @@
         <span id="weatherChip" class="weather-chip" hidden></span>
       </div>
       <div class="tabs" role="tablist">
-        <button class="tab active" role="tab" aria-selected="true" data-mode="find" id="tabFind"><span data-icon="beerMug" data-icon-size="17"></span>Bier finden</button>
-        <button class="tab" role="tab" aria-selected="false" data-mode="tour" id="tabTour"><span data-icon="bike" data-icon-size="17"></span>Bier-Radtour</button>
+        <button class="tab active" role="tab" aria-selected="true" data-mode="find" id="tabFind"><span data-icon="beerMug" data-icon-size="16"></span>Bier finden</button>
+        <button class="tab" role="tab" aria-selected="false" data-mode="tour" id="tabTour"><span data-icon="bike" data-icon-size="16"></span>Bier-Radtour</button>
         <span class="tab-indicator" aria-hidden="true"></span>
       </div>
     </div>
@@ -92,8 +92,8 @@
       <div class="chips-scroll" id="typeChips" aria-label="Ortstypen"></div>
       <div class="toolbar">
         <button class="toggle-chip" id="fOpen" aria-pressed="false"><span class="dot-open"></span>Jetzt offen</button>
-        <button class="toggle-chip" id="fPrice" aria-pressed="false"><span data-icon="coin" data-icon-size="14"></span>Mit Preis</button>
-        <button class="toggle-chip" id="fFav" aria-pressed="false"><span data-icon="heart" data-icon-size="14"></span>Favoriten</button>
+        <button class="toggle-chip" id="fPrice" aria-pressed="false"><span data-icon="coin" data-icon-size="16"></span>Mit Preis</button>
+        <button class="toggle-chip" id="fFav" aria-pressed="false"><span data-icon="heart" data-icon-size="16"></span>Favoriten</button>
         <label class="sort-select"><span class="sr-only">Sortierung</span>
           <select id="sortSelect">
             <option value="recommended">Für dich</option>
@@ -139,7 +139,7 @@
         <h2><span id="resultCount">0</span> <span id="resultNoun">Orte</span></h2>
         <div class="results-links">
           <button id="btnUnhide" class="link-btn" hidden></button>
-          <button id="btnSurprise" class="link-btn" hidden><span data-icon="dice" data-icon-size="15"></span>Überrasch mich</button>
+          <button id="btnSurprise" class="link-btn" hidden><span data-icon="dice" data-icon-size="16"></span>Überrasch mich</button>
         </div>
       </div>
       <div id="results" class="results" aria-live="polite"></div>
@@ -153,7 +153,7 @@
           <button role="radio" data-value="ab" aria-checked="false">Von A nach B</button>
         </div>
         <div id="tourDestWrap" class="searchbox inline" hidden>
-          <span class="searchbox-icon" data-icon="flag" data-icon-size="17"></span>
+          <span class="searchbox-icon" data-icon="flag" data-icon-size="16"></span>
           <input id="tourDest" type="search" placeholder="Ziel eingeben…" autocomplete="off" aria-label="Ziel">
           <ul id="tourDestSuggest" class="suggest" role="listbox" hidden></ul>
         </div>
@@ -215,7 +215,7 @@
           </div>
         </details>
 
-        <button id="btnPlan" class="btn btn-primary btn-big"><span data-icon="route" data-icon-size="19"></span>Tour planen</button>
+        <button id="btnPlan" class="btn btn-primary btn-big"><span data-icon="route" data-icon-size="20"></span>Tour planen</button>
         <p class="fine">Plant gleichmäßig verteilte Stopps, die zur geschätzten Ankunftszeit geöffnet haben.</p>
       </div>
 
@@ -228,7 +228,7 @@
       <div id="tourResult" class="tour-result" hidden>
         <div class="tour-result-head">
           <h2 id="tourTitle">Deine Biertour</h2>
-          <button id="btnTourEdit" class="link-btn"><span data-icon="sliders" data-icon-size="14"></span>Anpassen</button>
+          <button id="btnTourEdit" class="link-btn"><span data-icon="sliders" data-icon-size="16"></span>Anpassen</button>
         </div>
         <div id="tourLive" class="live-card" hidden></div>
         <div id="tourStats" class="stat-grid"></div>
@@ -237,17 +237,17 @@
         <div id="tourElev" class="elev"></div>
         <ol id="tourTimeline" class="timeline"></ol>
         <div class="action-grid" id="tourActions">
-          <button id="btnLive" class="btn btn-primary btn-big action-wide"><span data-icon="play" data-icon-size="19"></span>Los geht's</button>
-          <button id="btnReroll" class="btn btn-soft"><span data-icon="shuffle" data-icon-size="17"></span>Andere Route</button>
-          <button id="btnGroup" class="btn btn-soft"><span data-icon="users" data-icon-size="17"></span>Mit Freunden</button>
+          <button id="btnLive" class="btn btn-primary btn-big action-wide"><span data-icon="play" data-icon-size="20"></span>Los geht's</button>
+          <button id="btnReroll" class="btn btn-soft"><span data-icon="shuffle" data-icon-size="16"></span>Andere Route</button>
+          <button id="btnGroup" class="btn btn-soft"><span data-icon="users" data-icon-size="16"></span>Mit Freunden</button>
           <div class="menu-wrap" id="tourMoreWrap">
-            <button id="btnTourMore" class="btn btn-soft" aria-haspopup="true" aria-expanded="false" aria-label="Mehr"><span data-icon="more" data-icon-size="17"></span>Mehr</button>
+            <button id="btnTourMore" class="btn btn-soft" aria-haspopup="true" aria-expanded="false" aria-label="Mehr"><span data-icon="more" data-icon-size="16"></span>Mehr</button>
             <div id="tourMoreMenu" class="menu menu-up" role="menu" hidden>
-              <button role="menuitem" data-more="share"><span data-icon="share" data-icon-size="17"></span>Link teilen</button>
-              <button role="menuitem" data-more="gpx"><span data-icon="download" data-icon-size="17"></span>GPX-Datei</button>
-              <button role="menuitem" data-more="gmaps"><span data-icon="compass" data-icon-size="17"></span>In Google Maps</button>
-              <button role="menuitem" data-more="bingo"><span data-icon="grid" data-icon-size="17"></span>Bier-Bingo</button>
-              <button role="menuitem" data-more="save"><span data-icon="checkCircle" data-icon-size="17"></span>Als gefahren speichern</button>
+              <button role="menuitem" data-more="share"><span data-icon="share" data-icon-size="16"></span>Link teilen</button>
+              <button role="menuitem" data-more="gpx"><span data-icon="download" data-icon-size="16"></span>GPX-Datei</button>
+              <button role="menuitem" data-more="gmaps"><span data-icon="compass" data-icon-size="16"></span>In Google Maps</button>
+              <button role="menuitem" data-more="bingo"><span data-icon="grid" data-icon-size="16"></span>Bier-Bingo</button>
+              <button role="menuitem" data-more="save"><span data-icon="checkCircle" data-icon-size="16"></span>Als gefahren speichern</button>
             </div>
           </div>
         </div>
@@ -259,17 +259,17 @@
 <datalist id="beerList"></datalist>
 
 <dialog id="placeDialog" class="dlg" aria-labelledby="placeTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="placeBody"></div>
 </dialog>
 
 <dialog id="bacDialog" class="dlg dlg-wide" aria-labelledby="bacTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="bacBody"></div>
 </dialog>
 
 <dialog id="aboutDialog" class="dlg" aria-labelledby="aboutTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="aboutBody"></div>
 </dialog>
 
@@ -278,32 +278,32 @@
 </dialog>
 
 <dialog id="syncDialog" class="dlg" aria-labelledby="syncTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="syncBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="diaryDialog" class="dlg dlg-wide" aria-labelledby="diaryTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="diaryBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="alertsDialog" class="dlg" aria-labelledby="alertsTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="alertsBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="scanDialog" class="dlg" aria-labelledby="scanTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="scanBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="groupDialog" class="dlg" aria-labelledby="groupTitle">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="groupBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="miscDialog" class="dlg" aria-label="Bier-Locator">
-  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="18"></span></button>
+  <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="miscBody" class="dlg-body"></div>
 </dialog>
 
