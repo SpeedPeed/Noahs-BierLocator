@@ -221,13 +221,13 @@ function convertLegacy(localData) {
 
 function openAbout() {
   $('#aboutBody').innerHTML = `
-    <h2 id="aboutTitle" class="dlg-title">${icon('beerMug', { size: 22 })}Bier-Locator</h2>
+    <h2 id="aboutTitle" class="dlg-title">${icon('beerMug', { size: 20 })}Bier-Locator</h2>
     <p>${t('Findet Kneipen, Biergärten, Brauereien und Läden in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.')}</p>
-    <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 18 })}<div>${isShared()
+    <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 20 })}<div>${isShared()
       ? t('<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.')
       : t('<b>Lokaler Modus:</b> Preise & Bewertungen bleiben auf diesem Gerät. Für geteilte Preise muss ein Supabase-Projekt eingetragen werden (siehe README).')}</div></div>
     ${/android/i.test(navigator.userAgent) && !document.referrer.startsWith('android-app://') && !matchMedia('(display-mode: standalone)').matches
-      ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 18 })}${t('Android-App herunterladen')}</a><p class="fine center">${t('Läuft wie eine normale App, aktualisiert sich von selbst.')}</p>` : ''}
+      ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 20 })}${t('Android-App herunterladen')}</a><p class="fine center">${t('Läuft wie eine normale App, aktualisiert sich von selbst.')}</p>` : ''}
     <h3 class="pd-h">${icon('map', { size: 16 })}${t('Datenquellen')}</h3>
     <ul class="about-list">
       <li>${t('<b>Orte:</b> OpenStreetMap via Overpass API')}</li>
@@ -249,7 +249,7 @@ function openAbout() {
     <p class="fine">${t('Online-Preise ohne Gewähr — der Bier-Locator steht in keiner Verbindung zu den Händlern.')}</p>
     <p class="fine">${t('Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.')}</p>
     <p class="fine center"><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>
-    <label class="lang-pick">${icon('globe', { size: 15 })}${t('Sprache')} / Language
+    <label class="lang-pick">${icon('globe', { size: 16 })}${t('Sprache')} / Language
       <select id="langSelect">${Object.entries(LANGS).map(([k, v]) => `<option value="${k}"${k === LANG ? ' selected' : ''}>${v}</option>`).join('')}</select>
     </label>`;
   $('#langSelect').onchange = e => setLang(e.target.value);
@@ -260,14 +260,14 @@ function openAbout() {
 function showWelcome() {
   const dlg = $('#welcomeDialog');
   $('#welcomeBody').innerHTML = `
-    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 24 })}${t('Willkommen beim Bier-Locator')}</h2>
+    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 20 })}${t('Willkommen beim Bier-Locator')}</h2>
     <ul class="welcome-list">
       <li>${icon('map', { size: 20 })}<span>${t('<b>Bier in der Nähe:</b> Kneipen, Biergärten, Brauereien &amp; Läden mit Öffnungszeiten und Preisen.')}</span></li>
       <li>${icon('bike', { size: 20 })}<span>${t('<b>Radtouren:</b> gleichmäßige Bier-Runden planen und live mitfahren.')}</span></li>
       <li>${icon('users', { size: 20 })}<span>${t('<b>Mit Freunden:</b> Biere zählen, Runden abrechnen, über den nächsten Stopp abstimmen.')}</span></li>
     </ul>
-    <div class="notice">${icon('locate', { size: 18 })}<div>${t('Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.')}</div></div>
-    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 18 })}${t('Standort verwenden')}</button>
+    <div class="notice">${icon('locate', { size: 20 })}<div>${t('Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.')}</div></div>
+    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 20 })}${t('Standort verwenden')}</button>
     <button class="btn btn-soft welcome-skip" data-close>${t('Erst mal umschauen')}</button>
     <p class="fine center">${t('Für Erwachsene. Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht, auch nicht mit dem Rad.')}<br><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
   dlg.addEventListener('close', () => { try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ } }, { once: true });
@@ -396,7 +396,7 @@ async function init() {
   on('sync-changed', () => { renderFinder(); toast(t('Daten von deinem anderen Gerät übernommen'), { tone: 'good', ms: 2200 }); });
   $('#btnGroup').addEventListener('click', openGroupMenu);
   const g = activeGroup();
-  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 17 })}${t('Runde {code}', { code: g.code })}`;
+  if (g) $('#btnGroup').innerHTML = `${icon('users', { size: 16 })}${t('Runde {code}', { code: g.code })}`;
   wrappedTeaser();
   $('#beerList').innerHTML = diaryBeerSuggestions().map(b => `<option value="${b.replace(/"/g, '&quot;')}">`).join('');
   setTimeout(() => checkAlerts().catch(() => {}), 2500);

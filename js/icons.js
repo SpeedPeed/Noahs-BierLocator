@@ -81,7 +81,7 @@ export function icon(name, opts = {}) {
   const size = opts.size || 18;
   const cls = 'icon' + (opts.className ? ' ' + opts.className : '');
   const fill = opts.filled ? 'currentColor' : 'none';
-  const sw = opts.strokeWidth || 1.7;
+  const sw = opts.strokeWidth || 1.75;
   return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="${fill}" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 }
 

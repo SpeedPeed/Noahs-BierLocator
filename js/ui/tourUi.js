@@ -113,7 +113,7 @@ export function initTour(opts) {
   // Thema & Extras (eingeklappt, damit das Formular schlank bleibt)
   if (!TOUR_THEMES[cfg.theme]) cfg.theme = 'all';
   $('#tourTheme').innerHTML = Object.entries(TOUR_THEMES).map(([k, th]) =>
-    `<button type="button" class="type-chip" role="radio" data-theme="${k}" aria-pressed="${cfg.theme === k}" style="--c:var(--accent-strong)">${icon(th.icon, { size: 15 })}<span>${th.label}</span></button>`).join('');
+    `<button type="button" class="type-chip" role="radio" data-theme="${k}" aria-pressed="${cfg.theme === k}" style="--c:var(--accent-strong)">${icon(th.icon, { size: 16 })}<span>${th.label}</span></button>`).join('');
   $('#tourTheme').addEventListener('click', e => {
     const b = e.target.closest('[data-theme]');
     if (!b) return;
@@ -333,7 +333,7 @@ async function plan({ reroll = false } = {}) {
 function showError(msg) {
   const el = $('#tourError');
   el.hidden = false;
-  el.innerHTML = `${icon('alertTriangle', { size: 18 })}<div>${escapeHtml(msg)}</div>`;
+  el.innerHTML = `${icon('alertTriangle', { size: 20 })}<div>${escapeHtml(msg)}</div>`;
 }
 
 /* ---------- Zeitplan ---------- */
@@ -373,12 +373,12 @@ export function renderTour({ animate = false, fit = true } = {}) {
     : t('{sign}{pct} % vs. {km} km', { sign: dev > 0 ? '+' : '−', pct: Math.round(Math.abs(dev) * 100), km: tr.targetM / 1000 });
   const devTone = Math.abs(dev) <= TOUR_TOLERANCE ? 'good' : Math.abs(dev) <= 0.2 ? 'warn' : 'bad';
   $('#tourStats').innerHTML = `
-    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 18 })}</span><b><span data-num="${(r.distance / 1000).toFixed(1)}" data-dec="1">0</span> km</b><small class="tone-${devTone}">${devText}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('bike', { size: 18 })}</span><b>${fmtDuration(r.duration)}</b><small>${t('reine Fahrzeit')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${fmtClock(endTime)}</b><small>${t('zurück · {dur} gesamt', { dur: fmtDuration((endTime - tr.startTime) / 1000) })}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('mountain', { size: 18 })}</span><b>${r.ascent.up != null ? `<span data-num="${r.ascent.up}" data-dec="0">0</span> ${t('Hm')}` : '–'}</b><small>${t('bergauf')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b>${tr.stops.length}</b><small>${t('Bierstopps')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('activity', { size: 18 })}</span><b>${fmtKm(Math.min(...legs))}–${fmtKm(Math.max(...legs))} km</b><small>${lst.cv < 0.3 ? t('pro Etappe · gleichmäßig') : t('pro Etappe')}</small></div>`;
+    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 20 })}</span><b><span data-num="${(r.distance / 1000).toFixed(1)}" data-dec="1">0</span> km</b><small class="tone-${devTone}">${devText}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('bike', { size: 20 })}</span><b>${fmtDuration(r.duration)}</b><small>${t('reine Fahrzeit')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('clock', { size: 20 })}</span><b>${fmtClock(endTime)}</b><small>${t('zurück · {dur} gesamt', { dur: fmtDuration((endTime - tr.startTime) / 1000) })}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('mountain', { size: 20 })}</span><b>${r.ascent.up != null ? `<span data-num="${r.ascent.up}" data-dec="0">0</span> ${t('Hm')}` : '–'}</b><small>${t('bergauf')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 20 })}</span><b>${tr.stops.length}</b><small>${t('Bierstopps')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('activity', { size: 20 })}</span><b>${fmtKm(Math.min(...legs))}–${fmtKm(Math.max(...legs))} km</b><small>${lst.cv < 0.3 ? t('pro Etappe · gleichmäßig') : t('pro Etappe')}</small></div>`;
   $('#tourStats').querySelectorAll('[data-num]').forEach(el => {
     if (animate) animateNumber(el, Number(el.dataset.num), { decimals: Number(el.dataset.dec), duration: 900 });
     else el.textContent = num(Number(el.dataset.num), Number(el.dataset.dec));
@@ -387,9 +387,9 @@ export function renderTour({ animate = false, fit = true } = {}) {
   // Wetter während der Tour
   const w = weatherForWindow(state.weather, tr.startTime, endTime);
   $('#tourWeather').innerHTML = w ? `<div class="weather-strip">
-      ${icon(weatherIcon(w.code), { size: 22 })}
+      ${icon(weatherIcon(w.code), { size: 20 })}
       <span><b>${Math.round(w.min)}–${Math.round(w.max)} °C</b>, ${weatherText(w.code)}${w.wind && w.wind.speed >= 10 ? ` · ${t('Wind {speed} km/h aus {dir}', { speed: w.wind.speed, dir: windDirName(w.wind.from) })}` : ''}</span>
-      <span class="rain ${w.rain >= 50 ? 'tone-bad' : w.rain >= 25 ? 'tone-warn' : ''}">${icon('umbrella', { size: 15 })}${w.rain} %</span>
+      <span class="rain ${w.rain >= 50 ? 'tone-bad' : w.rain >= 25 ? 'tone-warn' : ''}">${icon('umbrella', { size: 16 })}${w.rain} %</span>
     </div>` : '';
 
   // Hinweise
@@ -429,10 +429,10 @@ export function renderTour({ animate = false, fit = true } = {}) {
 
   // Zeitleiste (live: tatsächliche Lage und neu berechnete Zeiten)
   const lrow = i => ls && ls.rows[i];
-  const legHm = leg => (leg.up != null && leg.up >= 15 ? ` · ${icon('mountain', { size: 12 })}${leg.up} ${t('Hm')}` : '');
+  const legHm = leg => (leg.up != null && leg.up >= 15 ? ` · ${icon('mountain', { size: 16 })}${leg.up} ${t('Hm')}` : '');
   $('#tourTimeline').innerHTML = `
     <li class="tl-item tl-start${live ? ' tl-done' : ''}" style="--i:0">
-      <span class="tl-dot">${icon('flag', { size: 14, strokeWidth: 2.2 })}</span>
+      <span class="tl-dot">${icon('flag', { size: 16, strokeWidth: 2.2 })}</span>
       <div class="tl-body"><b>${t('Start')}</b><small>${t('{time} Uhr', { time: fmtClock(live ? new Date(live.startedAt) : tr.startTime) })}${state.locationLabel && !live ? ' · ' + escapeHtml(state.locationLabel) : ''}</small></div>
     </li>
     ${rows.map((row, i) => {
@@ -443,7 +443,7 @@ export function renderTour({ animate = false, fit = true } = {}) {
       const st = placeStatus(s, arrive);
       const b = statusBadge(st);
       const closesEarly = st && st.open && st.until && st.until < leave;
-      const openAtArrival = st ? (st.open ? (closesEarly ? `${icon('alertTriangle', { size: 13 })} ${t('schließt {time}', { time: fmtClock(st.until) })}` : `${icon('checkCircle', { size: 13 })} ${t('offen bei Ankunft')}`) : `${icon('alertTriangle', { size: 13 })} ${b.text}`) : `${icon('info', { size: 13 })} ${t('Zeiten unbekannt')}`;
+      const openAtArrival = st ? (st.open ? (closesEarly ? `${icon('alertTriangle', { size: 16 })} ${t('schließt {time}', { time: fmtClock(st.until) })}` : `${icon('checkCircle', { size: 16 })} ${t('offen bei Ankunft')}`) : `${icon('alertTriangle', { size: 16 })} ${b.text}`) : `${icon('info', { size: 16 })} ${t('Zeiten unbekannt')}`;
       const tone = st ? (st.open && !closesEarly ? 'open' : 'closed') : 'unknown';
       const status = lr ? lr.status : '';
       const done = status === 'done';
@@ -451,9 +451,9 @@ export function renderTour({ animate = false, fit = true } = {}) {
         : status === 'here' ? t('seit {since} · weiter ca. {next}', { since: fmtClock(lr.arrive), next: fmtClock(lr.leave) })
         : t('an {arr} – ab {dep}', { arr: fmtClock(arrive), dep: fmtClock(leave) });
       const shift = lr && !done && status !== 'here' ? Math.round((lr.arrive - lr.plannedArrive) / 60000) : 0;
-      return `<li class="tl-leg${done || status === 'here' ? ' tl-done' : ''}" style="--i:${i * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(row.leg.distance)} · ${fmtDuration(row.leg.duration)}${legHm(row.leg)}</span></li>
+      return `<li class="tl-leg${done || status === 'here' ? ' tl-done' : ''}" style="--i:${i * 2 + 1}"><span>${icon('bike', { size: 16 })}${fmtDist(row.leg.distance)} · ${fmtDuration(row.leg.duration)}${legHm(row.leg)}</span></li>
       <li class="tl-item${done ? ' tl-done' : ''}${status === 'here' ? ' tl-here' : ''}${status === 'next' ? ' tl-next' : ''}" data-stop="${i}" style="--c:${m.color};--i:${i * 2 + 2}">
-        <span class="tl-dot tl-num">${done ? icon('check', { size: 15, strokeWidth: 3 }) : i + 1}</span>
+        <span class="tl-dot tl-num">${done ? icon('check', { size: 16, strokeWidth: 3 }) : i + 1}</span>
         <div class="tl-body">
           <button class="tl-name" data-open="${s.id}">${escapeHtml(s.name)}</button>
           <small>${m.short} · ${times}${Math.abs(shift) >= 5 ? ` <span class="${shift > 0 ? 'tone-warn' : 'tone-good'}">${t('({sign}{n} Min)', { sign: shift > 0 ? '+' : '−', n: Math.abs(shift) })}</span>` : ''}</small>
@@ -465,9 +465,9 @@ export function renderTour({ animate = false, fit = true } = {}) {
         </div>`}
       </li>`;
     }).join('')}
-    <li class="tl-leg" style="--i:${rows.length * 2 + 1}"><span>${icon('bike', { size: 13 })}${fmtDist(lastLeg.distance)} · ${fmtDuration(lastLeg.duration)}${legHm(lastLeg)}</span></li>
+    <li class="tl-leg" style="--i:${rows.length * 2 + 1}"><span>${icon('bike', { size: 16 })}${fmtDist(lastLeg.distance)} · ${fmtDuration(lastLeg.duration)}${legHm(lastLeg)}</span></li>
     <li class="tl-item tl-end" style="--i:${rows.length * 2 + 2}">
-      <span class="tl-dot">${icon(tr.roundtrip ? 'flag' : 'checkCircle', { size: 14, strokeWidth: 2.2 })}</span>
+      <span class="tl-dot">${icon(tr.roundtrip ? 'flag' : 'checkCircle', { size: 16, strokeWidth: 2.2 })}</span>
       <div class="tl-body"><b>${tr.roundtrip ? t('Zurück am Start') : t('Ziel')}</b><small>${t('ca. {time} Uhr', { time: fmtClock(ls ? ls.endTime : endTime) })}${!tr.roundtrip && dest ? ' · ' + escapeHtml(dest.label) : ''}</small></div>
     </li>`;
   $('#tourTimeline').classList.toggle('animate', animate);
@@ -526,7 +526,7 @@ function renderElevation(route, rows) {
   }).join('');
   const prog = state.live ? clamp(state.live.progress / total, 0, 1) : 0;
   box.innerHTML = `
-    <div class="elev-head"><span>${icon('mountain', { size: 14 })}${t('Höhenprofil')}</span><small>${Math.round(min)}–${Math.round(max)} m</small></div>
+    <div class="elev-head"><span>${icon('mountain', { size: 16 })}${t('Höhenprofil')}</span><small>${Math.round(min)}–${Math.round(max)} m</small></div>
     <svg viewBox="0 -8 ${W} ${H + 8}" preserveAspectRatio="none" role="img" aria-label="${t('Höhenprofil der Tour')}">
       <defs><linearGradient id="elevGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".55"/><stop offset="1" stop-color="var(--accent)" stop-opacity=".04"/></linearGradient></defs>
       <path class="elev-area" d="${line}L${W},${H - padB}L0,${H - padB}Z" fill="url(#elevGrad)"/>

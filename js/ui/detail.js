@@ -42,7 +42,7 @@ export async function openPlace(id) {
       place = p;
       mapview.setView(p.lat, p.lon, 17);
     } catch (e) {
-      $('#placeBody').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 18 })}<div>${escapeHtml(e.message)}</div></div>`;
+      $('#placeBody').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${escapeHtml(e.message)}</div></div>`;
       return;
     }
   }
@@ -73,10 +73,10 @@ function render() {
   const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`;
 
   const facts = [];
-  if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 14 })}${t('Sitzplätze draußen')}`);
-  if (p.tags.wheelchair === 'yes') facts.push(`${icon('wheelchair', { size: 14 })}${t('Barrierefrei')}`);
-  if (breweries(p.tags)) facts.push(`${icon('beerMug', { size: 14 })}${escapeHtml(breweries(p.tags).slice(0, 4).join(', '))}`);
-  if (p.tags['drink:craft_beer'] === 'yes') facts.push(`${icon('barrel', { size: 14 })}${t('Craft-Bier')}`);
+  if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 16 })}${t('Sitzplätze draußen')}`);
+  if (p.tags.wheelchair === 'yes') facts.push(`${icon('wheelchair', { size: 16 })}${t('Barrierefrei')}`);
+  if (breweries(p.tags)) facts.push(`${icon('beerMug', { size: 16 })}${escapeHtml(breweries(p.tags).slice(0, 4).join(', '))}`);
+  if (p.tags['drink:craft_beer'] === 'yes') facts.push(`${icon('barrel', { size: 16 })}${t('Craft-Bier')}`);
 
   const my = s.rating.mine;
   const ratingText = s.rating.count
@@ -91,7 +91,7 @@ function render() {
       </div>
       <span class="pr-price">${fmtEuro(pr.price)}</span>
       <span class="pr-age" title="${new Date(pr.created_at).toLocaleString(LOCALE)}">${timeAgo(pr.created_at)}${pr.stale ? ' · ' + t('veraltet') : ''}</span>
-      ${pr.mine ? `<button class="icon-btn small" data-del="${pr.id}" aria-label="${t('Eigene Meldung löschen')}" title="${t('Meine Meldung löschen')}">${icon('trash', { size: 15 })}</button>` : '<span></span>'}
+      ${pr.mine ? `<button class="icon-btn small" data-del="${pr.id}" aria-label="${t('Eigene Meldung löschen')}" title="${t('Meine Meldung löschen')}">${icon('trash', { size: 16 })}</button>` : '<span></span>'}
     </li>`).join('') : '';
 
   $('#placeBody').innerHTML = `
@@ -117,8 +117,8 @@ function render() {
       <div class="pd-status-row">
         <span class="status status-${b.tone} big"><span class="status-dot"></span>${b.text}</span>
       </div>
-      ${week ? `<details class="week"><summary>${t('Öffnungszeiten')} ${icon('chevronDown', { size: 15 })}</summary><table>${week.map(d => `<tr class="${d.today ? 'today' : ''}"><th>${d.label}${d.holiday ? ` <small>${t('Feiertag')}</small>` : ''}</th><td>${d.text}</td></tr>`).join('')}</table></details>`
-        : p.tags.opening_hours ? `<p class="fine">${icon('clock', { size: 13 })} ${escapeHtml(p.tags.opening_hours)}</p>` : ''}
+      ${week ? `<details class="week"><summary>${t('Öffnungszeiten')} ${icon('chevronDown', { size: 16 })}</summary><table>${week.map(d => `<tr class="${d.today ? 'today' : ''}"><th>${d.label}${d.holiday ? ` <small>${t('Feiertag')}</small>` : ''}</th><td>${d.text}</td></tr>`).join('')}</table></details>`
+        : p.tags.opening_hours ? `<p class="fine">${icon('clock', { size: 16 })} ${escapeHtml(p.tags.opening_hours)}</p>` : ''}
       ${facts.length ? `<div class="facts">${facts.map(f => `<span class="fact">${f}</span>`).join('')}</div>` : ''}
     </section>
 
@@ -140,8 +140,8 @@ function render() {
         <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
         <select name="unit" aria-label="${t('Gebinde')}">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
         <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}${t('Melden')}</button>
-        <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 17 })}${t('Barcode')}</button>
-        <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 17 })}${t('Karte fotografieren')}</button>
+        <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 16 })}${t('Barcode')}</button>
+        <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 16 })}${t('Karte fotografieren')}</button>
         <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
       </form>
       <p class="fine">${t('Preise älter als {n} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.', { n: STALE_DAYS })}</p>

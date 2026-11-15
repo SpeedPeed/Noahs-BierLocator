@@ -12,7 +12,7 @@ const isMobile = () => mq.matches;
 const vh = () => window.innerHeight;
 const topLimit = () => {
   const bar = $('.topbar');
-  return bar ? bar.getBoundingClientRect().bottom + 10 : 80;
+  return bar ? bar.getBoundingClientRect().bottom + 22 : 92; // Platz für die Schaumkrone
 };
 function heightFor(s) {
   if (s === 'full') return vh() - topLimit();

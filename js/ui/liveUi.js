@@ -196,7 +196,7 @@ function renderCard() {
     <div class="live-top">
       <span class="live-dot"></span><b>Live</b>
       <span class="live-km">${fmtKm(live.progress)} / ${fmtKm(total)} km</span>
-      ${!mapview.isFollowing() ? `<button class="link-btn" data-live="follow">${icon('locate', { size: 14 })}${t('Mitführen')}</button>` : ''}
+      ${!mapview.isFollowing() ? `<button class="link-btn" data-live="follow">${icon('locate', { size: 16 })}${t('Mitführen')}</button>` : ''}
       <button class="icon-btn small" data-live="end" aria-label="${t('Tour beenden')}" title="${t('Tour beenden')}">${icon('x', { size: 16 })}</button>
     </div>
     <div class="live-bar"><span style="width:${(pct * 100).toFixed(1)}%"></span>${ticks}</div>
@@ -206,8 +206,8 @@ function renderCard() {
         <div><small>${t('Du bist bei')}</small><b>${escapeHtml(here.name)}</b><span>${t('seit {since} · weiter ca. {leave} · {delay}', { since: fmtClock(new Date(live.arrivals[live.here])), leave: fmtClock(row.leave), delay: delayTxt })}</span></div>
       </div>
       <div class="live-actions">
-        <button class="btn btn-primary" data-live="checkin">${icon('beerMug', { size: 17 })}${t('Einchecken')}</button>
-        <button class="btn btn-soft" data-live="leave">${icon('bike', { size: 17 })}${t('Weiter')}</button>
+        <button class="btn btn-primary" data-live="checkin">${icon('beerMug', { size: 16 })}${t('Einchecken')}</button>
+        <button class="btn btn-soft" data-live="leave">${icon('bike', { size: 16 })}${t('Weiter')}</button>
       </div>`
     : target ? `
       <div class="live-next" style="--c:${m.color}">
@@ -215,22 +215,22 @@ function renderCard() {
         <div><small>${t('Nächster Stopp')}</small><b>${escapeHtml(target.name)}</b><span>${t('{dist} · an {time} · {delay}', { dist: ls.toNext != null ? fmtDist(ls.toNext) : '–', time: fmtClock(row.arrive), delay: delayTxt })}</span></div>
       </div>
       <div class="live-actions">
-        <button class="btn btn-soft" data-live="arrive">${icon('flag', { size: 17 })}${t('Bin da')}</button>
-        <button class="btn btn-soft" data-live="skip">${icon('chevronRight', { size: 17 })}${t('Überspringen')}</button>
+        <button class="btn btn-soft" data-live="arrive">${icon('flag', { size: 16 })}${t('Bin da')}</button>
+        <button class="btn btn-soft" data-live="skip">${icon('chevronRight', { size: 16 })}${t('Überspringen')}</button>
       </div>`
     : `
       <div class="live-next">
         <span class="live-num">${icon(tour.roundtrip ? 'flag' : 'checkCircle', { size: 16, strokeWidth: 2.2 })}</span>
         <div><small>${t('Letzte Etappe')}</small><b>${tour.roundtrip ? t('Zurück zum Start') : t('Zum Ziel')}</b><span>${t('{dist} · an ca. {time}', { dist: ls.toNext != null ? fmtDist(ls.toNext) : '–', time: fmtClock(ls.endTime) })}</span></div>
       </div>
-      <div class="live-actions"><button class="btn btn-primary" data-live="end">${icon('checkCircle', { size: 17 })}${t('Tour beenden')}</button></div>`}
-    ${warns.map(w => `<div class="live-warn">${icon('alertTriangle', { size: 15 })}<span>${w.text}</span><button class="link-btn" data-live="replace" data-i="${w.i}">${t('Ersatz suchen')}</button></div>`).join('')}
-    ${live.offRoute ? `<p class="fine">${icon('compass', { size: 13 })} ${t('Du bist gerade abseits der Route.')}</p>` : ''}
-    ${watchId == null ? '' : !lastPos ? `<p class="fine">${icon('locate', { size: 13 })} ${t('Warte auf GPS…')}</p>` : ''}
+      <div class="live-actions"><button class="btn btn-primary" data-live="end">${icon('checkCircle', { size: 16 })}${t('Tour beenden')}</button></div>`}
+    ${warns.map(w => `<div class="live-warn">${icon('alertTriangle', { size: 16 })}<span>${w.text}</span><button class="link-btn" data-live="replace" data-i="${w.i}">${t('Ersatz suchen')}</button></div>`).join('')}
+    ${live.offRoute ? `<p class="fine">${icon('compass', { size: 16 })} ${t('Du bist gerade abseits der Route.')}</p>` : ''}
+    ${watchId == null ? '' : !lastPos ? `<p class="fine">${icon('locate', { size: 16 })} ${t('Warte auf GPS…')}</p>` : ''}
     <div class="live-tools">
-      <button class="chip-btn" data-live="home">${icon('home', { size: 15 })}${t('Heimweg')}</button>
-      <button class="chip-btn" data-live="bingo">${icon('grid', { size: 15 })}Bingo</button>
-      <button class="chip-btn" data-live="group">${icon('users', { size: 15 })}${t('Runde')}</button>
+      <button class="chip-btn" data-live="home">${icon('home', { size: 16 })}${t('Heimweg')}</button>
+      <button class="chip-btn" data-live="bingo">${icon('grid', { size: 16 })}Bingo</button>
+      <button class="chip-btn" data-live="group">${icon('users', { size: 16 })}${t('Runde')}</button>
     </div>`;
 }
 
@@ -284,7 +284,7 @@ function summary() {
 function confirmEnd() {
   const s = summary();
   const body = openMisc(`
-    <h2 class="dlg-title">${icon('flag', { size: 22 })}${t('Tour beenden?')}</h2>
+    <h2 class="dlg-title">${icon('flag', { size: 20 })}${t('Tour beenden?')}</h2>
     ${endStats(s)}
     <label class="switch-row"><input type="checkbox" class="switch" id="liveSave" ${s.ridden > 500 || s.visited ? 'checked' : ''}><span>${t('In „Meine Touren“ speichern')}</span></label>
     <div class="row-btns">
@@ -297,10 +297,10 @@ function confirmEnd() {
 
 function endStats(s) {
   return `<div class="stat-grid">
-    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 18 })}</span><b>${fmtKm(s.ridden > 300 ? s.ridden : s.planned)} km</b><small>${s.ridden > 300 ? t('gefahren') : t('geplant')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('clock', { size: 18 })}</span><b>${fmtDuration(s.secs)}</b><small>${t('unterwegs')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('pin', { size: 18 })}</span><b>${s.visited}</b><small>${t('Stopps besucht')}</small></div>
-    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 18 })}</span><b>${s.beers}</b><small>${t('Biere eingecheckt')}</small></div>
+    <div class="stat stat-hero"><span class="stat-ico">${icon('route', { size: 20 })}</span><b>${fmtKm(s.ridden > 300 ? s.ridden : s.planned)} km</b><small>${s.ridden > 300 ? t('gefahren') : t('geplant')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('clock', { size: 20 })}</span><b>${fmtDuration(s.secs)}</b><small>${t('unterwegs')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('pin', { size: 20 })}</span><b>${s.visited}</b><small>${t('Stopps besucht')}</small></div>
+    <div class="stat"><span class="stat-ico">${icon('beerMug', { size: 20 })}</span><b>${s.beers}</b><small>${t('Biere eingecheckt')}</small></div>
   </div>`;
 }
 
@@ -308,10 +308,10 @@ function finish() {
   const s = summary();
   end({ save: true });
   openMisc(`
-    <h2 class="dlg-title">${icon('checkCircle', { size: 22 })}${t('Geschafft — Prost!')}</h2>
+    <h2 class="dlg-title">${icon('checkCircle', { size: 20 })}${t('Geschafft — Prost!')}</h2>
     ${endStats(s)}
     <p class="fine">${t('Die Tour ist unter „Bier-Tagebuch → Touren“ gespeichert.')}</p>
-    <button class="btn btn-primary btn-big" data-close>${icon('check', { size: 18 })}${t('Super')}</button>`);
+    <button class="btn btn-primary btn-big" data-close>${icon('check', { size: 20 })}${t('Super')}</button>`);
 }
 
 function end({ save }) {

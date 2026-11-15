@@ -49,7 +49,7 @@ async function render() {
   const res = await results();
   const pushOn = pushSupported() && localStorage.getItem(PUSH) === '1' && Notification.permission === 'granted';
   $('#alertsBody').innerHTML = `
-    <h2 class="dlg-title" id="alertsTitle">${icon('bell', { size: 22 })}${t('Preisalarme')}</h2>
+    <h2 class="dlg-title" id="alertsTitle">${icon('bell', { size: 20 })}${t('Preisalarme')}</h2>
     <p class="fine">${t('Die App prüft die Online-Preise aller Ketten (wöchentlich aktualisiert) gegen deine Wunschpreise.')}</p>
     <form class="alert-form" id="alertForm">
       <input name="q" placeholder="${t('z.B. Zipfer Märzen')}" required maxlength="40" autocomplete="off" list="beerList">
@@ -61,7 +61,7 @@ async function render() {
       <div class="alert-item">
         <div class="alert-head">
           <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · ${t('bis {price}', { price: money(w.max, w.country === 'CH' ? 'CHF' : 'EUR') })} · ${w.country || ''}</small>
-          <button class="icon-btn small" data-del="${w.id}" aria-label="${t('Alarm löschen')}">${icon('trash', { size: 14 })}</button>
+          <button class="icon-btn small" data-del="${w.id}" aria-label="${t('Alarm löschen')}">${icon('trash', { size: 16 })}</button>
         </div>
         ${hits.length ? `<ul>${hits.slice(0, 6).map(h => { const near = nearestStore(h.chain, h.country, state.places); return `<li>
           <span>${escapeHtml(CHAIN_LABELS[h.chain] || h.chain)}${near ? `<small class="ah-near">${fmtDist(near.distance)}</small>` : ''}</span>

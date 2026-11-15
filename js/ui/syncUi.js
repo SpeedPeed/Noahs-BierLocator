@@ -22,7 +22,7 @@ function wireBackup() {
 
 // Datenschutz: alles löschen (Server + dieses Gerät). Eingeklappt, damit's nicht stört.
 const WIPE = `<details class="wipe-box">
-    <summary>${icon('trash', { size: 15 })}${t('Meine Daten löschen')}</summary>
+    <summary>${icon('trash', { size: 16 })}${t('Meine Daten löschen')}</summary>
     <p class="fine">${t('Löscht deine gemeldeten Preise, Bewertungen, Preisalarme, Gruppen-Mitgliedschaften und den Geräte-Sync am Server sowie Favoriten, Tagebuch, Touren und Einstellungen auf diesem Gerät. Das lässt sich nicht rückgängig machen. Andere verbundene Geräte vorher trennen, sonst laden sie ihre Daten wieder hoch.')}</p>
     <button class="btn btn-soft danger-btn" id="wipeBtn">${icon('trash', { size: 16 })}${t('Alles unwiderruflich löschen')}</button>
   </details>`;
@@ -68,17 +68,17 @@ async function render() {
 async function renderInner() {
   const body = $('#syncBody');
   if (!syncAvailable()) {
-    body.innerHTML = `<h2 class="dlg-title">${icon('refresh', { size: 22 })}${t('Geräte &amp; Backup')}</h2>
+    body.innerHTML = `<h2 class="dlg-title">${icon('refresh', { size: 20 })}${t('Geräte &amp; Backup')}</h2>
       <p class="fine">${t('Für den Geräte-Sync muss Supabase eingerichtet sein (siehe README).')}</p>`;
     return;
   }
   const code = syncCode();
   if (!code) {
     body.innerHTML = `
-      <h2 class="dlg-title" id="syncTitle">${icon('refresh', { size: 22 })}${t('Geräte &amp; Backup')}</h2>
+      <h2 class="dlg-title" id="syncTitle">${icon('refresh', { size: 20 })}${t('Geräte &amp; Backup')}</h2>
       <p>${t('Favoriten, Vorlieben, Promille-Log, Tagebuch und Preisalarme auf allen deinen Geräten gleich — ohne Konto.')}</p>
       <div class="sync-choice">
-        <button class="btn btn-primary btn-big" id="syncStart">${icon('plus', { size: 18 })}${t('Sync starten')}</button>
+        <button class="btn btn-primary btn-big" id="syncStart">${icon('plus', { size: 20 })}${t('Sync starten')}</button>
         <p class="fine center">${t('Danach zeigt dieses Gerät einen QR-Code, den du mit dem anderen Handy scannst.')}</p>
       </div>
       <div class="sync-or"><span>${t('oder Code vom anderen Gerät eingeben')}</span></div>
@@ -101,16 +101,16 @@ async function renderInner() {
   const link = syncLink(code);
   const last = lastSync();
   body.innerHTML = `
-    <h2 class="dlg-title" id="syncTitle">${icon('checkCircle', { size: 22 })}${t('Geräte verbunden')}</h2>
+    <h2 class="dlg-title" id="syncTitle">${icon('checkCircle', { size: 20 })}${t('Geräte verbunden')}</h2>
     <p>${t('Scanne den QR-Code mit der Kamera des anderen Geräts — oder schick dir den Link.')}</p>
-    <div class="sync-qr" id="syncQr">${icon('refresh', { size: 22 })}</div>
+    <div class="sync-qr" id="syncQr">${icon('refresh', { size: 20 })}</div>
     <div class="sync-code"><code>${escapeHtml(code)}</code></div>
     <div class="row-btns">
       <button class="btn btn-soft" id="syncShare">${icon('share', { size: 16 })}${t('Link teilen')}</button>
       <button class="btn btn-soft" id="syncNowBtn">${icon('refresh', { size: 16 })}${t('Jetzt abgleichen')}</button>
     </div>
     <p class="fine">${t('Zuletzt abgeglichen: {when}. Wer den Code kennt, sieht deine Favoriten &amp; Co. — nur mit eigenen Geräten oder Leuten teilen, denen du vertraust.', { when: last ? timeAgo(last.getTime()) : t('noch nie') })}</p>
-    <button class="link-btn danger" id="syncOff">${icon('x', { size: 14 })}${t('Dieses Gerät trennen')}</button>`;
+    <button class="link-btn danger" id="syncOff">${icon('x', { size: 16 })}${t('Dieses Gerät trennen')}</button>`;
   try { $('#syncQr').innerHTML = await qrSvg(link); } catch (e) { $('#syncQr').innerHTML = `<p class="fine">${escapeHtml(e.message)}</p>`; }
   $('#syncShare').onclick = async () => {
     const r = await shareLink({ title: 'Bier-Locator Sync', text: t('Verbinde dein Gerät mit meinem Bier-Locator'), url: link });

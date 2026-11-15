@@ -31,7 +31,7 @@ function stop() {
 export async function openScanner(place, onFound) {
   const dlg = $('#scanDialog');
   $('#scanBody').innerHTML = `
-    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 22 })}${t('Barcode scannen')}</h2>
+    <h2 class="dlg-title" id="scanTitle">${icon('scan', { size: 20 })}${t('Barcode scannen')}</h2>
     <div class="scan-view"><video id="scanVideo" playsinline muted></video><div class="scan-frame"></div></div>
     <p class="fine center" id="scanHint">${t('Halte den Strichcode der Dose, Flasche oder Kiste in den Rahmen.')}</p>
     <form class="sync-join" id="scanManual">
@@ -94,7 +94,7 @@ async function lookup(ean) {
 function showResult(prod, place, onFound, dlg) {
   const box = $('#scanResult');
   if (!prod.found) {
-    box.innerHTML = `<div class="notice">${icon('info', { size: 18 })}<div>${prod.error ? t('Produktdatenbank nicht erreichbar. Trag die Sorte einfach selbst ein.') : t('Produkt nicht in der Datenbank. Trag die Sorte einfach selbst ein.')}</div></div>`;
+    box.innerHTML = `<div class="notice">${icon('info', { size: 20 })}<div>${prod.error ? t('Produktdatenbank nicht erreichbar. Trag die Sorte einfach selbst ein.') : t('Produkt nicht in der Datenbank. Trag die Sorte einfach selbst ein.')}</div></div>`;
     return;
   }
   const unit = parsePackLabel(prod.quantity);
@@ -106,8 +106,8 @@ function showResult(prod, place, onFound, dlg) {
     <div class="scan-hit">
       <b>${escapeHtml(prod.beer)}</b><small>${escapeHtml(prod.quantity)}${prod.isBeer ? '' : ' · ' + t('laut Datenbank evtl. kein Bier')}</small>
       ${online.length ? `<p class="fine">${t('Online bei dieser Kette: {list}', { list: online.map(o => `${escapeHtml(pkg(o.package))} ${money(o.price, o.currency)}`).join(' · ') })}</p>` : ''}
-      <button class="btn btn-primary" id="scanUse">${icon('check', { size: 17 })}${t('Übernehmen &amp; Preis eintragen')}</button>
-      <button class="link-btn" id="scanFav">${icon('heart', { size: 14 })}${t('Als Lieblingsbier merken')}</button>
+      <button class="btn btn-primary" id="scanUse">${icon('check', { size: 16 })}${t('Übernehmen &amp; Preis eintragen')}</button>
+      <button class="link-btn" id="scanFav">${icon('heart', { size: 16 })}${t('Als Lieblingsbier merken')}</button>
     </div>`;
   $('#scanFav').onclick = () => {
     // Marke + Sorte reichen für die Suche nach Aktionen (ohne Gebinde-Angaben)
