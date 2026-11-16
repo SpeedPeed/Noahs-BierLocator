@@ -2,10 +2,10 @@
 import { state, rememberPlaces } from '../state.js';
 import { TYPE_META, placeAddress, fetchPlacesByIds, breweries } from '../places.js';
 import { getSummary, loadSummaries, submitPrice, deletePrice, setRating, isShared } from '../community.js';
-import { isFavorite, toggleFavorite, isHidden, setHidden } from '../store.js';
+import { isFavorite, toggleFavorite, isHidden, setHidden, prefs, savePrefs } from '../store.js';
 import { placeStatus, statusBadge } from '../placeInfo.js';
 import { weekSchedule } from '../openingHours.js';
-import { UNITS, validatePrice, STALE_DAYS } from '../prices.js';
+import { UNITS, validatePrice, STALE_DAYS, beerChoices } from '../prices.js';
 import { placeLink, shareLink } from '../share.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fmtDist, fmtEuro, timeAgo, haversine } from '../util.js';
@@ -13,7 +13,7 @@ import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
 import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS, byKindThenPrice } from '../chainPrices.js';
 import { loadHistory, describe } from '../priceHistory.js';
-import { openDiary } from './diaryUi.js';
+import { openDiary, diaryBeerSuggestions } from './diaryUi.js';
 import { openScanner } from './scanUi.js';
 import { photoMenu } from './ocrUi.js';
 import { bumpStat } from '../store.js';
@@ -136,13 +136,14 @@ function render() {
       <h3 class="pd-h">${icon('tag', { size: 16 })}${t('Bierpreise')} <span class="pd-h-meta">${isShared() ? t('von der Community') : t('nur auf diesem Gerät')}</span></h3>
       ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">${t('Noch kein Preis. Was kostet’s dort?')}</p>`}
       <form class="price-form" id="pdPriceForm" novalidate>
-        <input name="beer" type="text" list="beerList" placeholder="${t('Sorte, z.B. Zwickl')}" maxlength="40" required autocomplete="off" aria-label="${t('Biersorte')}">
-        <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
-        <select name="unit" aria-label="${t('Gebinde')}">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}">${u.label}</option>`).join('')}</select>
-        <button type="submit" class="btn btn-primary" disabled>${icon('plus', { size: 16 })}${t('Melden')}</button>
+        <div class="beer-chips" id="pdBeerChips" role="group" aria-label="${t('Sorte wählen')}">${beerChoices([s.prices.map(pr => pr.beer), [prefs.lastBeer, prefs.beerType], chainPricesFor(p).slice().sort(byKindThenPrice).slice(0, 3).map(x => x.beer), diaryBeerSuggestions()]).map(b => `<button type="button" class="chip-btn" data-beer="${escapeHtml(b)}">${escapeHtml(b)}</button>`).join('')}</div>
+        <input name="beer" class="pf-beer" type="text" list="beerList" placeholder="${t('Sorte, z.B. Zwickl')}" maxlength="40" required autocomplete="off" aria-label="${t('Biersorte')}">
+        <div class="price-input"><input name="price" type="text" inputmode="decimal" enterkeyhint="send" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
+        <select name="unit" aria-label="${t('Gebinde')}">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}"${k === (prefs.lastUnit || '0.5l') ? ' selected' : ''}>${u.label}</option>`).join('')}</select>
+        <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
+        <button type="submit" class="btn btn-primary btn-big pf-send" disabled>${icon('plus', { size: 20 })}${t('Melden')}</button>
         <button type="button" class="btn btn-soft" id="pdScan">${icon('scan', { size: 16 })}${t('Barcode')}</button>
         <button type="button" class="btn btn-soft" id="pdPhoto">${icon('camera', { size: 16 })}${t('Karte fotografieren')}</button>
-        <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
       </form>
       <p class="fine">${t('Preise älter als {n} Tage werden ausgegraut. Unrealistische Preise lassen sich nicht abschicken.', { n: STALE_DAYS })}</p>
     </section>
@@ -308,6 +309,17 @@ function wire(p) {
     return v;
   };
   form.addEventListener('input', check);
+  // Ein Tipp auf die Sorte, dann nur noch den Betrag: Gebinde kommt von der letzten Meldung dieser Sorte hier, sonst vom letzten Mal.
+  $('#pdBeerChips').onclick = e => {
+    const b = e.target.closest('[data-beer]');
+    if (!b) return;
+    form.beer.value = b.dataset.beer;
+    const known = getSummary(p.id).prices.find(pr => pr.beer === b.dataset.beer);
+    if (known && UNITS[known.unit]) form.unit.value = known.unit;
+    $('#pdBeerChips').querySelectorAll('.chip-btn').forEach(c => c.classList.toggle('on', c === b));
+    form.price.focus();
+    check();
+  };
   form.addEventListener('change', check);
   form.onsubmit = async e => {
     e.preventDefault();
@@ -316,6 +328,8 @@ function wire(p) {
     submit.disabled = true;
     try {
       await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value });
+      Object.assign(prefs, { lastBeer: form.beer.value.trim(), lastUnit: form.unit.value });
+      savePrefs();
       bumpStat('prices');
       emit('price-reported');
       toast(t('Gemeldet. Danke.'), { tone: 'good' });

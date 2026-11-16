@@ -39,6 +39,17 @@ export function validatePrice(rawPrice, unit, beer = 'x') {
   return { ok: true, per05: p05, price: Math.round(price * 100) / 100 };
 }
 
+// Vorschläge beim Melden, in dieser Reihenfolge und ohne Dubletten: was hier schon gemeldet wurde,
+// was man selbst zuletzt gemeldet hat, was die Kette führt, die eigenen Sorten.
+export function beerChoices(lists, max = 6) {
+  const seen = new Set(), out = [];
+  for (const b of lists.flat()) {
+    const name = String(b || '').trim(), key = name.toLowerCase();
+    if (name && !seen.has(key)) { seen.add(key); out.push(name); }
+  }
+  return out.slice(0, max);
+}
+
 export const BEER_SUGGESTIONS = [
   'Pils', 'Helles', 'Märzen', 'Weizen', 'Zwickl', 'Radler', 'Dunkles', 'Lager', 'IPA', 'Kellerbier', 'Export', 'Bock',
   'Alkoholfrei', 'Kölsch', 'Altbier', 'Stiegl', 'Gösser', 'Ottakringer', 'Zipfer', 'Puntigamer', 'Augustiner',

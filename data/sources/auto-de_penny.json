@@ -2,15 +2,15 @@
 {
 "country": "DE",
 "chain": "penny",
-"beer": "Penny Bier-Adventskalender",
+"beer": "Desperados Original Bier",
 "unit": "other",
-"package": "24×0,5 l",
-"price": 33.33,
+"package": "12×0,33 l",
+"price": 12.99,
 "promo": true,
-"source": "https://www.penny.de/angebote/getraenke/penny-bier-adventskalender",
-"seen": "2026-10-20",
-"volume_l": 12.0,
+"source": "https://www.penny.de/angebote/getraenke/desperados-original-bier",
+"seen": "2026-11-16",
+"volume_l": 3.96,
 "note": "Aktion",
-"valid_until": "2026-10-24"
+"valid_until": "2026-11-21"
 }
 ]
