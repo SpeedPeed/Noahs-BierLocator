@@ -45,10 +45,10 @@ async function rpc(fn, body) {
     // Geprüft wird die Originalmeldung des Servers; `code` bleibt sprachunabhängig.
     let msg = raw || t('Server-Fehler {status}', { status: res.status }), code = null;
     if (res.status === 404 && /function/i.test(raw)) msg = t('Dafür fehlt noch das Datenbank-Update (supabase/003_runde.sql).');
-    else if (/not found/.test(raw)) { msg = t('Diese Gruppe gibt es nicht (mehr) — Gruppen gelten 7 Tage.'); code = 'gone'; }
+    else if (/not found/.test(raw)) { msg = t('Diese Runde gibt es nicht mehr. Runden gelten 7 Tage.'); code = 'gone'; }
     else if (/full/.test(raw)) msg = t('Die Gruppe ist voll (max. 30).');
     else if (/implausible/.test(raw)) msg = t('Der Betrag ist unrealistisch (0,30–15 € pro Bier).');
-    else if (/rate limit/.test(raw)) msg = t('Heute wurden schon sehr viele Runden erstellt — morgen wieder!');
+    else if (/rate limit/.test(raw)) msg = t('Für heute sind genug Runden erstellt. Morgen wieder.');
     const err = new Error(msg);
     err.code = code;
     throw err;
@@ -91,8 +91,8 @@ export async function openGroupMenu() {
   const hasTour = !!state.tour;
   $('#groupBody').innerHTML = `
     <h2 class="dlg-title" id="groupTitle">${icon('users', { size: 20 })}${t('Meine Runde')}</h2>
-    <p>${hasTour ? t('Mach eine Gruppe für deine Leute: alle sehen dieselbe Tour, Biere zählen, Runden abrechnen, über Stopps abstimmen — und unterwegs sehen, wo die anderen sind.')
-      : t('Mach eine Gruppe für deine Leute: Biere zählen, Runden abrechnen, über Stopps abstimmen — und unterwegs sehen, wo die anderen sind.')}</p>
+    <p>${hasTour ? t('Mach eine Runde für deine Leute: Alle sehen dieselbe Tour, zählen Biere, rechnen ab, stimmen über Stopps ab und sehen unterwegs, wo die anderen sind.')
+      : t('Mach eine Runde für deine Leute: Biere zählen, abrechnen, über Stopps abstimmen und unterwegs sehen, wo die anderen sind.')}</p>
     <form class="group-form" id="groupCreate">
       <label class="field"><span class="field-label">${t('Dein Name')}</span><input name="name" required maxlength="24" value="${escapeHtml(localStorage.getItem(NAME) || '')}" autocomplete="nickname"></label>
       <label class="field"><span class="field-label">${t('Name der Runde')}</span><input name="title" required maxlength="60" value="${escapeHtml(t('Biertour {date}', { date: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long' }) }))}"></label>
@@ -310,14 +310,14 @@ function moneyPane(st) {
     ${rounds.length ? `
       <h3 class="pd-h">${icon('coin', { size: 16 })}${t('Abrechnung')} <span class="pd-h-meta">${t('{sum} gesamt', { sum: money(sum) })}</span></h3>
       ${transfers.length ? `<ul class="settle-list">${transfers.map(t => `<li><b>${escapeHtml(nameOf(st, t.from))}</b>${icon('chevronRight', { size: 16 })}<b>${escapeHtml(nameOf(st, t.to))}</b><span>${money(t.amount)}</span></li>`).join('')}</ul>`
-        : `<p class="fine">${t('Alles ausgeglichen. 🍻')}</p>`}
+        : `<p class="fine">${t('Alles ausgeglichen.')}</p>`}
       <h3 class="pd-h">${icon('book', { size: 16 })}${t('Runden')}</h3>
       <ul class="round-list">${rounds.slice().reverse().map(r => `<li>
         <div>${t('<b>{name}</b> zahlt {n} × {price}', { name: escapeHtml(nameOf(st, r.payer)), n: r.beers, price: money(r.amount / r.beers) })}${r.place_name ? ` <small>· ${escapeHtml(r.place_name)}</small>` : ''}<small>${fmtClock(new Date(r.created_at))}</small></div>
         <span>${money(r.amount)}</span>
         ${r.mine || st.is_owner ? `<button class="icon-btn small" data-delround="${r.id}" aria-label="${t('Runde löschen')}">${icon('trash', { size: 16 })}</button>` : '<span></span>'}
       </li>`).join('')}</ul>`
-      : `<p class="fine">${t('Noch keine Runde eingetragen. Wer eine Runde ausgibt, trägt sie hier ein — am Ende rechnet die App aus, wer wem was schuldet.')}</p>`}`;
+      : `<p class="fine">${t('Noch nichts ausgegeben. Wer eine Runde zahlt, trägt sie hier ein. Am Ende rechnet die App aus, wer wem was schuldet.')}</p>`}`;
 }
 function wireMoney(st) {
   const f = $('#gRound');
@@ -338,7 +338,7 @@ function wireMoney(st) {
     if (!(p >= 0.3 && p <= 15)) { toast(t('Bitte einen realistischen Preis pro Bier (0,30–15 €).'), { tone: 'bad' }); return; }
     try {
       await rpc('group_round_add', { p_code: st.code, p_secret: deviceSecret(), p_payer: f.payer.value, p_participants: who, p_amount: Math.round(p * who.length * 100) / 100, p_beers: who.length, p_place_name: f.place.value || null });
-      toast(t('Runde eingetragen — Prost! 🍻'), { tone: 'good' });
+      toast(t('Runde eingetragen. Prost.'), { tone: 'good' });
       renderGroup(st.code);
     } catch (err) { toast(err.message, { tone: 'bad' }); }
   };
@@ -414,7 +414,7 @@ function wireTour(st) {
     // Art bleibt deutsch (geht als Daten an alle), übersetzt wird erst beim Anzeigen.
     const kind = p => ({ pub: 'Kneipe', biergarten: 'Biergarten', brewery: 'Brauerei', gasthaus: 'Gasthaus' }[p.type] || 'Lokal');
     const options = [cur, ...alts].map(p => ({ id: p.id, name: p.name.slice(0, 60), kind: kind(p) }));
-    try { await rpc('group_poll_set', { p_code: st.code, p_secret: deviceSecret(), p_poll: { stop: i, options } }); toast(t('Abstimmung gestartet — alle können jetzt wählen.'), { tone: 'good' }); renderGroup(st.code); }
+    try { await rpc('group_poll_set', { p_code: st.code, p_secret: deviceSecret(), p_poll: { stop: i, options } }); toast(t('Abstimmung läuft. Alle können jetzt wählen.'), { tone: 'good' }); renderGroup(st.code); }
     catch (e) { toast(e.message, { tone: 'bad' }); }
   });
   document.querySelectorAll('#groupBody [data-pollvote]').forEach(b => b.onclick = async () => {

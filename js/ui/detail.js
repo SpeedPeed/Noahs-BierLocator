@@ -127,14 +127,14 @@ function render() {
       <div class="star-input" id="pdStars" role="radiogroup" aria-label="${t('Deine Bewertung')}">
         ${[1, 2, 3, 4, 5].map(n => `<button role="radio" aria-checked="${my === n}" data-n="${n}" class="${my && n <= my ? 'on' : ''}" aria-label="${n > 1 ? t('{n} Sterne', { n }) : t('1 Stern')}">${icon('star', { size: 30, filled: true })}</button>`).join('')}
       </div>
-      <p class="fine">${my ? `${t('Deine Bewertung: {n} ★', { n: my })} · <button class="link-btn" id="pdUnrate">${t('zurücknehmen')}</button>` : t('Tippe auf einen Stern. Pro Gerät zählt eine Bewertung — du kannst sie jederzeit ändern.')}</p>
+      <p class="fine">${my ? `${t('Deine Bewertung: {n} ★', { n: my })} · <button class="link-btn" id="pdUnrate">${t('zurücknehmen')}</button>` : t('Tipp auf einen Stern. Ändern geht jederzeit.')}</p>
     </section>
 
     ${chainSection(p)}
 
     <section class="pd-section">
       <h3 class="pd-h">${icon('tag', { size: 16 })}${t('Bierpreise')} <span class="pd-h-meta">${isShared() ? t('von der Community') : t('nur auf diesem Gerät')}</span></h3>
-      ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">${t('Noch kein Preis gemeldet — sei die erste Person!')}</p>`}
+      ${s.prices.length ? `<ul class="price-list">${priceRows}</ul>` : `<p class="fine">${t('Noch kein Preis. Was kostet’s dort?')}</p>`}
       <form class="price-form" id="pdPriceForm" novalidate>
         <input name="beer" type="text" list="beerList" placeholder="${t('Sorte, z.B. Zwickl')}" maxlength="40" required autocomplete="off" aria-label="${t('Biersorte')}">
         <div class="price-input"><input name="price" type="text" inputmode="decimal" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
@@ -171,7 +171,7 @@ function chainSection(p) {
     ${list.length > CHAIN_PREVIEW ? `<div class="chain-search">${icon('search', { size: 16 })}<input id="pdChainSearch" type="search" placeholder="${t('Sorte oder Marke suchen…')}" autocomplete="off" aria-label="${t('Online-Preise durchsuchen')}"></div>` : ''}
     <ul class="price-list" id="pdChainList"></ul>
     <button class="link-btn" id="pdChainMore" hidden></button>
-    <p class="fine">${t('Laut Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro 0,5 l. In der Filiale kann der Preis abweichen — wenn du ihn vor Ort siehst, melde ihn unten.')}</p>
+    <p class="fine">${t('Aus dem Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro Halbe. In der Filiale kann es anders sein. Wenn du den Preis vor Ort siehst, meld ihn unten.')}</p>
   </section>`;
 }
 
@@ -251,7 +251,7 @@ function wire(p) {
     render(); onChange();
   };
   $('#pdShare').onclick = async () => {
-    const r = await shareLink({ title: p.name, text: t('{name} — gefunden mit dem Bier-Locator', { name: p.name }), url: placeLink(p.id) });
+    const r = await shareLink({ title: p.name, text: t('{name}, gefunden mit dem Bier-Locator', { name: p.name }), url: placeLink(p.id) });
     if (r === 'copied') toast(t('Link kopiert!'), { tone: 'good' });
     else if (r === 'failed') toast(t('Teilen nicht möglich'), { tone: 'bad' });
   };
@@ -275,7 +275,7 @@ function wire(p) {
       const n = +b.dataset.n;
       btns.forEach((x, i) => x.classList.toggle('on', i < n));
       b.classList.add('pop');
-      try { await setRating(p.id, n); toast(t('Danke! {n} ★', { n }), { tone: 'good', ms: 1500 }); render(); onChange(); }
+      try { await setRating(p.id, n); toast(t('Danke. {n} ★', { n }), { tone: 'good', ms: 1500 }); render(); onChange(); }
       catch (e) { toast(e.message, { tone: 'bad' }); render(); }
     };
   });
@@ -318,7 +318,7 @@ function wire(p) {
       await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value });
       bumpStat('prices');
       emit('price-reported');
-      toast(t('Preis gemeldet — danke! 🍻'), { tone: 'good' });
+      toast(t('Gemeldet. Danke.'), { tone: 'good' });
       render(); onChange();
     } catch (err) {
       msg.textContent = err.message; msg.className = 'form-msg bad';

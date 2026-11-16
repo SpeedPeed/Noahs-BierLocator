@@ -106,6 +106,6 @@ export const BAC_STAGES = [
   { max: 1.5, name: t('Betrunken'), tone: 'warn', desc: t('Gleichgewicht und Sprache leiden deutlich, Reaktionszeit stark verlängert.') },
   { max: 2.0, name: t('Schwer betrunken'), tone: 'bad', desc: t('Verwirrtheit, Orientierungslosigkeit, Übelkeit möglich.') },
   { max: 3.0, name: t('Betäubung'), tone: 'bad', desc: t('Bewusstseinstrübung, Filmriss, Gleichgewichtsverlust. Ärztliche Hilfe erwägen.') },
-  { max: Infinity, name: t('Lebensgefahr'), tone: 'bad', desc: t('Gefahr von Bewusstlosigkeit und Atemlähmung — sofort Notruf wählen und die Person nicht allein lassen!') },
+  { max: Infinity, name: t('Lebensgefahr'), tone: 'bad', desc: t('Gefahr von Bewusstlosigkeit und Atemlähmung. Sofort den Notruf wählen und die Person nicht allein lassen.') },
 ];
 export function bacStage(bac) { return BAC_STAGES.find(s => bac <= s.max); }

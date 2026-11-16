@@ -45,7 +45,7 @@ function renderBingo(seed) {
   const inLine = new Set(lines.flat());
   const body = openMisc(`
     <h2 class="dlg-title">${icon('grid', { size: 20 })}${t('Bier-Bingo')}</h2>
-    <p class="fine">${activeGroup() ? t('Alle in deiner Runde haben dieselbe Karte — wer hat zuerst eine Reihe?') : t('Tipp an, was auf der Tour passiert. Drei in einer Reihe = Bingo!')}</p>
+    <p class="fine">${activeGroup() ? t('Alle in deiner Runde haben dieselbe Karte. Wer hat zuerst eine Reihe?') : t('Tipp an, was auf der Tour passiert. Drei in einer Reihe = Bingo!')}</p>
     <div class="bingo" role="grid">${cells.map((c, i) => `<button class="bingo-cell${rec.marks[i] || i === 4 ? ' on' : ''}${inLine.has(i) ? ' line' : ''}${i === 4 ? ' free' : ''}" data-cell="${i}" ${i === 4 ? 'disabled' : ''}>${escapeHtml(t(c))}</button>`).join('')}</div>
     <div class="row-btns">
       <span class="bingo-count">${lines.length ? `${icon('star', { size: 16 })}${lines.length === 1 ? t('1 Reihe') : t('{n} Reihen', { n: lines.length })}` : ''}</span>
@@ -59,7 +59,7 @@ function renderBingo(seed) {
       rec.best = n;
       bumpStat('bingos');
       confetti(60);
-      toast(n === LINES.length ? t('VOLLE KARTE! 🍻🍻🍻') : 'BINGO! 🍻', { tone: 'good' });
+      toast(n === LINES.length ? t('Volle Karte.') : 'BINGO! 🍻', { tone: 'good' });
       emit('bingo');
     }
     const store = loadBingo();
@@ -87,7 +87,7 @@ function candidates() {
 
 export function openSurprise(openPlace) {
   const list = candidates();
-  if (list.length < 2) { toast(t('Erst oben einen Ort suchen oder den Standort teilen — dann dreht sich das Rad.')); return; }
+  if (list.length < 2) { toast(t('Erst oben einen Ort suchen oder den Standort teilen. Dann dreht sich das Rad.')); return; }
   const n = list.length;
   const seg = 360 / n;
   const R = 140;

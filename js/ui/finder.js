@@ -8,6 +8,7 @@ import { isBiergartenWeather, isRainy } from '../weather.js';
 import { icon } from '../icons.js';
 import { fmtDist, fmtEuro, escapeHtml, timeAgo, debounce } from '../util.js';
 import { $, toast, skeletonCards, beerLoader } from './dom.js';
+import { stateBlock } from './states.js';
 import * as mapview from '../map.js';
 import { BEER_SUGGESTIONS } from '../prices.js';
 import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf } from '../chainPrices.js';
@@ -16,6 +17,9 @@ import { t, num, money, moneyParts, LOCALE, pkg } from '../i18n.js';
 let openPlace = () => {};
 let loading = false;
 let searchSeq = 0;
+let lastRadius = prefs.radius;
+let retryWhenOnline = () => {};
+const MAX_RADIUS = 5000;
 
 export function initFinder(opts) {
   openPlace = opts.openPlace;
@@ -110,12 +114,10 @@ export function initFinder(opts) {
 }
 
 function renderEmpty() {
-  $('#results').innerHTML = `<div class="empty">
-    <div class="empty-art">${icon('beerMug', { size: 54, strokeWidth: 1.3 })}</div>
-    <h3>${t('Wo gibt\'s hier Bier?')}</h3>
-    <p>${t('Teile deinen Standort oder such oben nach einem Ort — dann zeigt die Karte Kneipen, Biergärten, Brauereien und Läden in der Nähe.')}</p>
-    <button class="btn btn-primary" id="btnEmptyLocate">${icon('locate', { size: 20 })}${t('Standort verwenden')}</button>
-  </div>`;
+  $('#results').innerHTML = stateBlock({
+    art: 'where', title: t('Wo gibt\'s hier Bier?'), text: t('Sag mir, wo du bist, oder such oben nach einem Ort.'),
+    action: { id: 'btnEmptyLocate', label: t('Standort verwenden'), icon: 'locate' },
+  });
   $('#btnEmptyLocate').onclick = () => emit('request-locate');
 }
 
@@ -123,10 +125,12 @@ function renderEmpty() {
 export async function searchAt(center, radius = prefs.radius, { fit = true, quiet = false } = {}) {
   const seq = ++searchSeq;
   loading = true;
+  lastRadius = radius;
+  window.removeEventListener('online', retryWhenOnline);
   state.searchCenter = center;
   $('#btnSearchArea').hidden = true;
   if (!quiet) {
-    $('#results').innerHTML = beerLoader(t('Suche Bier in der Nähe…')) + skeletonCards(4);
+    $('#results').innerHTML = beerLoader(t('Schau mich um …')) + skeletonCards(4);
     $('#resultCount').textContent = '…';
   }
   try {
@@ -138,16 +142,19 @@ export async function searchAt(center, radius = prefs.radius, { fit = true, quie
     loading = false;
     render();
     if (fit) mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), center);
-    if (total > places.length) toast(t('{n} von {total} Orten (die nächsten) — kleinerer Radius zeigt alle.', { n: places.length, total }), { ms: 4000 });
     // Preise/Bewertungen nachladen, dann neu zeichnen
     loadSummaries(places.map(p => p.id)).then(() => { if (seq === searchSeq) render(); })
-      .catch(() => toast(t('Preise konnten nicht geladen werden.'), { tone: 'bad' }));
-    if (!fromCache && !places.length) toast(t('Hier wurde nichts gefunden — größerer Radius?'), { ms: 3500 });
+      .catch(() => toast(t('Die Preise kommen gerade nicht durch.'), { tone: 'bad' }));
   } catch (e) {
     if (seq !== searchSeq) return;
     loading = false;
-    $('#results').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div><b>${t('Das hat nicht geklappt.')}</b><br>${escapeHtml(e.message)}</div><button class="btn btn-soft" id="btnRetry">${icon('refresh', { size: 16 })}${t('Nochmal')}</button></div>`;
-    $('#btnRetry').onclick = () => searchAt(center, radius, { fit });
+    const offline = navigator.onLine === false;
+    $('#results').innerHTML = stateBlock(offline
+      ? { art: 'offline', title: t('Kein Netz.'), text: t('Sobald du wieder Empfang hast, schau ich mich um.'), action: { id: 'btnRetry', label: t('Nochmal'), icon: 'refresh' } }
+      : { art: 'error', title: t('Das hat nicht geklappt.'), text: e.message, action: { id: 'btnRetry', label: t('Nochmal'), icon: 'refresh' } });
+    retryWhenOnline = () => searchAt(center, radius, { fit });
+    $('#btnRetry').onclick = retryWhenOnline;
+    if (offline) window.addEventListener('online', retryWhenOnline, { once: true });
     $('#resultCount').textContent = '0';
   }
 }
@@ -274,12 +281,39 @@ export function render() {
   const box = $('#results');
   if (loading) return;
   if (!list.length) {
-    box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('search', { size: 40, strokeWidth: 1.4 })}</div>
-      <h3>${t('Keine Treffer')}</h3><p>${state.places.length ? t('Die Filter sind gerade sehr streng — ein paar Ortstypen oder Schalter lockern?') : t('Hier gibt\'s laut OpenStreetMap nichts. Größerer Radius?')}</p></div>`;
+    if (state.places.length) {
+      // Orte wären da, die Filter lassen nur keinen durch → ein Tipp lockert sie.
+      box.innerHTML = stateBlock({ art: 'nothing', small: true, title: t('Mit diesen Filtern bleibt nichts übrig.'), action: { id: 'btnLoosen', label: t('Filter lockern') } });
+      $('#btnLoosen').onclick = loosenFilters;
+    } else {
+      const wider = Math.min(MAX_RADIUS, Math.max(lastRadius * 2, 1000));
+      const canWiden = wider > lastRadius;
+      box.innerHTML = stateBlock({
+        art: 'nothing', small: true, title: t('Hier ist nichts.'),
+        text: t('Im Umkreis von {r} kennt die Karte keinen Bierort.', { r: fmtDist(lastRadius) }),
+        action: canWiden ? { id: 'btnWiden', label: t('Weiter weg schauen') } : null,
+      });
+      if (canWiden) $('#btnWiden').onclick = () => {
+        prefs.radius = wider; savePrefs();
+        $('#radius').value = wider; $('#radius').dispatchEvent(new Event('input'));
+        searchAt(state.searchCenter, wider, { fit: true });
+      };
+    }
     return;
   }
   box.innerHTML = list.slice(0, 120).map((x, i) => cardHtml(x, i)).join('')
     + (list.length > 120 ? `<p class="fine center">${t('+ {n} weitere auf der Karte', { n: list.length - 120 })}</p>` : '');
+}
+
+// Erst die Schalter und den Sortenfilter aus; reicht das nicht, alle Ortstypen an.
+function loosenFilters() {
+  prefs.onlyOpen = prefs.onlyPrice = prefs.onlyFav = false;
+  $('#filterBeer').value = '';
+  if (!visibleList().length) prefs.types = TYPE_ORDER.slice();
+  savePrefs();
+  for (const [id, key] of Object.entries({ fOpen: 'onlyOpen', fPrice: 'onlyPrice', fFav: 'onlyFav' })) $('#' + id).setAttribute('aria-pressed', String(!!prefs[key]));
+  document.querySelectorAll('.type-chip').forEach(c => c.setAttribute('aria-pressed', String(prefs.types.includes(c.dataset.type))));
+  render();
 }
 
 /* ---------- Lieblingsbier im Angebot ---------- */

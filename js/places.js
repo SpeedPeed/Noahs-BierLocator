@@ -124,7 +124,7 @@ function overpassRound(query) {
           if (done) return;
           errors.push(err.message || String(err));
           if (next < OVERPASS_ENDPOINTS.length) launch();
-          else if (pending === 0) reject(new Error(t('Die Kartenserver sind gerade überlastet. Bitte gleich nochmal versuchen.')));
+          else if (pending === 0) reject(new Error(t('Die Kartenserver streiken gerade. Gleich nochmal versuchen.')));
         });
     };
     launch();

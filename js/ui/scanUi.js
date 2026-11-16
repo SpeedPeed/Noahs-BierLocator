@@ -44,7 +44,7 @@ export async function openScanner(place, onFound) {
 
   const handle = async code => {
     stop();
-    $('#scanHint').textContent = t('Gefunden: {code} — suche Produkt…', { code });
+    $('#scanHint').textContent = t('Gefunden: {code}. Suche das Produkt …', { code });
     const prod = await lookup(code);
     showResult(prod, place, onFound, dlg);
   };
@@ -71,7 +71,7 @@ export async function openScanner(place, onFound) {
     };
     raf = requestAnimationFrame(tick);
   } catch (e) {
-    $('#scanHint').textContent = e.name === 'NotAllowedError' ? t('Kamerazugriff nicht erlaubt — tipp die Nummer unter dem Strichcode ein.') : t('{error} Tipp die Nummer unter dem Strichcode ein.', { error: e.message });
+    $('#scanHint').textContent = e.name === 'NotAllowedError' ? t('Kein Zugriff auf die Kamera. Tipp die Nummer unter dem Strichcode ein.') : t('{error} Tipp die Nummer unter dem Strichcode ein.', { error: e.message });
     $('.scan-view').hidden = true;
   }
 }
@@ -115,7 +115,7 @@ function showResult(prod, place, onFound, dlg) {
     savePrefs();
     const el = document.getElementById('prefBeer');
     if (el) el.value = prefs.beerType;
-    toast(t('Lieblingsbier: {beer} — Aktionen in der Nähe erscheinen jetzt unter „Bier finden“.', { beer: escapeHtml(prefs.beerType) }), { tone: 'good', ms: 4000 });
+    toast(t('Lieblingsbier: {beer}. Aktionen in der Nähe stehen jetzt unter „Bier finden“.', { beer: escapeHtml(prefs.beerType) }), { tone: 'good', ms: 4000 });
   };
   $('#scanUse').onclick = () => {
     closeDialog(dlg);
