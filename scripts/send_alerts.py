@@ -4,12 +4,14 @@ Benötigt die Umgebungsvariablen SUPABASE_URL, SUPABASE_ANON_KEY, ALERTS_TOKEN,
 VAPID_PRIVATE_KEY (PEM) und das Paket pywebpush. Jeder Treffer (Kette, Bier,
 Gebinde, Preis) wird pro Gerät nur einmal gemeldet. Gleiche Logik wie js/alerts.js.
 """
+import base64
 import datetime
 import json
 import os
 import sys
 import urllib.request
 
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from pywebpush import webpush, WebPushException
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -19,6 +21,22 @@ LABELS = {'billa': 'BILLA', 'spar': 'SPAR', 'mpreis': 'MPREIS', 'hofer': 'HOFER'
           'netto': 'Netto', 'trinkgut': 'trinkgut', 'getraenke_hoffmann': 'Getränke Hoffmann', 'coop': 'Coop',
           'migros': 'Migros', 'denner': 'Denner', 'aldi': 'ALDI', 'volg': 'Volg'}
 APP_URL = 'https://speedpeed.github.io/Noahs-BierLocator/#alarme'
+
+
+def vapid_key(secret):
+    """VAPID-Schlüssel so umformen, wie pywebpush ihn als Text versteht.
+
+    Das Secret liegt als PEM vor. pywebpush liest einen Text aber nur als base64url
+    (PEM nur aus einer Datei) und scheitert sonst mit "Could not deserialize key data".
+    """
+    s = secret.strip().strip('"\'').replace('\\n', '\n')  # Anführungszeichen und "\n" als Text vom Einfügen
+    if 'BEGIN' not in s:
+        return ''.join(s.split())
+    try:
+        number = load_pem_private_key(s.encode(), password=None).private_numbers().private_value
+    except Exception as e:  # keine Details des Schlüssels ins (öffentliche) Log
+        raise SystemExit(f'VAPID_PRIVATE_KEY ist kein lesbarer PEM-Schlüssel ({type(e).__name__}). Secret neu hinterlegen.')
+    return base64.urlsafe_b64encode(number.to_bytes(32, 'big')).rstrip(b'=').decode()
 
 
 def rpc(fn, body):
@@ -66,6 +84,7 @@ def money(p):
 def main():
     with open(os.path.join(ROOT, 'data', 'chain-prices.json'), encoding='utf-8') as f:
         prices = [p for p in json.load(f)['prices'] if active(p)]
+    private_key = vapid_key(os.environ['VAPID_PRIVATE_KEY'])  # vorab, damit ein kaputter Schlüssel auch ohne Treffer auffällt
     subs = rpc('alerts_export', {'p_token': os.environ['ALERTS_TOKEN']}) or []
     sent = 0
     for s in subs:
@@ -84,8 +103,8 @@ def main():
             body += f" (+{len(fresh) - 1} weitere)"
         try:
             webpush(subscription_info=s['subscription'],
-                    data=json.dumps({'title': 'Preisalarm 🍺', 'body': body, 'url': APP_URL, 'tag': 'preisalarm'}),
-                    vapid_private_key=os.environ['VAPID_PRIVATE_KEY'],
+                    data=json.dumps({'title': 'Preisalarm', 'body': body, 'url': APP_URL, 'tag': 'preisalarm'}),
+                    vapid_private_key=private_key,
                     vapid_claims={'sub': 'mailto:bierlocator@users.noreply.github.com'})
         except WebPushException as e:
             gone = e.response is not None and e.response.status_code in (404, 410)
