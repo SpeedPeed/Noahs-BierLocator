@@ -143,7 +143,7 @@ export async function renderWrapped(year) {
   const s = yearStats(year);
   const box = document.getElementById('wrapImg');
   if (!s.beers && !s.tours) {
-    box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('star', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('{year} ist noch leer', { year })}</h3><p>${t("Trag Biere ins Tagebuch ein oder fahr eine Tour — dann gibt's hier deinen Rückblick.")}</p></div>`;
+    box.innerHTML = `<div class="empty small"><div class="empty-art">${icon('star', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('{year} ist noch leer', { year })}</h3><p>${t("Trag Biere ins Tagebuch ein oder fahr eine Tour. Dann gibt’s hier deinen Rückblick.")}</p></div>`;
     return null;
   }
   const canvas = await drawWrapped(s);

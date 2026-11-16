@@ -119,7 +119,7 @@ function handleEvent(ev, tour) {
   if (navigator.vibrate) navigator.vibrate(ev.type === 'arrive' ? [80, 60, 80] : 60);
   if (ev.type === 'arrive') {
     const s = tour.stops[ev.i];
-    toast(t('Angekommen: {name} — Prost! 🍺', { name: escapeHtml(s.name) }), { tone: 'good', ms: 7000, action: { label: t('Einchecken'), run: () => openDiary(s) } });
+    toast(t('Angekommen: {name}. Prost.', { name: escapeHtml(s.name) }), { tone: 'good', ms: 7000, action: { label: t('Einchecken'), run: () => openDiary(s) } });
   } else if (ev.type === 'leave') {
     const next = tour.stops[ev.i + 1];
     toast(next ? t('Weiter zu {name}', { name: escapeHtml(next.name) }) : t('Auf zum Ziel!'), { ms: 2500 });
@@ -308,7 +308,7 @@ function finish() {
   const s = summary();
   end({ save: true });
   openMisc(`
-    <h2 class="dlg-title">${icon('checkCircle', { size: 20 })}${t('Geschafft — Prost!')}</h2>
+    <h2 class="dlg-title">${icon('checkCircle', { size: 20 })}${t('Geschafft. Prost.')}</h2>
     ${endStats(s)}
     <p class="fine">${t('Die Tour ist unter „Bier-Tagebuch → Touren“ gespeichert.')}</p>
     <button class="btn btn-primary btn-big" data-close>${icon('check', { size: 20 })}${t('Super')}</button>`);
@@ -347,7 +347,7 @@ function saveFinished({ planned = false }) {
   }
   addTour(entry);
   emit('tour-saved', entry);
-  toast(t('Tour gespeichert — siehe Bier-Tagebuch → Touren'), { tone: 'good' });
+  toast(t('Tour gespeichert. Sie liegt im Tagebuch unter „Touren“.'), { tone: 'good' });
 }
 
 // Spur auf höchstens n Punkte ausdünnen (gleichmäßig).

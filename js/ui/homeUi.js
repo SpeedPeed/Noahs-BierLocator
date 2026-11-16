@@ -80,7 +80,7 @@ function bacWarning() {
   const cur = simulateBac(profile, log, Date.now()).current;
   const lim = countryInfo(state.country).bike;
   if (cur >= lim.bac * 0.85) {
-    $('#homeBac').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${t('Laut Promille-Rechner hast du gerade etwa <b>{bac} ‰</b> — die Fahrrad-Grenze liegt bei {limit} ‰. Lieber schieben, Öffis oder ein Taxi nehmen.', { bac: num(cur, 2), limit: num(lim.bac, 1) })}</div></div>`;
+    $('#homeBac').innerHTML = `<div class="notice notice-bad">${icon('alertTriangle', { size: 20 })}<div>${t('Laut Promille-Rechner hast du gerade etwa <b>{bac} ‰</b>. Die Fahrrad-Grenze liegt bei {limit} ‰. Lieber schieben, Öffis oder ein Taxi nehmen.', { bac: num(cur, 2), limit: num(lim.bac, 1) })}</div></div>`;
   }
 }
 
@@ -89,14 +89,14 @@ async function show() {
   document.querySelectorAll('#homeTarget [data-t]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.t === target)));
   const box = $('#homeResult');
   if (target === 'home' && !prefs.home) {
-    box.innerHTML = `<p class="fine">${t('Leg unten fest, wo du wohnst — dann zeigt die App jederzeit den ruhigsten Radweg dorthin.')}</p>`;
+    box.innerHTML = `<p class="fine">${t('Leg unten fest, wo du wohnst. Dann zeigt die App jederzeit den ruhigsten Radweg dorthin.')}</p>`;
     $('#homeSet').open = true;
     return;
   }
   box.innerHTML = beerLoader(t('Weg wird gesucht…'));
   const pos = await currentPos();
   if (my !== seq) return;
-  if (!pos) { box.innerHTML = `<p class="fine">${t('Ohne Standort geht\'s leider nicht — oben „Mein Standort“ antippen.')}</p>`; return; }
+  if (!pos) { box.innerHTML = `<p class="fine">${t('Ohne Standort geht das nicht. Oben „Mein Standort“ antippen.')}</p>`; return; }
   try {
     if (target === 'station') { await showStations(pos, box, my); return; }
     const dest = target === 'home'
@@ -110,7 +110,7 @@ async function show() {
 
 async function showRoute(pos, dest, box, my, extraHtml = '') {
   const direct = haversine(pos.lat, pos.lon, dest.lat, dest.lon);
-  if (direct < 80) { box.innerHTML = `<p class="fine center">${t('Du bist schon da. 🍺')}</p>${extraHtml}`; return; }
+  if (direct < 80) { box.innerHTML = `<p class="fine center">${t('Du bist schon da.')}</p>${extraHtml}`; return; }
   const route = await routeThrough([pos, dest], 'safety');
   if (my !== seq) return;
   const gm = `https://www.google.com/maps/dir/?api=1&origin=${pos.lat},${pos.lon}&destination=${dest.lat},${dest.lon}&travelmode=bicycling`;
@@ -118,7 +118,7 @@ async function showRoute(pos, dest, box, my, extraHtml = '') {
     <div class="home-route">
       <div><b>${fmtDist(route.distance)}</b><span>${t('{time} gemütlich · ruhige Strecke', { time: fmtDuration(route.duration) })}${route.ascent.up ? ` · ${t('{n} Hm', { n: route.ascent.up })}` : ''}</span><small>${t('nach {place}', { place: escapeHtml(dest.label) })}</small></div>
     </div>
-    ${route.distance > 25000 ? `<p class="fine">${icon('info', { size: 16 })} ${t('Ganz schön weit fürs Rad — vielleicht doch mit Öffis („Bahnhof“)?')}</p>` : ''}
+    ${route.distance > 25000 ? `<p class="fine">${icon('info', { size: 16 })} ${t('Ganz schön weit fürs Rad. Vielleicht doch mit den Öffis?')}</p>` : ''}
     <div class="row-btns">
       <button class="btn btn-primary" id="homeShow">${icon('map', { size: 16 })}${t('Auf der Karte')}</button>
       <a class="btn btn-soft" href="${gm}" target="_blank" rel="noopener">${icon('compass', { size: 16 })}Navigation</a>

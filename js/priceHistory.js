@@ -48,7 +48,7 @@ export function describe(p) {
   } else if (pts.length) {
     lines.push(t('Keine Aktion seit Beginn der Aufzeichnung ({date})', { date: fmtDate(hist.since) }));
   }
-  if (!pts.length) lines.push(t('Verlauf wird seit {date} aufgezeichnet — noch keine Daten.', { date: fmtDate(hist.since || new Date().toISOString()) }));
+  if (!pts.length) lines.push(t('Verlauf läuft seit {date}. Noch keine Daten.', { date: fmtDate(hist.since || new Date().toISOString()) }));
   return { points: pts, text: lines, svg: pts.length >= 2 ? sparkline(pts) : '' };
 }
 

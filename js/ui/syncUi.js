@@ -28,7 +28,7 @@ const WIPE = `<details class="wipe-box">
   </details>`;
 
 async function wipeAll() {
-  if (!confirm(t('Wirklich alle deine Bier-Locator-Daten löschen — am Server und auf diesem Gerät?'))) return;
+  if (!confirm(t('Wirklich alle deine Bier-Locator-Daten löschen, am Server und auf diesem Gerät?'))) return;
   const btn = $('#wipeBtn');
   btn.disabled = true;
   try {
@@ -44,7 +44,7 @@ async function wipeAll() {
       if (k && (k.startsWith('bl_') || k.startsWith('bierlocator'))) keys.push(k);
     }
     keys.forEach(k => localStorage.removeItem(k));
-    toast(t('Alle Daten gelöscht — lädt neu…'), { tone: 'good' });
+    toast(t('Alle Daten gelöscht. Lädt neu …'), { tone: 'good' });
     setTimeout(() => location.reload(), 1200);
   } catch (e) {
     btn.disabled = false;
@@ -76,7 +76,7 @@ async function renderInner() {
   if (!code) {
     body.innerHTML = `
       <h2 class="dlg-title" id="syncTitle">${icon('refresh', { size: 20 })}${t('Geräte &amp; Backup')}</h2>
-      <p>${t('Favoriten, Vorlieben, Promille-Log, Tagebuch und Preisalarme auf allen deinen Geräten gleich — ohne Konto.')}</p>
+      <p>${t('Favoriten, Vorlieben, Promille-Log, Tagebuch und Preisalarme auf allen deinen Geräten gleich, ganz ohne Konto.')}</p>
       <div class="sync-choice">
         <button class="btn btn-primary btn-big" id="syncStart">${icon('plus', { size: 20 })}${t('Sync starten')}</button>
         <p class="fine center">${t('Danach zeigt dieses Gerät einen QR-Code, den du mit dem anderen Handy scannst.')}</p>
@@ -102,14 +102,14 @@ async function renderInner() {
   const last = lastSync();
   body.innerHTML = `
     <h2 class="dlg-title" id="syncTitle">${icon('checkCircle', { size: 20 })}${t('Geräte verbunden')}</h2>
-    <p>${t('Scanne den QR-Code mit der Kamera des anderen Geräts — oder schick dir den Link.')}</p>
+    <p>${t('Scann den QR-Code mit dem anderen Gerät oder schick dir den Link.')}</p>
     <div class="sync-qr" id="syncQr">${icon('refresh', { size: 20 })}</div>
     <div class="sync-code"><code>${escapeHtml(code)}</code></div>
     <div class="row-btns">
       <button class="btn btn-soft" id="syncShare">${icon('share', { size: 16 })}${t('Link teilen')}</button>
       <button class="btn btn-soft" id="syncNowBtn">${icon('refresh', { size: 16 })}${t('Jetzt abgleichen')}</button>
     </div>
-    <p class="fine">${t('Zuletzt abgeglichen: {when}. Wer den Code kennt, sieht deine Favoriten &amp; Co. — nur mit eigenen Geräten oder Leuten teilen, denen du vertraust.', { when: last ? timeAgo(last.getTime()) : t('noch nie') })}</p>
+    <p class="fine">${t('Zuletzt abgeglichen: {when}. Wer den Code kennt, sieht deine Favoriten &amp; Co. Teil ihn nur mit eigenen Geräten oder Leuten, denen du vertraust.', { when: last ? timeAgo(last.getTime()) : t('noch nie') })}</p>
     <button class="link-btn danger" id="syncOff">${icon('x', { size: 16 })}${t('Dieses Gerät trennen')}</button>`;
   try { $('#syncQr').innerHTML = await qrSvg(link); } catch (e) { $('#syncQr').innerHTML = `<p class="fine">${escapeHtml(e.message)}</p>`; }
   $('#syncShare').onclick = async () => {
@@ -122,7 +122,7 @@ async function renderInner() {
   };
   $('#syncOff').onclick = async () => {
     disableSync();
-    toast(t('Gerät getrennt — die Daten bleiben hier erhalten.'));
+    toast(t('Gerät getrennt. Die Daten bleiben hier.'));
     await render();
   };
 }
@@ -130,7 +130,7 @@ async function renderInner() {
 async function join(code) {
   try {
     await enableSync(code);
-    toast(t('Verbunden — Daten werden zusammengeführt.'), { tone: 'good', ms: 3500 });
+    toast(t('Verbunden. Die Daten werden zusammengeführt.'), { tone: 'good', ms: 3500 });
     await render();
   } catch (e) {
     disableSync();

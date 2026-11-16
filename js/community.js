@@ -78,7 +78,7 @@ async function rpc(fn, body) {
     let msg = t('Server-Fehler {status}', { status: res.status });
     try { const j = await res.json(); msg = j.message || msg; } catch (e) { /* egal */ }
     if (/implausible/i.test(msg)) msg = t('Der Preis ist unrealistisch und wurde nicht gespeichert.');
-    if (/rate limit/i.test(msg)) msg = t('Heute schon sehr viele Meldungen — morgen wieder!');
+    if (/rate limit/i.test(msg)) msg = t('Für heute reicht’s mit Meldungen. Morgen wieder.');
     throw new Error(msg);
   }
   const text = await res.text();
@@ -176,7 +176,7 @@ export async function deleteServerData(syncCode) {
   try {
     return await rpc('delete_my_data', { p_secret: deviceSecret(), p_sync_code: syncCode || null });
   } catch (e) {
-    if (/delete_my_data|404|function/i.test(e.message)) throw new Error(t('Löschen am Server ist noch nicht eingerichtet — bitte später nochmal versuchen.'));
+    if (/delete_my_data|404|function/i.test(e.message)) throw new Error(t('Löschen am Server geht noch nicht. Später nochmal versuchen.'));
     throw e;
   }
 }

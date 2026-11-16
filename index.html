@@ -31,7 +31,7 @@
 <div id="map" aria-label="Karte"></div>
 
 <header class="topbar">
-  <button class="brand" id="btnBrand" aria-label="Bier-Locator — Info">
+  <button class="brand" id="btnBrand" aria-label="Über den Bier-Locator">
     <span class="brand-glass" aria-hidden="true">
       <svg viewBox="0 0 32 32" width="30" height="30"><defs><clipPath id="glassClip"><path d="M8 7h14l-1.6 19a2.2 2.2 0 0 1-2.2 2h-6.4a2.2 2.2 0 0 1-2.2-2z"/></clipPath></defs>
         <g clip-path="url(#glassClip)"><rect class="bg-beer" x="0" y="11" width="32" height="22"/><circle class="bubble b1" cx="12" cy="24" r="1"/><circle class="bubble b2" cx="17" cy="26" r="0.8"/><circle class="bubble b3" cx="15" cy="22" r="0.7"/></g>
@@ -96,7 +96,7 @@
         <button class="toggle-chip" id="fFav" aria-pressed="false"><span data-icon="heart" data-icon-size="16"></span>Favoriten</button>
         <label class="sort-select"><span class="sr-only">Sortierung</span>
           <select id="sortSelect">
-            <option value="recommended">Für dich</option>
+            <option value="recommended">Empfohlen</option>
             <option value="distance">Nächste</option>
             <option value="price">Günstigste</option>
             <option value="rating">Beste</option>
@@ -117,7 +117,7 @@
               <input id="prefBeer" type="text" list="beerList" placeholder="z.B. Zwickl" maxlength="40">
             </label>
             <label class="field">
-              <span class="field-label">Max. Preis / 0,5 l</span>
+              <span class="field-label">Max. Preis pro Halbe</span>
               <input id="prefMaxPrice" type="number" inputmode="decimal" min="0" step="0.1" placeholder="4,50">
             </label>
           </div>
@@ -127,7 +127,7 @@
           </label>
           <label class="switch-row">
             <input id="prefBiergarten" type="checkbox" class="switch">
-            <span>Biergärten bevorzugen <small>(bei schönem Wetter ohnehin)</small></span>
+            <span>Biergärten bevorzugen</span>
           </label>
         </div>
       </details>
@@ -202,15 +202,15 @@
             </div>
             <label class="switch-row" id="tourCalmRow">
               <input id="tourCalm" type="checkbox" class="switch">
-              <span>Anstiege nicht am Ende <small>(fährt die Runde andersrum, wenn's sonst nach den Bieren bergauf geht)</small></span>
+              <span>Bergauf lieber am Anfang</span>
             </label>
             <label class="switch-row">
               <input id="tourWind" type="checkbox" class="switch">
-              <span>Wetter &amp; Wind beachten <small>(Rückenwind auf dem Heimweg, bei Regen drinnen sitzen)</small></span>
+              <span>Wetter &amp; Wind beachten</span>
             </label>
             <label class="switch-row">
               <input id="tourShops" type="checkbox" class="switch">
-              <span>Auch Restaurants, Läden &amp; Tankstellen <small>(sonst nur Kneipen, Gasthäuser, Biergärten, Brauereien)</small></span>
+              <span>Auch Restaurants, Läden &amp; Tankstellen</span>
             </label>
           </div>
         </details>

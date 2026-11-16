@@ -466,6 +466,48 @@ test('Preisschild: Betrag und Währung getrennt', () => {
   eq(moneyParts(4.8, 'CHF').unit, 'CHF');
 });
 
+/* ---------- Übersetzungen vollständig, Texte nach Leitlinie ---------- */
+// Liest die App-Quelltexte (Dateiliste aus sw.js) und index.html. Jeder sichtbare deutsche
+// Text braucht einen Eintrag im englischen Wörterbuch, sonst bleibt er in der englischen App deutsch.
+const sources = await (async () => {
+  const get = p => fetch('../' + p).then(r => (r.ok ? r.text() : '')).catch(() => '');
+  const sw = await get('sw.js');
+  const files = [...new Set(sw.match(/\.\/js\/[\w/.-]+\.js/g) || [])].map(f => f.slice(2))
+    .filter(f => !f.startsWith('js/lang/') && f !== 'js/i18n.js');
+  return { files, js: await Promise.all(files.map(get)), html: await get('index.html') };
+})();
+const inDict = key => Object.prototype.hasOwnProperty.call(dictionary(), key);
+test('Englisch: jeder t()-Text steht im Wörterbuch', () => {
+  ok(sources.files.length > 30 && sources.js.every(Boolean), 'Quelltexte nicht geladen');
+  const missing = [];
+  const call = /(?<![\w.$])t\(\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")/g;
+  sources.js.forEach((src, i) => {
+    for (const m of src.matchAll(call)) {
+      const key = (m[1] ?? m[2]).replace(/\\(.)/g, '$1');
+      if (!inDict(key)) missing.push(`${sources.files[i]}: ${key}`);
+    }
+  });
+  ok(!missing.length, `${missing.length} ohne Übersetzung: ` + missing.slice(0, 5).join(' | '));
+});
+test('Englisch: jeder feste Text in index.html steht im Wörterbuch', () => {
+  const doc = new DOMParser().parseFromString(sources.html, 'text/html');
+  doc.querySelectorAll('script, style, svg').forEach(n => n.remove());
+  const texts = new Set();
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) if (n.nodeValue.trim()) texts.add(n.nodeValue.trim());
+  for (const attr of ['placeholder', 'aria-label', 'title']) doc.querySelectorAll(`[${attr}]`).forEach(el => texts.add(el.getAttribute(attr)));
+  // Sprachneutral: Zahlen, Kilometer und der App-Name (mit weichem Trennzeichen)
+  const neutral = s => /^[\d\s.,:]*(km)?$/.test(s) || /^Bier[-­]?Locator$/.test(s);
+  const missing = [...texts].filter(s => !neutral(s) && !inDict(s));
+  ok(texts.size > 60, 'index.html nicht geladen');
+  ok(!missing.length, `${missing.length} ohne Übersetzung: ` + missing.slice(0, 5).join(' | '));
+});
+test('Texte: keine Emojis, keine Gedankenstrich-Einschübe (docs/design.md)', () => {
+  const emoji = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
+  const bad = Object.entries(dictionary()).filter(([de, en]) => [de, en].some(s => emoji.test(s.replace(/★/g, '')) || s.includes(' — '))).map(([de]) => de);
+  ok(!bad.length, `${bad.length} Texte: ` + bad.slice(0, 5).join(' | '));
+});
+
 /* ---------- Ausgabe ---------- */
 const passed = results.filter(r => r.ok).length;
 document.getElementById('summary').innerHTML = `<span class="${passed === results.length ? 'pass' : 'fail'}">${passed} / ${results.length} Tests bestanden</span>`;

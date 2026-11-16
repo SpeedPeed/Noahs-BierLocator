@@ -115,7 +115,7 @@ function beersHtml() {
         ${e.stars ? `<span class="mini-stars" style="--v:${e.stars * 20}%">★★★★★</span>` : ''}
         <button class="icon-btn small" data-del="${e.id}" aria-label="${t('Eintrag löschen')}">${icon('trash', { size: 16 })}</button>
       </li>`).join('')}</ul>`).join('')}</div>`
-    : `<div class="empty small"><div class="empty-art">${icon('book', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch leer')}</h3><p>${t('Trag dein erstes Bier ein — oder tippe bei einem Lokal auf „Einchecken“.')}</p></div>`}`;
+    : `<div class="empty small"><div class="empty-art">${icon('book', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch leer')}</h3><p>${t('Trag dein erstes Bier ein oder tipp bei einem Lokal auf „Einchecken“.')}</p></div>`}`;
 }
 
 function wireBeers(animate) {
@@ -149,7 +149,7 @@ function wireBeers(animate) {
       bac.log.push({ label: `${beer} ${SIZES[ml] || ''}`.trim(), volume: ml, abv, kcal100: 43, qty: 1, timestamp: now });
       saveBac(bac);
     }
-    toast(t('Prost! {beer} eingetragen 🍺', { beer: escapeHtml(beer) }), { tone: 'good', ms: 2000 });
+    toast(t('Prost. {beer} eingetragen.', { beer: escapeHtml(beer) }), { tone: 'good', ms: 2000 });
     emit('diary-added', entry);
     render(true);
   };
@@ -175,7 +175,7 @@ function trackSvg(track) {
 
 function toursHtml() {
   const list = loadTours().filter(t => !t.deleted).sort((a, b) => b.at - a.at);
-  if (!list.length) return `<div class="empty small"><div class="empty-art">${icon('bike', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch keine Tour')}</h3><p>${t("Plane eine Bier-Radtour und tipp auf „Los geht's“ — am Ende landet sie hier, mit Strecke, Stopps und Mitfahrenden.")}</p></div>`;
+  if (!list.length) return `<div class="empty small"><div class="empty-art">${icon('bike', { size: 40, strokeWidth: 1.4 })}</div><h3>${t('Noch keine Tour')}</h3><p>${t("Plan eine Bier-Radtour und tipp auf „Los geht’s“. Am Ende landet sie hier, mit Strecke, Stopps und allen, die dabei waren.")}</p></div>`;
   const km = list.reduce((s, t) => s + (t.km || 0), 0);
   return `
     <div class="stat-grid diary-stats">

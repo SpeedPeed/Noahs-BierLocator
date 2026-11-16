@@ -68,11 +68,11 @@ async function render() {
           <span class="ah-beer">${escapeHtml(h.beer)} <small>${escapeHtml(pkg(h.package))}</small>${h.promo ? ` <span class="promo">${t('Aktion')}</span>` : ''}</span>
           <a href="${escapeHtml(h.source)}" target="_blank" rel="noopener"><b>${money(h.price, h.currency)}</b></a></li>`; }).join('')}</ul>
           ${hits.length > 6 ? `<p class="fine">${t('+ {n} weitere', { n: hits.length - 6 })}</p>` : ''}`
-        : `<p class="fine">${t('Gerade kein Treffer — die App meldet sich, sobald es soweit ist.')}</p>`}
+        : `<p class="fine">${t('Gerade kein Treffer. Die App meldet sich, wenn es so weit ist.')}</p>`}
       </div>`).join('') : `<p class="fine center">${t('Noch keine Alarme.')}</p>`}</div>
     ${pushSupported() ? `<label class="switch-row push-row">
       <input type="checkbox" class="switch" id="pushToggle" ${pushOn ? 'checked' : ''}>
-      <span>${t('Benachrichtigung aufs Handy')} <small>${t('(auch wenn die App zu ist — kommt montags nach dem Preis-Update)')}</small></span>
+      <span>${t('Benachrichtigung aufs Handy')} <small>${t('kommt montags nach dem Preis-Update, auch wenn die App zu ist')}</small></span>
     </label>` : ''}`;
 
   $('#alertForm').onsubmit = async e => {

@@ -98,7 +98,7 @@ async function loadWeather(loc) {
     const w = state.weather.current;
     const chip = $('#weatherChip');
     chip.hidden = false;
-    const tag = isBiergartenWeather(w) ? t('Biergartenwetter!') : isRainy(w) ? t('lieber drinnen') : '';
+    const tag = isBiergartenWeather(w) ? t('Biergartenwetter') : isRainy(w) ? t('lieber drinnen') : '';
     chip.innerHTML = `${icon(weatherIcon(w.code), { size: 16 })}<b>${Math.round(w.temperature)}°</b>${tag ? `<span>${tag}</span>` : ''}`;
     chip.classList.toggle('sunny', isBiergartenWeather(w));
     renderFinder();
@@ -144,7 +144,7 @@ function toggleHeat() {
   applyHeat(lastList);
   if (prefs.heatmap) {
     const n = lastList ? pricedPoints(lastList).length : 0;
-    toast(n >= 2 ? t('Preis-Heatmap an: grün = günstig, rot = teuer') : t('Preis-Heatmap an — hier gibt es aber noch kaum Preise. Melde welche!'), { ms: 3500 });
+    toast(n >= 2 ? t('Preis-Heatmap an: grün = günstig, rot = teuer') : t('Heatmap an. Hier gibt es aber kaum Preise.'), { ms: 3500 });
   }
 }
 
@@ -200,7 +200,7 @@ function initMenu() {
         importBundle(payload);
         if (payload.community) importLocalCommunity(payload.community);
         if (payload.localData) importLocalCommunity(convertLegacy(payload.localData));
-        toast(t('Daten importiert — lädt neu…'), { tone: 'good' });
+        toast(t('Daten importiert. Lädt neu …'), { tone: 'good' });
         setTimeout(() => location.reload(), 900);
       } catch (err) {
         toast(t('Import fehlgeschlagen: {msg}', { msg: err.message }), { tone: 'bad' });
@@ -224,7 +224,7 @@ function openAbout() {
     <h2 id="aboutTitle" class="dlg-title">${icon('beerMug', { size: 20 })}Bier-Locator</h2>
     <p>${t('Findet Kneipen, Biergärten, Brauereien und Läden in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.')}</p>
     <div class="notice ${isShared() ? 'notice-good' : ''}">${icon(isShared() ? 'globe' : 'info', { size: 20 })}<div>${isShared()
-      ? t('<b>Community-Modus:</b> Preise & Bewertungen sind für alle sichtbar. Ohne Login — pro Gerät zählt eine Bewertung.')
+      ? t('<b>Community-Modus:</b> Preise & Bewertungen sehen alle. Kein Login, pro Gerät zählt eine Bewertung.')
       : t('<b>Lokaler Modus:</b> Preise & Bewertungen bleiben auf diesem Gerät. Für geteilte Preise muss ein Supabase-Projekt eingetragen werden (siehe README).')}</div></div>
     ${/android/i.test(navigator.userAgent) && !document.referrer.startsWith('android-app://') && !matchMedia('(display-mode: standalone)').matches
       ? `<a class="btn btn-primary btn-big" href="https://github.com/SpeedPeed/Noahs-BierLocator/releases/latest" target="_blank" rel="noopener">${icon('download', { size: 20 })}${t('Android-App herunterladen')}</a><p class="fine center">${t('Läuft wie eine normale App, aktualisiert sich von selbst.')}</p>` : ''}
@@ -240,14 +240,14 @@ function openAbout() {
     <ul class="about-list">
       <li>${t('Doppeltipp auf einen Ortstyp zeigt nur diesen Typ.')}</li>
       <li>${t('Karte verschieben → „In diesem Bereich suchen“.')}</li>
-      <li>${t('In der Tour lassen sich einzelne Stopps tauschen oder entfernen — „Los geht\'s“ startet die Live-Tour, deren Zeitplan sich mitbewegt.')}</li>
+      <li>${t('In der Tour lassen sich Stopps tauschen oder entfernen. „Los geht’s“ startet die Live-Tour, der Zeitplan fährt mit.')}</li>
       <li>${t('Lieblingssorte unter „Umkreis &amp; Vorlieben“ eintragen → Aktionen in der Nähe erscheinen von selbst.')}</li>
       <li>${t('„Meine Runde“ im Menü: Biere zählen, Runden abrechnen, über Stopps abstimmen.')}</li>
       <li>${t('Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.')}</li>
       <li>${t('Taste <kbd>/</kbd> springt in die Suche.')}</li>
     </ul>
-    <p class="fine">${t('Online-Preise ohne Gewähr — der Bier-Locator steht in keiner Verbindung zu den Händlern.')}</p>
-    <p class="fine">${t('Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht — auch nicht mit dem Rad.')}</p>
+    <p class="fine">${t('Online-Preise ohne Gewähr. Der Bier-Locator hat mit den Händlern nichts zu tun.')}</p>
+    <p class="fine">${t('Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht, auch nicht mit dem Rad.')}</p>
     <p class="fine center"><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>
     <label class="lang-pick">${icon('globe', { size: 16 })}${t('Sprache')} / Language
       <select id="langSelect">${Object.entries(LANGS).map(([k, v]) => `<option value="${k}"${k === LANG ? ' selected' : ''}>${v}</option>`).join('')}</select>
@@ -269,7 +269,7 @@ function showWelcome() {
     <div class="notice">${icon('locate', { size: 20 })}<div>${t('Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.')}</div></div>
     <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 20 })}${t('Standort verwenden')}</button>
     <button class="btn btn-soft welcome-skip" data-close>${t('Erst mal umschauen')}</button>
-    <p class="fine center">${t('Für Erwachsene. Bitte verantwortungsvoll trinken — wer trinkt, fährt nicht, auch nicht mit dem Rad.')}<br><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
+    <p class="fine center">${t('Für Erwachsene. Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht, auch nicht mit dem Rad.')}<br><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
   dlg.addEventListener('close', () => { try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ } }, { once: true });
   $('#welcomeLocate').onclick = () => { closeDialog(dlg); locate(); };
   openDialog(dlg);
@@ -321,7 +321,7 @@ function wrappedTeaser() {
   const flag = `bl_wrapped_seen_${year}`;
   if (localStorage.getItem(flag)) return;
   if (yearStats(year).beers < 5) return;
-  setTimeout(() => toast(t('Dein Bier-Jahr {year} ist fertig 🍺', { year }), { tone: 'good', ms: 9000, action: { label: t('Ansehen'), run: () => { localStorage.setItem(flag, '1'); openDiary(null, 'year'); } } }), 4000);
+  setTimeout(() => toast(t('Dein Bier-Jahr {year} ist fertig.', { year }), { tone: 'good', ms: 9000, action: { label: t('Ansehen'), run: () => { localStorage.setItem(flag, '1'); openDiary(null, 'year'); } } }), 4000);
 }
 
 /* ---------- Start ---------- */

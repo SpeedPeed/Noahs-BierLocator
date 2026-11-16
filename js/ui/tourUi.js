@@ -207,19 +207,19 @@ function themedPool(all, theme, k) {
   if (theme === 'brewery') {
     const list = all.filter(isBreweryLike);
     if (list.length < k) throw new Error(list.length === 1
-      ? t('Nur 1 Brauerei in der Gegend — weniger Stopps, eine längere Tour oder ein anderes Thema probieren.')
-      : t('Nur {n} Brauereien in der Gegend — weniger Stopps, eine längere Tour oder ein anderes Thema probieren.', { n: list.length }));
+      ? t('Nur 1 Brauerei in der Gegend. Probier weniger Stopps, eine längere Tour oder ein anderes Thema.')
+      : t('Nur {n} Brauereien in der Gegend. Probier weniger Stopps, eine längere Tour oder ein anderes Thema.', { n: list.length }));
     return { list };
   }
   if (theme === 'biergarten') {
     const list = all.filter(isGardenLike);
-    if (list.length < k) throw new Error(t('Nur {n} Biergärten bzw. Lokale mit Gastgarten in der Gegend — weniger Stopps oder ein anderes Thema probieren.', { n: list.length }));
+    if (list.length < k) throw new Error(t('Nur {n} Biergärten oder Lokale mit Gastgarten in der Gegend. Probier weniger Stopps oder ein anderes Thema.', { n: list.length }));
     return { list };
   }
   if (theme === 'cheap') {
     const priced = all.filter(p => effectivePer05(p) != null);
     if (priced.length >= k * 2) return { list: priced };
-    return { list: all, note: t('Nur {n} Lokale mit bekanntem Preis — die anderen Stopps sind nach Gefühl gewählt. Preise melden hilft!', { n: priced.length }) };
+    return { list: all, note: t('Nur {n} Lokale mit bekanntem Preis. Die anderen Stopps sind nach Gefühl gewählt.', { n: priced.length }) };
   }
   return { list: all };
 }
@@ -243,7 +243,7 @@ async function plan({ reroll = false } = {}) {
   const theme = TOUR_THEMES[cfg.theme] ? cfg.theme : 'all';
   $('#tourError').hidden = true;
   if (!state.location) {
-    showError(t('Bitte zuerst oben einen Startpunkt festlegen — Standort teilen oder einen Ort suchen.'));
+    showError(t('Erst oben einen Start festlegen: Standort teilen oder einen Ort suchen.'));
     return;
   }
   if (!cfg.roundtrip && !dest) {
@@ -394,27 +394,27 @@ export function renderTour({ animate = false, fit = true } = {}) {
 
   // Hinweise
   const hints = [];
-  if (!r.bikeFriendly) hints.push(['alertTriangle', t('Der Fahrrad-Router war nicht erreichbar — das ist eine Standard-Route ohne Radweg-Vorliebe.')]);
+  if (!r.bikeFriendly) hints.push(['alertTriangle', t('Der Fahrrad-Router war nicht erreichbar. Das ist eine Standard-Route ohne Vorliebe für Radwege.')]);
   if (tr.note) hints.push(['info', escapeHtml(tr.note)]);
   if (tr.evenerK && tr.evenerK < tr.stops.length) hints.push(['info', `${t('Für {n} Stopps liegen die Bierorte hier ungünstig verteilt. Mit {k} Stopps wird die Tour gleichmäßiger.', { n: tr.stops.length, k: tr.evenerK })} <button class="link-btn" data-even="${tr.evenerK}">${t('Mit {k} Stopps planen', { k: tr.evenerK })}</button>`]);
-  if (tr.k < tr.requestedK) hints.push(['info', t('Nur {k} statt {req} Stopps möglich — mehr Orte gibt die Gegend nicht her.', { k: tr.k, req: tr.requestedK })]);
+  if (tr.k < tr.requestedK) hints.push(['info', t('Nur {k} statt {req} Stopps. Mehr gibt die Gegend nicht her.', { k: tr.k, req: tr.requestedK })]);
   const sortedLegs = legs.slice().sort((a, b) => a - b);
   const median = sortedLegs[Math.floor(sortedLegs.length / 2)];
   const gapIdx = legs.findIndex(l => l > median * 2.2 && l > 2500);
   if (gapIdx >= 0 && !tr.evenerK) {
     const from = gapIdx === 0 ? t('Start') : t('Stopp {n}', { n: gapIdx });
     const to = gapIdx === legs.length - 1 ? t('Ziel') : t('Stopp {n}', { n: gapIdx + 1 });
-    hints.push(['info', t('Zwischen {from} und {to} ({dist}) gibt es keine passenden Bierorte — da hilft nur durchradeln.', { from, to, dist: fmtDist(legs[gapIdx]) })]);
+    hints.push(['info', t('Zwischen {from} und {to} ({dist}) gibt es keinen Bierort. Da hilft nur durchradeln.', { from, to, dist: fmtDist(legs[gapIdx]) })]);
   }
   if (r.overlap > 0.25) hints.push(['info', t('Etwa {pct} % der Strecke fährst du doppelt (Stichstraßen). „Andere Route“ probieren?', { pct: Math.round(r.overlap * 100) })]);
-  if (dev > 0.2) hints.push(['info', t('Deutlich länger als gewünscht — die passenden Orte liegen weiter auseinander.')]);
-  else if (dev < -0.2) hints.push(['info', t('Kürzer als gewünscht — weiter draußen gibt es keine passenden Orte.')]);
-  if (tr.wx && tr.wx.rainy) hints.push(['cloudRain', tr.theme === 'biergarten' ? t('Regen angesagt — für eine Biergarten-Runde eher ungünstig.') : t('Regen angesagt — Lokale mit Innenraum wurden bevorzugt, Biergärten gemieden.')]);
-  else if (tr.wx && tr.wx.sunny) hints.push(['sun', t('Biergartenwetter — Lokale mit Garten wurden bevorzugt.')]);
+  if (dev > 0.2) hints.push(['info', t('Deutlich länger als gewünscht. Die passenden Orte liegen weiter auseinander.')]);
+  else if (dev < -0.2) hints.push(['info', t('Kürzer als gewünscht. Weiter draußen gibt es nichts Passendes.')]);
+  if (tr.wx && tr.wx.rainy) hints.push(['cloudRain', tr.theme === 'biergarten' ? t('Regen angesagt. Für eine Biergarten-Runde eher ungünstig.') : t('Drinnen sitzen vorn, weil Regen angesagt ist.')]);
+  else if (tr.wx && tr.wx.sunny) hints.push(['sun', t('Lokale mit Garten vorn, weil die Sonne scheint.')]);
   if (tr.reversed) hints.push(['mountain', t('Andersrum gefahren: so liegen die Anstiege vor den Bieren statt danach.')]);
   if (tr.wind && tr.wind.speed >= 12 && tr.effort && tr.roundtrip) {
     const wp = { dir: windDirName(tr.wind.from), speed: tr.wind.speed };
-    hints.push(['activity', tr.effort.headwind < -0.15 ? t('Rückenwind auf dem Heimweg (Wind aus {dir}, {speed} km/h).', wp) : tr.effort.headwind > 0.15 ? t('Gegen Ende Gegenwind (aus {dir}, {speed} km/h) — anders ging\'s hier nicht.', wp) : t('Wind aus {dir} ({speed} km/h) kommt meist von der Seite.', wp)]);
+    hints.push(['activity', tr.effort.headwind < -0.15 ? t('Rückenwind auf dem Heimweg (Wind aus {dir}, {speed} km/h).', wp) : tr.effort.headwind > 0.15 ? t('Gegen Ende Gegenwind (aus {dir}, {speed} km/h). Anders ging es hier nicht.', wp) : t('Wind aus {dir} ({speed} km/h) kommt meist von der Seite.', wp)]);
   }
   const bac = projectBac(rows);
   if (bac) hints.push([bac.over ? 'alertTriangle' : 'beerMug', bac.text]);
@@ -494,7 +494,7 @@ function projectBac(rows) {
   return {
     over,
     text: `${t('Bei einem Bier (0,5 l) pro Stopp: bis zu ca. <b>{bac} ‰</b>.', { bac: fmt(peak) })} ${over
-      ? t('Das liegt über der Fahrrad-Grenze ({limit} ‰, {country}) — lieber Radler, Alkoholfreies oder schieben!', p)
+      ? t('Das liegt über der Fahrrad-Grenze ({limit} ‰, {country}). Lieber Radler, Alkoholfreies oder schieben.', p)
       : t('Fahrrad-Grenze in {country}: {limit} ‰.', p)} <small>${t('(grobe Schätzung, Profil im Promille-Rechner)')}</small>`,
   };
 }
@@ -635,7 +635,7 @@ ${trkpts}
 </trkseg></trk>
 </gpx>`;
   downloadFile(`bier-radtour-${Math.round(r.distance / 1000)}km.gpx`, gpx, 'application/gpx+xml');
-  toast(t('GPX gespeichert — passt in Komoot, Garmin & Co.'), { tone: 'good' });
+  toast(t('GPX gespeichert. Passt in Komoot, Garmin & Co.'), { tone: 'good' });
 }
 
 function openGmaps() {
@@ -658,7 +658,7 @@ export function currentTourLink() {
 
 async function shareTour() {
   if (!tour) return;
-  const res = await shareLink({ title: t('Bier-Radtour'), text: t('{km} km, {n} Bierstopps — fährst du mit?', { km: (tour.route.distance / 1000).toFixed(1), n: tour.stops.length }), url: currentTourLink() });
+  const res = await shareLink({ title: t('Bier-Radtour'), text: t('{km} km, {n} Bierstopps. Fährst du mit?', { km: (tour.route.distance / 1000).toFixed(1), n: tour.stops.length }), url: currentTourLink() });
   if (res === 'copied') toast(t('Tour-Link kopiert!'), { tone: 'good' });
   else if (res === 'failed') toast(t('Teilen nicht möglich'), { tone: 'bad' });
 }

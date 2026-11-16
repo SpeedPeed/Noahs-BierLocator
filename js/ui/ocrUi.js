@@ -67,7 +67,7 @@ function showCandidates(place, list, raw, onDone) {
   }
   const unitOpts = sel => (sel ? '' : `<option value="" selected>${t('Menge?')}</option>`) + Object.entries(UNITS).filter(([k]) => !k.startsWith('kasten')).map(([k, u]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${u.label}</option>`).join('');
   box.innerHTML = `
-    <p class="fine">${t('Häkchen bei allem, was stimmt — Sorte, Menge und Preis lassen sich noch korrigieren.')}</p>
+    <p class="fine">${t('Hak an, was stimmt. Sorte, Menge und Preis kannst du noch korrigieren.')}</p>
     <ul class="ocr-list">${list.map((c, i) => `<li data-i="${i}" ${c.guessed ? 'data-guessed' : ''}>
       <input type="checkbox" class="ocr-on" ${c.ok && c.beerish && !c.guessed ? 'checked' : ''} aria-label="${t('Übernehmen')}">
       <input class="ocr-beer" value="${escapeHtml(c.beer)}" maxlength="40" aria-label="${t('Sorte')}">
@@ -91,7 +91,7 @@ function showCandidates(place, list, raw, onDone) {
       const v = validatePrice(r.price, r.unit, r.beer);
       li.classList.toggle('bad', r.on && !v.ok);
       li.querySelector('.ocr-msg').textContent = !v.ok ? v.message
-        : li.hasAttribute('data-guessed') && r.unit === '0.5l' ? t('Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.')
+        : li.hasAttribute('data-guessed') && r.unit === '0.5l' ? t('Menge nicht erkannt, 0,5 l angenommen. Bitte prüfen.')
         : r.unit !== '0.5l' ? t('= {price} pro 0,5 l', { price: fmtEuro(v.per05) }) : '';
       if (r.on && v.ok) n++;
     }
@@ -113,9 +113,9 @@ function showCandidates(place, list, raw, onDone) {
       catch (e) { fail++; li.querySelector('.ocr-msg').textContent = e.message; }
     }
     if (ok) {
-      toast(ok === 1 ? t('1 Preis gemeldet — danke! 🍻') : t('{n} Preise gemeldet — danke! 🍻', { n: ok }), { tone: 'good' });
+      toast(ok === 1 ? t('1 Preis gemeldet. Danke.') : t('{n} Preise gemeldet. Danke.', { n: ok }), { tone: 'good' });
       closeDialog($('#scanDialog'));
       onDone && onDone();
-    } else if (fail) { btn.disabled = false; toast(t('Nichts gemeldet — siehe Hinweise.'), { tone: 'bad' }); }
+    } else if (fail) { btn.disabled = false; toast(t('Nichts gemeldet. Schau auf die Hinweise.'), { tone: 'bad' }); }
   };
 }

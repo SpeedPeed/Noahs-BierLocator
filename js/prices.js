@@ -34,8 +34,8 @@ export function validatePrice(rawPrice, unit, beer = 'x') {
   const p05 = price / u.halves;
   const range = u.crate ? PLAUSIBLE.crate : PLAUSIBLE.single;
   const lo = range.min * u.halves, hi = range.max * u.halves;
-  if (p05 < range.min) return { ok: false, per05: p05, message: t('Das ist unrealistisch billig — für {unit} sind mindestens {min} plausibel.', { unit: u.label, min: money(lo) }) };
-  if (p05 > range.max) return { ok: false, per05: p05, message: t('Das ist unrealistisch teuer — für {unit} sind höchstens {max} plausibel.', { unit: u.label, max: money(hi) }) };
+  if (p05 < range.min) return { ok: false, per05: p05, message: t('Zu billig. Für {unit} sind mindestens {min} plausibel.', { unit: u.label, min: money(lo) }) };
+  if (p05 > range.max) return { ok: false, per05: p05, message: t('Zu teuer. Für {unit} sind höchstens {max} plausibel.', { unit: u.label, max: money(hi) }) };
   return { ok: true, per05: p05, price: Math.round(price * 100) / 100 };
 }
 
@@ -99,10 +99,10 @@ export function parseMenuText(text) {
       const guessed = volL == null;
       const unit = guessed ? '0.5l' : volUnit(volL);
       const beer = name.slice(0, 40);
-      const check = unit ? validatePrice(p.v, unit, beer) : { ok: false, message: t('{vol} l gibt es als Gebinde nicht — bitte anpassen.', { vol: LANG === 'de' ? String(volL).replace('.', ',') : String(volL) }) };
+      const check = unit ? validatePrice(p.v, unit, beer) : { ok: false, message: t('{vol} l gibt es als Gebinde nicht. Bitte anpassen.', { vol: LANG === 'de' ? String(volL).replace('.', ',') : String(volL) }) };
       const beerish = BEERISH.test(name);
       if (out.some(o => o.beer === beer && o.unit === unit && o.price === p.v)) return;
-      out.push({ beer, price: p.v, unit, volL, guessed, beerish, ok: check.ok, message: check.ok ? (guessed ? t('Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.') : '') : check.message });
+      out.push({ beer, price: p.v, unit, volL, guessed, beerish, ok: check.ok, message: check.ok ? (guessed ? t('Menge nicht erkannt, 0,5 l angenommen. Bitte prüfen.') : '') : check.message });
     });
   }
   return out.slice(0, 40);

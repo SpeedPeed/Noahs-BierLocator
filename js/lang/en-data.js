@@ -29,10 +29,10 @@ export default {
   'Welche Biersorte?': 'Which beer?',
   'Biersorte bitte kürzer (max. 40 Zeichen).': 'Please keep the beer name shorter (max. 40 characters).',
   'Bitte einen Preis eingeben.': 'Please enter a price.',
-  'Das ist unrealistisch billig — für {unit} sind mindestens {min} plausibel.': 'That’s unrealistically cheap — for {unit}, at least {min} is plausible.',
-  'Das ist unrealistisch teuer — für {unit} sind höchstens {max} plausibel.': 'That’s unrealistically expensive — for {unit}, at most {max} is plausible.',
-  '{vol} l gibt es als Gebinde nicht — bitte anpassen.': '{vol} l isn’t a size we support — please adjust.',
-  'Menge nicht erkannt — 0,5 l angenommen, bitte prüfen.': 'Size not recognised — assumed 0.5 l, please check.',
+  'Zu billig. Für {unit} sind mindestens {min} plausibel.': 'Too cheap. For {unit}, at least {min} is plausible.',
+  'Zu teuer. Für {unit} sind höchstens {max} plausibel.': 'Too expensive. For {unit}, at most {max} is plausible.',
+  '{vol} l gibt es als Gebinde nicht. Bitte anpassen.': '{vol} l isn’t a size we know. Please adjust.',
+  'Menge nicht erkannt, 0,5 l angenommen. Bitte prüfen.': 'Couldn’t read the size, assumed 0.5 l. Please check.',
 
   // Promille-Modell
   'Bier 0,5 l': 'Beer 0.5 l',
@@ -63,7 +63,7 @@ export default {
   'Betäubung': 'Stupor',
   'Bewusstseinstrübung, Filmriss, Gleichgewichtsverlust. Ärztliche Hilfe erwägen.': 'Clouded consciousness, blackouts, loss of balance. Consider getting medical help.',
   'Lebensgefahr': 'Life-threatening',
-  'Gefahr von Bewusstlosigkeit und Atemlähmung — sofort Notruf wählen und die Person nicht allein lassen!': 'Risk of unconsciousness and respiratory arrest — call the emergency number right away and don’t leave the person alone!',
+  'Gefahr von Bewusstlosigkeit und Atemlähmung. Sofort den Notruf wählen und die Person nicht allein lassen.': 'Risk of unconsciousness and respiratory arrest. Call the emergency number now and stay with the person.',
 
   // Promille-Rechner (Dialog)
   'Promille-Rechner': 'BAC calculator',
@@ -82,8 +82,7 @@ export default {
   'Gegessen?': 'Eaten?',
   'Grenzwerte': 'Limits',
   'Land': 'Country',
-  'Statistische Schätzung (Watson-Körperwasser, Resorption & Abbau ca. 0,15 ‰/h). Tagesform, Medikamente und Gewöhnung verändern den echten Wert stark. Kein medizinischer oder rechtlicher Rat und keine Aussage darüber, ob du fahrtüchtig bist — im Zweifel <b>nicht fahren</b>. Bei Erbrechen, Verwirrtheit oder Bewusstlosigkeit sofort den Notruf <b id="bacEmergency"></b> wählen.':
-    'Statistical estimate (Watson body water, absorption & elimination approx. 0.15 ‰/h). How you feel on the day, medication and tolerance change the real value a lot. Not medical or legal advice and no statement about whether you are fit to drive — if in doubt, <b>don’t drive</b>. In case of vomiting, confusion or unconsciousness, call the emergency number <b id="bacEmergency"></b> immediately.',
+  'Statistische Schätzung (Watson-Körperwasser, Resorption & Abbau ca. 0,15 ‰/h). Tagesform, Medikamente und Gewöhnung verändern den echten Wert stark. Kein medizinischer oder rechtlicher Rat und keine Aussage darüber, ob du fahrtüchtig bist. Im Zweifel <b>nicht fahren</b>. Bei Erbrechen, Verwirrtheit oder Bewusstlosigkeit sofort den Notruf <b id="bacEmergency"></b> wählen.': 'Statistical estimate (Watson body water, absorption & elimination approx. 0.15 ‰/h). How you feel on the day, medication and tolerance change the real value a lot. Not medical or legal advice, and no statement about whether you are fit to drive. If in doubt, <b>don’t drive</b>. In case of vomiting, confusion or unconsciousness, call the emergency number <b id="bacEmergency"></b> immediately.',
   '{drink} eingetragen': '{drink} added',
   'Fahrrad': 'Bike',
   'Unter {bac} ‰': 'Below {bac} ‰',
@@ -138,13 +137,13 @@ export default {
   'Kiosk & Späti': 'Kiosk & corner shop',
   'Kiosk': 'Kiosk',
   'Zeitüberschreitung': 'Timed out',
-  'Die Kartenserver sind gerade überlastet. Bitte gleich nochmal versuchen.': 'The map servers are overloaded right now. Please try again in a moment.',
+  'Die Kartenserver streiken gerade. Gleich nochmal versuchen.': 'The map servers are on strike right now. Try again in a moment.',
 
   // Community & Speicher
   'Server-Fehler {status}': 'Server error {status}',
   'Der Preis ist unrealistisch und wurde nicht gespeichert.': 'That price is unrealistic and wasn’t saved.',
-  'Heute schon sehr viele Meldungen — morgen wieder!': 'Lots of reports today already — back tomorrow!',
-  'Löschen am Server ist noch nicht eingerichtet — bitte später nochmal versuchen.': 'Deleting on the server isn’t set up yet — please try again later.',
+  'Für heute reicht’s mit Meldungen. Morgen wieder.': 'That’s enough reports for today. Back tomorrow.',
+  'Löschen am Server geht noch nicht. Später nochmal versuchen.': 'Deleting on the server isn’t set up yet. Try again later.',
   'Keine gültige Datei': 'Not a valid file',
   'Unbekanntes Format': 'Unknown format',
 
@@ -158,7 +157,7 @@ export default {
   'Keine Preise erkannt. Am besten gerade von vorne, gut beleuchtet und nur den Bier-Teil der Karte fotografieren.': 'No prices found. Best take the photo straight on, well lit, and only of the beer part of the menu.',
   'Erkannter Text': 'Recognised text',
   'Menge?': 'Size?',
-  'Häkchen bei allem, was stimmt — Sorte, Menge und Preis lassen sich noch korrigieren.': 'Tick everything that’s right — beer, size and price can still be corrected.',
+  'Hak an, was stimmt. Sorte, Menge und Preis kannst du noch korrigieren.': 'Tick what’s right. You can still fix beer, size and price.',
   'Übernehmen': 'Use',
   'Sorte': 'Beer',
   'Menge': 'Size',
@@ -168,18 +167,18 @@ export default {
   '1 Preis melden': 'Report 1 price',
   '{n} Preise melden': 'Report {n} prices',
   'Nichts ausgewählt': 'Nothing selected',
-  '1 Preis gemeldet — danke! 🍻': '1 price reported — thanks! 🍻',
-  '{n} Preise gemeldet — danke! 🍻': '{n} prices reported — thanks! 🍻',
-  'Nichts gemeldet — siehe Hinweise.': 'Nothing reported — see the notes.',
+  '1 Preis gemeldet. Danke.': '1 price reported. Cheers.',
+  '{n} Preise gemeldet. Danke.': '{n} prices reported. Cheers.',
+  'Nichts gemeldet. Schau auf die Hinweise.': 'Nothing reported. Check the notes.',
 
   // Barcode-Scanner
   'Barcode scannen': 'Scan barcode',
   'Halte den Strichcode der Dose, Flasche oder Kiste in den Rahmen.': 'Hold the barcode of the can, bottle or crate inside the frame.',
   '… oder Nummer eintippen': '… or type in the number',
   'Suchen': 'Search',
-  'Gefunden: {code} — suche Produkt…': 'Found: {code} — looking up product…',
+  'Gefunden: {code}. Suche das Produkt …': 'Found: {code}. Looking it up …',
   'Kamera wird von diesem Browser nicht unterstützt.': 'This browser doesn’t support the camera.',
-  'Kamerazugriff nicht erlaubt — tipp die Nummer unter dem Strichcode ein.': 'Camera access not allowed — type in the number under the barcode.',
+  'Kein Zugriff auf die Kamera. Tipp die Nummer unter dem Strichcode ein.': 'No camera access. Type in the number under the barcode.',
   '{error} Tipp die Nummer unter dem Strichcode ein.': '{error} Type in the number under the barcode.',
   'Produktdatenbank nicht erreichbar. Trag die Sorte einfach selbst ein.': 'Can’t reach the product database. Just enter the beer yourself.',
   'Produkt nicht in der Datenbank. Trag die Sorte einfach selbst ein.': 'Product not in the database. Just enter the beer yourself.',
@@ -187,7 +186,7 @@ export default {
   'Online bei dieser Kette: {list}': 'Online at this chain: {list}',
   'Übernehmen &amp; Preis eintragen': 'Use &amp; enter price',
   'Als Lieblingsbier merken': 'Save as favourite beer',
-  'Lieblingsbier: {beer} — Aktionen in der Nähe erscheinen jetzt unter „Bier finden“.': 'Favourite beer: {beer} — deals nearby now show up under “Find beer”.',
+  'Lieblingsbier: {beer}. Aktionen in der Nähe stehen jetzt unter „Bier finden“.': 'Favourite beer: {beer}. Nearby deals now show up under “Find beer”.',
   'Jetzt nur noch den Preis vom Regal eintippen': 'Now just type in the price from the shelf',
 
   // Preisverlauf
@@ -199,6 +198,6 @@ export default {
   'Aktion etwa alle 1 Wochen ({count}× seit {date})': 'Deal roughly every week ({count}× since {date})',
   'Aktion etwa alle {n} Wochen ({count}× seit {date})': 'Deal roughly every {n} weeks ({count}× since {date})',
   'Keine Aktion seit Beginn der Aufzeichnung ({date})': 'No deal since records began ({date})',
-  'Verlauf wird seit {date} aufgezeichnet — noch keine Daten.': 'History recorded since {date} — no data yet.',
+  'Verlauf läuft seit {date}. Noch keine Daten.': 'Tracking since {date}. Nothing to show yet.',
   'Preisverlauf': 'Price history',
 };
