@@ -1260,19 +1260,6 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Feldschlösschen Lager alkoholfrei",
-"unit": "other",
-"package": "10×0,33 l",
-"price": 12.5,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121321000000",
-"seen": "2026-11-16",
-"volume_l": 3.3,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
 "beer": "Appenzeller Bier Bschorle alkoholfrei",
 "unit": "other",
 "package": "6×0,33 l",
@@ -1286,27 +1273,14 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Appenzeller Quöllfrisch alkoholfrei",
+"beer": "Feldschlösschen Lager alkoholfrei",
 "unit": "other",
-"package": "6×0,5 l",
-"price": 10.95,
+"package": "10×0,33 l",
+"price": 12.5,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121310100000",
+"source": "https://www.migros.ch/de/product/121321000000",
 "seen": "2026-11-16",
-"volume_l": 3.0,
-"currency": "CHF"
-},
-{
-"country": "CH",
-"chain": "migros",
-"beer": "Non Panaché alkoholfrei",
-"unit": "other",
-"package": "4×0,33 l",
-"price": 5.4,
-"promo": false,
-"source": "https://www.migros.ch/de/product/121307800000",
-"seen": "2026-11-16",
-"volume_l": 1.32,
+"volume_l": 3.3,
 "currency": "CHF"
 },
 {
@@ -1325,14 +1299,27 @@
 {
 "country": "CH",
 "chain": "migros",
-"beer": "Corona Cero 0.0% alkoholfrei",
+"beer": "Non Panaché alkoholfrei",
 "unit": "other",
 "package": "4×0,33 l",
-"price": 6.4,
+"price": 5.4,
 "promo": false,
-"source": "https://www.migros.ch/de/product/121306600000",
+"source": "https://www.migros.ch/de/product/121307800000",
 "seen": "2026-11-16",
 "volume_l": 1.32,
+"currency": "CHF"
+},
+{
+"country": "CH",
+"chain": "migros",
+"beer": "Appenzeller Quöllfrisch alkoholfrei",
+"unit": "other",
+"package": "6×0,5 l",
+"price": 10.95,
+"promo": false,
+"source": "https://www.migros.ch/de/product/121310100000",
+"seen": "2026-11-16",
+"volume_l": 3.0,
 "currency": "CHF"
 },
 {
