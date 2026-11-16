@@ -3,14 +3,14 @@ import { hydrateIcons, icon } from './icons.js';
 import { state, on } from './state.js';
 import { prefs, savePrefs, loadTheme, saveTheme, loadLastLocation, saveLastLocation, exportBundle, importBundle } from './store.js';
 import { getPosition, reverseGeocode, geolocationGranted } from './geo.js';
-import { fetchWeather, weatherIcon, isBiergartenWeather, isRainy } from './weather.js';
+import { fetchWeather, weatherIcon, isBiergartenWeather } from './weather.js';
 import { isShared, migrateLocalToShared, exportLocalCommunity, importLocalCommunity } from './community.js';
 import { readHash, clearHash } from './share.js';
 import { haversine } from './util.js';
 import * as mapview from './map.js';
 import { $, $$, toast, wireDialog, openDialog, closeDialog, downloadFile } from './ui/dom.js';
 import { initSheet, sheetOcclusion, setSheet, getSheet, mobile, onSheetChange } from './ui/sheet.js';
-import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints } from './ui/finder.js';
+import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints, currentRadius } from './ui/finder.js';
 import { initDetail, openPlace } from './ui/detail.js';
 import { initTour, loadSharedTour, onTourModeShown, onTourModeHidden, paintRange } from './ui/tourUi.js';
 import { attachAutocomplete } from './ui/autocomplete.js';
@@ -27,15 +27,6 @@ import { initBadges } from './ui/badgesUi.js';
 import { showHeatmap, hideHeatmap } from './heatmap.js';
 import { yearStats } from './ui/wrappedUi.js';
 import { t, num, LANG, LANGS, setLang, translateDom, privacyPage } from './i18n.js';
-
-// Erster Start? (vor init prüfen, bevor die App selbst etwas speichert)
-const WELCOME_KEY = 'bl_welcome_v1';
-const FIRST_RUN = (() => {
-  try {
-    return !['bl_welcome_v1', 'bl_last_location_v1', 'bl_device_secret_v1', 'bl_diary_v1', 'bl_personal_v2', 'bierlocator_data_v1']
-      .some(k => localStorage.getItem(k) !== null);
-  } catch (e) { return false; }
-})();
 
 /* ---------- Theme ---------- */
 function currentTheme() {
@@ -61,7 +52,7 @@ async function setLocation(loc, { label = null, country = null, search = true, f
   setLocLabel(label || t('Standort wird bestimmt…'));
   if (search) {
     mapview.setView(loc.lat, loc.lon, 15);
-    searchAt(state.location, prefs.radius, { fit });
+    searchAt(state.location, null, { fit });
   }
   loadWeather(loc);
   if (country && !prefs.country) state.country = country;
@@ -98,8 +89,7 @@ async function loadWeather(loc) {
     const w = state.weather.current;
     const chip = $('#weatherChip');
     chip.hidden = false;
-    const tag = isBiergartenWeather(w) ? t('Biergartenwetter') : isRainy(w) ? t('lieber drinnen') : '';
-    chip.innerHTML = `${icon(weatherIcon(w.code), { size: 16 })}<b>${Math.round(w.temperature)}°</b>${tag ? `<span>${tag}</span>` : ''}`;
+    chip.innerHTML = `${icon(weatherIcon(w.code), { size: 16 })}<b>${Math.round(w.temperature)}°</b>`;
     chip.classList.toggle('sunny', isBiergartenWeather(w));
     renderFinder();
   } catch (e) { /* Wetter ist nur ein Bonus */ }
@@ -153,8 +143,8 @@ function onMapMoved() {
   if (state.mode !== 'find' || !state.searchCenter) return;
   const { center, radius } = mapview.getViewInfo();
   const moved = haversine(center.lat, center.lon, state.searchCenter.lat, state.searchCenter.lon);
-  $('#btnSearchArea').hidden = moved < Math.max(250, prefs.radius * 0.4) || (mobile() && getSheet() === 'full');
-  $('#btnSearchArea').dataset.radius = String(Math.round(Math.max(400, Math.min(radius, 5000))));
+  $('#btnSearchArea').hidden = moved < Math.max(250, currentRadius() * 0.4) || (mobile() && getSheet() === 'full');
+  $('#btnSearchArea').dataset.radius = String(Math.round(Math.max(400, Math.min(radius, 6000))));
 }
 
 /* ---------- Menü ---------- */
@@ -238,10 +228,9 @@ function openAbout() {
     </ul>
     <h3 class="pd-h">${icon('info', { size: 16 })}${t('Tipps')}</h3>
     <ul class="about-list">
-      <li>${t('Doppeltipp auf einen Ortstyp zeigt nur diesen Typ.')}</li>
       <li>${t('Karte verschieben → „In diesem Bereich suchen“.')}</li>
       <li>${t('In der Tour lassen sich Stopps tauschen oder entfernen. „Los geht’s“ startet die Live-Tour, der Zeitplan fährt mit.')}</li>
-      <li>${t('Lieblingssorte unter „Umkreis &amp; Vorlieben“ eintragen → Aktionen in der Nähe erscheinen von selbst.')}</li>
+      <li>${t('Lieblingssorte unter „Filter“ eintragen, dann erscheinen Aktionen in der Nähe von selbst.')}</li>
       <li>${t('„Meine Runde“ im Menü: Biere zählen, Runden abrechnen, über Stopps abstimmen.')}</li>
       <li>${t('Bei einem Lokal liest „Karte fotografieren“ die Preise von der Getränkekarte.')}</li>
       <li>${t('Taste <kbd>/</kbd> springt in die Suche.')}</li>
@@ -254,25 +243,6 @@ function openAbout() {
     </label>`;
   $('#langSelect').onchange = e => setLang(e.target.value);
   openDialog($('#aboutDialog'));
-}
-
-/* ---------- Einführung beim ersten Start ---------- */
-function showWelcome() {
-  const dlg = $('#welcomeDialog');
-  $('#welcomeBody').innerHTML = `
-    <h2 id="welcomeTitle" class="dlg-title">${icon('beerMug', { size: 20 })}${t('Willkommen beim Bier-Locator')}</h2>
-    <ul class="welcome-list">
-      <li>${icon('map', { size: 20 })}<span>${t('<b>Bier in der Nähe:</b> Kneipen, Biergärten, Brauereien &amp; Läden mit Öffnungszeiten und Preisen.')}</span></li>
-      <li>${icon('bike', { size: 20 })}<span>${t('<b>Radtouren:</b> gleichmäßige Bier-Runden planen und live mitfahren.')}</span></li>
-      <li>${icon('users', { size: 20 })}<span>${t('<b>Mit Freunden:</b> Biere zählen, Runden abrechnen, über den nächsten Stopp abstimmen.')}</span></li>
-    </ul>
-    <div class="notice">${icon('locate', { size: 20 })}<div>${t('Für Orte in deiner Nähe braucht die App deinen <b>Standort</b>. Er wird nur an Karten- und Routendienste geschickt, nicht gespeichert. Ohne Standort kannst du oben nach einem Ort suchen.')}</div></div>
-    <button class="btn btn-primary btn-big" id="welcomeLocate">${icon('locate', { size: 20 })}${t('Standort verwenden')}</button>
-    <button class="btn btn-soft welcome-skip" data-close>${t('Erst mal umschauen')}</button>
-    <p class="fine center">${t('Für Erwachsene. Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht, auch nicht mit dem Rad.')}<br><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
-  dlg.addEventListener('close', () => { try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ } }, { once: true });
-  $('#welcomeLocate').onclick = () => { closeDialog(dlg); locate(); };
-  openDialog(dlg);
 }
 
 /* ---------- Links (#ort=…, #tour=…) ---------- */
@@ -386,7 +356,7 @@ async function init() {
   $$('.tab').forEach(t => t.addEventListener('click', () => { setMode(t.dataset.mode); if (mobile()) setSheet('half'); }));
   $('#btnSearchArea').addEventListener('click', () => {
     const { center } = mapview.getViewInfo();
-    searchAt(center, Number($('#btnSearchArea').dataset.radius) || prefs.radius, { fit: false });
+    searchAt(center, Number($('#btnSearchArea').dataset.radius) || null, { fit: false });
   });
   window.addEventListener('hashchange', handleHash);
 
@@ -404,7 +374,6 @@ async function init() {
 
   // Startpunkt: Link > letzter Standort > (falls erlaubt) GPS
   if (await handleHash()) return;
-  if (FIRST_RUN) { showWelcome(); return; }
   const last = loadLastLocation();
   const granted = await geolocationGranted();
   if (last) {

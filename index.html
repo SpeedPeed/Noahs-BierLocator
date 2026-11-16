@@ -89,27 +89,26 @@
   <div class="sheet-body" id="sheetBody">
     <!-- ===== Bier finden ===== -->
     <section id="paneFind" class="pane" role="tabpanel" aria-labelledby="tabFind">
-      <div class="chips-scroll" id="typeChips" aria-label="Ortstypen"></div>
-      <div class="toolbar">
-        <button class="toggle-chip" id="fOpen" aria-pressed="false"><span class="dot-open"></span>Jetzt offen</button>
-        <button class="toggle-chip" id="fPrice" aria-pressed="false"><span data-icon="coin" data-icon-size="16"></span>Mit Preis</button>
-        <button class="toggle-chip" id="fFav" aria-pressed="false"><span data-icon="heart" data-icon-size="16"></span>Favoriten</button>
-        <label class="sort-select"><span class="sr-only">Sortierung</span>
-          <select id="sortSelect">
-            <option value="recommended">Empfohlen</option>
-            <option value="distance">Nächste</option>
-            <option value="price">Günstigste</option>
-            <option value="rating">Beste</option>
-          </select>
-        </label>
-      </div>
-
-      <details class="prefs" id="prefsBox">
-        <summary><span data-icon="sliders" data-icon-size="16"></span>Umkreis &amp; Vorlieben <span class="prefs-summary" id="prefsSummary"></span><span class="chev" data-icon="chevronDown" data-icon-size="16"></span></summary>
-        <div class="prefs-body">
+      <details class="filters" id="filterBox" hidden>
+        <summary class="results-head">
+          <h2 id="resultTitle"></h2>
+          <span class="filter-btn"><span data-icon="sliders" data-icon-size="16"></span>Filter<b id="filterCount" hidden></b></span>
+        </summary>
+        <div class="filters-body">
+          <div class="chips-wrap" id="typeChips" aria-label="Ortstypen"></div>
+          <div class="chips-wrap">
+            <button class="toggle-chip" id="fOpen" aria-pressed="false"><span class="dot-open"></span>Jetzt offen</button>
+            <button class="toggle-chip" id="fPrice" aria-pressed="false"><span data-icon="coin" data-icon-size="16"></span>Mit Preis</button>
+            <button class="toggle-chip" id="fFav" aria-pressed="false"><span data-icon="heart" data-icon-size="16"></span>Favoriten</button>
+          </div>
           <label class="field">
-            <span class="field-label">Suchradius <b id="radiusValue">1,0 km</b></span>
-            <input id="radius" type="range" min="300" max="5000" step="100" value="1000" class="range">
+            <span class="field-label">Sortierung</span>
+            <select id="sortSelect">
+              <option value="recommended">Empfohlen</option>
+              <option value="distance">Nächste</option>
+              <option value="price">Günstigste</option>
+              <option value="rating">Beste</option>
+            </select>
           </label>
           <div class="field-row">
             <label class="field">
@@ -129,20 +128,18 @@
             <input id="prefBiergarten" type="checkbox" class="switch">
             <span>Biergärten bevorzugen</span>
           </label>
+          <button id="btnUnhide" class="link-btn" hidden></button>
         </div>
       </details>
+      <p id="contextLine" class="context-line" hidden></p>
 
       <div id="cheapestCard" class="cheapest" hidden></div>
       <div id="dealCard" class="deal" hidden></div>
-
-      <div class="results-head">
-        <h2><span id="resultCount">0</span> <span id="resultNoun">Orte</span></h2>
-        <div class="results-links">
-          <button id="btnUnhide" class="link-btn" hidden></button>
-          <button id="btnSurprise" class="link-btn" hidden><span data-icon="dice" data-icon-size="16"></span>Überrasch mich</button>
-        </div>
-      </div>
       <div id="results" class="results" aria-live="polite"></div>
+      <div id="resultsFoot" class="results-foot" hidden>
+        <button id="btnWider" class="btn btn-soft">Weiter weg schauen</button>
+        <button id="btnSurprise" class="link-btn" hidden><span data-icon="dice" data-icon-size="16"></span>Überrasch mich</button>
+      </div>
     </section>
 
     <!-- ===== Bier-Radtour ===== -->
@@ -271,10 +268,6 @@
 <dialog id="aboutDialog" class="dlg" aria-labelledby="aboutTitle">
   <button class="dlg-close icon-btn" data-close aria-label="Schließen"><span data-icon="x" data-icon-size="20"></span></button>
   <div id="aboutBody"></div>
-</dialog>
-
-<dialog id="welcomeDialog" class="dlg" aria-labelledby="welcomeTitle">
-  <div id="welcomeBody" class="dlg-body"></div>
 </dialog>
 
 <dialog id="syncDialog" class="dlg" aria-labelledby="syncTitle">

@@ -18,6 +18,11 @@ export function fmtDist(m) {
   if (m < 1000) return `${Math.round(m / 10) * 10} m`;
   return `${num(m / 1000, m < 10000 ? 1 : 0)} km`;
 }
+// Gehzeit statt Meter: Luftlinie mal 1,3 (Umweg) bei 4,8 km/h. Über 25 Min sagt die Entfernung mehr.
+export function fmtWalk(m) {
+  const min = Math.max(1, Math.round(m * 1.3 / 80));
+  return min <= 25 ? t('{min} Min zu Fuß', { min }) : fmtDist(m);
+}
 export function fmtKm(m, digits = 1) { return num(m / 1000, digits); }
 export function fmtDuration(seconds) {
   if (seconds < 60) return t('< 1 Min');

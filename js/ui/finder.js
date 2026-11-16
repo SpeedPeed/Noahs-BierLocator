@@ -1,57 +1,63 @@
-// "Bier finden": Filter, Sortierung, Ergebnisliste, Karte mit Markern.
-import { prefs, savePrefs, isFavorite, isHidden, hiddenCount, unhideAll } from '../store.js';
+// "Bier finden": Liste und Karte. Zeigt zuerst echte Bierorte im passenden Umkreis;
+// alles Weitere (Ortstypen, Schalter, Sortierung, Vorlieben) liegt hinter "Filter".
+import { prefs, savePrefs, isFavorite, isHidden, hiddenCount, unhideAll, BEER_TYPES } from '../store.js';
 import { state, rememberPlaces, emit } from '../state.js';
-import { TYPE_META, TYPE_ORDER, fetchPlacesAround, breweries } from '../places.js';
+import { TYPE_META, TYPE_ORDER, fetchPlacesAround, autoRadius } from '../places.js';
 import { getSummary, loadSummaries } from '../community.js';
-import { placeStatus, statusBadge } from '../placeInfo.js';
+import { placeStatus, statusShort, contextReason, isLate } from '../placeInfo.js';
 import { isBiergartenWeather, isRainy } from '../weather.js';
 import { icon } from '../icons.js';
-import { fmtDist, fmtEuro, escapeHtml, timeAgo, debounce } from '../util.js';
+import { fmtDist, fmtWalk, escapeHtml, timeAgo, debounce, haversine } from '../util.js';
 import { $, toast, skeletonCards, beerLoader } from './dom.js';
 import { stateBlock } from './states.js';
 import * as mapview from '../map.js';
 import { BEER_SUGGESTIONS } from '../prices.js';
 import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf } from '../chainPrices.js';
-import { t, num, money, moneyParts, LOCALE, pkg } from '../i18n.js';
+import { t, num, money, moneyParts, LOCALE, pkg, privacyPage } from '../i18n.js';
 
 let openPlace = () => {};
 let loading = false;
 let searchSeq = 0;
-let lastRadius = prefs.radius;
 let retryWhenOnline = () => {};
-const MAX_RADIUS = 5000;
+
+// Umkreis: ohne Vorgabe erst nah suchen; sind dort zu wenige Bierorte, einmal weit (Stadt eng, Land weit).
+// Zwei Stufen, damit das Dorf höchstens zwei Abfragen braucht.
+const AUTO_STEPS = [1000, 6000];
+const MAX_RADIUS = 6000;
+const ENOUGH = 8;
+let fetchedRadius = 0;   // so weit reichen die geladenen Orte
+let shownRadius = 0;     // so weit zeigt die Liste
+let autoMode = true;
+export const currentRadius = () => shownRadius || 1000;
+
+const BEER = new Set(BEER_TYPES);
+const LATE_TYPES = new Set(['convenience', 'fuel']);
+const SHOP_TYPES = new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
+const TOGGLES = { fOpen: 'onlyOpen', fPrice: 'onlyPrice', fFav: 'onlyFav' };
+// Hat man an den Ortstypen gedreht? Dann entscheidet man selbst, und die App mischt nichts dazu.
+const customTypes = () => prefs.types.length !== BEER.size || prefs.types.some(ty => !BEER.has(ty));
+const reach = p => p.reach ?? p.distance;
+const wanted = () => { const types = new Set(prefs.types); return state.places.filter(p => types.has(p.type) && !isHidden(p.id)); };
 
 export function initFinder(opts) {
   openPlace = opts.openPlace;
 
-  // Typ-Chips
-  $('#typeChips').innerHTML = TYPE_ORDER.map(t => {
-    const m = TYPE_META[t];
-    const on = prefs.types.includes(t);
-    return `<button class="type-chip" data-type="${t}" aria-pressed="${on}" style="--c:${m.color}">${icon(m.icon, { size: 16 })}<span>${m.short}</span></button>`;
+  $('#typeChips').innerHTML = TYPE_ORDER.map(ty => {
+    const m = TYPE_META[ty];
+    return `<button class="type-chip" data-type="${ty}" aria-pressed="${prefs.types.includes(ty)}" style="--c:${m.color}">${icon(m.icon, { size: 16 })}<span>${m.short}</span></button>`;
   }).join('');
   $('#typeChips').addEventListener('click', e => {
     const b = e.target.closest('.type-chip');
     if (!b) return;
-    const ty = b.dataset.type;
     const on = b.getAttribute('aria-pressed') !== 'true';
-    // Langes Drücken wäre schöner; hier: Doppeltipp = "nur dieser Typ"
-    if (b._lastTap && Date.now() - b._lastTap < 350) {
-      prefs.types = [ty];
-      document.querySelectorAll('.type-chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.type === ty)));
-      toast(t('Nur {type}', { type: TYPE_META[ty].label }), { ms: 1600 });
-    } else {
-      b.setAttribute('aria-pressed', String(on));
-      prefs.types = on ? [...new Set([...prefs.types, ty])] : prefs.types.filter(x => x !== ty);
-    }
-    b._lastTap = Date.now();
+    b.setAttribute('aria-pressed', String(on));
+    prefs.types = on ? [...new Set([...prefs.types, b.dataset.type])] : prefs.types.filter(x => x !== b.dataset.type);
     savePrefs();
+    if (autoMode) shownRadius = autoRadius(wanted().map(reach), fetchedRadius);
     render();
   });
 
-  // Schalter
-  const toggles = { fOpen: 'onlyOpen', fPrice: 'onlyPrice', fFav: 'onlyFav' };
-  for (const [id, key] of Object.entries(toggles)) {
+  for (const [id, key] of Object.entries(TOGGLES)) {
     const el = $('#' + id);
     el.setAttribute('aria-pressed', String(!!prefs[key]));
     el.addEventListener('click', () => {
@@ -65,17 +71,7 @@ export function initFinder(opts) {
   sort.value = prefs.sort;
   sort.addEventListener('change', () => { prefs.sort = sort.value; savePrefs(); render(); });
 
-  // Vorlieben
   $('#beerList').innerHTML = BEER_SUGGESTIONS.map(b => `<option value="${b}">`).join('');
-  const radius = $('#radius');
-  radius.value = prefs.radius;
-  const showRadius = () => { $('#radiusValue').textContent = fmtDist(+radius.value); };
-  showRadius();
-  radius.addEventListener('input', showRadius);
-  radius.addEventListener('change', () => {
-    prefs.radius = +radius.value; savePrefs();
-    if (state.searchCenter) searchAt(state.searchCenter, prefs.radius, { fit: true });
-  });
   $('#prefBeer').value = prefs.beerType || '';
   $('#prefMaxPrice').value = prefs.maxPrice ?? '';
   $('#prefBiergarten').checked = !!prefs.biergartenPref;
@@ -92,53 +88,58 @@ export function initFinder(opts) {
   $('#filterBeer').addEventListener('input', debounce(render, 200));
 
   $('#btnUnhide').addEventListener('click', () => { unhideAll(); render(); toast(t('Alle ausgeblendeten Orte sind wieder sichtbar.'), { tone: 'good' }); });
-
-  $('#results').addEventListener('click', e => {
-    const card = e.target.closest('[data-place]');
-    if (!card) return;
-    if (e.target.closest('[data-action="locate"]')) { mapview.highlightPlace(card.dataset.place); return; }
-    openPlace(card.dataset.place);
-  });
-  $('#cheapestCard').addEventListener('click', e => {
-    const c = e.target.closest('[data-place]');
-    if (c) openPlace(c.dataset.place);
-  });
-  $('#dealCard').addEventListener('click', e => {
-    const c = e.target.closest('[data-place]');
-    if (c) openPlace(c.dataset.place);
-  });
+  for (const id of ['#results', '#cheapestCard', '#dealCard']) {
+    $(id).addEventListener('click', e => {
+      const c = e.target.closest('[data-place]');
+      if (c) openPlace(c.dataset.place);
+    });
+  }
   $('#btnSurprise').addEventListener('click', () => emit('open-surprise'));
+  $('#btnWider').addEventListener('click', widen);
 
   renderEmpty();
   loadChainPrices().then(() => render());
 }
 
+// Erster Start und "kein Standort" sind derselbe Bildschirm: ein Satz, ein Knopf, das Kleingedruckte.
 function renderEmpty() {
   $('#results').innerHTML = stateBlock({
     art: 'where', title: t('Wo gibt\'s hier Bier?'), text: t('Sag mir, wo du bist, oder such oben nach einem Ort.'),
     action: { id: 'btnEmptyLocate', label: t('Standort verwenden'), icon: 'locate' },
-  });
+  }) + `<p class="fine center">${t('Für Erwachsene. Dein Standort geht nur an Karten-, Routen- und Wetterdienste.')} <a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>`;
   $('#btnEmptyLocate').onclick = () => emit('request-locate');
 }
 
 /* ---------- Suche ---------- */
-export async function searchAt(center, radius = prefs.radius, { fit = true, quiet = false } = {}) {
+// radius = null: Umkreis passend zur Dichte. Mit Radius (z.B. "In diesem Bereich suchen"): genau der.
+export async function searchAt(center, radius = null, { fit = true, quiet = false } = {}) {
   const seq = ++searchSeq;
   loading = true;
-  lastRadius = radius;
   window.removeEventListener('online', retryWhenOnline);
   state.searchCenter = center;
   $('#btnSearchArea').hidden = true;
+  $('#filterBox').hidden = false;
   if (!quiet) {
     $('#results').innerHTML = beerLoader(t('Schau mich um …')) + skeletonCards(4);
-    $('#resultCount').textContent = '…';
+    $('#resultTitle').textContent = '…';
+    $('#resultsFoot').hidden = true;
   }
   try {
     const ref = state.location || center;
-    const { places, total, fromCache } = await fetchPlacesAround(center, radius, TYPE_ORDER, { ref });
-    if (seq !== searchSeq) return;
+    const types = new Set(prefs.types);
+    let places = [], fetched = 0;
+    for (const step of radius ? [radius] : AUTO_STEPS) {
+      ({ places } = await fetchPlacesAround(center, step, TYPE_ORDER, { ref }));
+      if (seq !== searchSeq) return;
+      fetched = step;
+      if (places.filter(p => types.has(p.type) && !isHidden(p.id)).length >= ENOUGH) break;
+    }
+    for (const p of places) p.reach = haversine(center.lat, center.lon, p.lat, p.lon);
     state.places = places;
     rememberPlaces(places);
+    fetchedRadius = fetched;
+    autoMode = !radius;
+    shownRadius = radius || autoRadius(wanted().map(reach), fetched);
     loading = false;
     render();
     if (fit) mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), center);
@@ -155,8 +156,17 @@ export async function searchAt(center, radius = prefs.radius, { fit = true, quie
     retryWhenOnline = () => searchAt(center, radius, { fit });
     $('#btnRetry').onclick = retryWhenOnline;
     if (offline) window.addEventListener('online', retryWhenOnline, { once: true });
-    $('#resultCount').textContent = '0';
+    $('#resultTitle').textContent = '';
   }
+}
+
+function widen() {
+  const next = Math.min(MAX_RADIUS, shownRadius * 2);
+  if (next > fetchedRadius) { searchAt(state.searchCenter, next); return; }
+  shownRadius = next;
+  autoMode = false;
+  render();
+  mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), state.searchCenter);
 }
 
 /* ---------- Filtern & Sortieren ---------- */
@@ -174,17 +184,18 @@ function deckel(pr, size = 'md') {
   const what = pr.online ? t('Online-Preis {chain}', { chain: pr.chain }) : timeAgo(pr.created_at);
   return `<span class="deckel deckel-${size}${pr.online ? ' online' : ''}${pr.stale ? ' stale' : ''}" title="${escapeHtml(`${pr.beer} · ${what}`)}"><b>${value}</b><small>${unit}</small></span>`;
 }
-// Bierorte stehen auf der Karte vorn, alles andere tritt zurück.
-const MAJOR_TYPES = new Set(['pub', 'biergarten', 'brewery', 'gasthaus']);
-function recommendationScore(p, s, st, price) {
-  let score = (1 - Math.min(p.distance / (prefs.radius || 1000), 1)) * 40;
+function recommendationScore({ p, s, st, price }, now, late) {
+  let score = (1 - Math.min(reach(p) / currentRadius(), 1)) * 30;
   if (price) {
     score += prefs.maxPrice ? (price.per05 <= prefs.maxPrice ? 22 : -18) : 8;
     if (prefs.beerType && price.beer.toLowerCase().includes(prefs.beerType.toLowerCase())) score += 12;
   }
   if (prefs.beerType && s.prices.some(x => x.beer.toLowerCase().includes(prefs.beerType.toLowerCase()))) score += 14;
   if (s.rating.avg) score += (s.rating.avg - 2.5) * 6;
-  if (st) score += st.open ? 12 : -25;
+  // Die Frage ist "wo krieg ich jetzt ein Bier": offen schlägt nah, zu steht hinten.
+  if (st) score += st.open ? 30 : -30;
+  // Spät am Abend zählt, wie lange noch offen ist.
+  if (late && st && st.open && st.until) score += Math.min((st.until - now) / 3600000, 4) * 3;
   const outdoor = p.type === 'biergarten' || p.tags.outdoor_seating === 'yes';
   const w = state.weather && state.weather.current;
   if (outdoor) {
@@ -198,12 +209,29 @@ function recommendationScore(p, s, st, price) {
   return score;
 }
 
+// Was die Liste zuletzt von selbst dazugenommen hat (für die Erklärzeile).
+let ctx = { widened: false, late: false };
+
 function visibleList() {
-  const types = new Set(prefs.types);
-  const beer = $('#filterBeer').value.trim().toLowerCase();
   const now = new Date();
-  let list = state.places.filter(p => types.has(p.type) && !isHidden(p.id));
-  list = list.map(p => { const s = getSummary(p.id); return { p, s, st: placeStatus(p, now), price: effectivePrice(p, s) }; });
+  const late = isLate(now.getHours());
+  const beer = $('#filterBeer').value.trim().toLowerCase();
+  const types = new Set(prefs.types);
+  const row = p => { const s = getSummary(p.id); return { p, s, st: placeStatus(p, now), price: effectivePrice(p, s) }; };
+  const near = state.places.filter(p => !isHidden(p.id) && reach(p) <= shownRadius);
+  let list = near.filter(p => types.has(p.type)).map(row);
+
+  // Kontext statt Knopf: Hat kein Bierort offen, kommt dazu, was offen hat. Spät am Abend Spätis und Tankstellen.
+  ctx = { widened: false, late: false };
+  if (!customTypes()) {
+    // Unbekannte Zeiten zählen nicht als offen, sonst greift das in der Stadt nie.
+    const noneOpen = !list.some(x => x.st && x.st.open);
+    const extra = noneOpen ? p => !types.has(p.type) : late ? p => LATE_TYPES.has(p.type) : null;
+    // Dafür auch weiter weg schauen als die Liste reicht: die nächsten paar, die sicher offen haben.
+    const more = extra ? state.places.filter(p => !isHidden(p.id) && extra(p)).map(row).filter(x => x.st && x.st.open).sort((a, b) => a.p.distance - b.p.distance).slice(0, 8) : [];
+    if (more.length) { ctx = { widened: noneOpen, late: !noneOpen }; list = list.concat(more); }
+  }
+
   if (prefs.onlyOpen) list = list.filter(x => x.st && x.st.open);
   if (prefs.onlyPrice) list = list.filter(x => x.price);
   if (prefs.onlyFav) list = list.filter(x => isFavorite(x.p.id));
@@ -221,97 +249,115 @@ function visibleList() {
   } else if (prefs.sort === 'rating') {
     list.sort((a, b) => (b.s.rating.avg || 0) - (a.s.rating.avg || 0) || a.p.distance - b.p.distance);
   } else {
-    list.forEach(x => { x.score = recommendationScore(x.p, x.s, x.st, x.price); });
+    list.forEach(x => { x.score = recommendationScore(x, now, late); });
     list.sort((a, b) => b.score - a.score);
   }
   return list;
 }
 
 /* ---------- Darstellung ---------- */
+const REASONS = {
+  closed: () => t('Kein Bierort hier hat sicher offen. Das hier schon.'),
+  late: () => t('Spät dran: Spätis und Tankstellen sind dabei.'),
+  rain: () => t('Drinnen sitzen vorn, weil es regnet.'),
+  sun: () => t('Biergärten vorn, weil die Sonne scheint.'),
+};
+
 export function render() {
   if (!state.searchCenter) return;
   const list = visibleList();
-  const cheapest = list.filter(x => x.price && !x.price.stale && x.price.currency !== 'CHF').sort((a, b) => a.price.per05 - b.price.per05)[0]
-    || list.filter(x => x.price && !x.price.stale).sort((a, b) => a.price.per05 - b.price.per05)[0];
+  const custom = customTypes();
+  const activeFilters = [prefs.onlyOpen, prefs.onlyPrice, prefs.onlyFav, custom, prefs.sort !== 'recommended', !!$('#filterBeer').value.trim()].filter(Boolean).length;
 
   if (state.mode === 'find') {
-    const hasMajor = list.some(x => MAJOR_TYPES.has(x.p.type));
+    const hasBeer = list.some(x => BEER.has(x.p.type));
     mapview.renderPlaceMarkers(list.map(x => ({
       place: x.p,
       info: {
         price: x.price && !x.price.stale ? x.price.per05 : null, online: !!(x.price && x.price.online),
-        closed: x.st && !x.st.open, favorite: isFavorite(x.p.id), best: cheapest && cheapest.p.id === x.p.id,
-        minor: hasMajor && !MAJOR_TYPES.has(x.p.type),
+        closed: x.st && !x.st.open, favorite: isFavorite(x.p.id), minor: hasBeer && !BEER.has(x.p.type),
       },
     })), id => openPlace(id));
   }
 
-  $('#resultCount').textContent = list.length;
-  $('#resultNoun').textContent = list.length === 1 ? t('Ort') : t('Orte');
+  // Kopfzeile: was man sieht und wie weit, daneben der eine Knopf für alles Weitere.
+  const n = list.length;
+  const mixed = custom || ctx.widened || ctx.late;
+  const count = mixed ? (n === 1 ? t('1 Ort') : t('{n} Orte', { n })) : (n === 1 ? t('1 Bierort') : t('{n} Bierorte', { n }));
+  // Hat die Liste von selbst weiter weg gesucht, stimmt der Umkreis nicht mehr: dann ohne.
+  $('#resultTitle').innerHTML = loading ? '…' : `${count}${ctx.widened || ctx.late ? '' : ` <small>${t('bis {r}', { r: fmtDist(shownRadius) })}</small>`}`;
+  $('#filterCount').hidden = !activeFilters;
+  $('#filterCount').textContent = activeFilters;
   const hc = hiddenCount();
   $('#btnUnhide').hidden = !hc;
   $('#btnUnhide').textContent = t('{n} ausgeblendet · zeigen', { n: hc });
 
-  const pr = [];
-  if (prefs.radius) pr.push(fmtDist(prefs.radius));
-  if (prefs.beerType) pr.push(prefs.beerType);
-  if (prefs.maxPrice) pr.push(`≤ ${fmtEuro(prefs.maxPrice)}`);
-  $('#prefsSummary').textContent = pr.join(' · ');
+  // Erklärzeile: warum die Liste so aussieht. Wetter zählt nur bei "Empfohlen".
+  const w = state.weather && state.weather.current;
+  const byWeather = prefs.sort === 'recommended' && n > 1;
+  const reason = contextReason({
+    ...ctx,
+    rainy: byWeather && isRainy(w) && list.some(x => x.p.type === 'biergarten'),
+    sunny: byWeather && isBiergartenWeather(w) && list.some(x => x.p.type === 'biergarten' || x.p.tags.outdoor_seating === 'yes'),
+  });
+  $('#contextLine').hidden = !reason || loading;
+  $('#contextLine').textContent = reason ? REASONS[reason]() : '';
 
-  // Günstigstes Bier
+  // Günstigste Halbe: im Kneipen-Kontext nur ein vor Ort gemeldeter Preis, nie ein Supermarktpreis.
+  const fresh = list.filter(x => x.price && !x.price.stale);
+  const byPrice = (a, b) => a.price.per05 - b.price.per05;
+  const cheapest = fresh.filter(x => x.price.currency !== 'CHF').sort(byPrice)[0] || fresh.sort(byPrice)[0];
+  const shopContext = !prefs.types.some(ty => BEER.has(ty));
   const cc = $('#cheapestCard');
-  if (cheapest) {
+  cc.hidden = !cheapest || (cheapest.price.online && !shopContext);
+  if (!cc.hidden) {
     const c = cheapest.price;
-    cc.hidden = false;
     cc.innerHTML = `<button class="cheapest-inner" data-place="${cheapest.p.id}">
       ${deckel(c, 'lg')}
       <span class="cheapest-text">
         <span class="cheapest-kicker">${t('Günstigste Halbe')}${c.online ? ' · ' + t('Online-Preis') : ''}</span>
         <span class="cheapest-beer">${escapeHtml(c.beer)}</span>
-        <span class="cheapest-where">${escapeHtml(cheapest.p.name)} · ${fmtDist(cheapest.p.distance)} · ${c.online ? t('Stand {date}', { date: new Date(c.created_at).toLocaleDateString(LOCALE) }) : timeAgo(c.created_at)}</span>
+        <span class="cheapest-where">${escapeHtml(cheapest.p.name)} · ${fmtWalk(cheapest.p.distance)} · ${c.online ? t('Stand {date}', { date: new Date(c.created_at).toLocaleDateString(LOCALE) }) : timeAgo(c.created_at)}</span>
       </span>
     </button>`;
-  } else {
-    cc.hidden = true;
   }
   renderDeal(list);
-  $('#btnSurprise').hidden = !list.some(x => SURPRISE_TYPES.has(x.p.type));
+  $('#resultsFoot').hidden = loading || !n;
+  $('#btnWider').hidden = shownRadius >= MAX_RADIUS;
+  $('#btnSurprise').hidden = !list.some(x => BEER.has(x.p.type));
   renderListeners.forEach(fn => fn(list));
 
   const box = $('#results');
   if (loading) return;
-  if (!list.length) {
-    if (state.places.length) {
+  if (!n) {
+    if (activeFilters) {
       // Orte wären da, die Filter lassen nur keinen durch → ein Tipp lockert sie.
       box.innerHTML = stateBlock({ art: 'nothing', small: true, title: t('Mit diesen Filtern bleibt nichts übrig.'), action: { id: 'btnLoosen', label: t('Filter lockern') } });
       $('#btnLoosen').onclick = loosenFilters;
     } else {
-      const wider = Math.min(MAX_RADIUS, Math.max(lastRadius * 2, 1000));
-      const canWiden = wider > lastRadius;
+      const canWiden = shownRadius < MAX_RADIUS;
       box.innerHTML = stateBlock({
         art: 'nothing', small: true, title: t('Hier ist nichts.'),
-        text: t('Im Umkreis von {r} kennt die Karte keinen Bierort.', { r: fmtDist(lastRadius) }),
+        text: t('Im Umkreis von {r} kennt die Karte keinen Bierort.', { r: fmtDist(shownRadius) }),
         action: canWiden ? { id: 'btnWiden', label: t('Weiter weg schauen') } : null,
       });
-      if (canWiden) $('#btnWiden').onclick = () => {
-        prefs.radius = wider; savePrefs();
-        $('#radius').value = wider; $('#radius').dispatchEvent(new Event('input'));
-        searchAt(state.searchCenter, wider, { fit: true });
-      };
+      if (canWiden) $('#btnWiden').onclick = widen;
     }
     return;
   }
-  box.innerHTML = list.slice(0, 120).map((x, i) => cardHtml(x, i)).join('')
-    + (list.length > 120 ? `<p class="fine center">${t('+ {n} weitere auf der Karte', { n: list.length - 120 })}</p>` : '');
+  box.innerHTML = list.slice(0, 60).map(cardHtml).join('')
+    + (n > 60 ? `<p class="fine center">${t('+ {n} weitere auf der Karte', { n: n - 60 })}</p>` : '');
 }
 
-// Erst die Schalter und den Sortenfilter aus; reicht das nicht, alle Ortstypen an.
+// Erst die Schalter, den Sortenfilter und die Sortierung zurück; reicht das nicht, wieder die Bierorte.
 function loosenFilters() {
   prefs.onlyOpen = prefs.onlyPrice = prefs.onlyFav = false;
+  prefs.sort = 'recommended';
+  $('#sortSelect').value = prefs.sort;
   $('#filterBeer').value = '';
-  if (!visibleList().length) prefs.types = TYPE_ORDER.slice();
+  if (!visibleList().length) prefs.types = BEER_TYPES.slice();
   savePrefs();
-  for (const [id, key] of Object.entries({ fOpen: 'onlyOpen', fPrice: 'onlyPrice', fFav: 'onlyFav' })) $('#' + id).setAttribute('aria-pressed', String(!!prefs[key]));
+  for (const [id, key] of Object.entries(TOGGLES)) $('#' + id).setAttribute('aria-pressed', String(!!prefs[key]));
   document.querySelectorAll('.type-chip').forEach(c => c.setAttribute('aria-pressed', String(prefs.types.includes(c.dataset.type))));
   render();
 }
@@ -342,9 +388,10 @@ export function favDeal(list) {
   return best;
 }
 
-function renderDeal(list) {
+// Die Aktion gilt für Läden, die in der Bierort-Liste gar nicht stehen: deshalb über alle geladenen Orte.
+function renderDeal() {
   const box = $('#dealCard');
-  const d = favDeal(list);
+  const d = favDeal(state.places.filter(p => !isHidden(p.id)).map(p => ({ p })));
   if (!d) { box.hidden = true; return; }
   const { p, pr } = d;
   const until = pr.valid_until ? ' · ' + t('bis {date}', { date: new Date(pr.valid_until).toLocaleDateString(LOCALE, { day: '2-digit', month: '2-digit' }) }) : '';
@@ -363,41 +410,29 @@ function renderDeal(list) {
 /* ---------- Für Heatmap & Co. ---------- */
 const renderListeners = [];
 export function onRender(fn) { renderListeners.push(fn); }
-const SHOP_TYPES = new Set(['supermarket', 'beverages', 'convenience', 'fuel']);
-const SURPRISE_TYPES = new Set(['pub', 'biergarten', 'brewery', 'gasthaus']);
 // Orte mit aktuellem Preis → [{ lat, lon, v, gastro }]
 export function pricedPoints(list) {
   return list.filter(x => x.price && !x.price.stale && x.price.per05 != null)
     .map(x => ({ lat: x.p.lat, lon: x.p.lon, v: x.price.per05, gastro: !SHOP_TYPES.has(x.p.type) }));
 }
 
-function stars(avg) {
-  return `<span class="mini-stars" style="--v:${(avg / 5) * 100}%" aria-label="${t('{avg} von 5 Sternen', { avg: num(avg, 1) })}">★★★★★</span>`;
-}
-
-function cardHtml({ p, s, st, price: pr }, i) {
+// Eine Zeile = eine Entscheidung: Name, offen bis wann, wie weit zu Fuß, was für ein Ort, Preis.
+function cardHtml({ p, s, st, price: pr }) {
   const m = TYPE_META[p.type];
-  const b = statusBadge(st);
-  const extras = [];
-  if (p.tags.outdoor_seating === 'yes' && p.type !== 'biergarten') extras.push(`<span class="tag">${icon('sun', { size: 16 })}${t('Draußen')}</span>`);
-  if (breweries(p.tags)) extras.push(`<span class="tag">${escapeHtml(breweries(p.tags)[0])}</span>`);
-  return `<article class="card" data-place="${p.id}" style="--c:${m.color};--i:${Math.min(i, 14)}" tabindex="0" role="button" aria-label="${escapeHtml(p.name)}, ${m.label}, ${fmtDist(p.distance)}">
+  const b = statusShort(st);
+  const walk = fmtWalk(p.distance);
+  const outdoor = p.type === 'biergarten' || p.tags.outdoor_seating === 'yes';
+  return `<article class="card" data-place="${p.id}" style="--c:${m.color}" tabindex="0" role="button" aria-label="${escapeHtml(`${p.name}, ${m.label}, ${b.text}, ${walk}${outdoor ? ', ' + t('draußen') : ''}`)}">
     <div class="card-ico">${icon(m.icon, { size: 20 })}</div>
     <div class="card-main">
-      <div class="card-top">
-        <h3 class="card-name">${escapeHtml(p.name)}${isFavorite(p.id) ? `<span class="card-fav">${icon('heart', { size: 16, filled: true })}</span>` : ''}</h3>
-      </div>
+      <h3 class="card-name"><span>${escapeHtml(p.name)}</span>${isFavorite(p.id) ? `<span class="card-fav">${icon('heart', { size: 16, filled: true })}</span>` : ''}${outdoor ? `<span class="card-out" title="${t('draußen')}">${icon('sun', { size: 16 })}</span>` : ''}</h3>
       <div class="card-meta">
-        <span>${m.short}</span><span class="sep">·</span><span>${fmtDist(p.distance)}</span>
-        ${s.rating.avg ? `<span class="sep">·</span>${stars(s.rating.avg)}<span class="muted">(${s.rating.count})</span>` : ''}
-      </div>
-      <div class="card-bottom">
-        <span class="status status-${b.tone}"><span class="status-dot"></span>${b.text}</span>
-        ${extras.join('')}
+        <span class="status status-${b.tone}">${b.text}</span>
+        <span>${walk === fmtDist(p.distance) ? walk : icon('walk', { size: 16 }) + walk.replace(/ zu Fuß| walk/, '')}</span>
+        <span>${m.short}</span>${s.rating.avg ? `<span>★ ${num(s.rating.avg, 1)}</span>` : ''}
       </div>
     </div>
     ${pr ? deckel(pr) : ''}
-    <button class="icon-btn card-locate" data-action="locate" aria-label="${t('Auf der Karte zeigen')}">${icon('pin', { size: 16 })}</button>
   </article>`;
 }
 

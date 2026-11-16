@@ -31,6 +31,30 @@ export function statusBadge(st) {
   return { tone: 'closed', text: st.opensAt ? t('Geschlossen · öffnet {when}', { when: whenLabel(st.opensAt) }) : t('Geschlossen') };
 }
 
+// Kurzform für die Listenzeile: "bis 02:00", "schließt 23:00", "zu, öffnet 16:00".
+export function statusShort(st) {
+  if (!st) return { tone: 'unknown', text: t('Zeiten unbekannt') };
+  if (st.open) {
+    if (st.always) return { tone: 'open', text: t('immer offen') };
+    if (st.closingSoon) return { tone: 'soon', text: t('schließt {time}', { time: fmtClock(st.until) }) };
+    // "bis 02:00" versteht jeder als heute Nacht: kein "morgen" davor.
+    const when = st.until - Date.now() < 20 * 3600e3 ? fmtClock(st.until) : whenLabel(st.until);
+    return { tone: 'open', text: st.until ? t('bis {when}', { when }) : t('offen') };
+  }
+  return { tone: 'closed', text: st.opensAt ? t('zu, öffnet {when}', { when: whenLabel(st.opensAt) }) : t('zu') };
+}
+
+// Warum die Liste so aussieht, wie sie aussieht: ein Grund, der wichtigste zuerst.
+// → 'closed' | 'late' | 'rain' | 'sun' | null
+export const isLate = hour => hour >= 22 || hour < 5;
+export function contextReason({ widened, late, sunny, rainy }) {
+  if (widened) return 'closed';
+  if (late) return 'late';
+  if (rainy) return 'rain';
+  if (sunny) return 'sun';
+  return null;
+}
+
 // Qualität 0..1 für die Tourplanung: Typ + Bonus für Bewertung, Preis, Favorit, Wetter.
 // `wx` = Wetter während der Tour ({ sunny, rainy }, aus der Vorhersage); ohne
 // Angabe zählt das aktuelle Wetter.
