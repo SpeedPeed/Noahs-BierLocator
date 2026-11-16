@@ -8,7 +8,7 @@ import { isShared, migrateLocalToShared, exportLocalCommunity, importLocalCommun
 import { readHash, clearHash } from './share.js';
 import { haversine } from './util.js';
 import * as mapview from './map.js';
-import { $, $$, toast, wireDialog, openDialog, closeDialog, downloadFile } from './ui/dom.js';
+import { $, $$, toast, wireDialog, openDialog, closeDialog, downloadFile, initBack, syncBack } from './ui/dom.js';
 import { initSheet, sheetOcclusion, setSheet, getSheet, mobile, onSheetChange } from './ui/sheet.js';
 import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints, currentRadius } from './ui/finder.js';
 import { initDetail, openPlace } from './ui/detail.js';
@@ -308,7 +308,9 @@ async function init() {
     const top = mobile() ? $('.topbar').getBoundingClientRect().bottom : 0;
     return { top, bottom: occ.bottom, left: occ.left, right: 0 };
   });
+  initBack({ open: () => mobile() && getSheet() === 'full', close: () => setSheet('half') });
   onSheetChange(s => {
+    syncBack();
     setTimeout(() => mapview.invalidate(), 320);
     if (s === 'full') $('#btnSearchArea').hidden = true;
   });

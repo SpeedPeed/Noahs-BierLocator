@@ -42,6 +42,7 @@ export function openDialog(dlg) {
   dlg.classList.remove('closing');
   dlg.showModal();
   dlg.scrollTop = 0;
+  syncBack();
 }
 export function closeDialog(dlg) {
   if (!dlg.open || dlg.classList.contains('closing')) return;
@@ -54,7 +55,29 @@ export function wireDialog(dlg, onClose) {
     if (e.target === dlg || e.target.closest('[data-close]')) closeDialog(dlg);
   });
   dlg.addEventListener('cancel', e => { e.preventDefault(); closeDialog(dlg); });
+  dlg.addEventListener('close', syncBack);
   if (onClose) dlg.addEventListener('close', onClose);
+}
+
+/* ---------- Zurück-Taste (Android): schließt die oberste Ebene, statt die App zu verlassen ---------- */
+// Für jede offene Ebene (Dialog, voll ausgezogenes Sheet) liegt genau ein Verlaufseintrag bereit.
+// syncBack() gleicht das nach jedem Öffnen und Schließen ab; "Zurück" nimmt die oberste Ebene weg.
+let backDepth = 0, backSkip = 0, backSheet = null;
+export function syncBack() {
+  const want = $$('dialog[open]').length + (backSheet && backSheet.open() ? 1 : 0);
+  for (; backDepth < want; backDepth++) history.pushState(null, '');
+  if (backDepth > want) { backSkip++; history.go(want - backDepth); backDepth = want; } // selbst geschlossen: Eintrag still entfernen
+}
+// sheet = { open: () => bool, close: () => void }
+export function initBack(sheet) {
+  backSheet = sheet;
+  window.addEventListener('popstate', () => {
+    if (backSkip) { backSkip--; return; }
+    if (!backDepth) return;
+    backDepth--;
+    const top = $$('dialog[open]').pop();
+    if (top) top.close(); else backSheet.close();
+  });
 }
 
 // Allzweck-Dialog für kleinere Ansichten (Überraschung, Bingo, Heimweg, Tour-Ende …).
