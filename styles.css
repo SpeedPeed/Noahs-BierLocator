@@ -595,7 +595,15 @@ kbd { font-family: inherit; font-size: var(--fs-xs); padding: 1px 8px; border: 1
 .price-input input { padding-right: 32px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .price-input span { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 700; }
 .price-form .btn { border-radius: var(--r-sm); }
-.form-msg { grid-column: 1 / -1; margin: 0; font-size: var(--fs-sm); font-weight: 600; min-height: 1.2em; color: var(--muted); }
+/* Preis melden in zwei Taps: Sorte antippen, Betrag groß eintippen, Melden. */
+.beer-chips, .pf-beer, .pf-send { grid-column: 1 / -1; }
+.beer-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.beer-chips:empty { display: none; }
+.beer-chips .chip-btn { min-height: var(--tap); }
+.price-form .price-input input, .price-form select { height: 52px; }
+.price-form .price-input input { font-family: var(--font-display); font-size: var(--fs-lg); }
+.form-msg { grid-column: 1 / -1; margin: 0; font-size: var(--fs-sm); font-weight: 600; color: var(--muted); }
+.form-msg:empty { display: none; }
 .form-msg.bad { color: var(--bad); }
 .form-msg.good { color: var(--good); }
 .row-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }

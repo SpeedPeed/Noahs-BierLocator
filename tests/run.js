@@ -1,7 +1,7 @@
 // Minimaler Test-Runner im Browser: tests/index.html über einen lokalen Server öffnen.
 import { parseOpeningHours, openStatus, isOpenAt, weekSchedule, isHoliday } from '../js/openingHours.js';
 import { simulateBac, distributionFactor } from '../js/bac.js';
-import { validatePrice, per05 } from '../js/prices.js';
+import { validatePrice, per05, beerChoices } from '../js/prices.js';
 import { generateVariants, overlapRatio, legStats, makeProjection } from '../js/tour/planner.js';
 import { encodeTour, decodeTour } from '../js/share.js';
 import { classify, breweries, autoRadius, dedupe } from '../js/places.js';
@@ -465,6 +465,12 @@ test('Preisschild: Betrag und Währung getrennt', () => {
   eq(moneyParts(4.8).unit, '€');
   eq(moneyParts(4.8, 'CHF').value, '4.80', 'Franken immer mit Punkt');
   eq(moneyParts(4.8, 'CHF').unit, 'CHF');
+});
+
+test('Preis melden: Sortenvorschläge ohne Dubletten, das Naheliegende zuerst', () => {
+  eq(beerChoices([['Zipfer Märzen', 'zipfer märzen '], [undefined, ''], ['Gösser', 'Zipfer Märzen'], ['Pils', 'Helles']]).join('|'), 'Zipfer Märzen|Gösser|Pils|Helles');
+  eq(beerChoices([['a', 'b', 'c', 'd'], ['e', 'f', 'g', 'h']]).length, 6, 'höchstens sechs');
+  eq(beerChoices([[], [null]]).length, 0);
 });
 
 /* ---------- Startbildschirm: Umkreis, Listenzeile, Kontext ---------- */

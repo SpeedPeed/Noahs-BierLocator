@@ -291,4 +291,5 @@ export default {
   'draußen': 'outdoors',
   'Filter': 'Filters',
   'Lieblingssorte unter „Filter“ eintragen, dann erscheinen Aktionen in der Nähe von selbst.': 'Enter your favourite beer under “Filters” and nearby deals show up on their own.',
+  'Sorte wählen': 'Pick a beer',
 };
