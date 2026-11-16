@@ -27,6 +27,7 @@ const ICONS = {
   trash: '<path d="M5 7h14"/><path d="M9.5 7V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v2"/><path d="M7 7l1 12.5A1.5 1.5 0 0 0 9.5 21h5a1.5 1.5 0 0 0 1.5-1.5L17 7"/><path d="M10.3 11v6M13.7 11v6"/>',
   calculator: '<rect x="5" y="3" width="14" height="18" rx="2.2"/><path d="M7.5 6.5h9v3.5h-9z"/><circle cx="8" cy="14" r="0.9"/><circle cx="12" cy="14" r="0.9"/><circle cx="16" cy="14" r="0.9"/><circle cx="8" cy="17.5" r="0.9"/><circle cx="12" cy="17.5" r="0.9"/><circle cx="16" cy="17.5" r="0.9"/>',
   x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  walk: '<circle cx="13" cy="4.5" r="1.8"/><path d="M13 8.5l-2 5 3 3v4.5"/><path d="M11 13.5l-3 7"/><path d="M8.5 11.5l4.5-3 2.5 3 2.5 1"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
   minus: '<path d="M5 12h14"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',

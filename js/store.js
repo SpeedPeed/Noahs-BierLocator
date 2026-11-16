@@ -49,6 +49,10 @@ prefs.tour = Object.assign({}, DEFAULT_PREFS.tour, prefs.tour);
 // Neu hinzugekommene Ortstypen bei bestehenden Profilen einmalig aktivieren
 prefs.knownTypes = prefs.knownTypes || ['pub', 'biergarten', 'brewery', 'restaurant', 'fastfood', 'nightclub', 'fuel', 'supermarket', 'beverages', 'convenience'];
 for (const t of DEFAULT_TYPES) if (!prefs.knownTypes.includes(t)) { prefs.knownTypes.push(t); if (!prefs.types.includes(t)) prefs.types.push(t); }
+// "Bier finden" zeigt zuerst echte Bierorte; alles andere schaltet man im Filter dazu.
+// Bestehende Profile hatten alles an: einmalig auf die Bierorte zurückstellen.
+export const BEER_TYPES = ['pub', 'biergarten', 'brewery', 'gasthaus'];
+if (!prefs.beerTypesFirst) { prefs.types = BEER_TYPES.slice(); prefs.beerTypesFirst = true; }
 export function savePrefs() { write(KEYS.prefs, prefs); touch('prefs'); changed(); }
 
 function migratePrefs() {

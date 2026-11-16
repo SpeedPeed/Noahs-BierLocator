@@ -4,11 +4,12 @@ import { simulateBac, distributionFactor } from '../js/bac.js';
 import { validatePrice, per05 } from '../js/prices.js';
 import { generateVariants, overlapRatio, legStats, makeProjection } from '../js/tour/planner.js';
 import { encodeTour, decodeTour } from '../js/share.js';
-import { classify, breweries } from '../js/places.js';
+import { classify, breweries, autoRadius, dedupe } from '../js/places.js';
+import { statusShort, contextReason, isLate } from '../js/placeInfo.js';
 import { chainOf, beerKind, cheapestOf, byKindThenPrice } from '../js/chainPrices.js';
 import { evaluate, matches } from '../js/alerts.js';
 import { parsePackLabel } from '../js/prices.js';
-import { seededRandom, haversine } from '../js/util.js';
+import { seededRandom, haversine, fmtWalk } from '../js/util.js';
 import { projectOnRoute, newLive, updateLive, liveSchedule } from '../js/tour/live.js';
 import { lateHeadwind, windWeight } from '../js/tour/planner.js';
 import { lateEffort } from '../js/tour/routing.js';
@@ -464,6 +465,43 @@ test('Preisschild: Betrag und Währung getrennt', () => {
   eq(moneyParts(4.8).unit, '€');
   eq(moneyParts(4.8, 'CHF').value, '4.80', 'Franken immer mit Punkt');
   eq(moneyParts(4.8, 'CHF').unit, 'CHF');
+});
+
+/* ---------- Startbildschirm: Umkreis, Listenzeile, Kontext ---------- */
+test('Umkreis passt sich der Dichte an: Stadt eng, Land weit', () => {
+  const city = Array.from({ length: 80 }, (_, i) => 20 + i * 10);   // alle 10 m ein Lokal
+  eq(autoRadius(city, 800), 300, 'dichte Stadt: Mindestradius');
+  const town = Array.from({ length: 30 }, (_, i) => 100 + i * 50);
+  eq(autoRadius(town, 2500), 800, 'so weit, dass 15 Bierorte drin sind');
+  eq(autoRadius([70, 150, 290], 6000), 6000, 'Dorf: alles zeigen, was gefunden wurde');
+  eq(autoRadius([], 6000), 6000);
+});
+test('Gehzeit statt Meter, weit weg bleibt Entfernung', () => {
+  eq(fmtWalk(30), '1 Min zu Fuß');
+  eq(fmtWalk(250), '4 Min zu Fuß');
+  eq(fmtWalk(1500), '24 Min zu Fuß');
+  eq(fmtWalk(2400), '2,4 km');
+});
+test('Kurzstatus der Listenzeile', () => {
+  eq(statusShort(null).text, 'Zeiten unbekannt');
+  eq(statusShort(openStatus('24/7', at(0, 12))).text, 'immer offen');
+  ok(/^bis .*22:00$/.test(statusShort(openStatus('Mo-Fr 10:00-22:00', at(0, 12))).text), 'offen mit Schlusszeit'); // Wochentag hängt vom heutigen Datum ab
+  eq(statusShort(openStatus('Mo-Fr 10:00-22:00', at(0, 21, 30))).tone, 'soon');
+  ok(statusShort(openStatus('Mo-Fr 10:00-22:00', at(0, 8))).text.startsWith('zu, öffnet'), 'geschlossen mit Öffnungszeit');
+});
+test('Erklärzeile: ein Grund, der wichtigste zuerst', () => {
+  eq(contextReason({ widened: true, late: true, rainy: true }), 'closed');
+  eq(contextReason({ late: true, sunny: true }), 'late');
+  eq(contextReason({ rainy: true, sunny: true }), 'rain');
+  eq(contextReason({ sunny: true }), 'sun');
+  eq(contextReason({}), null);
+  ok(isLate(23) && isLate(2) && !isLate(18), 'spät ist 22 bis 5 Uhr');
+});
+test('Dubletten aus OSM: gleicher Name und Typ auf 40 m ist ein Ort', () => {
+  const pl = (id, name, lat, tags = {}) => ({ id, name, type: 'pub', lat, lon: 11.57, tags });
+  const out = dedupe([pl('node/1', 'München 72', 48.13), pl('way/2', 'München 72', 48.1301, { opening_hours: 'Mo-Su 10:00-22:00' }), pl('node/3', 'München 72', 48.14), pl('node/4', 'Sax', 48.13)]);
+  eq(out.map(p => p.id).join(), 'way/2,node/3,node/4', 'Zwilling mit Öffnungszeiten bleibt, die Filiale 1 km weiter auch');
+  eq(dedupe([{ ...pl('node/5', 'Kneipe & Bar', 48.13), unnamed: true }, { ...pl('node/6', 'Kneipe & Bar', 48.13), unnamed: true }]).length, 2, 'Namenlose nie zusammenlegen');
 });
 
 /* ---------- Übersetzungen vollständig, Texte nach Leitlinie ---------- */

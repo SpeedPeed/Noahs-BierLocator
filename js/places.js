@@ -77,6 +77,27 @@ function toPlace(el) {
   };
 }
 
+// OSM führt manche Lokale doppelt (Punkt und Gebäude): gleicher Name und Typ innerhalb von 40 m
+// ist derselbe Ort. Es bleibt der Eintrag mit Öffnungszeiten.
+// shortcut: Preise am verworfenen Zwilling sind dann unsichtbar; bei Bedarf auf beide IDs abfragen.
+export function dedupe(places) {
+  const out = [];
+  for (const p of places) {
+    const i = p.unnamed ? -1 : out.findIndex(o => o.name === p.name && o.type === p.type && haversine(o.lat, o.lon, p.lat, p.lon) < 40);
+    if (i < 0) out.push(p);
+    else if (!out[i].tags.opening_hours && p.tags.opening_hours) out[i] = p;
+  }
+  return out;
+}
+
+// Anzeige-Radius passend zur Dichte: so weit, bis `want` Bierorte drin sind (Stadt eng, Land weit).
+// dists = Entfernungen der Bierorte in Metern, fetched = abgefragter Radius.
+export function autoRadius(dists, fetched, want = 15, min = 300) {
+  if (dists.length <= want) return fetched;
+  const d = [...dists].sort((a, b) => a - b)[want - 1];
+  return Math.min(fetched, Math.max(min, Math.ceil(d / 100) * 100));
+}
+
 /* ---------- Overpass mit mehreren Servern ---------- */
 // Startet die ersten zwei Server gleichzeitig; kommt nichts, laufen gestaffelt die
 // übrigen an. Die erste brauchbare Antwort gewinnt. Scheitern alle, gibt es nach
@@ -189,6 +210,7 @@ export async function fetchPlacesAround(center, radius, types, { ref = center, l
       const p = toPlace(el);
       if (p && !seen.has(p.id)) { seen.add(p.id); places.push(p); }
     }
+    places = dedupe(places);
     cachePut(key, places);
   }
   const typeSet = new Set(types);
