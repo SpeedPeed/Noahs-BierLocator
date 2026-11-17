@@ -7,7 +7,8 @@ import { state } from '../state.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fetchWithTimeout, debounce, fmtDist } from '../util.js';
 import { $, openDialog, toast } from './dom.js';
-import { t, money, pkg } from '../i18n.js';
+import { t, money, moneyParts, pkg } from '../i18n.js';
+import { currencyFor } from '../countries.js';
 
 const SEEN = 'bl_alerts_seen_v1';
 const PUSH = 'bl_push_on_v1';
@@ -54,13 +55,13 @@ async function render() {
     <form class="alert-form" id="alertForm">
       <input name="q" placeholder="${t('z.B. Zipfer Märzen')}" required maxlength="40" autocomplete="off" list="beerList">
       <select name="kind">${Object.entries(KINDS).map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select>
-      <div class="price-input"><input name="max" inputmode="decimal" placeholder="${t('max. Preis')}" required><span>${state.country === 'CH' ? 'CHF' : '€'}</span></div>
+      <div class="price-input"><input name="max" inputmode="decimal" placeholder="${t('max. Preis')}" required><span>${moneyParts(0, currencyFor(state.country)).unit}</span></div>
       <button class="btn btn-primary" type="submit">${icon('plus', { size: 16 })}${t('Alarm')}</button>
     </form>
     <div class="alert-list">${res.length ? res.map(({ watch: w, hits }) => `
       <div class="alert-item">
         <div class="alert-head">
-          <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · ${t('bis {price}', { price: money(w.max, w.country === 'CH' ? 'CHF' : 'EUR') })} · ${w.country || ''}</small>
+          <b>${escapeHtml(w.q)}</b><small>${KINDS[w.kind || 'any']} · ${t('bis {price}', { price: money(w.max, currencyFor(w.country)) })} · ${w.country || ''}</small>
           <button class="icon-btn small" data-del="${w.id}" aria-label="${t('Alarm löschen')}">${icon('trash', { size: 16 })}</button>
         </div>
         ${hits.length ? `<ul>${hits.slice(0, 6).map(h => { const near = nearestStore(h.chain, h.country, state.places); return `<li>

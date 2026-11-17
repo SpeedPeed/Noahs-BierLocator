@@ -13,7 +13,7 @@ import { routeThrough, RIDE_STYLES } from '../tour/routing.js';
 import { liveSchedule } from '../tour/live.js';
 import { weatherForWindow, weatherIcon, weatherText, windDirName } from '../weather.js';
 import { simulateBac, DRINK_PRESETS } from '../bac.js';
-import { countryInfo } from '../legal.js';
+import { countryInfo } from '../countries.js';
 import { tourLink, shareLink } from '../share.js';
 import { cheapestChainPrice } from '../chainPrices.js';
 import { icon } from '../icons.js';

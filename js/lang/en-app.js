@@ -157,7 +157,6 @@ export default {
   'Noch kein Preis. Was kostet’s dort?': 'No price yet. What does it cost there?',
   'Sorte, z.B. Zwickl': 'Beer, e.g. Zwickl',
   'Biersorte': 'Beer',
-  'Preis in Euro': 'Price in euros',
   'Gebinde': 'Size',
   'Melden': 'Report',
   'Karte fotografieren': 'Photograph menu',
@@ -292,4 +291,6 @@ export default {
   'Filter': 'Filters',
   'Lieblingssorte unter „Filter“ eintragen, dann erscheinen Aktionen in der Nähe von selbst.': 'Enter your favourite beer under “Filters” and nearby deals show up on their own.',
   'Sorte wählen': 'Pick a beer',
+  'Unbekannte Währung.': 'Unknown currency.',
+  'Für diese Währung braucht der Server noch ein Update.': 'The server needs an update for this currency first.',
 };

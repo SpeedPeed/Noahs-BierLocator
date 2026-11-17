@@ -12,6 +12,7 @@ import { balances, settle } from '../settle.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fetchWithTimeout, timeAgo, fmtClock } from '../util.js';
 import { t, num, money as fmtMoney, LOCALE } from '../i18n.js';
+import { currencyFor } from '../countries.js';
 import { $, openDialog, toast } from './dom.js';
 import { shareLink } from '../share.js';
 import { loadSharedTour, getTour, alternativesFor, swapStop } from './tourUi.js';
@@ -24,7 +25,7 @@ let poll = null;
 let tab = 'people';
 let last = null;                // letzter Gruppenstatus
 let lastPing = 0, lastFetch = 0, dirty = false, loadedTourKey = null, pollNotified = null;
-const money = v => fmtMoney(v, state.country === 'CH' ? 'CHF' : 'EUR');
+const money = v => fmtMoney(v, currencyFor(state.country));
 
 const current = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
 const setCurrent = v => (v ? localStorage.setItem(KEY, JSON.stringify(v)) : localStorage.removeItem(KEY));

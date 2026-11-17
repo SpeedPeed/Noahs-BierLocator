@@ -55,12 +55,12 @@ async function setLocation(loc, { label = null, country = null, search = true, f
     searchAt(state.location, null, { fit });
   }
   loadWeather(loc);
-  if (country && !prefs.country) state.country = country;
+  if (country) state.country = country;
   if (!label || !country) {
     const r = await reverseGeocode(loc.lat, loc.lon);
     if (r) {
       if (!label) { setLocLabel(r.short); saveLastLocation({ lat: loc.lat, lon: loc.lon, label: r.short }); }
-      if (r.country && !prefs.country && ['AT', 'DE', 'CH'].includes(r.country)) state.country = r.country;
+      if (r.country) state.country = r.country;
     } else if (!label) setLocLabel(t('Mein Standort'));
   }
 }

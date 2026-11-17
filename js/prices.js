@@ -1,6 +1,7 @@
 // Gebinde, Umrechnung auf 0,5 l und Plausibilitätsprüfung.
-// Die Grenzen sind identisch mit denen in supabase/schema.sql.
+// Die Grenzen sind identisch mit denen in supabase/006_waehrung.sql.
 import { t, money, LANG } from './i18n.js';
+import { CURRENCIES } from './countries.js';
 
 export const UNITS = {
   '0.5l':           { label: t('0,5 l'),             halves: 1 },
@@ -10,7 +11,7 @@ export const UNITS = {
   'kasten24x0.33l': { label: t('Kasten 24 × 0,33 l'), halves: 15.84, crate: true },
 };
 
-// Erlaubter Bereich, umgerechnet auf €/0,5 l.
+// Erlaubter Bereich pro Halbe in Euro; andere Währungen über CURRENCIES[…].perEuro.
 export const PLAUSIBLE = {
   single: { min: 0.30, max: 15 },
   crate:  { min: 0.25, max: 4 },
@@ -24,18 +25,21 @@ export function per05(price, unit) {
 }
 
 // → { ok, per05, message }
-export function validatePrice(rawPrice, unit, beer = 'x') {
+export function validatePrice(rawPrice, unit, beer = 'x', currency = 'EUR') {
   const price = typeof rawPrice === 'number' ? rawPrice : parseFloat(String(rawPrice).replace(',', '.'));
   const u = UNITS[unit];
   if (!u) return { ok: false, message: t('Unbekanntes Gebinde.') };
+  const cur = CURRENCIES[currency];
+  if (!cur) return { ok: false, message: t('Unbekannte Währung.') };
   if (!beer || !String(beer).trim()) return { ok: false, message: t('Welche Biersorte?') };
   if (String(beer).trim().length > 40) return { ok: false, message: t('Biersorte bitte kürzer (max. 40 Zeichen).') };
   if (!isFinite(price) || price <= 0) return { ok: false, message: t('Bitte einen Preis eingeben.') };
   const p05 = price / u.halves;
-  const range = u.crate ? PLAUSIBLE.crate : PLAUSIBLE.single;
+  const base = u.crate ? PLAUSIBLE.crate : PLAUSIBLE.single;
+  const range = { min: base.min * cur.perEuro, max: base.max * cur.perEuro };
   const lo = range.min * u.halves, hi = range.max * u.halves;
-  if (p05 < range.min) return { ok: false, per05: p05, message: t('Zu billig. Für {unit} sind mindestens {min} plausibel.', { unit: u.label, min: money(lo) }) };
-  if (p05 > range.max) return { ok: false, per05: p05, message: t('Zu teuer. Für {unit} sind höchstens {max} plausibel.', { unit: u.label, max: money(hi) }) };
+  if (p05 < range.min) return { ok: false, per05: p05, message: t('Zu billig. Für {unit} sind mindestens {min} plausibel.', { unit: u.label, min: money(lo, currency) }) };
+  if (p05 > range.max) return { ok: false, per05: p05, message: t('Zu teuer. Für {unit} sind höchstens {max} plausibel.', { unit: u.label, max: money(hi, currency) }) };
   return { ok: true, per05: p05, price: Math.round(price * 100) / 100 };
 }
 

@@ -19,6 +19,8 @@ import { evaluateBadges } from '../js/badges.js';
 import { parseMenuText } from '../js/prices.js';
 import { sampleAt, priceColor } from '../js/heatmap.js';
 import { tr, dictionary, money, moneyParts, pkg } from '../js/i18n.js';
+import { COUNTRIES, CURRENCIES, currencyFor } from '../js/countries.js';
+import { PLAUSIBLE } from '../js/prices.js';
 
 const results = [];
 function test(name, fn) {
@@ -508,6 +510,34 @@ test('Dubletten aus OSM: gleicher Name und Typ auf 40 m ist ein Ort', () => {
   const out = dedupe([pl('node/1', 'München 72', 48.13), pl('way/2', 'München 72', 48.1301, { opening_hours: 'Mo-Su 10:00-22:00' }), pl('node/3', 'München 72', 48.14), pl('node/4', 'Sax', 48.13)]);
   eq(out.map(p => p.id).join(), 'way/2,node/3,node/4', 'Zwilling mit Öffnungszeiten bleibt, die Filiale 1 km weiter auch');
   eq(dedupe([{ ...pl('node/5', 'Kneipe & Bar', 48.13), unnamed: true }, { ...pl('node/6', 'Kneipe & Bar', 48.13), unnamed: true }]).length, 2, 'Namenlose nie zusammenlegen');
+});
+
+/* ---------- Länder und Währungen ---------- */
+test('Länder: jedes Land hat Währung, Feiertage und Grenzen', () => {
+  for (const [code, c] of Object.entries(COUNTRIES)) {
+    ok(CURRENCIES[c.currency], `${code}: Währung ${c.currency} fehlt in CURRENCIES`);
+    ok(c.holidays && c.holidays.fixed.length && c.holidays.easter.length, `${code}: Feiertage`);
+    ok(c.bike && c.car.length && c.emergency, `${code}: Grenzen/Notruf`);
+  }
+  eq(currencyFor('CH'), 'CHF');
+  eq(currencyFor('AT'), 'EUR');
+  eq(currencyFor('XX'), 'EUR', 'unbekanntes Land fällt auf Euro zurück');
+});
+test('Preise: Grenzen pro Währung, unbekannte Währung abgelehnt', () => {
+  ok(validatePrice(7.5, '0.5l', 'Lager', 'CHF').ok, 'Zürich: Stange-Preis in Franken');
+  ok(!validatePrice(40, '0.5l', 'Lager', 'CHF').ok, '40 Franken abgelehnt');
+  ok(validatePrice(99, '0.5l', 'Lager', 'CHF').message.includes('CHF'), 'Meldung nennt Franken');
+  ok(!validatePrice(4, '0.5l', 'Pils', 'XYZ').ok, 'unbekannte Währung');
+  eq(money(45, 'CZK'), '45,00 CZK', 'andere Währungen generisch');
+});
+const sql006 = await fetch('../supabase/006_waehrung.sql').then(r => (r.ok ? r.text() : '')).catch(() => '');
+test('Preisgrenzen: Server kennt dieselben Währungen und Werte', () => {
+  ok(sql006, '006_waehrung.sql nicht geladen');
+  for (const [code, c] of Object.entries(CURRENCIES)) ok(sql006.includes(`when '${code}' then ${c.perEuro}`), `${code} fehlt oder weicht ab`);
+  for (const v of [PLAUSIBLE.single.min, PLAUSIBLE.single.max, PLAUSIBLE.crate.min, PLAUSIBLE.crate.max]) {
+    const s = Number.isInteger(v) ? String(v) : v.toFixed(2);   // so steht es im SQL: 0.30, 15, 0.25, 4
+    ok(sql006.includes(`${s} * v_f`), `Grenze ${s} fehlt im Server`);
+  }
 });
 
 /* ---------- Übersetzungen vollständig, Texte nach Leitlinie ---------- */

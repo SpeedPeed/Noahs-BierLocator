@@ -3,7 +3,7 @@
 // App-Dateien: zuerst Netzwerk (Updates kommen sofort an), offline aus dem Cache.
 // Kartenkacheln: Cache zuerst, im Hintergrund aktualisieren.
 // Live-Daten (Overpass, Routing, Wetter, Supabase) werden nicht gecacht.
-const VERSION = 'v4.7.0';
+const VERSION = 'v4.8.0';
 const SHELL_CACHE = `bierlocator-shell-${VERSION}`;
 const RUNTIME_CACHE = 'bierlocator-runtime-v2';
 
@@ -11,7 +11,7 @@ const SHELL_FILES = [
   './', './index.html', './styles.css', './manifest.json',
   './js/main.js', './js/config.js', './js/util.js', './js/icons.js', './js/state.js', './js/store.js',
   './js/places.js', './js/placeInfo.js', './js/geo.js', './js/weather.js', './js/community.js',
-  './js/openingHours.js', './js/prices.js', './js/bac.js', './js/legal.js', './js/share.js', './js/map.js',
+  './js/openingHours.js', './js/prices.js', './js/bac.js', './js/countries.js', './js/share.js', './js/map.js',
   './js/tour/planner.js', './js/tour/routing.js', './js/tour/tourPlan.js',
   './js/ui/dom.js', './js/ui/states.js', './js/ui/sheet.js', './js/ui/finder.js', './js/ui/detail.js', './js/ui/tourUi.js',
   './js/ui/bacUi.js', './js/ui/autocomplete.js', './js/chainPrices.js', './data/chain-prices.json',

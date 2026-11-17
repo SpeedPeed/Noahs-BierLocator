@@ -8,17 +8,17 @@ import { weekSchedule } from '../openingHours.js';
 import { UNITS, validatePrice, STALE_DAYS, beerChoices } from '../prices.js';
 import { placeLink, shareLink } from '../share.js';
 import { icon } from '../icons.js';
-import { escapeHtml, fmtDist, fmtEuro, timeAgo, haversine } from '../util.js';
+import { escapeHtml, fmtDist, timeAgo, haversine } from '../util.js';
 import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
 import * as mapview from '../map.js';
-import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS, byKindThenPrice } from '../chainPrices.js';
+import { loadChainPrices, chainPricesFor, chainOf, CHAIN_LABELS, byKindThenPrice, placeCurrency } from '../chainPrices.js';
 import { loadHistory, describe } from '../priceHistory.js';
 import { openDiary, diaryBeerSuggestions } from './diaryUi.js';
 import { openScanner } from './scanUi.js';
 import { photoMenu } from './ocrUi.js';
 import { bumpStat } from '../store.js';
 import { emit } from '../state.js';
-import { t, num, money, LOCALE, pkg } from '../i18n.js';
+import { t, num, money, moneyParts, LOCALE, pkg } from '../i18n.js';
 
 let dlg, current = null, onChange = () => {};
 
@@ -71,6 +71,7 @@ function render() {
   const web = website(p.tags);
   const phone = p.tags.phone || p.tags['contact:phone'];
   const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`;
+  const cur = placeCurrency(p);
 
   const facts = [];
   if (p.tags.outdoor_seating === 'yes') facts.push(`${icon('sun', { size: 16 })}${t('Sitzplätze draußen')}`);
@@ -87,9 +88,9 @@ function render() {
     <li class="price-row${pr.stale ? ' stale' : ''}${s.cheapest && s.cheapest.id === pr.id ? ' best' : ''}">
       <div class="pr-main">
         <span class="pr-beer">${escapeHtml(pr.beer)}</span>
-        <span class="pr-unit">${UNITS[pr.unit] ? UNITS[pr.unit].label : escapeHtml(pr.unit)}${pr.unit !== '0.5l' ? ` · ${fmtEuro(pr.per05)}/${t('0,5 l')}` : ''}</span>
+        <span class="pr-unit">${UNITS[pr.unit] ? UNITS[pr.unit].label : escapeHtml(pr.unit)}${pr.unit !== '0.5l' ? ` · ${money(pr.per05, pr.currency || cur)}/${t('0,5 l')}` : ''}</span>
       </div>
-      <span class="pr-price">${fmtEuro(pr.price)}</span>
+      <span class="pr-price">${money(pr.price, pr.currency || cur)}</span>
       <span class="pr-age" title="${new Date(pr.created_at).toLocaleString(LOCALE)}">${timeAgo(pr.created_at)}${pr.stale ? ' · ' + t('veraltet') : ''}</span>
       ${pr.mine ? `<button class="icon-btn small" data-del="${pr.id}" aria-label="${t('Eigene Meldung löschen')}" title="${t('Meine Meldung löschen')}">${icon('trash', { size: 16 })}</button>` : '<span></span>'}
     </li>`).join('') : '';
@@ -138,7 +139,7 @@ function render() {
       <form class="price-form" id="pdPriceForm" novalidate>
         <div class="beer-chips" id="pdBeerChips" role="group" aria-label="${t('Sorte wählen')}">${beerChoices([s.prices.map(pr => pr.beer), [prefs.lastBeer, prefs.beerType], chainPricesFor(p).slice().sort(byKindThenPrice).slice(0, 3).map(x => x.beer), diaryBeerSuggestions()]).map(b => `<button type="button" class="chip-btn" data-beer="${escapeHtml(b)}">${escapeHtml(b)}</button>`).join('')}</div>
         <input name="beer" class="pf-beer" type="text" list="beerList" placeholder="${t('Sorte, z.B. Zwickl')}" maxlength="40" required autocomplete="off" aria-label="${t('Biersorte')}">
-        <div class="price-input"><input name="price" type="text" inputmode="decimal" enterkeyhint="send" placeholder="${num(0, 2)}" required aria-label="${t('Preis in Euro')}"><span>€</span></div>
+        <div class="price-input"><input name="price" type="text" inputmode="decimal" enterkeyhint="send" placeholder="${num(0, 2)}" required aria-label="${t('Preis')}"><span>${moneyParts(0, cur).unit}</span></div>
         <select name="unit" aria-label="${t('Gebinde')}">${Object.entries(UNITS).map(([k, u]) => `<option value="${k}"${k === (prefs.lastUnit || '0.5l') ? ' selected' : ''}>${u.label}</option>`).join('')}</select>
         <p class="form-msg" id="pdPriceMsg" aria-live="polite"></p>
         <button type="submit" class="btn btn-primary btn-big pf-send" disabled>${icon('plus', { size: 20 })}${t('Melden')}</button>
@@ -301,11 +302,11 @@ function wire(p) {
   const check = () => {
     const beer = form.beer.value, price = form.price.value, unit = form.unit.value;
     if (!price.trim()) { submit.disabled = true; msg.textContent = ''; msg.className = 'form-msg'; return null; }
-    const v = validatePrice(price, unit, beer || 'x');
+    const v = validatePrice(price, unit, beer || 'x', placeCurrency(p));
     submit.disabled = !v.ok || !beer.trim();
     if (!v.ok) { msg.textContent = v.message; msg.className = 'form-msg bad'; }
     else if (!beer.trim()) { msg.textContent = t('Noch die Sorte eintragen.'); msg.className = 'form-msg'; }
-    else { msg.textContent = unit === '0.5l' ? t('Passt!') : t('Entspricht {price} pro 0,5 l.', { price: fmtEuro(v.per05) }); msg.className = 'form-msg good'; }
+    else { msg.textContent = unit === '0.5l' ? t('Passt!') : t('Entspricht {price} pro 0,5 l.', { price: money(v.per05, placeCurrency(p)) }); msg.className = 'form-msg good'; }
     return v;
   };
   form.addEventListener('input', check);
@@ -327,7 +328,7 @@ function wire(p) {
     if (!v || !v.ok || !form.beer.value.trim()) return;
     submit.disabled = true;
     try {
-      await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value });
+      await submitPrice(p.id, { beer: form.beer.value, price: v.price, unit: form.unit.value, currency: placeCurrency(p) });
       Object.assign(prefs, { lastBeer: form.beer.value.trim(), lastUnit: form.unit.value });
       savePrefs();
       bumpStat('prices');

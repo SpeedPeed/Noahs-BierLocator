@@ -42,13 +42,14 @@ export function num(v, digits = 1) {
 // Geldbetrag: "4,50 €" / "€4.50"; Franken wie in der Schweiz üblich "CHF 4.50".
 export function money(v, currency = 'EUR') {
   if (currency === 'CHF') return `CHF ${Number(v).toFixed(2)}`; // Schweiz: immer Punkt
+  if (currency !== 'EUR') return `${num(v, 2)} ${currency}`;
   return LANG === 'de' ? `${num(v, 2)} €` : `€${num(v, 2)}`;
 }
 
 // Betrag und Währung getrennt, fürs Preisschild (Bierdeckel): { value: '4,80', unit: '€' }.
 export function moneyParts(v, currency = 'EUR') {
   if (currency === 'CHF') return { value: Number(v).toFixed(2), unit: 'CHF' };
-  return { value: num(v, 2), unit: '€' };
+  return { value: num(v, 2), unit: currency === 'EUR' ? '€' : currency };
 }
 
 // Gebinde-Angaben aus den Händlerdaten ("6×0,5 l Dosen") nur zur Anzeige übersetzen.

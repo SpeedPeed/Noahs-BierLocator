@@ -100,7 +100,7 @@ Diese Funktionen brauchen zusätzlich [`supabase/002_features.sql`](supabase/002
 braucht zusätzlich [`supabase/003_runde.sql`](supabase/003_runde.sql) — ohne läuft die Gruppe wie bisher
 (Biere zählen, Stopps bewerten). „Meine Daten löschen“ (Menü → Geräte & Backup) braucht
 [`supabase/004_datenschutz.sql`](supabase/004_datenschutz.sql). [`supabase/005_schutz.sql`](supabase/005_schutz.sql) ergänzt
-ein Tageslimit pro IP-Adresse (gegen Spam), 8-stellige Gruppencodes und zeigt Runden nur Mitgliedern. Preisalarme per Push verschickt der GitHub-Job
+ein Tageslimit pro IP-Adresse (gegen Spam), 8-stellige Gruppencodes und zeigt Runden nur Mitgliedern. [`supabase/006_waehrung.sql`](supabase/006_waehrung.sql) speichert die Währung jeder Meldung und prüft Preise pro Währung (ohne: Meldungen gelten in der Währung des Landes, in dem der Ort liegt). Preisalarme per Push verschickt der GitHub-Job
 „Preisalarme verschicken“ nach jedem Preis-Update; er braucht die Secrets `ALERTS_TOKEN`
 und `VAPID_PRIVATE_KEY`.
 
@@ -189,7 +189,7 @@ js/
   openingHours.js  opening_hours-Parser inkl. Feiertage AT/DE/CH
   community.js     Preise & Bewertungen (Supabase oder lokal)
   prices.js        Gebinde, Umrechnung, Plausibilitätsprüfung
-  bac.js, legal.js Promille-Modell, Grenzwerte je Land
+  bac.js, countries.js Promille-Modell, Grenzwerte je Land
   tour/            planner.js (Geometrie, Wind), tourPlan.js (Steuerung), routing.js (BRouter/OSRM),
                    live.js (GPS auf der Route, Zeitplan unterwegs)
   settle.js, bingo.js, badges.js, heatmap.js   Abrechnung, Bingo, Abzeichen, Preis-Heatmap

@@ -2,7 +2,7 @@
 import { loadBac, saveBac, prefs, savePrefs } from '../store.js';
 import { state } from '../state.js';
 import { DRINK_PRESETS, FOOD_STATES, simulateBac, bacStage, gramsOfAlcohol } from '../bac.js';
-import { COUNTRIES, countryInfo } from '../legal.js';
+import { COUNTRIES, countryInfo } from '../countries.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fmtClock, fmtDuration, timeAgo } from '../util.js';
 import { $, openDialog, toast, animateNumber } from './dom.js';
@@ -89,7 +89,7 @@ function renderShell() {
     <div class="bac-legal">
       <div class="bac-legal-head">
         <h3 class="pd-h">${icon('alertTriangle', { size: 16 })}${t('Grenzwerte')}</h3>
-        <select id="bacCountry" aria-label="${t('Land')}">${Object.entries(COUNTRIES).map(([k, c]) => `<option value="${k}" ${state.country === k ? 'selected' : ''}>${c.name}</option>`).join('')}</select>
+        <select id="bacCountry" aria-label="${t('Land')}">${Object.entries(COUNTRIES).map(([k, c]) => `<option value="${k}" ${bacCountry() === k ? 'selected' : ''}>${c.name}</option>`).join('')}</select>
       </div>
       <div id="bacLegalRows"></div>
     </div>
@@ -129,7 +129,6 @@ function wire() {
   });
   ['#bacW', '#bacH', '#bacA', '#bacFood'].forEach(s => $(s).addEventListener('change', saveProfile));
   $('#bacCountry').addEventListener('change', e => {
-    state.country = e.target.value;
     prefs.country = e.target.value;
     savePrefs();
     renderAll(false);
@@ -157,12 +156,15 @@ function addDrink(d) {
   toast(t('{drink} eingetragen', { drink: d.label }), { ms: 1400 });
 }
 
+// Der Rechner merkt sich ein gewähltes Land; sonst gilt das Land des Standorts.
+const bacCountry = () => prefs.country || state.country;
+
 function renderAll(animate) {
   const now = Date.now();
   const sim = simulateBac(bac.profile, bac.log, now);
   const v = sim.current;
   const stage = bacStage(v);
-  const c = countryInfo(state.country);
+  const c = countryInfo(bacCountry());
 
   const numEl = $('#bacNum');
   if (animate) animateNumber(numEl, v, { decimals: 2 }); else { numEl.textContent = fmtP(v); numEl.dataset.value = String(v); }
