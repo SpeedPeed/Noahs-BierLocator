@@ -10,10 +10,11 @@ import time
 
 from .common import get_text, parse_pack, entry, strip_pack
 
-CATEGORY = 'https://www.edeka24.de/Getraenke/Bier/'
+CATEGORY = 'https://www.edeka24.de/Getraenke-2/Bier/'  # bis 11/2026: /Getraenke/Bier/
 
 ITEM = re.compile(r'<div class="product-details">(.*?)<div class="product-action', re.S)
-LINK = re.compile(r'<a id="listitem_\d+" href="([^"]+)" class="title" title="([^"]*)"')
+# id bis 11/2026 "listitem_<n>", seitdem "productList_<Artikelnr>"; ?force_sid=… (Sitzung) fällt weg
+LINK = re.compile(r'<a id="(?:listitem|productList)_\w+" href="([^"?]+)[^"]*" class="title" title="([^"]*)"')
 PRICE = re.compile(r'<div class="price( salesprice)?">\s*([\d.]+,\d{2})')
 LOWEST = re.compile(r'Niedrigster Preis:\s*([\d.]+,\d{2})')
 
@@ -56,5 +57,5 @@ def scrape():
         if not new:
             break
         page += 1
-        time.sleep(0.6)
+        time.sleep(2)  # robots.txt: Crawl-delay 2
     return out
