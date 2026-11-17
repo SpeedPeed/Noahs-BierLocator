@@ -10,7 +10,7 @@ import { haversine } from './util.js';
 import * as mapview from './map.js';
 import { $, $$, toast, wireDialog, openDialog, closeDialog, downloadFile, initBack, syncBack } from './ui/dom.js';
 import { initSheet, sheetOcclusion, setSheet, getSheet, mobile, onSheetChange } from './ui/sheet.js';
-import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints, currentRadius } from './ui/finder.js';
+import { initFinder, searchAt, render as renderFinder, onRender, pricedPoints, currentRadius, beerSuggestion, findBeer, clearBeer } from './ui/finder.js';
 import { initDetail, openPlace } from './ui/detail.js';
 import { initTour, loadSharedTour, onTourModeShown, onTourModeHidden, paintRange } from './ui/tourUi.js';
 import { attachAutocomplete } from './ui/autocomplete.js';
@@ -38,10 +38,6 @@ function applyTheme(theme, persist = false) {
   document.documentElement.setAttribute('data-theme', theme);
   if (persist) saveTheme(theme);
   mapview.setMapTheme(theme);
-  const ti = $('#themeIcon');
-  ti.dataset.icon = theme === 'dark' ? 'sun' : 'moon';
-  hydrateIcons(ti.parentElement);
-  $('#themeLabel').textContent = theme === 'dark' ? t('Helles Design') : t('Dunkles Design');
 }
 
 /* ---------- Standort ---------- */
@@ -115,7 +111,7 @@ function setMode(mode) {
 /* ---------- Preis-Heatmap ---------- */
 let lastList = null;
 function applyHeat(list) {
-  $('#menuHeat').setAttribute('aria-pressed', String(!!prefs.heatmap));
+  $('#prefHeat').checked = !!prefs.heatmap;
   const legend = $('#heatLegend');
   if (!prefs.heatmap || state.mode !== 'find' || !list) { hideHeatmap(); legend.hidden = true; return; }
   const all = pricedPoints(list);
@@ -140,7 +136,8 @@ function toggleHeat() {
 
 /* ---------- "In diesem Bereich suchen" ---------- */
 function onMapMoved() {
-  if (state.mode !== 'find' || !state.searchCenter) return;
+  // Bei der Bier-Suche zoomt die App selbst auf die Treffer; "hier suchen" wäre dann nur verwirrend.
+  if (state.mode !== 'find' || !state.searchCenter || $('#filterBeer').value) return;
   const { center, radius } = mapview.getViewInfo();
   const moved = haversine(center.lat, center.lon, state.searchCenter.lat, state.searchCenter.lon);
   $('#btnSearchArea').hidden = moved < Math.max(250, currentRadius() * 0.4) || (mobile() && getSheet() === 'full');
@@ -168,10 +165,8 @@ function initMenu() {
     else if (a === 'diary') openDiary();
     else if (a === 'group') openGroupMenu();
     else if (a === 'home') openHome();
-    else if (a === 'heatmap') toggleHeat();
     else if (a === 'alerts') openAlerts();
     else if (a === 'sync') openSync();
-    else if (a === 'theme') applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
     else if (a === 'about') openAbout();
   });
   on('backup-export', () => {
@@ -238,10 +233,14 @@ function openAbout() {
     <p class="fine">${t('Online-Preise ohne Gewähr. Der Bier-Locator hat mit den Händlern nichts zu tun.')}</p>
     <p class="fine">${t('Bitte verantwortungsvoll trinken. Wer trinkt, fährt nicht, auch nicht mit dem Rad.')}</p>
     <p class="fine center"><a href="${privacyPage()}">${t('Datenschutz &amp; Impressum')}</a></p>
+    <label class="lang-pick">${icon('moon', { size: 16 })}${t('Design')}
+      <select id="themeSelect">${[['light', t('Hell')], ['dark', t('Dunkel')]].map(([k, v]) => `<option value="${k}"${k === document.documentElement.getAttribute('data-theme') ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </label>
     <label class="lang-pick">${icon('globe', { size: 16 })}${t('Sprache')} / Language
       <select id="langSelect">${Object.entries(LANGS).map(([k, v]) => `<option value="${k}"${k === LANG ? ' selected' : ''}>${v}</option>`).join('')}</select>
     </label>`;
   $('#langSelect').onchange = e => setLang(e.target.value);
+  $('#themeSelect').onchange = e => applyTheme(e.target.value, true);
   openDialog($('#aboutDialog'));
 }
 
@@ -335,15 +334,20 @@ async function init() {
   const si = $('#searchInput');
   attachAutocomplete(si, $('#searchSuggest'), {
     near: () => state.location || mapview.getViewInfo().center,
+    extra: q => (state.mode === 'find' ? beerSuggestion(q) : null),
+    onClear: clearBeer,
     onPick: it => {
       si.blur();
       $('#searchClear').hidden = false;
+      if (it.kind === 'beer') { findBeer(it.label); if (mobile()) setSheet('half'); return; }
+      clearBeer();
       setLocation({ lat: it.lat, lon: it.lon }, { label: it.label, country: it.country });
       if (mobile()) setSheet('half');
     },
   });
   si.addEventListener('input', () => { $('#searchClear').hidden = !si.value; });
-  $('#searchClear').addEventListener('click', () => { si.value = ''; $('#searchClear').hidden = true; si.focus(); });
+  $('#searchClear').addEventListener('click', () => { si.value = ''; $('#searchClear').hidden = true; clearBeer(); si.focus(); });
+  on('beer-cleared', () => { si.value = ''; $('#searchClear').hidden = true; });
   document.addEventListener('keydown', e => {
     if (e.key === '/' && !e.target.closest('input, textarea, select') && !document.querySelector('dialog[open]')) { e.preventDefault(); si.focus(); }
   });
@@ -355,6 +359,7 @@ async function init() {
   });
   on('request-locate', locate);
   $('#btnBrand').addEventListener('click', openAbout);
+  $('#prefHeat').addEventListener('change', toggleHeat);
   $$('.tab').forEach(t => t.addEventListener('click', () => { setMode(t.dataset.mode); if (mobile()) setSheet('half'); }));
   $('#btnSearchArea').addEventListener('click', () => {
     const { center } = mapview.getViewInfo();

@@ -170,6 +170,36 @@ function widen() {
   mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), state.searchCenter);
 }
 
+/* ---------- Bier-Suche: "Wo gibt's Zipfer?" ---------- */
+const words = q => q.toLowerCase().split(/\s+/).filter(Boolean);
+const hasAll = (text, ws) => { const s = text.toLowerCase(); return ws.every(w => s.includes(w)); };
+// Günstigster Preis pro Halbe für die gesuchte Sorte an einem Ort: vor Ort gemeldet oder online.
+export function beerPrice(p, s, ws) {
+  const own = s.prices.filter(pr => !pr.stale && hasAll(pr.beer, ws)).map(pr => ({ ...pr, currency: pr.currency || placeCurrency(p) }));
+  const online = chainPricesFor(p).filter(c => c.per05 != null && hasAll(`${c.beer} ${c.package || ''}`, ws))
+    .map(c => ({ per05: c.per05, beer: c.beer, created_at: Date.parse(c.seen), online: true, promo: c.promo, currency: c.currency, chain: CHAIN_LABELS[chainOf(p).key] }));
+  const all = own.concat(online);
+  return all.length ? all.reduce((a, b) => (b.per05 < a.per05 ? b : a)) : null;
+}
+// Vorschlag fürs Suchfeld, wenn ein geladener Ort die Sorte führt.
+export function beerSuggestion(q) {
+  const ws = words(q);
+  if (q.trim().length < 3 || !state.places.length) return null;
+  const n = state.places.filter(p => !isHidden(p.id) && beerPrice(p, getSummary(p.id), ws)).length;
+  if (!n) return null;
+  return { kind: 'beer', label: q.trim(), sub: n === 1 ? t('1 Ort in der Nähe hat es') : t('{n} Orte in der Nähe haben es', { n }) };
+}
+export function findBeer(q) {
+  $('#filterBeer').value = q;
+  render();
+  mapview.fitToPlaces(visibleList().slice(0, 25).map(x => x.p), state.searchCenter);
+}
+export function clearBeer() {
+  if (!$('#filterBeer').value) return;
+  $('#filterBeer').value = '';
+  render();
+}
+
 /* ---------- Filtern & Sortieren ---------- */
 // Preis für Liste/Karte: Community-Meldung (aktuell) vor Online-Preis der Kette
 // vor veralteter Meldung.
@@ -220,6 +250,15 @@ function visibleList() {
   const beer = $('#filterBeer').value.trim().toLowerCase();
   const types = new Set(prefs.types);
   const row = p => { const s = getSummary(p.id); return { p, s, st: placeStatus(p, now), price: effectivePrice(p, s) }; };
+  // Gesuchte Sorte: jeder geladene Ort, der sie führt, egal welcher Typ, günstigste zuerst.
+  if (beer) {
+    const ws = words(beer);
+    let hits = state.places.filter(p => !isHidden(p.id)).map(row).map(x => ({ ...x, price: beerPrice(x.p, x.s, ws) })).filter(x => x.price);
+    if (prefs.onlyOpen) hits = hits.filter(x => x.st && x.st.open);
+    if (prefs.onlyFav) hits = hits.filter(x => isFavorite(x.p.id));
+    ctx = { widened: false, late: false };
+    return hits.sort((a, b) => a.price.per05 - b.price.per05 || a.p.distance - b.p.distance);
+  }
   const near = state.places.filter(p => !isHidden(p.id) && reach(p) <= shownRadius);
   let list = near.filter(p => types.has(p.type)).map(row);
 
@@ -237,7 +276,6 @@ function visibleList() {
   if (prefs.onlyOpen) list = list.filter(x => x.st && x.st.open);
   if (prefs.onlyPrice) list = list.filter(x => x.price);
   if (prefs.onlyFav) list = list.filter(x => isFavorite(x.p.id));
-  if (beer) list = list.filter(x => x.s.prices.some(pr => pr.beer.toLowerCase().includes(beer)) || chainPricesFor(x.p).some(pr => pr.beer.toLowerCase().includes(beer)));
 
   if (prefs.sort === 'distance') list.sort((a, b) => a.p.distance - b.p.distance);
   else if (prefs.sort === 'price') {
@@ -284,10 +322,12 @@ export function render() {
 
   // Kopfzeile: was man sieht und wie weit, daneben der eine Knopf für alles Weitere.
   const n = list.length;
+  const beer = $('#filterBeer').value.trim();
   const mixed = custom || ctx.widened || ctx.late;
   const count = mixed ? (n === 1 ? t('1 Ort') : t('{n} Orte', { n })) : (n === 1 ? t('1 Bierort') : t('{n} Bierorte', { n }));
   // Hat die Liste von selbst weiter weg gesucht, stimmt der Umkreis nicht mehr: dann ohne.
-  $('#resultTitle').innerHTML = loading ? '…' : `${count}${ctx.widened || ctx.late ? '' : ` <small>${t('bis {r}', { r: fmtDist(shownRadius) })}</small>`}`;
+  $('#resultTitle').innerHTML = loading ? '…' : beer ? `${n === 1 ? t('1 Ort') : t('{n} Orte', { n })} <small>${t('mit {beer}', { beer: escapeHtml(beer) })}</small>`
+    : `${count}${ctx.widened || ctx.late ? '' : ` <small>${t('bis {r}', { r: fmtDist(shownRadius) })}</small>`}`;
   $('#filterCount').hidden = !activeFilters;
   $('#filterCount').textContent = activeFilters;
   const hc = hiddenCount();
@@ -302,8 +342,12 @@ export function render() {
     rainy: byWeather && isRainy(w) && list.some(x => x.p.type === 'biergarten'),
     sunny: byWeather && isBiergartenWeather(w) && list.some(x => x.p.type === 'biergarten' || x.p.tags.outdoor_seating === 'yes'),
   });
-  $('#contextLine').hidden = !reason || loading;
-  $('#contextLine').textContent = reason ? REASONS[reason]() : '';
+  const line = $('#contextLine');
+  line.hidden = !(reason || beer) || loading;
+  if (beer) {
+    line.innerHTML = `${t('Günstigste zuerst.')} <button class="link-btn" id="btnBeerReset">${t('Alle Bierorte zeigen')}</button>`;
+    $('#btnBeerReset').onclick = () => { clearBeer(); emit('beer-cleared'); };
+  } else line.textContent = reason ? REASONS[reason]() : '';
 
   // Günstigste Halbe: im Kneipen-Kontext nur ein vor Ort gemeldeter Preis, nie ein Supermarktpreis.
   const fresh = list.filter(x => x.price && !x.price.stale);
@@ -312,7 +356,7 @@ export function render() {
   const cheapest = fresh.filter(x => x.price.currency === currencyFor(state.country)).sort(byPrice)[0] || fresh.sort(byPrice)[0];
   const shopContext = !prefs.types.some(ty => BEER.has(ty));
   const cc = $('#cheapestCard');
-  cc.hidden = !cheapest || (cheapest.price.online && !shopContext);
+  cc.hidden = !cheapest || !!beer || (cheapest.price.online && !shopContext);   // bei der Bier-Suche ist die Liste schon nach Preis sortiert
   if (!cc.hidden) {
     const c = cheapest.price;
     cc.innerHTML = `<button class="cheapest-inner" data-place="${cheapest.p.id}">

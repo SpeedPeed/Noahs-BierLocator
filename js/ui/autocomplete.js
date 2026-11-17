@@ -3,14 +3,15 @@ import { searchPlaces } from '../geo.js';
 import { debounce, escapeHtml } from '../util.js';
 import { icon } from '../icons.js';
 
-export function attachAutocomplete(input, list, { onPick, near = () => null, onClear } = {}) {
+// extra(q) → ein Vorschlag, der vor den Orten steht (z.B. eine Biersorte), oder null.
+export function attachAutocomplete(input, list, { onPick, near = () => null, onClear, extra = () => null } = {}) {
   let items = [], active = -1, seq = 0;
 
   const close = () => { list.hidden = true; active = -1; input.setAttribute('aria-expanded', 'false'); };
   const draw = () => {
     if (!items.length) { close(); return; }
     list.innerHTML = items.map((it, i) => `<li role="option" id="${list.id}-${i}" aria-selected="${i === active}" data-i="${i}">
-      ${icon(it.kind === 'city' || it.kind === 'town' || it.kind === 'village' ? 'map' : 'pin', { size: 16 })}
+      ${icon(it.kind === 'beer' ? 'beerMug' : it.kind === 'city' || it.kind === 'town' || it.kind === 'village' ? 'map' : 'pin', { size: 16 })}
       <span><b>${escapeHtml(it.label)}</b>${it.sub ? `<small>${escapeHtml(it.sub)}</small>` : ''}</span></li>`).join('');
     list.hidden = false;
     input.setAttribute('aria-expanded', 'true');
@@ -27,10 +28,12 @@ export function attachAutocomplete(input, list, { onPick, near = () => null, onC
     const q = input.value.trim();
     if (q.length < 2) { items = []; close(); return; }
     const my = ++seq;
+    const ex = extra(q);
+    if (ex) { items = [ex]; active = -1; draw(); }   // sofort, auch ohne Netz
     try {
       const res = await searchPlaces(q, near());
       if (my !== seq) return;
-      items = res; active = -1; draw();
+      items = ex ? [ex, ...res] : res; active = -1; draw();
     } catch (e) { /* Suche offline → still */ }
   }, 220);
 
