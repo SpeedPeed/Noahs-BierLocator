@@ -4,6 +4,7 @@
 // Alles, was nicht sicher verstanden wird (sunrise, week, Mo[1] …), liefert
 // "unbekannt" (null) statt einer falschen Aussage.
 import { t } from './i18n.js';
+import { countryInfo } from './countries.js';
 
 const DAY_TOKENS = { Mo: 0, Tu: 1, We: 2, Th: 3, Fr: 4, Sa: 5, Su: 6 };
 const MONTH_TOKENS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
@@ -29,14 +30,8 @@ export function holidaysFor(country, year) {
   const easter = easterSunday(year);
   const rel = n => { const d = new Date(easter); d.setDate(d.getDate() + n); return d; };
   const fix = (m, d) => new Date(year, m - 1, d);
-  let list;
-  if (country === 'AT') {
-    list = [fix(1, 1), fix(1, 6), rel(1), fix(5, 1), rel(39), rel(50), rel(60), fix(8, 15), fix(10, 26), fix(11, 1), fix(12, 8), fix(12, 25), fix(12, 26)];
-  } else if (country === 'CH') {
-    list = [fix(1, 1), rel(-2), rel(1), rel(39), rel(50), fix(8, 1), fix(12, 25), fix(12, 26)];
-  } else {
-    list = [fix(1, 1), rel(-2), rel(1), fix(5, 1), rel(39), rel(50), fix(10, 3), fix(12, 25), fix(12, 26)];
-  }
+  const h = countryInfo(country).holidays;
+  const list = [...h.fixed.map(md => fix(...md.split('-').map(Number))), ...h.easter.map(rel)];
   const set = new Set(list.map(dayKey));
   holidayCache.set(key, set);
   return set;

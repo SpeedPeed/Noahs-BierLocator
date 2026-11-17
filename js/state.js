@@ -1,6 +1,6 @@
 // Gemeinsamer Laufzeit-Zustand + ein winziger Event-Bus zwischen den UI-Modulen.
 import { prefs } from './store.js';
-import { guessCountryFromLocale } from './legal.js';
+import { guessCountryFromLocale } from './countries.js';
 
 export const state = {
   location: null,        // { lat, lon, accuracy? }

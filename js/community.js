@@ -10,6 +10,7 @@
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import { deviceSecret, LEGACY_DATA_KEY } from './store.js';
 import { per05, validatePrice, STALE_DAYS } from './prices.js';
+import { CURRENCIES } from './countries.js';
 import { fetchWithTimeout } from './util.js';
 import { t } from './i18n.js';
 
@@ -99,23 +100,37 @@ export async function loadSummaries(ids, { force = false } = {}) {
     const data = await rpc('place_data', { p_ids: chunk, p_secret: deviceSecret() });
     const prices = new Map(chunk.map(id => [id, []]));
     for (const p of data.prices || []) {
-      prices.get(p.place_id)?.push({ id: p.id, beer: p.beer, price: Number(p.price), unit: p.unit, created_at: new Date(p.created_at).getTime(), mine: !!p.mine });
+      prices.get(p.place_id)?.push({ id: p.id, beer: p.beer, price: Number(p.price), unit: p.unit, currency: p.currency || null, created_at: new Date(p.created_at).getTime(), mine: !!p.mine });
     }
     const ratings = new Map((data.ratings || []).map(r => [r.place_id, { avg: Number(r.avg), count: Number(r.count), mine: r.mine ?? null }]));
     for (const id of chunk) summaries.set(id, summarize(prices.get(id), ratings.get(id)));
   }
 }
 
-export async function submitPrice(placeId, { beer, price, unit }) {
-  const v = validatePrice(price, unit, beer);
+// Ohne supabase/006_waehrung.sql kennt der Server keine Währung. Dann melden wir ohne; das geht,
+// solange die Grenzen der Währung denen in Euro entsprechen (EUR, CHF). Angezeigt wird dann die Währung des Ortes.
+let serverKnowsCurrency = true;
+const needsServerUpdate = e => /schema cache|Could not find the function/i.test(e.message);
+
+export async function submitPrice(placeId, { beer, price, unit, currency = 'EUR' }) {
+  const v = validatePrice(price, unit, beer, currency);
   if (!v.ok) throw new Error(v.message);
   if (isShared()) {
-    await rpc('submit_price', { p_place_id: placeId, p_beer: beer.trim(), p_price: v.price, p_unit: unit, p_secret: deviceSecret() });
+    const body = { p_place_id: placeId, p_beer: beer.trim(), p_price: v.price, p_unit: unit, p_secret: deviceSecret() };
+    try {
+      if (!serverKnowsCurrency) throw new Error('schema cache');
+      await rpc('submit_price', { ...body, p_currency: currency });
+    } catch (e) {
+      if (!needsServerUpdate(e)) throw e;
+      serverKnowsCurrency = false;
+      if (CURRENCIES[currency].perEuro !== 1) throw new Error(t('Für diese Währung braucht der Server noch ein Update.'));
+      await rpc('submit_price', body);
+    }
     await loadSummaries([placeId], { force: true });
   } else {
     const db = loadLocal();
     const r = db[placeId] || (db[placeId] = { prices: [], myRating: null });
-    r.prices.push({ id: `l${Date.now()}`, beer: beer.trim(), price: v.price, unit, created_at: Date.now(), mine: true });
+    r.prices.push({ id: `l${Date.now()}`, beer: beer.trim(), price: v.price, unit, currency, created_at: Date.now(), mine: true });
     saveLocal();
     summaries.set(placeId, localSummary(placeId));
   }

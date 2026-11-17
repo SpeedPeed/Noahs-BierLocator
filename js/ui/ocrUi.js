@@ -6,9 +6,10 @@ import { submitPrice } from '../community.js';
 import { bumpStat } from '../store.js';
 import { emit } from '../state.js';
 import { icon } from '../icons.js';
-import { escapeHtml, fmtEuro } from '../util.js';
+import { escapeHtml } from '../util.js';
+import { placeCurrency } from '../chainPrices.js';
 import { $, openDialog, closeDialog, toast, beerLoader } from './dom.js';
-import { t, num } from '../i18n.js';
+import { t, num, money, moneyParts } from '../i18n.js';
 
 const TESSERACT = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
 let lib = null;
@@ -65,6 +66,7 @@ function showCandidates(place, list, raw, onDone) {
       <details class="ocr-raw"><summary>${t('Erkannter Text')}</summary><pre>${escapeHtml(raw.slice(0, 2000))}</pre></details>`;
     return;
   }
+  const cur = placeCurrency(place);
   const unitOpts = sel => (sel ? '' : `<option value="" selected>${t('Menge?')}</option>`) + Object.entries(UNITS).filter(([k]) => !k.startsWith('kasten')).map(([k, u]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${u.label}</option>`).join('');
   box.innerHTML = `
     <p class="fine">${t('Hak an, was stimmt. Sorte, Menge und Preis kannst du noch korrigieren.')}</p>
@@ -72,7 +74,7 @@ function showCandidates(place, list, raw, onDone) {
       <input type="checkbox" class="ocr-on" ${c.ok && c.beerish && !c.guessed ? 'checked' : ''} aria-label="${t('Übernehmen')}">
       <input class="ocr-beer" value="${escapeHtml(c.beer)}" maxlength="40" aria-label="${t('Sorte')}">
       <select class="ocr-unit" aria-label="${t('Menge')}">${unitOpts(c.unit)}</select>
-      <div class="price-input"><input class="ocr-price" inputmode="decimal" value="${num(c.price, 2)}" aria-label="${t('Preis')}"><span>€</span></div>
+      <div class="price-input"><input class="ocr-price" inputmode="decimal" value="${num(c.price, 2)}" aria-label="${t('Preis')}"><span>${moneyParts(0, cur).unit}</span></div>
       <small class="ocr-msg">${c.message ? escapeHtml(c.message) : !c.beerish ? t('Bier? Laut Name eher nicht.') : ''}</small>
     </li>`).join('')}</ul>
     <button class="btn btn-primary btn-big" id="ocrSend">${icon('check', { size: 20 })}<span></span></button>
@@ -88,11 +90,11 @@ function showCandidates(place, list, raw, onDone) {
     let n = 0;
     for (const li of rows) {
       const r = read(li);
-      const v = validatePrice(r.price, r.unit, r.beer);
+      const v = validatePrice(r.price, r.unit, r.beer, cur);
       li.classList.toggle('bad', r.on && !v.ok);
       li.querySelector('.ocr-msg').textContent = !v.ok ? v.message
         : li.hasAttribute('data-guessed') && r.unit === '0.5l' ? t('Menge nicht erkannt, 0,5 l angenommen. Bitte prüfen.')
-        : r.unit !== '0.5l' ? t('= {price} pro 0,5 l', { price: fmtEuro(v.per05) }) : '';
+        : r.unit !== '0.5l' ? t('= {price} pro 0,5 l', { price: money(v.per05, cur) }) : '';
       if (r.on && v.ok) n++;
     }
     const btn = $('#ocrSend');
@@ -108,8 +110,8 @@ function showCandidates(place, list, raw, onDone) {
     let ok = 0, fail = 0;
     for (const li of rows) {
       const r = read(li);
-      if (!r.on || !validatePrice(r.price, r.unit, r.beer).ok) continue;
-      try { await submitPrice(place.id, { beer: r.beer, price: r.price, unit: r.unit }); ok++; li.classList.add('sent'); bumpStat('prices'); emit('price-reported'); }
+      if (!r.on || !validatePrice(r.price, r.unit, r.beer, cur).ok) continue;
+      try { await submitPrice(place.id, { beer: r.beer, price: r.price, unit: r.unit, currency: cur }); ok++; li.classList.add('sent'); bumpStat('prices'); emit('price-reported'); }
       catch (e) { fail++; li.querySelector('.ocr-msg').textContent = e.message; }
     }
     if (ok) {

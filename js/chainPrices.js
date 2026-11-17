@@ -6,6 +6,7 @@
 
 import { UNITS } from './prices.js';
 import { state } from './state.js';
+import { COUNTRIES, currencyFor } from './countries.js';
 
 // Reihenfolge wichtig: spezifischere Muster zuerst (z.B. "Billa Plus" vor "Billa").
 const CHAIN_PATTERNS = {
@@ -76,7 +77,7 @@ export function loadChainPrices() {
           const u = UNITS[p.unit];
           // Mehrfachpackungen/Fässer: über die Gesamtmenge auf 0,5 l umrechnen
           p.per05 = u ? p.price / u.halves : p.volume_l ? p.price / (p.volume_l * 2) : null;
-          p.currency = p.currency || (p.country === 'CH' ? 'CHF' : 'EUR');
+          p.currency = p.currency || currencyFor(p.country);
         }
         data = d;
         return data;
@@ -101,10 +102,13 @@ const KIND_ORDER = { bier: 0, radler: 1, alkoholfrei: 2 };
 // Für Listen: echtes Bier zuerst, darin nach Preis pro Halbe.
 export const byKindThenPrice = (a, b) => KIND_ORDER[beerKind(a)] - KIND_ORDER[beerKind(b)] || (a.per05 ?? 99) - (b.per05 ?? 99);
 
-function placeCountry(place) {
-  const c = (place.tags['addr:country'] || '').toUpperCase();
-  return CHAIN_PATTERNS[c] ? c : state.country;
+// Land eines Ortes: aus OSM, sonst das Land des gesuchten Standorts.
+// shortcut: direkt an der Grenze (Basel, Konstanz) zählt das Land der Suche, bis Orte ein eigenes Land bekommen.
+export function placeCountry(place) {
+  const c = ((place.tags && place.tags['addr:country']) || '').toUpperCase();
+  return COUNTRIES[c] ? c : state.country;
 }
+export const placeCurrency = place => currencyFor(placeCountry(place));
 
 export function chainOf(place) {
   if (!ELIGIBLE_TYPES.has(place.type)) return null;

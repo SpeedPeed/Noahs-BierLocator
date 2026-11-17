@@ -7,7 +7,7 @@ import { getPosition } from '../geo.js';
 import { fetchStations } from '../places.js';
 import { routeThrough } from '../tour/routing.js';
 import { simulateBac } from '../bac.js';
-import { countryInfo } from '../legal.js';
+import { countryInfo } from '../countries.js';
 import { icon } from '../icons.js';
 import { escapeHtml, fmtDist, fmtDuration, haversine } from '../util.js';
 import { $, toast, openMisc, closeMisc, beerLoader } from './dom.js';

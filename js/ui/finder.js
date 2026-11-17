@@ -12,7 +12,8 @@ import { $, toast, skeletonCards, beerLoader } from './dom.js';
 import { stateBlock } from './states.js';
 import * as mapview from '../map.js';
 import { BEER_SUGGESTIONS } from '../prices.js';
-import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf } from '../chainPrices.js';
+import { loadChainPrices, chainPricesFor, cheapestChainPrice, CHAIN_LABELS, chainOf, placeCurrency } from '../chainPrices.js';
+import { currencyFor } from '../countries.js';
 import { t, num, money, moneyParts, LOCALE, pkg, privacyPage } from '../i18n.js';
 
 let openPlace = () => {};
@@ -173,10 +174,11 @@ function widen() {
 // Preis für Liste/Karte: Community-Meldung (aktuell) vor Online-Preis der Kette
 // vor veralteter Meldung.
 function effectivePrice(p, s) {
-  if (s.cheapest && !s.cheapest.stale) return s.cheapest;
+  const own = s.cheapest && { ...s.cheapest, currency: s.cheapest.currency || placeCurrency(p) };
+  if (own && !own.stale) return own;
   const c = cheapestChainPrice(p);
   if (c) return { per05: c.per05, beer: c.beer, created_at: Date.parse(c.seen), online: true, promo: c.promo, currency: c.currency, chain: CHAIN_LABELS[chainOf(p).key] };
-  return s.cheapest;
+  return own;
 }
 // Preis pro Halbe als Bierdeckel: voll = vor Ort gemeldet, nur Rand = Online-Preis, blass = alt.
 function deckel(pr, size = 'md') {
@@ -306,7 +308,8 @@ export function render() {
   // Günstigste Halbe: im Kneipen-Kontext nur ein vor Ort gemeldeter Preis, nie ein Supermarktpreis.
   const fresh = list.filter(x => x.price && !x.price.stale);
   const byPrice = (a, b) => a.price.per05 - b.price.per05;
-  const cheapest = fresh.filter(x => x.price.currency !== 'CHF').sort(byPrice)[0] || fresh.sort(byPrice)[0];
+  // Nur in einer Währung vergleichen: der des Standorts (an der Grenze sonst Franken gegen Euro).
+  const cheapest = fresh.filter(x => x.price.currency === currencyFor(state.country)).sort(byPrice)[0] || fresh.sort(byPrice)[0];
   const shopContext = !prefs.types.some(ty => BEER.has(ty));
   const cc = $('#cheapestCard');
   cc.hidden = !cheapest || (cheapest.price.online && !shopContext);

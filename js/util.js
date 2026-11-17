@@ -1,5 +1,5 @@
 // Kleine, DOM-freie Hilfsfunktionen (auch in den Tests nutzbar).
-import { t, num, money, LOCALE } from './i18n.js';
+import { t, num, LOCALE } from './i18n.js';
 
 export function haversine(lat1, lon1, lat2, lon2) {
   const R = 6371000;
@@ -32,7 +32,6 @@ export function fmtDuration(seconds) {
   if (!h) return t('{min} Min', { min });
   return min ? t('{h} h {min} Min', { h, min }) : `${h} h`;
 }
-export function fmtEuro(v) { return money(v, 'EUR'); }
 export function fmtClock(date) {
   return date.toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' });
 }
