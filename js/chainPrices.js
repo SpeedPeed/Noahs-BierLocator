@@ -46,6 +46,16 @@ const CHAIN_PATTERNS = {
     ['volg', /\bvolg\b/i],
     ['spar', /\bspar\b/i],
   ],
+  // Kroatien: Preise aus den gesetzlichen Preislisten (scripts/scrapers/hr_cijene.py)
+  HR: [
+    ['interspar', /interspar/i],
+    ['spar', /\bspar\b/i],
+    ['kaufland', /kaufland/i],
+    ['plodine', /plodine/i],
+    ['tommy', /\btommy\b/i],
+    ['ribola', /ribola/i],
+    ['eurospin', /eurospin/i],
+  ],
 };
 
 // Hat eine Format-Variante keine eigenen Preise, gelten die der Hauptmarke.
@@ -58,6 +68,7 @@ export const CHAIN_LABELS = {
   rewe: 'REWE', edeka: 'EDEKA', aldi_sued: 'ALDI SÜD', aldi_nord: 'ALDI NORD', kaufland: 'Kaufland',
   netto: 'Netto', trinkgut: 'trinkgut', getraenke_hoffmann: 'Getränke Hoffmann',
   coop: 'Coop', migros: 'Migros', denner: 'Denner', aldi: 'ALDI SUISSE', volg: 'Volg',
+  plodine: 'Plodine', tommy: 'Tommy', ribola: 'Ribola', eurospin: 'Eurospin',
 };
 
 let data = null;      // { updated, prices: [...] }

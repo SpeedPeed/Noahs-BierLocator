@@ -173,7 +173,7 @@ function chainSection(p) {
     ${list.length > CHAIN_PREVIEW ? `<div class="chain-search">${icon('search', { size: 16 })}<input id="pdChainSearch" type="search" placeholder="${t('Sorte oder Marke suchen…')}" autocomplete="off" aria-label="${t('Online-Preise durchsuchen')}"></div>` : ''}
     <ul class="price-list" id="pdChainList"></ul>
     <button class="link-btn" id="pdChainMore" hidden></button>
-    <p class="fine">${t('Aus dem Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro Halbe. In der Filiale kann es anders sein. Wenn du den Preis vor Ort siehst, meld ihn unten.')}</p>
+    <p class="fine">${t('Von der Kette selbst veröffentlicht, ohne Pfand, sortiert nach Preis pro Halbe. In der Filiale kann es anders sein. Wenn du den Preis vor Ort siehst, meld ihn unten.')}</p>
   </section>`;
 }
 
