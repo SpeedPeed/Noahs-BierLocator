@@ -42,7 +42,7 @@ der ersten 120 Orte steht „Öffnungszeiten unbekannt“, gleich laut wie „Of
 | „Günstigstes Bier hier: 0,49 €, Landgraf Zitronenradler“ in Wien, „Pittinger Radler Zitrone“ in Sandl. Radler wird nicht aussortiert. | `js/chainPrices.js:88` |
 | In der BILLA-Liste steht „Landgraf Alkoholfrei“ ganz oben. | ![](audit/06-billa-online-preise.jpg) |
 | Zürich: Migros und Migrolino zeigen CHF 2.27 als Bierpreis. Migros verkauft keinen Alkohol, alle 111 Migros-Einträge sind alkoholfrei. | `data/chain-prices.json` |
-| Rund 500 der 1.625 Preise sind kein Bier im engeren Sinn (287 alkoholfrei, 231 Radler/Mischgetränke, teils doppelt gezählt). 75 Dubletten. | Auswertung |
+| Rund 500 der 1.625 Preise sind kein Bier im engeren Sinn (287 alkoholfrei, 231 Radler/Mischgetränke, teils doppelt gezählt). Die vermeintlichen 75 Dubletten sind Paare aus Normal- und Aktionspreis desselben Produkts und gewollt (nachgeprüft 17.11.). | Auswertung |
 | Echte Abdeckung: AT 1.359, CH 158 (davon 111 alkoholfrei), DE 108. | Auswertung |
 | Kein einziger Community-Preis in einer Kneipe an allen fünf Orten. Das Preisschild in der Liste gibt es praktisch nur bei Supermärkten. | Durchklicken |
 | Community-Preise werden überall mit „€“ gezeigt und gemeldet, auch in Zürich (`fmtEuro`, Feld „Preis in Euro“). | `js/ui/detail.js:92,140` |

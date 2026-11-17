@@ -10,7 +10,8 @@ import subprocess
 import time
 
 TODAY = datetime.date.today().isoformat()
-UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+# Ehrlich: wer wir sind und wo man uns findet (kein vorgetäuschter Browser).
+UA = 'Mozilla/5.0 (compatible; Bier-Locator/1.0; +https://github.com/SpeedPeed/Noahs-BierLocator)'
 
 
 def _curl(url, headers, body=None):
