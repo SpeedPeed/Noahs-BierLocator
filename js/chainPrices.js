@@ -133,14 +133,19 @@ export function chainOf(place) {
 }
 
 // Online-Preise für eine Filiale (leer, wenn Kette unbekannt oder Daten noch nicht geladen).
+const byChain = new Map();
 export function chainPricesFor(place) {
   if (!data) return [];
   const chain = chainOf(place);
   if (!chain) return [];
-  const pick = key => data.prices.filter(p => p.country === chain.country && p.chain === key);
-  let list = pick(chain.key);
-  if (!list.length && FALLBACK[chain.key]) list = pick(FALLBACK[chain.key]);
-  return list;
+  const id = `${chain.country}|${chain.key}`;
+  if (!byChain.has(id)) {
+    const pick = key => data.prices.filter(p => p.country === chain.country && p.chain === key);
+    let list = pick(chain.key);
+    if (!list.length && FALLBACK[chain.key]) list = pick(FALLBACK[chain.key]);
+    byChain.set(id, list);
+  }
+  return byChain.get(id);
 }
 
 // Günstigstes echtes Bier einer Preisliste (Normalpreis bevorzugt, Aktionen nur wenn sonst

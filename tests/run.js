@@ -20,6 +20,7 @@ import { parseMenuText } from '../js/prices.js';
 import { sampleAt, priceColor } from '../js/heatmap.js';
 import { tr, dictionary, money, moneyParts, pkg } from '../js/i18n.js';
 import { COUNTRIES, CURRENCIES, currencyFor } from '../js/countries.js';
+import { beerPrice } from '../js/ui/finder.js';
 import { PLAUSIBLE } from '../js/prices.js';
 
 const results = [];
@@ -510,6 +511,16 @@ test('Dubletten aus OSM: gleicher Name und Typ auf 40 m ist ein Ort', () => {
   const out = dedupe([pl('node/1', 'München 72', 48.13), pl('way/2', 'München 72', 48.1301, { opening_hours: 'Mo-Su 10:00-22:00' }), pl('node/3', 'München 72', 48.14), pl('node/4', 'Sax', 48.13)]);
   eq(out.map(p => p.id).join(), 'way/2,node/3,node/4', 'Zwilling mit Öffnungszeiten bleibt, die Filiale 1 km weiter auch');
   eq(dedupe([{ ...pl('node/5', 'Kneipe & Bar', 48.13), unnamed: true }, { ...pl('node/6', 'Kneipe & Bar', 48.13), unnamed: true }]).length, 2, 'Namenlose nie zusammenlegen');
+});
+
+/* ---------- Bier-Suche ---------- */
+test('Bier-Suche: günstigster passender Preis, alte Meldungen zählen nicht', () => {
+  const pub = { id: 'node/1', type: 'pub', tags: {} };
+  const pr = (beer, per05, stale = false) => ({ beer, per05, stale, price: per05, unit: '0.5l', created_at: 1 });
+  const s = { prices: [pr('Zipfer Märzen', 4.6), pr('Zipfer Pils', 4.2), pr('Zipfer Urtyp', 3.9, true), pr('Gösser', 3.5)] };
+  eq(beerPrice(pub, s, ['zipfer']).beer, 'Zipfer Pils');
+  eq(beerPrice(pub, s, ['zipfer', 'märzen']).beer, 'Zipfer Märzen', 'alle Wörter müssen passen');
+  eq(beerPrice(pub, s, ['augustiner']), null);
 });
 
 /* ---------- Länder und Währungen ---------- */

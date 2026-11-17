@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Bier-Locator</title>
 <meta name="description" content="Findet Kneipen, Biergärten, Brauereien & Getränkemärkte in der Nähe, vergleicht Bierpreise und plant gleichmäßige Fahrrad-Biertouren.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bier-Locator">
+<meta property="og:description" content="Wo gibt's hier Bier, und was kostet's? Kneipen, Biergärten und Preise in der Nähe, dazu Fahrrad-Biertouren.">
+<meta property="og:image" content="https://speedpeed.github.io/Noahs-BierLocator/icons/icon-512.png">
+<meta property="og:url" content="https://speedpeed.github.io/Noahs-BierLocator/">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#fbf4e6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#16110c" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
@@ -54,12 +60,10 @@
       <button role="menuitem" data-action="diary"><span data-icon="book" data-icon-size="16"></span>Tagebuch &amp; Erfolge</button>
       <button role="menuitem" data-action="group"><span data-icon="users" data-icon-size="16"></span>Meine Runde</button>
       <button role="menuitem" data-action="home"><span data-icon="home" data-icon-size="16"></span>Heimweg</button>
-      <button role="menuitem" data-action="heatmap" aria-pressed="false" id="menuHeat"><span data-icon="layers" data-icon-size="16"></span>Preis-Heatmap<span class="menu-check" data-icon="check" data-icon-size="16"></span></button>
       <button role="menuitem" data-action="alerts"><span data-icon="bell" data-icon-size="16"></span>Preisalarme<span class="menu-badge" id="alertBadge" hidden></span></button>
       <button role="menuitem" data-action="bac"><span data-icon="calculator" data-icon-size="16"></span>Promille-Rechner</button>
       <div class="menu-sep"></div>
       <button role="menuitem" data-action="sync"><span data-icon="refresh" data-icon-size="16"></span>Geräte &amp; Backup</button>
-      <button role="menuitem" data-action="theme"><span id="themeIcon" data-icon="moon" data-icon-size="16"></span><span id="themeLabel">Dunkles Design</span></button>
       <button role="menuitem" data-action="about"><span data-icon="info" data-icon-size="16"></span>Über die App</button>
     </div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -127,6 +131,10 @@
           <label class="switch-row">
             <input id="prefBiergarten" type="checkbox" class="switch">
             <span>Biergärten bevorzugen</span>
+          </label>
+          <label class="switch-row">
+            <input id="prefHeat" type="checkbox" class="switch">
+            <span>Preis-Heatmap auf der Karte</span>
           </label>
           <button id="btnUnhide" class="link-btn" hidden></button>
         </div>
