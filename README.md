@@ -171,7 +171,7 @@ python scripts/scrape_prices.py
 ```
 
 Holt alle Ketten neu (`scripts/scrapers/<land>_<kette>.py`), schreibt `data/sources/auto-*.json`
-und baut `data/chain-prices.json`. Einzelne Ketten: `python scripts/scrape_prices.py at_spar at_billa`.
+und baut `data/chain-prices.json` (alles, für Preisalarme und Verlauf) sowie `data/prices/<Land>.json` (die App lädt nur das Land, in dem man gerade ist). Einzelne Ketten: `python scripts/scrape_prices.py at_spar at_billa`.
 Jeder Eintrag wird auf Plausibilität geprüft (z.B. keine Einzeldose über 5 €).
 
 ## Technik

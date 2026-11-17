@@ -7,7 +7,7 @@ import { getSummary, loadSummaries } from '../community.js';
 import { placeStatus, statusShort, contextReason, isLate } from '../placeInfo.js';
 import { isBiergartenWeather, isRainy } from '../weather.js';
 import { icon } from '../icons.js';
-import { fmtDist, fmtWalk, escapeHtml, timeAgo, debounce, haversine } from '../util.js';
+import { fmtDist, fmtWalk, fmtClock, escapeHtml, timeAgo, debounce, haversine } from '../util.js';
 import { $, toast, skeletonCards, beerLoader } from './dom.js';
 import { stateBlock } from './states.js';
 import * as mapview from '../map.js';
@@ -20,6 +20,7 @@ let openPlace = () => {};
 let loading = false;
 let searchSeq = 0;
 let retryWhenOnline = () => {};
+let staleSince = null;   // ohne Netz: Zeitpunkt der gezeigten (alten) Orte
 
 // Umkreis: ohne Vorgabe erst nah suchen; sind dort zu wenige Bierorte, einmal weit (Stadt eng, Land weit).
 // Zwei Stufen, damit das Dorf höchstens zwei Abfragen braucht.
@@ -128,13 +129,16 @@ export async function searchAt(center, radius = null, { fit = true, quiet = fals
   try {
     const ref = state.location || center;
     const types = new Set(prefs.types);
-    let places = [], fetched = 0;
+    let places = [], fetched = 0, stale = null;
     for (const step of radius ? [radius] : AUTO_STEPS) {
-      ({ places } = await fetchPlacesAround(center, step, TYPE_ORDER, { ref }));
+      ({ places, staleSince: stale } = await fetchPlacesAround(center, step, TYPE_ORDER, { ref }));
       if (seq !== searchSeq) return;
       fetched = step;
-      if (places.filter(p => types.has(p.type) && !isHidden(p.id)).length >= ENOUGH) break;
+      if (stale || places.filter(p => types.has(p.type) && !isHidden(p.id)).length >= ENOUGH) break;
     }
+    staleSince = stale;
+    // Alte Orte gezeigt: sobald das Netz zurück ist, still neu laden
+    if (stale) { retryWhenOnline = () => searchAt(center, radius, { fit: false, quiet: true }); window.addEventListener('online', retryWhenOnline, { once: true }); }
     for (const p of places) p.reach = haversine(center.lat, center.lon, p.lat, p.lon);
     state.places = places;
     rememberPlaces(places);
@@ -343,8 +347,12 @@ export function render() {
     sunny: byWeather && isBiergartenWeather(w) && list.some(x => x.p.type === 'biergarten' || x.p.tags.outdoor_seating === 'yes'),
   });
   const line = $('#contextLine');
-  line.hidden = !(reason || beer) || loading;
-  if (beer) {
+  line.hidden = !(reason || beer || staleSince) || loading;
+  if (staleSince && !beer) {
+    const d = new Date(staleSince);
+    const when = d.toDateString() === new Date().toDateString() ? fmtClock(d) : d.toLocaleDateString(LOCALE, { day: 'numeric', month: 'numeric' });
+    line.textContent = t('Kein Netz. Die Orte sind von {when}, Öffnungszeiten können sich geändert haben.', { when });
+  } else if (beer) {
     line.innerHTML = `${t('Günstigste zuerst.')} <button class="link-btn" id="btnBeerReset">${t('Alle Bierorte zeigen')}</button>`;
     $('#btnBeerReset').onclick = () => { clearBeer(); emit('beer-cleared'); };
   } else line.textContent = reason ? REASONS[reason]() : '';

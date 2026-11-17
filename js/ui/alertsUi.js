@@ -15,8 +15,9 @@ const PUSH = 'bl_push_on_v1';
 const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && !!SUPABASE_URL;
 
 async function results() {
-  const data = await loadChainPrices();
-  return evaluate(loadWatches(), data.prices || []);
+  const watches = loadWatches();
+  const data = await loadChainPrices([state.country, ...watches.map(w => w.country)]);
+  return evaluate(watches, data.prices || []);
 }
 
 // Beim Start: neue Treffer seit dem letzten Mal → Badge + Hinweis

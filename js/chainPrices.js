@@ -1,4 +1,4 @@
-// Online-Preise von Supermarkt-/Diskonterketten (data/chain-prices.json).
+// Online-Preise von Supermarkt-/Diskonterketten (data/prices/<Land>.json, nur die nötigen Länder).
 // Ketten haben meist landesweit einheitliche Online-Preise — sie werden deshalb
 // pro Kette gepflegt und automatisch jeder Filiale zugeordnet (über die OSM-Tags
 // brand/name/operator). Angezeigt als "Online-Preis · Stand …", getrennt von den
@@ -7,6 +7,8 @@
 import { UNITS } from './prices.js';
 import { state } from './state.js';
 import { COUNTRIES, currencyFor } from './countries.js';
+
+const byChain = new Map();   // Kette → ihre Preise (die Bier-Suche fragt alle Orte ab)
 
 // Reihenfolge wichtig: spezifischere Muster zuerst (z.B. "Billa Plus" vor "Billa").
 const CHAIN_PATTERNS = {
@@ -71,13 +73,13 @@ export const CHAIN_LABELS = {
   plodine: 'Plodine', tommy: 'Tommy', ribola: 'Ribola', eurospin: 'Eurospin',
 };
 
-let data = null;      // { updated, prices: [...] }
-let loading = null;
+let data = null;      // { updated, prices: [...] } aller bisher geladenen Länder
+const perCountry = new Map();   // Land → Promise<{ updated, prices }>
 
-export function loadChainPrices() {
-  if (data) return Promise.resolve(data);
-  if (!loading) {
-    loading = fetch('data/chain-prices.json')
+function loadCountry(code) {
+  if (!perCountry.has(code)) {
+    // Länder ohne Datei (noch keine Ketten) liefern 404 → einfach leer
+    perCountry.set(code, fetch(`data/prices/${code}.json`)
       .then(r => (r.ok ? r.json() : { prices: [] }))
       .catch(() => ({ prices: [] }))
       .then(d => {
@@ -90,11 +92,23 @@ export function loadChainPrices() {
           p.per05 = u ? p.price / u.halves : p.volume_l ? p.price / (p.volume_l * 2) : null;
           p.currency = p.currency || currencyFor(p.country);
         }
-        data = d;
-        return data;
-      });
+        return d;
+      }));
   }
-  return loading;
+  return perCountry.get(code);
+}
+
+// Lädt die Preise der genannten Länder dazu (Standard: das Land des Standorts).
+export async function loadChainPrices(countries = [state.country]) {
+  const want = [...new Set(countries.filter(Boolean))];
+  const missing = want.filter(c => !perCountry.has(c));
+  await Promise.all(want.map(loadCountry));
+  if (missing.length || !data) {
+    const parts = await Promise.all([...perCountry.values()]);
+    data = { updated: parts.map(d => d.updated).filter(Boolean).sort().pop(), prices: parts.flatMap(d => d.prices) };
+    byChain.clear();
+  }
+  return data;
 }
 
 const ALCOHOL_FREE = /alkoholfrei|alkoholarm|\b0[.,]0\b|0[.,]0\s*%|\bnon\b|ohne alkohol|ohne alcool|sans alcool|senza alcol|alcohol[- ]?free|\bfrei\b|\bfree\b|\bzero\b/i;
@@ -133,7 +147,6 @@ export function chainOf(place) {
 }
 
 // Online-Preise für eine Filiale (leer, wenn Kette unbekannt oder Daten noch nicht geladen).
-const byChain = new Map();
 export function chainPricesFor(place) {
   if (!data) return [];
   const chain = chainOf(place);

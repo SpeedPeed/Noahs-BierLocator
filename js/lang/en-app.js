@@ -304,4 +304,5 @@ export default {
   'Design': 'Theme',
   'Hell': 'Light',
   'Dunkel': 'Dark',
+  'Kein Netz. Die Orte sind von {when}, Öffnungszeiten können sich geändert haben.': 'No signal. These places are from {when}; opening hours may have changed.',
 };
