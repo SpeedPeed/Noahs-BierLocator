@@ -174,13 +174,25 @@ function cacheGet(key) {
     return v.places;
   } catch (e) { return null; }
 }
-function cachePut(key, places) {
+// Ohne Netz: die zuletzt geladenen Orte in der Nähe, egal wie alt. → { places, t } oder null
+function cacheNearby(center, radius) {
+  let best = null;
+  try {
+    for (const k of Object.keys(localStorage).filter(k => k.startsWith(CACHE_PREFIX))) {
+      const v = JSON.parse(localStorage.getItem(k));
+      if (!v || !v.c || haversine(center.lat, center.lon, v.c.lat, v.c.lon) > Math.max(radius, 1000)) continue;
+      if (!best || v.t > best.t) best = v;
+    }
+  } catch (e) { /* kein Speicher */ }
+  return best;
+}
+function cachePut(key, places, c) {
   try {
     const keys = Object.keys(localStorage).filter(k => k.startsWith(CACHE_PREFIX))
       .map(k => ({ k, t: (JSON.parse(localStorage.getItem(k)) || {}).t || 0 }))
       .sort((a, b) => a.t - b.t);
     while (keys.length >= CACHE_MAX) localStorage.removeItem(keys.shift().k);
-    localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ t: Date.now(), places }));
+    localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ t: Date.now(), places, c }));
   } catch (e) {
     // Speicher voll → alten Cache wegwerfen und es lassen
     try { Object.keys(localStorage).filter(k => k.startsWith(CACHE_PREFIX)).forEach(k => localStorage.removeItem(k)); } catch (_) { /* egal */ }
@@ -202,8 +214,18 @@ export async function fetchPlacesAround(center, radius, types, { ref = center, l
   const key = hash(query);
   let places = useCache ? cacheGet(key) : null;
   const fromCache = !!places;
+  let staleSince = null, data = null;
   if (!places) {
-    const data = await overpass(query);
+    try {
+      data = await overpass(query);
+    } catch (e) {
+      const old = cacheNearby(center, radius);
+      if (!old) throw e;
+      places = old.places;
+      staleSince = old.t;
+    }
+  }
+  if (!places) {
     const seen = new Set();
     places = [];
     for (const el of data.elements || []) {
@@ -211,14 +233,14 @@ export async function fetchPlacesAround(center, radius, types, { ref = center, l
       if (p && !seen.has(p.id)) { seen.add(p.id); places.push(p); }
     }
     places = dedupe(places);
-    cachePut(key, places);
+    cachePut(key, places, { lat: center.lat, lon: center.lon });
   }
   const typeSet = new Set(types);
   const list = places
     .filter(p => typeSet.has(p.type))
     .map(p => ({ ...p, distance: haversine(ref.lat, ref.lon, p.lat, p.lon) }))
     .sort((a, b) => a.distance - b.distance);
-  return { places: limit ? list.slice(0, limit) : list, total: list.length, fromCache };
+  return { places: limit ? list.slice(0, limit) : list, total: list.length, fromCache, staleSince };
 }
 
 // Orte per ID (für geteilte Links).

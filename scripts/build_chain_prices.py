@@ -92,6 +92,13 @@ def main():
     out = {'updated': max(p['seen'] for p in prices), 'prices': prices}
     with open(os.path.join(ROOT, 'data', 'chain-prices.json'), 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
+    # Die App lädt nur das Land, in dem man gerade ist (data/prices/<Land>.json);
+    # chain-prices.json bleibt für Preisalarme und Verlauf.
+    os.makedirs(os.path.join(ROOT, 'data', 'prices'), exist_ok=True)
+    for c in sorted({p['country'] for p in prices}):
+        part = [p for p in prices if p['country'] == c]
+        with open(os.path.join(ROOT, 'data', 'prices', f'{c}.json'), 'w', encoding='utf-8') as f:
+            json.dump({'updated': max(p['seen'] for p in part), 'prices': part}, f, ensure_ascii=False, separators=(',', ':'))
     update_history(prices)
     by = {}
     for p in prices:

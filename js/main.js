@@ -25,6 +25,7 @@ import { openHome } from './ui/homeUi.js';
 import { openBingo, openSurprise } from './ui/funUi.js';
 import { initBadges } from './ui/badgesUi.js';
 import { showHeatmap, hideHeatmap } from './heatmap.js';
+import { loadChainPrices } from './chainPrices.js';
 import { yearStats } from './ui/wrappedUi.js';
 import { t, num, LANG, LANGS, setLang, translateDom, privacyPage } from './i18n.js';
 
@@ -51,14 +52,20 @@ async function setLocation(loc, { label = null, country = null, search = true, f
     searchAt(state.location, null, { fit });
   }
   loadWeather(loc);
-  if (country) state.country = country;
+  if (country) setCountry(country);
   if (!label || !country) {
     const r = await reverseGeocode(loc.lat, loc.lon);
     if (r) {
       if (!label) { setLocLabel(r.short); saveLastLocation({ lat: loc.lat, lon: loc.lon, label: r.short }); }
-      if (r.country) state.country = r.country;
+      if (r.country) setCountry(r.country);
     } else if (!label) setLocLabel(t('Mein Standort'));
   }
+}
+// Neues Land: dessen Kettenpreise laden und die Liste neu zeichnen.
+function setCountry(code) {
+  if (code === state.country) return;
+  state.country = code;
+  loadChainPrices().then(() => renderFinder());
 }
 function setLocLabel(text) {
   state.locationLabel = text;
