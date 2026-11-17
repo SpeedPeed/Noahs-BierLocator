@@ -50,6 +50,18 @@ export const COUNTRIES = {
     ],
     bike: { bac: 0.5, label: t('Gilt auch auf dem Velo') },
   },
+  HR: {
+    name: t('Kroatien'),
+    currency: 'EUR',
+    holidays: { fixed: ['1-1', '1-6', '5-1', '5-30', '6-22', '8-5', '8-15', '11-1', '11-18', '12-25', '12-26'], easter: [0, 1, 60] },
+    emergency: '112',
+    emergencyLabel: t('Notruf 112 · Rettung 194'),
+    car: [
+      { bac: 0.0, label: t('Unter 24 Jahren & Berufsfahrer: absolutes Alkoholverbot') },
+      { bac: 0.5, label: t('Allgemeine Grenze Auto') },
+    ],
+    bike: { bac: 0.5, label: t('Gilt auch auf dem Fahrrad') },
+  },
 };
 
 export function countryInfo(code) {

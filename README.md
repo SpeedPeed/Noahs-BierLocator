@@ -149,7 +149,7 @@ beim ersten Start im Community-Modus automatisch hochgeladen.
 
 ## Online-Preise der Supermarktketten
 
-Rund **1.650 Bierpreise** aus den Online-Sortimenten der Ketten. Jede Filiale zeigt die
+Rund **2.800 Bierpreise** aus den Online-Sortimenten der Ketten. Jede Filiale zeigt die
 Preise ihrer Kette als „Online-Preis · Stand …“ (durchsuchbar, mit Link zum Produkt);
 Community-Meldungen haben Vorrang. Aktionen erscheinen erst ab ihrem Start und
 verschwinden nach ihrem Ende von selbst.
@@ -159,9 +159,10 @@ verschwinden nach ihrem Ende von selbst.
 | AT | SPAR/EUROSPAR/INTERSPAR, BILLA/BILLA PLUS, MPREIS | PENNY, Lidl | HOFER |
 | DE | EDEKA (edeka24), ALDI NORD | Kaufland, Lidl (Partyfässer), PENNY, trinkgut, Getränke Hoffmann | ALDI SÜD, Netto |
 | CH | Migros (nur alkoholfrei), ALDI SUISSE, Volg | Denner, Lidl | Coop |
+| HR | SPAR, Kaufland, Plodine, Tommy, Ribola, Eurospin (gesetzliche Preislisten über cijene.dev) | | Konzum, Lidl (nicht im Archiv) |
 
 Ohne Online-Preise: Sutterlüty, ADEG, Nah&Frisch (nur PDF-/Bild-Flugblätter), REWE und
-SPAR Schweiz. Bot-Schutz (Captchas o. ä.) wird bewusst nicht umgangen.
+SPAR Schweiz. Bot-Schutz (Captchas o. ä.) wird bewusst nicht umgangen. Geprüfte Quellen: [`docs/sources.md`](docs/sources.md).
 
 **Aktualisieren** (dauert ein paar Minuten, braucht `curl`):
 

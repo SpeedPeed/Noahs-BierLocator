@@ -171,7 +171,7 @@ export default {
   '{n} Biere · Stand {date}': '{n} beers · as of {date}',
   'Sorte oder Marke suchen…': 'Search beer or brand…',
   'Online-Preise durchsuchen': 'Search online prices',
-  'Aus dem Online-Shop der Kette, ohne Pfand, sortiert nach Preis pro Halbe. In der Filiale kann es anders sein. Wenn du den Preis vor Ort siehst, meld ihn unten.': 'From the chain’s online shop, deposit not included, sorted by price per half-litre. The shelf may say otherwise. If you see the price in store, report it below.',
+  'Von der Kette selbst veröffentlicht, ohne Pfand, sortiert nach Preis pro Halbe. In der Filiale kann es anders sein. Wenn du den Preis vor Ort siehst, meld ihn unten.': 'Published by the chain itself, deposit not included, sorted by price per half-litre. The shelf may say otherwise. If you see the price in store, report it below.',
   'Aktion': 'Deal',
   'Aktion bis {date}': 'Deal until {date}',
   'Preisverlauf anzeigen': 'Show price history',
@@ -293,4 +293,8 @@ export default {
   'Sorte wählen': 'Pick a beer',
   'Unbekannte Währung.': 'Unknown currency.',
   'Für diese Währung braucht der Server noch ein Update.': 'The server needs an update for this currency first.',
+  'Kroatien': 'Croatia',
+  'Notruf 112 · Rettung 194': 'Emergency 112 · Ambulance 194',
+  'Unter 24 Jahren & Berufsfahrer: absolutes Alkoholverbot': 'Under 24 & professional drivers: zero tolerance',
+  'Gilt auch auf dem Fahrrad': 'Also applies on a bike',
 };

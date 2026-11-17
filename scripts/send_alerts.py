@@ -19,7 +19,8 @@ TODAY = datetime.date.today().isoformat()
 LABELS = {'billa': 'BILLA', 'spar': 'SPAR', 'mpreis': 'MPREIS', 'hofer': 'HOFER', 'lidl': 'Lidl', 'penny': 'PENNY',
           'rewe': 'REWE', 'edeka': 'EDEKA', 'aldi_sued': 'ALDI SÜD', 'aldi_nord': 'ALDI NORD', 'kaufland': 'Kaufland',
           'netto': 'Netto', 'trinkgut': 'trinkgut', 'getraenke_hoffmann': 'Getränke Hoffmann', 'coop': 'Coop',
-          'migros': 'Migros', 'denner': 'Denner', 'aldi': 'ALDI', 'volg': 'Volg'}
+          'migros': 'Migros', 'denner': 'Denner', 'aldi': 'ALDI', 'volg': 'Volg',
+          'plodine': 'Plodine', 'tommy': 'Tommy', 'ribola': 'Ribola', 'eurospin': 'Eurospin'}
 APP_URL = 'https://speedpeed.github.io/Noahs-BierLocator/#alarme'
 
 
