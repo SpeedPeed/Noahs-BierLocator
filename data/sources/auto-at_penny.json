@@ -5,13 +5,34 @@
 "beer": "Ottakringer Helles",
 "unit": "0.33l",
 "package": "0,33 l",
+"price": 1.09,
+"promo": false,
+"source": "https://www.penny.at/produkte/helles-78101754",
+"seen": "2026-11-23"
+},
+{
+"country": "AT",
+"chain": "penny",
+"beer": "Ottakringer Helles",
+"unit": "0.33l",
+"package": "0,33 l",
 "price": 0.69,
 "promo": true,
 "source": "https://www.penny.at/produkte/helles-78101754",
-"seen": "2026-11-16",
-"note": "Aktion (ab 24 Stück, gültig ab 19.11.)",
-"valid_until": "2026-11-25",
-"valid_from": "2026-11-19"
+"seen": "2026-11-23",
+"note": "Aktion, statt 1,09 € (ab 24 Flaschen)",
+"valid_until": "2026-11-25"
+},
+{
+"country": "AT",
+"chain": "penny",
+"beer": "Puntigamer",
+"unit": "0.33l",
+"package": "0,33 l",
+"price": 1.38,
+"promo": false,
+"source": "https://www.penny.at/produkte/puntigamer-78432372",
+"seen": "2026-11-23"
 },
 {
 "country": "AT",
@@ -22,34 +43,20 @@
 "price": 0.79,
 "promo": true,
 "source": "https://www.penny.at/produkte/puntigamer-78432372",
-"seen": "2026-11-16",
-"note": "Aktion (ab 24 Stück, gültig ab 19.11.)",
-"valid_until": "2026-11-25",
-"valid_from": "2026-11-19"
+"seen": "2026-11-23",
+"note": "Aktion, statt 1,38 € (ab 24 Flaschen)",
+"valid_until": "2026-11-25"
 },
 {
 "country": "AT",
 "chain": "penny",
-"beer": "Puntigamer",
+"beer": "Schwechater Bier",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 1.55,
+"price": 1.38,
 "promo": false,
-"source": "https://www.penny.at/produkte/puntigamer-78542228",
-"seen": "2026-11-16"
-},
-{
-"country": "AT",
-"chain": "penny",
-"beer": "Puntigamer",
-"unit": "0.5l",
-"package": "0,5 l",
-"price": 0.59,
-"promo": true,
-"source": "https://www.penny.at/produkte/puntigamer-78542228",
-"seen": "2026-11-16",
-"note": "Aktion, statt 1,55 € (ab 24 Dosen)",
-"valid_until": "2026-11-18"
+"source": "https://www.penny.at/produkte/bier-78542233",
+"seen": "2026-11-23"
 },
 {
 "country": "AT",
@@ -60,71 +67,36 @@
 "price": 0.49,
 "promo": true,
 "source": "https://www.penny.at/produkte/bier-78542233",
-"seen": "2026-11-16",
-"note": "Aktion (ab 24 Stück, gültig ab 19.11.)",
-"valid_until": "2026-11-25",
-"valid_from": "2026-11-19"
+"seen": "2026-11-23",
+"note": "Aktion, statt 1,38 € (ab 24 Dosen)",
+"valid_until": "2026-11-25"
 },
 {
 "country": "AT",
 "chain": "penny",
-"beer": "Gambrinus",
+"beer": "Gösser Märzen",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 0.64,
-"promo": false,
-"source": "https://www.penny.at/produkte/gambrinus-78559017",
-"seen": "2026-11-16"
+"price": 0.77,
+"promo": true,
+"source": "https://www.penny.at/produkte/maerzen-78542238",
+"seen": "2026-11-23",
+"note": "Aktion (ab 24 Stück, gültig ab 26.11.)",
+"valid_until": "2026-12-02",
+"valid_from": "2026-11-26"
 },
 {
 "country": "AT",
 "chain": "penny",
-"beer": "Gambrinus",
+"beer": "Wieselburger Gold",
 "unit": "0.5l",
 "package": "0,5 l",
-"price": 0.44,
+"price": 0.79,
 "promo": true,
-"source": "https://www.penny.at/produkte/gambrinus-78559017",
-"seen": "2026-11-16",
-"note": "Aktion, statt 0,64 € (ab 24 Dosen)",
-"valid_until": "2026-11-18"
-},
-{
-"country": "AT",
-"chain": "penny",
-"beer": "Stiegl Goldbräu",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 1.29,
-"promo": false,
-"source": "https://www.penny.at/produkte/goldbraeu-78623778",
-"seen": "2026-11-16"
-},
-{
-"country": "AT",
-"chain": "penny",
-"beer": "Stiegl Goldbräu",
-"unit": "0.33l",
-"package": "0,33 l",
-"price": 0.69,
-"promo": true,
-"source": "https://www.penny.at/produkte/goldbraeu-78623778",
-"seen": "2026-11-16",
-"note": "Aktion, statt 1,29 € (ab 12 Flaschen)",
-"valid_until": "2026-11-18"
-},
-{
-"country": "AT",
-"chain": "penny",
-"beer": "Stiegl Goldbräu",
-"unit": "kasten20x0.5l",
-"package": "20×0,5 l",
-"price": 14.4,
-"promo": true,
-"source": "https://www.penny.at/produkte/goldbraeu-78674131",
-"seen": "2026-11-16",
-"note": "Aktion (gültig ab 19.11.)",
-"valid_until": "2026-11-21",
-"valid_from": "2026-11-19"
+"source": "https://www.penny.at/produkte/gold-78549543",
+"seen": "2026-11-23",
+"note": "Aktion (ab 24 Stück, gültig ab 26.11.)",
+"valid_until": "2026-12-02",
+"valid_from": "2026-11-26"
 }
 ]
